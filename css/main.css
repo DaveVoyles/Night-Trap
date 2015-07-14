@@ -5,9 +5,11 @@
    ========================================================================== */
 
 .btn-icon {
-    height: 50px; 
-    width:  50px;
-    margin: 5px;
+    height: 70px; 
+    width:  70px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     border-style:solid;
     border-color:black;
 }
