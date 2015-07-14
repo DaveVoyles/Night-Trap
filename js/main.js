@@ -39,7 +39,7 @@
     ]
 
     // Adaptive bitrate, hosted on Azure. Not tested
-    aAdaptiveStreamCamList = [
+    var aAdaptiveStreamCamList = [
         ''
         ,'http://nighttrap.streaming.mediaservices.windows.net/1071ab9e-7ae9-431a-a9bd-56dcff768afb/Bedroom.ism/Manifest'
         ,''
