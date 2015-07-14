@@ -6,7 +6,7 @@ A browser port of the Sega CD classic from Digital Pictures
 ----------
 ### About
 
-## [You can play / view it here.](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists)
+## [You can play / view it here.](www.nighttrap.azurewebsites.net)
 
 ![] (http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg)
 
