@@ -23,6 +23,7 @@ There's obviously still a lot of work to go. Special thanks to Phil Cobley in th
 - Add the color coordinated password system
 - Pause Screen
 - Get raw footage, to prevent that *click* noise from going off every time you miss an auger
+- Get multiple video feeds to buffer as soon as the page loads. Allows for quicker camera changes.
 
 ----------
 
