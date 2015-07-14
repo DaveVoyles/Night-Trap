@@ -63,7 +63,7 @@
     // 2. Sets src property for video player
 
     var init = function () {
-        document.getElementById('Hall-1'     ).addEventListener('click', chang, false);
+        document.getElementById('Hall-1'     ).addEventListener('click', changeVideoStreamRemote, false);
         document.getElementById('Kitchen'    ).addEventListener('click', changeVideoStreamRemote, false);
         document.getElementById('Entry-Way'  ).addEventListener('click', changeVideoStreamRemote, false);
         document.getElementById('Living-Room').addEventListener('click', changeVideoStreamRemote, false);
