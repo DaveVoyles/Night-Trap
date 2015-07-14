@@ -4,6 +4,13 @@
    Author's custom styles
    ========================================================================== */
 
+.btn-icon {
+    height: 50px; 
+    width:  50px;
+    margin: 5px;
+    border-style:solid;
+    border-color:black;
+}
 
 
 
