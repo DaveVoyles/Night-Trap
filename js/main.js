@@ -24,11 +24,11 @@
         'https://medianighttrap.blob.core.windows.net/asset-ec25435d-1500-80c3-09ca-f1e52a3a5233/Hall-1.mp4?sv=2012-02-12&sr=c&si=2d42fed2-be3f-4a6c-9217-9482cf0a9156&sig=9nKW%2B9hN2iYZW%2BW0skSqs8RB9vM3Ehd5k3ltPxxDcWg%3D&st=2015-07-14T15%3A09%3A44Z&se=2115-06-20T15%3A09%3A44Z'
         // Kitchen
         , 'https://medianighttrap.blob.core.windows.net/asset-0308435d-1500-80c3-a8c0-f1e52a3ac3b0/Kitchen.mp4?sv=2012-02-12&sr=c&si=1d52abda-4f5a-475d-911f-ed2d0a4e953e&sig=S2oNOwATZSPKSqxDRg8XukiXYA58YZeu6WJlHdcgV%2BI%3D&st=2015-07-14T15%3A16%3A47Z&se=2115-06-20T15%3A16%3A47Z'
-        //Entryway
-        , ''
+        // Entryway
+        , '' 
         // Living-Room
         , 'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c3-ad76-f1e52a3ae894/Living-room.mp4?sv=2012-02-12&sr=c&si=bf5a6a18-cfa1-408c-a45f-560687398497&sig=DzBbLzsm3AnaV3XcE3e2JoW%2Foi%2F2ksF4J4vPDRpedq4%3D&st=2015-07-14T15%3A16%3A55Z&se=2115-06-20T15%3A16%3A55Z'
-        //Bathroom
+        // Bathroom
         ,''
         // Bedroom
         , 'https://medianighttrap.blob.core.windows.net/asset-9412435d-1500-80c3-6f56-f1e529d32336/Bedroom.mp4?sv=2012-02-12&sr=c&si=a7d1fbe9-58bd-45e2-8d2d-09e04d2e817d&sig=xYng3DacbYamyksaGGRtHYo6ul8dGFuCxyioxwQ%2FGzA%3D&st=2015-07-14T03%3A02%3A16Z&se=2115-06-20T03%3A02%3A16Z'
@@ -63,14 +63,14 @@
     // 2. Sets src property for video player
 
     var init = function () {
-        document.getElementById('Hall-1'     ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Kitchen'    ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Entry-Way'  ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Living-Room').addEventListener('click', changeVideoStream, false);
-        document.getElementById('Bathroom'   ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Bedroom'    ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
+        document.getElementById('Hall-1'     ).addEventListener('click', chang, false);
+        document.getElementById('Kitchen'    ).addEventListener('click', changeVideoStreamRemote, false);
+        document.getElementById('Entry-Way'  ).addEventListener('click', changeVideoStreamRemote, false);
+        document.getElementById('Living-Room').addEventListener('click', changeVideoStreamRemote, false);
+        document.getElementById('Bathroom'   ).addEventListener('click', changeVideoStreamRemote, false);
+        document.getElementById('Bedroom'    ).addEventListener('click', changeVideoStreamRemote, false);
+        document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStreamRemote, false);
+        document.getElementById('Driveway'   ).addEventListener('click', changeVideoStreamRemote, false);
 
         initializeVideoStream();
     };
@@ -133,7 +133,7 @@
     // 2. Set the current stream to the ID of the button passed in
     // 3. Set current video time
 
-    var changeVideoStreamLocal = function () {
+    var changeVideoStreamRemote = function () {
 
         nCurrentTime = video.currentTime();
         console.log(nCurrentTime);
