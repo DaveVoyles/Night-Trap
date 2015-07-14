@@ -6,6 +6,8 @@ A browser port of the Sega CD classic from Digital Pictures
 ----------
 ### About
 
+## [You can play / view it here.](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists)
+
 ![] (http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg)
 
 I spent about 45 minutes bringing this over to the browser today. The code is all done in JavaScript, and I'm using the open source [Video.JS player](http://www.videojs.com/) to display the video on most devices (mobile included). 
