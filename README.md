@@ -8,7 +8,7 @@ A browser port of the Sega CD classic from Digital Pictures
 
 ## [You can play / view it here.](http://nighttrap.azurewebsites.net/)
 
-(Join the discussion on Reddit)[https://www.reddit.com/r/gamedev/comments/3d9m9x/i_ported_night_trap_to_the_browser_today/]
+[Join the discussion on Reddit](https://www.reddit.com/r/gamedev/comments/3d9m9x/i_ported_night_trap_to_the_browser_today/)
 
 ![] (http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg)
 
