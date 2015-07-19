@@ -43,32 +43,11 @@
         // Hall-2
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-b2c6-f1e52e22ea99/Hall%202.mp4?sv=2012-02-12&sr=c&si=1807cd36-2894-4d6f-8715-8e670bac1a83&sig=pVwcFddrVon1dRK07WFaC1ZkZVUfWP%2BL4UMu1ox4EgQ%3D&st=2015-07-19T14%3A31%3A20Z&se=2115-06-25T14%3A31%3A20Z'
         // Driveway
-        , 'https://medianighttrap.blob.core.windows.net/asset-5310435d-1500-80c3-fa08-f1e52a3a9080/Driveway.mp4?sv=2012-02-12&sr=c&si=1ef4a6dd-0639-4ad5-88b8-c922ea173424&sig=4bQsPLzeu3BKtXeLolISNHxuqVWkfALOCDZuXybicxc%3D&st=2015-07-14T15%3A11%3A03Z&se=2115-06-20T15%3A11%3A03Z'
-    ]
-
-    // Adaptive bitrate, hosted on Azure. Not tested
-    var aAdaptiveStreamCamList = [
-        // Hall-1
-          'http://nighttrap.streaming.mediaservices.windows.net/90bfe0f4-04f0-4223-8883-c4a1a8246a5a/Hall-1.ism/Manifest'
-        // Kitchen
-        , 'http://nighttrap.streaming.mediaservices.windows.net/cdaa8b80-8308-47da-b5b1-c6bf95a33c74/Kitchen.ism/Manifest'
-        // Entryway
-        , 'http://nighttrap.streaming.mediaservices.windows.net/3ddefd8b-9463-4238-80b2-3de5d242a880/Entry%20Way.ism/Manifest'
-        // Living-Room
-        , 'http://nighttrap.streaming.mediaservices.windows.net/be159b0b-538e-4e72-b7d1-44f4d2868052/Living-room.ism/Manifest'
-        // Bathroom
-        , ''
-        // Bedroom
-        , 'http://nighttrap.streaming.mediaservices.windows.net/1071ab9e-7ae9-431a-a9bd-56dcff768afb/Bedroom.ism/Manifest'
-        // Hall-2
-        , 'http://nighttrap.streaming.mediaservices.windows.net/27535007-d6d3-4245-8122-d89fbbec95a4/Hall-2.ism/Manifest'
-        // Driveway
-        , 'http://nighttrap.streaming.mediaservices.windows.net/a424d14c-fbab-42d1-a070-b4a722cc6fa7/Driveway.ism/ManifestCopy'
+        , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-cb0f-f1e52e2ba9ad/Driveway.mp4?sv=2012-02-12&sr=c&si=5ef75072-f00a-4dfe-b594-2bca9a240e72&sig=dA17z0KePOg1lJztRxEeAqbTmBKqEqnbeyov0WP8BhU%3D&st=2015-07-19T15%3A33%3A50Z&se=2115-06-25T15%3A33%3A50Z'
     ]
 
     // Intro video
     var introVidMp4      = 'https://medianighttrap.blob.core.windows.net/asset-5310435d-1500-80c3-279c-f1e52a3a5429/Intro-outro.mp4?sv=2012-02-12&sr=c&si=7405f907-bcb3-4ef2-9234-32c8277f62fc&sig=BHlAH2uKWjB6I612bXgnA0s3iID7FuaHj%2FftB388Vi0%3D&st=2015-07-14T15%3A09%3A48Z&se=2115-06-20T15%3A09%3A48Z';
-    var introVidAdaptive = 'http://nighttrap.streaming.mediaservices.windows.net/fed82a4b-e146-4bde-bbcf-333713e14f37/Intro-outro.ism/Manifest';
 
 
     /**
