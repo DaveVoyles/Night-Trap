@@ -5,10 +5,9 @@
     var video           = null;   // Video player
     var nCurrentTime    = null;   // Timestamp
     var urlMediaStream  = null;   // Source for the video feed
-    var bUsingAMP       = false;  // Using Azure Media Player for adaptive streaming?
     var ranPassword     = "Blue"; // Random password set by game 
     var curUserPassword = "Blue"; // What has the user selected?
-    var aPasswords = {
+    var aPasswords      = {
         Purple: "Purple"
       , Blue:   "Blue"
       , Red:    "Red"
@@ -17,12 +16,21 @@
       , Orange: "Orange"
     };
 
-    // Fallback options for video playing when using AMP
-    if (typeof amp === undefined) {
-        amp.options.flashSS.swf       = "//amp.azure.net/libs/amp/1.0.0/techs/StrobeMediaPlayback.2.0.swf";
-        amp.options.flashSS.plugin    = "//amp.azure.net/libs/amp/1.0.0/techs/MSAdaptiveStreamingPlugin-osmf2.0.swf";
-        amp.options.silverlightSS.xap = "//amp.azure.net/libs/amp/1.0.0/techs/SmoothStreamingPlayer.xap";
+    /** Which url should this room be on at this moment? 
+     * @example: currentRoomUrl.hallOne = camHallOne.c21;
+     */
+    var currentRoomUrl = {
+          hallOne: ''
+        , kitchen: ''
+        , entryWay: ''
+        , livingRoom: ''
+        , bathroom: ''
+        , bedroom: ''
+        , hallTwo: ''
+        , driveWay: ''
     };
+
+    curre
 
     /* 0 | 1 Opening & General */
     var camMisc = {
@@ -152,17 +160,6 @@
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ded-f1e52e2c2261/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=0bf72883-4a5b-475e-be0f-bbe6ed7cbd3e&sig=2K7QFWy7Xrtpk4mUzv3ff87p5cu29sYomDDLyROWG6U%3D&st=2015-07-19T15%3A37%3A19Z&se=2115-06-25T15%3A37%3A19Z'
     ];
 
-    /* Only applicable if using the AMP  */
-    var playerOptions = {
-        "nativeControlsForTouch": false,
-        autoplay: false,
-        controls: true,
-        width: "640",
-        height: "480",
-        poster: "/img/Night-Trap-32x-front.jpg"
-    };
-
- 
     /**
      * Wires up event handlers for buttons.
      * Sets src property for video player.
@@ -184,26 +181,13 @@
     /**
       * Loads video as soon as page loads for Video.js player
       * Set the urlMediaStream on the video tag.
+      * @param {url} stream - The htttp address of the video clip
       */
     var initializeVideoStream = function (stream) {
         video = videojs('video-player');
         video.src([{ type: 'video/mp4', src: aMP4CamList[8] }]);
         video.load();
     };
-
-
-    /**
-     * Loads video as soon as page loads for Azure Media Player.
-     * Set the urlMediaStream on the video tag.
-     */
-    var initializeVideoStreamAMP = function () {
-        video = amp('video-p', playerOptions);
-        video.src([{
-            src: introVidAdaptive, type: "application/vnd.ms-sstr+xml"
-        }]);
-        video.load();
-    }
-
 
     /**
      * Pulls url from Azure 
@@ -246,27 +230,47 @@
 
     /**
      * Pauses, sets new source, loads source, sets currentTime & plays. 
-     * If using AMP, urlMediaStream from Azure Media Player of type: .manifest for adaptive bitrate. 
-     * If using AMP, need to set time after stream starts playing.
-     * @param {string} [urlMediaStream] 
+     * @param {string} urlMediaStream 
      */
     var loadNewVideo = function (urlMediaStream) {
-        if (bUsingAMP) {
-            video.pause();
-            video.src([{ src: urlMediaStream, type: "application/vnd.ms-sstr+xml" }]);
-            video.load();
-            video.play();
-            video.currentTime(nCurrentTime);
-        } else {
             video.pause();
             video.src(urlMediaStream);
             video.load();
             video.currentTime(nCurrentTime);
             video.play();
+    };
+
+
+    /**
+     * 
+     * @param {nCurrentCam} trapUrl  - Clip with the trap sequence.
+     * @param {nCurremtCam  returnTo - Which camera should we return to?  //TODO: Is this needed?. 
+     * @param {callback} [nextClip]  - Trap clips are often have a clip that appears next.
+     */
+    var triggerTrap = function (urlClip, returnTo, nextClip) {
+
+        playVideo(urlClip); 
+        
+        // Not sure if this ended syntax is correct....
+        if (nextClip) {
+            video.ended = function () {
+                playVideo(nextClip);
+            }
         }
-    }
+    };
 
+     
 
+    /**
+     * Video to play.
+     * @param {url} clipUrl - Address of clip to play.
+     */
+    var playVideo = function (urlClip) {
+            video.pause()
+            video.src(urlClip);
+            video.load();
+            video.play();
+    };
 
 
     init();
