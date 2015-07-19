@@ -47,7 +47,7 @@
     ]
 
     // Intro video
-    var introVidMp4      = 'https://medianighttrap.blob.core.windows.net/asset-5310435d-1500-80c3-279c-f1e52a3a5429/Intro-outro.mp4?sv=2012-02-12&sr=c&si=7405f907-bcb3-4ef2-9234-32c8277f62fc&sig=BHlAH2uKWjB6I612bXgnA0s3iID7FuaHj%2FftB388Vi0%3D&st=2015-07-14T15%3A09%3A48Z&se=2115-06-20T15%3A09%3A48Z';
+    var introVidMp4 = 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ded-f1e52e2c2261/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=0bf72883-4a5b-475e-be0f-bbe6ed7cbd3e&sig=2K7QFWy7Xrtpk4mUzv3ff87p5cu29sYomDDLyROWG6U%3D&st=2015-07-19T15%3A37%3A19Z&se=2115-06-25T15%3A37%3A19Z';
 
 
     /**
