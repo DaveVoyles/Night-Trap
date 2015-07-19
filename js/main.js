@@ -1,11 +1,12 @@
 (function () {
     'use strict';
 
-    var nCurrentCam    = null;
-    var video          = null;
-    var nCurrentTime   = null;
-    var urlMediaStream = null;
-    var bUsingAMP      = false;
+    var nCurrentCam    = null;  // Camera (room) player currently has selected
+    var video          = null;  // Video player
+    var nCurrentTime   = null;  // Timestamp
+    var urlMediaStream = null;  // Source for the video feed
+    var bUsingAMP      = false; // Using Azure Media Player for adaptive streaming?
+    var password       = [{}];
 
     // Fallback options for video playing when using AMP
     if (typeof amp === undefined) {
@@ -14,32 +15,31 @@
         amp.options.silverlightSS.xap = "//amp.azure.net/libs/amp/1.0.0/techs/SmoothStreamingPlayer.xap";
     }
 
-    // Used for testing videos locally. Will not work on a web server
-    var aLocalCamList = [
-          'video/Hall-1.mp4     '
-        , 'video/Kitchen.mp4    '
-        , 'video/Entryway.mp4   '
-        , 'video/Living-Room.mp4'
-        , 'video/Bathroom.mp4   '
-        , 'video/Bedroom.mp4    '
-        , 'video/Hall-2.mp4     '
-        , 'video/Driveway.mp4   '
-    ];
+    var camMisc = {
+        DPWORLDD: '',
+        // Intro
+        c11: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-bfd6-f1e52dbc8916/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=2e8cdfc7-b544-41d5-b589-f9b7a63b30cf&sig=WafTBePJo8TIgpXdc29Mgw1wBi9wQ6nxtOpF7amRoJY%3D&st=2015-07-19T02%3A20%3A13Z&se=2115-06-25T02%3A20%3A13Z',
+    }
+
+    var camHallOne = {
+        c21: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-7565-f1e52dbb7f85/00000021.mp4?sv=2012-02-12&sr=c&si=ebc8ac96-42bb-4bb0-aa3d-73568364a354&sig=NZQg4LdeJvFfbGf%2FUIEAhMsVLM0K3HhmTD%2FgZH%2BbgFM%3D&st=2015-07-19T02%3A18%3A40Z&se=2115-06-25T02%3A18%3A40Z'
+    }
+
 
     // Azure hosted MP4s -- works on the web
     var aMP4CamList = [
         // Hall-1
-        'https://medianighttrap.blob.core.windows.net/asset-ec25435d-1500-80c3-09ca-f1e52a3a5233/Hall-1.mp4?sv=2012-02-12&sr=c&si=2d42fed2-be3f-4a6c-9217-9482cf0a9156&sig=9nKW%2B9hN2iYZW%2BW0skSqs8RB9vM3Ehd5k3ltPxxDcWg%3D&st=2015-07-14T15%3A09%3A44Z&se=2115-06-20T15%3A09%3A44Z'
+          'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c4-2ff5-f1e52dcd6b9b/Hall%201.mp4?sv=2012-02-12&sr=c&si=25e8addd-457c-42c7-adf9-6f2be68f2214&sig=tHHSs9wzZKVBrBKYOBddwy7hc2GdSfjeCI6IaLslVJY%3D&st=2015-07-19T04%3A19%3A19Z&se=2115-06-25T04%3A19%3A19Z'
         // Kitchen
-        , 'https://medianighttrap.blob.core.windows.net/asset-0308435d-1500-80c3-a8c0-f1e52a3ac3b0/Kitchen.mp4?sv=2012-02-12&sr=c&si=1d52abda-4f5a-475d-911f-ed2d0a4e953e&sig=S2oNOwATZSPKSqxDRg8XukiXYA58YZeu6WJlHdcgV%2BI%3D&st=2015-07-14T15%3A16%3A47Z&se=2115-06-20T15%3A16%3A47Z'
+        , 'https://medianighttrap.blob.core.windows.net/asset-9412435d-1500-80c4-f800-f1e52dd5a212/Kitchen.mp4?sv=2012-02-12&sr=c&si=1513ed65-b011-4620-b128-1e16dcfe395e&sig=Yt7jTW5fxOWJk5KNi0nYOESyl2EkXqcLrHYuy%2Bz3uPk%3D&st=2015-07-19T05%3A18%3A06Z&se=2115-06-25T05%3A18%3A06Z'
         // Entryway
         , 'https://medianighttrap.blob.core.windows.net/asset-0914435d-1500-80c4-dc33-f1e52b5a50bc/Entry%20Way.mp4?sv=2012-02-12&sr=c&si=fae29d98-c886-4163-bff6-f7e698da0b0d&sig=USlApgIimNyM4gHINHVwMe332WIdGWKZZJXm6E12dL4%3D&st=2015-07-16T01%3A30%3A40Z&se=2115-06-22T01%3A30%3A40Z'
         // Living-Room
         , 'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c3-ad76-f1e52a3ae894/Living-room.mp4?sv=2012-02-12&sr=c&si=bf5a6a18-cfa1-408c-a45f-560687398497&sig=DzBbLzsm3AnaV3XcE3e2JoW%2Foi%2F2ksF4J4vPDRpedq4%3D&st=2015-07-14T15%3A16%3A55Z&se=2115-06-20T15%3A16%3A55Z'
         // Bathroom
-        , 'https://medianighttrap.blob.core.windows.net/asset-0308435d-1500-80c4-1748-f1e52b6c787f/Bathroom.mp4?sv=2012-02-12&sr=c&si=f1b69592-0563-41de-be85-46367b0315d2&sig=AEL6zFUvM7IkpBzEHleccdaCOBAjfOcV%2BbOyRdNiVK0%3D&st=2015-07-16T03%3A43%3A29Z&se=2115-06-22T03%3A43%3A29Z'
+        , 'https://medianighttrap.blob.core.windows.net/asset-ec25435d-1500-80c4-67eb-f1e52dc2410d/Bathroom.mp4?sv=2012-02-12&sr=c&si=c3d18fc6-8f68-4c1b-a0af-2b4dea3e3427&sig=QzETveyrXJ%2BvEO787B3NlKeFuNaN37sCzMa%2F7K3%2FKbE%3D&st=2015-07-19T03%3A11%3A00Z&se=2115-06-25T03%3A11%3A00Z'
         // Bedroom
-        , 'https://medianighttrap.blob.core.windows.net/asset-9412435d-1500-80c3-6f56-f1e529d32336/Bedroom.mp4?sv=2012-02-12&sr=c&si=a7d1fbe9-58bd-45e2-8d2d-09e04d2e817d&sig=xYng3DacbYamyksaGGRtHYo6ul8dGFuCxyioxwQ%2FGzA%3D&st=2015-07-14T03%3A02%3A16Z&se=2115-06-20T03%3A02%3A16Z'
+        , 'https://medianighttrap.blob.core.windows.net/asset-9412435d-1500-80c4-a131-f1e52dc68826/Bedroom.mp4?sv=2012-02-12&sr=c&si=527a5f46-e297-4de5-9066-45908dd8860b&sig=6IYbeUeDaZp7A2CESbRngC0VGSJscxUU8qFyi5UnAKU%3D&st=2015-07-19T03%3A30%3A25Z&se=2115-06-25T03%3A30%3A25Z'
         // Hall-2
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-8d2c-f1e52b5f0ed9/Hall-2.mp4?sv=2012-02-12&sr=c&si=d076960f-85e4-457b-a5fc-2a233219bcde&sig=%2FZyXTR%2F7sKHCaDngQT3cLjlSkQJrY5lfDJEsvfwgpC0%3D&st=2015-07-16T02%3A32%3A24Z&se=2115-06-22T02%3A32%3A24Z'
         // Driveway
@@ -86,6 +86,7 @@
         document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
 
         initializeVideoStream();
+        
     };
 
 
