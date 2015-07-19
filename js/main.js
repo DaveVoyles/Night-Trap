@@ -1,12 +1,20 @@
 (function () {
     'use strict';
 
-    var nCurrentCam    = null;  // Camera (room) player currently has selected
-    var video          = null;  // Video player
-    var nCurrentTime   = null;  // Timestamp
-    var urlMediaStream = null;  // Source for the video feed
-    var bUsingAMP      = false; // Using Azure Media Player for adaptive streaming?
-    var password       = [{}];
+    var nCurrentCam     = null;  // Camera (room) player currently has selected
+    var video           = null;  // Video player
+    var nCurrentTime    = null;  // Timestamp
+    var urlMediaStream  = null;  // Source for the video feed
+    var bUsingAMP       = false; // Using Azure Media Player for adaptive streaming?
+    var curPassword     = "Blue";
+    var aPasswords      = {
+                            Purple:  "Purple"
+                           , Blue:   "Blue"
+                           , Red:    "Red"
+                           , Green:  "Green"
+                           , Yellow: "Yellow"
+                           , Orange: "Orange"
+                        }
 
     // Fallback options for video playing when using AMP
     if (typeof amp === undefined) {
@@ -26,7 +34,7 @@
     }
 
 
-    // Azure hosted MP4s -- works on the web
+    // Azure hosted MP4s -- Just used for temp prototype
     var aMP4CamList = [
         // Hall-1
           'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c4-2ff5-f1e52dcd6b9b/Hall%201.mp4?sv=2012-02-12&sr=c&si=25e8addd-457c-42c7-adf9-6f2be68f2214&sig=tHHSs9wzZKVBrBKYOBddwy7hc2GdSfjeCI6IaLslVJY%3D&st=2015-07-19T04%3A19%3A19Z&se=2115-06-25T04%3A19%3A19Z'
@@ -45,8 +53,6 @@
         // Driveway
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-cb0f-f1e52e2ba9ad/Driveway.mp4?sv=2012-02-12&sr=c&si=5ef75072-f00a-4dfe-b594-2bca9a240e72&sig=dA17z0KePOg1lJztRxEeAqbTmBKqEqnbeyov0WP8BhU%3D&st=2015-07-19T15%3A33%3A50Z&se=2115-06-25T15%3A33%3A50Z'
     ]
-
-    // Intro video
     var introVidMp4 = 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ded-f1e52e2c2261/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=0bf72883-4a5b-475e-be0f-bbe6ed7cbd3e&sig=2K7QFWy7Xrtpk4mUzv3ff87p5cu29sYomDDLyROWG6U%3D&st=2015-07-19T15%3A37%3A19Z&se=2115-06-25T15%3A37%3A19Z';
 
 
