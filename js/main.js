@@ -33,15 +33,15 @@
         // Kitchen
         , 'https://medianighttrap.blob.core.windows.net/asset-9412435d-1500-80c4-f800-f1e52dd5a212/Kitchen.mp4?sv=2012-02-12&sr=c&si=1513ed65-b011-4620-b128-1e16dcfe395e&sig=Yt7jTW5fxOWJk5KNi0nYOESyl2EkXqcLrHYuy%2Bz3uPk%3D&st=2015-07-19T05%3A18%3A06Z&se=2115-06-25T05%3A18%3A06Z'
         // Entryway
-        , 'https://medianighttrap.blob.core.windows.net/asset-0914435d-1500-80c4-dc33-f1e52b5a50bc/Entry%20Way.mp4?sv=2012-02-12&sr=c&si=fae29d98-c886-4163-bff6-f7e698da0b0d&sig=USlApgIimNyM4gHINHVwMe332WIdGWKZZJXm6E12dL4%3D&st=2015-07-16T01%3A30%3A40Z&se=2115-06-22T01%3A30%3A40Z'
+        , 'https://medianighttrap.blob.core.windows.net/asset-5310435d-1500-80c4-f3ea-f1e52e216cf4/Entry%20Way.mp4?sv=2012-02-12&sr=c&si=4ec337f4-fe1d-4603-b707-cf5e4364a875&sig=UAuW673XANrycx2tJKWGSu%2BRHx%2Fw562X%2BB7dJ%2BeCDWU%3D&st=2015-07-19T14%3A21%3A21Z&se=2115-06-25T14%3A21%3A21Z'
         // Living-Room
-        , 'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c3-ad76-f1e52a3ae894/Living-room.mp4?sv=2012-02-12&sr=c&si=bf5a6a18-cfa1-408c-a45f-560687398497&sig=DzBbLzsm3AnaV3XcE3e2JoW%2Foi%2F2ksF4J4vPDRpedq4%3D&st=2015-07-14T15%3A16%3A55Z&se=2115-06-20T15%3A16%3A55Z'
+        , 'https://medianighttrap.blob.core.windows.net/asset-9412435d-1500-80c4-1b8f-f1e52e219307/Living%20Room.mp4?sv=2012-02-12&sr=c&si=d1c9ff74-197f-4b54-980b-6fd03659a038&sig=xyf%2B35eRfAgJgE5PG6qclWFPmFs9KJPc7rTbVChbcsg%3D&st=2015-07-19T14%3A21%3A42Z&se=2115-06-25T14%3A21%3A42Z'
         // Bathroom
         , 'https://medianighttrap.blob.core.windows.net/asset-ec25435d-1500-80c4-67eb-f1e52dc2410d/Bathroom.mp4?sv=2012-02-12&sr=c&si=c3d18fc6-8f68-4c1b-a0af-2b4dea3e3427&sig=QzETveyrXJ%2BvEO787B3NlKeFuNaN37sCzMa%2F7K3%2FKbE%3D&st=2015-07-19T03%3A11%3A00Z&se=2115-06-25T03%3A11%3A00Z'
         // Bedroom
         , 'https://medianighttrap.blob.core.windows.net/asset-9412435d-1500-80c4-a131-f1e52dc68826/Bedroom.mp4?sv=2012-02-12&sr=c&si=527a5f46-e297-4de5-9066-45908dd8860b&sig=6IYbeUeDaZp7A2CESbRngC0VGSJscxUU8qFyi5UnAKU%3D&st=2015-07-19T03%3A30%3A25Z&se=2115-06-25T03%3A30%3A25Z'
         // Hall-2
-        , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-8d2c-f1e52b5f0ed9/Hall-2.mp4?sv=2012-02-12&sr=c&si=d076960f-85e4-457b-a5fc-2a233219bcde&sig=%2FZyXTR%2F7sKHCaDngQT3cLjlSkQJrY5lfDJEsvfwgpC0%3D&st=2015-07-16T02%3A32%3A24Z&se=2115-06-22T02%3A32%3A24Z'
+        , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-b2c6-f1e52e22ea99/Hall%202.mp4?sv=2012-02-12&sr=c&si=1807cd36-2894-4d6f-8715-8e670bac1a83&sig=pVwcFddrVon1dRK07WFaC1ZkZVUfWP%2BL4UMu1ox4EgQ%3D&st=2015-07-19T14%3A31%3A20Z&se=2115-06-25T14%3A31%3A20Z'
         // Driveway
         , 'https://medianighttrap.blob.core.windows.net/asset-5310435d-1500-80c3-fa08-f1e52a3a9080/Driveway.mp4?sv=2012-02-12&sr=c&si=1ef4a6dd-0639-4ad5-88b8-c922ea173424&sig=4bQsPLzeu3BKtXeLolISNHxuqVWkfALOCDZuXybicxc%3D&st=2015-07-14T15%3A11%3A03Z&se=2115-06-20T15%3A11%3A03Z'
     ]
