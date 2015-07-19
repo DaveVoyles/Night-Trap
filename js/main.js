@@ -34,35 +34,97 @@
     var camHallOne = {
         // Augers enter through back door, walk to basement
         c21: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-7565-f1e52dbb7f85/00000021.mp4?sv=2012-02-12&sr=c&si=ebc8ac96-42bb-4bb0-aa3d-73568364a354&sig=NZQg4LdeJvFfbGf%2FUIEAhMsVLM0K3HhmTD%2FgZH%2BbgFM%3D&st=2015-07-19T02%3A18%3A40Z&se=2115-06-25T02%3A18%3A40Z'
+        // Tony, Jeff, & Dad enter from basement
+        , c1152221: ''
+    };
+
+    // 3 Kitchen
+    var camKitchen = {
+        // 1 Auger walks in from Entry. Can catch at 4 Sec
+        c1200431: ''
+        // 1 Auger caught in kitchen when trying to access fridge
+        , c1240632: ''
+        // Tony, Jeff, & Dad enter from Hall-1, talk to parents
+        , c1481231: ''
     };
 
     // 4 Living-Room
     var camLivingRoom = {
+        // Augers enter from outside
+        c232241: ''
+        // TRAP: Augers caught on bookshelf
+        , c271442: ''
+        // Augers Escape
+        , c271641: ''
+        // TRAP: Auger caught on library 
+        , c0554164A: ''
+        // 2 Augers enter from outside
+        , c1001241: ''
+        // TRAP: Augers caught on right side of living room
+        , c1071042: ''
+        // Mom enters from bookshelf
+        , c1572241: ''
     };
 
     // 5 Driveway
     var camDriveway = {
+        //  Girls enter the driveway, meet eddy, walk in. Can catch at ~6 Sec.
+        c1440451: ''
+        // TRAP: Auger caught on roof 
+        , c1502452: ''
     };
 
     // 6 Entryway
     var camEntryway = {
+        // 1 Auger walks in from beneath stairs. Looks outside. Can be caught
+        c1320261: ''
+        // 1 Auger caught in  entryway
+        , c1391862: ''
+        // Sarah enters from closet, parents enter, augers can be trapped on stairs
+        , c2122461: ''
+        // 
+        , c2500221: ''
     };
 
     // 7 Hall-2
     var camHallTwo = {
+        // Auger enters hall 2 from bedroom
+        c310471: ''
+        // Auger walks in from Bathroom.
+        , c500271: ''
+        // Auger caught in hall trap
+        , c542272: ''
+        // Augers enters from bedroom, goes down stairs
+        , c2390671: ''
     };
 
     // 8 Bedroom
     var camBedroom = {
-        //
+        //Sarah staring at mirror, 3 augers enter two go to bathroom one to hall-2
         c81: ''
         // TRAP: Augers caught 
         , c130422: ''
-        ,
+        // TRAP: 1 Auger is caught, other walks into bathroom
+        , c352482: ''
+        // Auger walks in from Bathroom, goes out window
+        , c540281: ''
     };
 
     // 9 Bathroom
-    var cambathroom = {
+    var camBathroom = {
+        // Sarah enters bathroom from bedroom. Enters mirror
+        c180291: ''
+        // 2 Augers enter bathroom from bedroom, 1 catchable
+        , c352291: ''
+        // TRAP: 1 Auger is caught, other walks into mirror
+        , c0430249b: ''
+        // TRAP: Auger caught on scale trap
+        , c431292: ''
+        // Auger walks in from Hall-2, walks toward bedroom
+        , c480291: ''
+        // TRAP: Auger caught in floor trap
+        , c500291: ''
+
     };
 
 
