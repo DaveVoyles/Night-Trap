@@ -1,12 +1,13 @@
 (function () {
     'use strict';
 
-    var nCurrentCam     = null;  // Camera (room) player currently has selected
-    var video           = null;  // Video player
-    var nCurrentTime    = null;  // Timestamp
-    var urlMediaStream  = null;  // Source for the video feed
-    var bUsingAMP       = false; // Using Azure Media Player for adaptive streaming?
-    var curPassword     = "Blue";
+    var nCurrentCam     = null;   // Camera (room) player currently has selected
+    var video           = null;   // Video player
+    var nCurrentTime    = null;   // Timestamp
+    var urlMediaStream  = null;   // Source for the video feed
+    var bUsingAMP       = false;  // Using Azure Media Player for adaptive streaming?
+    var ranPassword     = "Blue"; // Random password set by game 
+    var curUserPassword = "Blue"; // What has the user selected?
     var aPasswords = {
         Purple: "Purple"
       , Blue:   "Blue"
@@ -23,14 +24,14 @@
         amp.options.silverlightSS.xap = "//amp.azure.net/libs/amp/1.0.0/techs/SmoothStreamingPlayer.xap";
     };
 
-    // 0 | 1 Opening & General
+    /* 0 | 1 Opening & General */
     var camMisc = {
         DPWORLDD: '',
         // Intro briefing
         c11: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-bfd6-f1e52dbc8916/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=2e8cdfc7-b544-41d5-b589-f9b7a63b30cf&sig=WafTBePJo8TIgpXdc29Mgw1wBi9wQ6nxtOpF7amRoJY%3D&st=2015-07-19T02%3A20%3A13Z&se=2115-06-25T02%3A20%3A13Z',
     };
 
-    // 2 Hall-1
+    /* 2 - Hall-1 */
     var camHallOne = {
         // Augers enter through back door, walk to basement
           c21: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-7565-f1e52dbb7f85/00000021.mp4?sv=2012-02-12&sr=c&si=ebc8ac96-42bb-4bb0-aa3d-73568364a354&sig=NZQg4LdeJvFfbGf%2FUIEAhMsVLM0K3HhmTD%2FgZH%2BbgFM%3D&st=2015-07-19T02%3A18%3A40Z&se=2115-06-25T02%3A18%3A40Z'
@@ -38,7 +39,7 @@
         , c1152221: ''
     };
 
-    // 3 Kitchen
+    /* 3 - Kitchen */
     var camKitchen = {
         // 1 Auger walks in from Entry. Can catch at 4 Sec
           c1200431: 'https://medianighttrap.blob.core.windows.net/asset-0308435d-1500-80c4-30fc-f1e52dbc38c6/01200431.mp4?sv=2012-02-12&sr=c&si=de4d8c8a-d3e6-4b6d-9508-4a8beb6ce5b3&sig=5WGDAMEEjgJMgtv%2FDB8C2WWIrQN9v%2B9xyAKwUyq77V8%3D&st=2015-07-19T02%3A19%3A17Z&se=2115-06-25T02%3A19%3A17Z'
@@ -48,7 +49,7 @@
         , c1481231: 'https://medianighttrap.blob.core.windows.net/asset-0308435d-1500-80c4-3035-f1e52dbc44db/01481231.mp4?sv=2012-02-12&sr=c&si=dff21bde-1643-4883-a120-25a8d12a6127&sig=wBr7IOrNZVpo7eGsePFxD0vvNMXt%2BMhpDHqa5ece55g%3D&st=2015-07-19T02%3A19%3A25Z&se=2115-06-25T02%3A19%3A25Z'
     };
 
-    // 4 Living-Room
+    /* 4- Living-Room */
     var camLivingRoom = {
         // Augers enter from outside
           c232241: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-70ef-f1e52dbc471a/00232241.mp4?sv=2012-02-12&sr=c&si=02d08290-0b0a-4034-b9f0-d8db227c6f29&sig=yJ6xoJnnV6aoLc04XkASxWwL9UHxPkhKcME5%2FNO0zTY%3D&st=2015-07-19T02%3A19%3A28Z&se=2115-06-25T02%3A19%3A28Z'
@@ -66,7 +67,7 @@
         , c1572241: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-1c85-f1e52dbc5f31/01572241.mp4?sv=2012-02-12&sr=c&si=3b4d698c-ef70-4a50-bd89-9c570c6d530a&sig=eqz3g9UoWZzSXYZTTEzMCoUL0NpVZh0S24Oh5m5evDA%3D&st=2015-07-19T02%3A20%3A06Z&se=2115-06-25T02%3A20%3A06Z'
     };
 
-    // 5 Driveway
+    /* 5 - Driveway */
     var camDriveway = {
         //  Girls enter the driveway, meet eddy, walk in. Can catch at ~6 Sec.
           c1440451: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-7449-f1e52dbb7f85/01440451.mp4?sv=2012-02-12&sr=c&si=3bfe3669-5427-446a-a00b-39129ec7986c&sig=hxwhWHtAMXA4kExbUiaoBIFRuLNETcTmPWfGxauHIbU%3D&st=2015-07-19T02%3A18%3A35Z&se=2115-06-25T02%3A18%3A35Z'
@@ -74,7 +75,7 @@
         , c1502452: 'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c4-583c-f1e52dbb7ba6/01502452.mp4?sv=2012-02-12&sr=c&si=67b13384-7b89-4bc2-bd4d-24163b07e630&sig=XA1XP%2BMY6LspCBBrCXeWq6Rm2tAGZZNy5333sK1KfzU%3D&st=2015-07-19T02%3A18%3A28Z&se=2115-06-25T02%3A18%3A28Z'
     };
 
-    // 6 Entryway
+    /* 6 - Entryway */
     var camEntryway = {
         // 1 Auger walks in from beneath stairs. Looks outside. Can be caught
           c1320261: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-c0df-f1e52dbb8b7f/01320261.mp4?sv=2012-02-12&sr=c&si=b6ef1446-a021-466c-84aa-42a8c1e065be&sig=gvEE8c4rvCQDGfS33E62CZJ1rU%2FYhwKy%2BTkpJkfyoeM%3D&st=2015-07-19T02%3A18%3A47Z&se=2115-06-25T02%3A18%3A47Z'
@@ -86,7 +87,7 @@
         , c2500221: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ba5-f1e52dbb97ae/02500221.mp4?sv=2012-02-12&sr=c&si=f34e6bd8-dbe4-464f-b0f8-2b16c61fcecd&sig=DretusvijWM7WVsXbipYK6W%2FBjEHDn9jXwsxg8%2F3zyE%3D&st=2015-07-19T02%3A18%3A59Z&se=2115-06-25T02%3A18%3A59Z'
     };
 
-    // 7 Hall-2
+    /* 7 - Hall-2 */
     var camHallTwo = {
         // Auger enters hall 2 from bedroom
           c310471: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-c3ee-f1e52dbc2ef2/00310471.mp4?sv=2012-02-12&sr=c&si=8e4457eb-c052-4465-9402-3ad0bec91833&sig=0ztjrEiCDVsooxbKihP4ZSCl7XZSMgwf3%2Bka9C8Sc1g%3D&st=2015-07-19T02%3A19%3A02Z&se=2115-06-25T02%3A19%3A02Z'
@@ -98,7 +99,7 @@
         , c2390671: 'https://medianighttrap.blob.core.windows.net/asset-0308435d-1500-80c4-5633-f1e52dbc32c4/02390671.mp4?sv=2012-02-12&sr=c&si=a9bd4dcc-329d-4599-b2d9-93551867f579&sig=BtC0Aj2s%2FmMiLDr8UVwrPgMrVD7YILUdSO2y5zv04Qs%3D&st=2015-07-19T02%3A19%3A13Z&se=2115-06-25T02%3A19%3A13Z'
     };
 
-    // 8 Bedroom
+    /* 8 - Bedroom */
     var camBedroom = {
         //Sarah staring at mirror, 3 augers enter two go to bathroom one to hall-2
           c81: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-ca75-f1e52dbb617d/00000081.mp4?sv=2012-02-12&sr=c&si=283f3a04-7e97-4de1-9b94-a2292537baac&sig=hT1mSrjIuE9eAcIYvSKTbFu7H96ZV2sYjD0XgPdZQXQ%3D&st=2015-07-19T02%3A17%3A58Z&se=2115-06-25T02%3A17%3A58Z'
@@ -110,7 +111,9 @@
         , c540281: 'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c4-4857-f1e52dbb63bb/00540281.mp4?sv=2012-02-12&sr=c&si=03a79dc6-4c0d-4186-9dce-098169bdd7b4&sig=pD9i1bhqXxS1pz8FEEjSNUBaplZ0qyVkyiawxCTQhkg%3D&st=2015-07-19T02%3A18%3A20Z&se=2115-06-25T02%3A18%3A20Z'
     };
 
-    // 9 Bathroom
+    
+
+    /* 9 - Bathroom */
     var camBathroom = {
         // Sarah enters bathroom from bedroom. Enters mirror
           c180291: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-0846-f1e52dbb48b2/00500293.mp4?sv=2012-02-12&sr=c&si=807448ef-06c8-4fff-9434-6e145fe88a74&sig=QJfnf48nuV92TkT%2FNaeKbLZs7pdqEJa%2FmCnN41df5Gw%3D&st=2015-07-19T02%3A17%3A54Z&se=2115-06-25T02%3A17%3A54Z'
@@ -127,8 +130,7 @@
 
     };
 
-
-    // Azure hosted MP4s -- Just used for temp prototype
+    /* Azure hosted MP4s -- Just used for temp prototype */
     var aMP4CamList = [
         // Hall-1
           'https://medianighttrap.blob.core.windows.net/asset-cc27435d-1500-80c4-2ff5-f1e52dcd6b9b/Hall%201.mp4?sv=2012-02-12&sr=c&si=25e8addd-457c-42c7-adf9-6f2be68f2214&sig=tHHSs9wzZKVBrBKYOBddwy7hc2GdSfjeCI6IaLslVJY%3D&st=2015-07-19T04%3A19%3A19Z&se=2115-06-25T04%3A19%3A19Z'
@@ -148,9 +150,19 @@
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-cb0f-f1e52e2ba9ad/Driveway.mp4?sv=2012-02-12&sr=c&si=5ef75072-f00a-4dfe-b594-2bca9a240e72&sig=dA17z0KePOg1lJztRxEeAqbTmBKqEqnbeyov0WP8BhU%3D&st=2015-07-19T15%3A33%3A50Z&se=2115-06-25T15%3A33%3A50Z'
         // Intro
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ded-f1e52e2c2261/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=0bf72883-4a5b-475e-be0f-bbe6ed7cbd3e&sig=2K7QFWy7Xrtpk4mUzv3ff87p5cu29sYomDDLyROWG6U%3D&st=2015-07-19T15%3A37%3A19Z&se=2115-06-25T15%3A37%3A19Z'
-    ]
+    ];
 
+    /* Only applicable if using the AMP  */
+    var playerOptions = {
+        "nativeControlsForTouch": false,
+        autoplay: false,
+        controls: true,
+        width: "640",
+        height: "480",
+        poster: "/img/Night-Trap-32x-front.jpg"
+    };
 
+ 
     /**
      * Wires up event handlers for buttons.
      * Sets src property for video player.
@@ -255,17 +267,7 @@
     }
 
 
-    /**
-     * Only applicable if using the AMP
-     */
-    var playerOptions = {
-        "nativeControlsForTouch": false,
-        autoplay: false,
-        controls: true,
-        width: "640",
-        height: "480",
-        poster: "/img/Night-Trap-32x-front.jpg"
-    };
+
 
     init();
 
