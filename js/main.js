@@ -242,7 +242,7 @@
 
 
     /**
-     * 
+     * TODO: Finish me
      * @param {nCurrentCam} trapUrl  - Clip with the trap sequence.
      * @param {nCurremtCam  returnTo - Which camera should we return to?  //TODO: Is this needed?. 
      * @param {callback} [nextClip]  - Trap clips are often have a clip that appears next.
