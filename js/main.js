@@ -7,31 +7,63 @@
     var urlMediaStream  = null;  // Source for the video feed
     var bUsingAMP       = false; // Using Azure Media Player for adaptive streaming?
     var curPassword     = "Blue";
-    var aPasswords      = {
-                            Purple:  "Purple"
-                           , Blue:   "Blue"
-                           , Red:    "Red"
-                           , Green:  "Green"
-                           , Yellow: "Yellow"
-                           , Orange: "Orange"
-                        }
+    var aPasswords = {
+        Purple: "Purple"
+      , Blue:   "Blue"
+      , Red:    "Red"
+      , Green:  "Green"
+      , Yellow: "Yellow"
+      , Orange: "Orange"
+    };
 
     // Fallback options for video playing when using AMP
     if (typeof amp === undefined) {
         amp.options.flashSS.swf       = "//amp.azure.net/libs/amp/1.0.0/techs/StrobeMediaPlayback.2.0.swf";
         amp.options.flashSS.plugin    = "//amp.azure.net/libs/amp/1.0.0/techs/MSAdaptiveStreamingPlugin-osmf2.0.swf";
         amp.options.silverlightSS.xap = "//amp.azure.net/libs/amp/1.0.0/techs/SmoothStreamingPlayer.xap";
-    }
+    };
 
+    // 0 | 1 Opening & General
     var camMisc = {
         DPWORLDD: '',
-        // Intro
+        // Intro briefing
         c11: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-bfd6-f1e52dbc8916/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=2e8cdfc7-b544-41d5-b589-f9b7a63b30cf&sig=WafTBePJo8TIgpXdc29Mgw1wBi9wQ6nxtOpF7amRoJY%3D&st=2015-07-19T02%3A20%3A13Z&se=2115-06-25T02%3A20%3A13Z',
-    }
+    };
 
+    // 2 Hall-1
     var camHallOne = {
+        // Augers enter through back door, walk to basement
         c21: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-7565-f1e52dbb7f85/00000021.mp4?sv=2012-02-12&sr=c&si=ebc8ac96-42bb-4bb0-aa3d-73568364a354&sig=NZQg4LdeJvFfbGf%2FUIEAhMsVLM0K3HhmTD%2FgZH%2BbgFM%3D&st=2015-07-19T02%3A18%3A40Z&se=2115-06-25T02%3A18%3A40Z'
-    }
+    };
+
+    // 4 Living-Room
+    var camLivingRoom = {
+    };
+
+    // 5 Driveway
+    var camDriveway = {
+    };
+
+    // 6 Entryway
+    var camEntryway = {
+    };
+
+    // 7 Hall-2
+    var camHallTwo = {
+    };
+
+    // 8 Bedroom
+    var camBedroom = {
+        //
+        c81: ''
+        // TRAP: Augers caught 
+        , c130422: ''
+        ,
+    };
+
+    // 9 Bathroom
+    var cambathroom = {
+    };
 
 
     // Azure hosted MP4s -- Just used for temp prototype
@@ -52,8 +84,9 @@
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-b2c6-f1e52e22ea99/Hall%202.mp4?sv=2012-02-12&sr=c&si=1807cd36-2894-4d6f-8715-8e670bac1a83&sig=pVwcFddrVon1dRK07WFaC1ZkZVUfWP%2BL4UMu1ox4EgQ%3D&st=2015-07-19T14%3A31%3A20Z&se=2115-06-25T14%3A31%3A20Z'
         // Driveway
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-cb0f-f1e52e2ba9ad/Driveway.mp4?sv=2012-02-12&sr=c&si=5ef75072-f00a-4dfe-b594-2bca9a240e72&sig=dA17z0KePOg1lJztRxEeAqbTmBKqEqnbeyov0WP8BhU%3D&st=2015-07-19T15%3A33%3A50Z&se=2115-06-25T15%3A33%3A50Z'
+        // Intro
+        , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ded-f1e52e2c2261/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=0bf72883-4a5b-475e-be0f-bbe6ed7cbd3e&sig=2K7QFWy7Xrtpk4mUzv3ff87p5cu29sYomDDLyROWG6U%3D&st=2015-07-19T15%3A37%3A19Z&se=2115-06-25T15%3A37%3A19Z'
     ]
-    var introVidMp4 = 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ded-f1e52e2c2261/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=0bf72883-4a5b-475e-be0f-bbe6ed7cbd3e&sig=2K7QFWy7Xrtpk4mUzv3ff87p5cu29sYomDDLyROWG6U%3D&st=2015-07-19T15%3A37%3A19Z&se=2115-06-25T15%3A37%3A19Z';
 
 
     /**
@@ -70,8 +103,7 @@
         document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
         document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
 
-        initializeVideoStream();
-        
+        initializeVideoStream();       
     };
 
 
@@ -81,7 +113,7 @@
       */
     var initializeVideoStream = function (stream) {
         video = videojs('video-player');
-        video.src([{ type: 'video/mp4', src: introVidMp4 }]);
+        video.src([{ type: 'video/mp4', src: aMP4CamList[8] }]);
         video.load();
     };
 
