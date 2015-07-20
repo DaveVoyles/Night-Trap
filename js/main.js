@@ -258,7 +258,7 @@
                 case 'Driveway':
                     urlMediaStream = aMP4CamList[7];
             }
-            loadNewVideo(urlMediaStream);
+            playVideo(urlMediaStream);
 
         } else {
             switch (this.id) {
@@ -286,27 +286,7 @@
                 case 'Driveway':
                     urlMediaStream = aMP4CamList[7];
             }
-            loadNewVideo(urlMediaStream);
-        }
-    };
-
-
-    /**
-     * Pauses, sets new source, loads source, sets currentTime & plays. 
-     * @param {string} urlMediaStream 
-     */
-    var loadNewVideo = function (urlMediaStream) {
-        if (bDebug) {
-            video.pause();
-            video.src(urlMediaStream);
-            video.load();
-            video.play();
-        } else {
-            video.pause();
-            video.src(urlMediaStream);
-            video.load();
-            video.currentTime(nCurrentTime); // Probably don't need this here anymore
-            video.play();
+            playVideo(urlMediaStream);
         }
     };
 
@@ -318,14 +298,12 @@
      * @param {callback} [nexturl]     Trap clips are often have a clip that appears next.
      */
     var triggerTrap = function (trapUrl, nextUrl) {
-        video.src(trapUrl);
-        video.play();
+        playVideo(trapUrl);
+        var hasPlayed = false;
 
-        var hasPlayed = false; 
         video.on('ended', function () { 
             if (hasPlayed === false) {
-                video.src(nextUrl);
-                video.play();
+                playVideo(nextUrl);
             }
             hasPlayed = true;
         })
