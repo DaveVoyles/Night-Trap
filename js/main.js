@@ -1,19 +1,39 @@
 (function () {
     'use strict';
 
-    var nCurrentCam     = null;   // Camera (room) player currently has selected
-    var video           = null;   // Video player
-    var nCurrentTime    = null;   // Timestamp
-    var urlMediaStream  = null;   // Source for the video feed
-    var ranPassword     = "Blue"; // Random password set by game 
-    var curUserPassword = "Blue"; // What has the user selected?
+    // Are we in Debug mode?
+    var bDebug          = true;
+    var timer           = new Timer();
+    var newClip         = null;
+    // Camera (room) player currently has selected
+    var nCurrentCam     = null;   
+    var video           = null;   
+    var nCurrentTime    = null;
+    // Source for the video feed
+    var urlMediaStream  = null;
+    // Random password set by game 
+    var ranPassword     = "Blue";
+    // What has the user selected?
+    var curUserPassword = "Blue"; 
     var aPasswords      = {
-        Purple: "Purple"
-      , Blue:   "Blue"
-      , Red:    "Red"
-      , Green:  "Green"
-      , Yellow: "Yellow"
-      , Orange: "Orange"
+        Purple : "Purple"
+      , Blue   : "Blue"
+      , Red    : "Red"
+      , Green  : "Green"
+      , Yellow : "Yellow"
+      , Orange : "Orange"
+    };
+
+    // whichCamera is currently selected
+    var roomCam = {
+        "hallOne"    : 0
+      , "kitchen"    : 1
+      , "entryWay"   : 2
+      , "livingRoom" : 3
+      , "bathroom"   : 4
+      , "bedroom"    : 5
+      , "hallTwo"    : 6
+      , "Driveway"   : 7
     };
 
     /** Which url should this room be on at this moment? 
@@ -27,10 +47,15 @@
         , bathroom: ''
         , bedroom: ''
         , hallTwo: ''
-        , driveWay: ''
+        , driveway: ''
     };
 
-    curre
+    /* Temp videos for testing playback */
+    var aTempLocal = [
+        'video/00180291.mp4',
+        'video/00352291.mp4',
+        'video/00431292.mp4'
+    ];
 
     /* 0 | 1 Opening & General */
     var camMisc = {
@@ -184,9 +209,15 @@
       * @param {url} stream - The htttp address of the video clip
       */
     var initializeVideoStream = function (stream) {
-        video = videojs('video-player');
-        video.src([{ type: 'video/mp4', src: aMP4CamList[8] }]);
-        video.load();
+        if (bDebug) {
+            video = videojs('video-player');
+            video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);
+            video.load();
+        } else {
+            video = videojs('video-player');
+            video.src([{ type: 'video/mp4', src: aMP4CamList[8] }]);
+            video.load();
+        }
     };
 
     /**
@@ -199,32 +230,62 @@
     var changeVideoStream = function () {
         nCurrentTime = video.currentTime();
 
-        switch (this.id) {
-            case 'Hall-1':
-                urlMediaStream = aMP4CamList[0];
-                break;
-            case 'Kitchen':
-                urlMediaStream = aMP4CamList[1];
-                break;
-            case 'Entry-Way':
-                urlMediaStream = aMP4CamList[2];
-                break;
-            case 'Living-Room':
-                urlMediaStream = aMP4CamList[3];
-                break;
-            case 'Bathroom':
-                urlMediaStream = aMP4CamList[4];
-                break;
-            case 'Bedroom':
-                urlMediaStream = aMP4CamList[5];
-                break;
-            case 'Hall-2':
-                urlMediaStream = aMP4CamList[6];
-                break;
-            case 'Driveway':
-                urlMediaStream = aMP4CamList[7];
+        if (bDebug) {
+            switch (this.id) {
+                case 'Hall-1':
+                    urlMediaStream = aTempLocal[1];
+                    break;
+                case 'Kitchen':
+                    urlMediaStream = aTempLocal[2];
+                    break;
+                case 'Entry-Way':
+                     triggerTrap(aTempLocal[2], roomCam.bathroom, aTempLocal[1])
+                    break;
+                case 'Living-Room':
+                     triggerTrap(aTempLocal[1], roomCam.bathroom, aTempLocal[0])
+                    break;
+                case 'Bathroom':
+                    urlMediaStream = aMP4CamList[4];
+                    break;
+                case 'Bedroom':
+                    urlMediaStream = aMP4CamList[5];
+                    break;
+                case 'Hall-2':
+                    urlMediaStream = aMP4CamList[6];
+                    break;
+                case 'Driveway':
+                    urlMediaStream = aMP4CamList[7];
+            }
+            loadNewVideo(urlMediaStream);
+
+        } else {
+            switch (this.id) {
+                case 'Hall-1':
+                    urlMediaStream = aMP4CamList[0];
+                    break;
+                case 'Kitchen':
+                    urlMediaStream = aMP4CamList[1];
+                    break;
+                case 'Entry-Way':
+                    urlMediaStream = aMP4CamList[2];
+                    break;
+                case 'Living-Room':
+                    urlMediaStream = aMP4CamList[3];
+                    break;
+                case 'Bathroom':
+                    urlMediaStream = aMP4CamList[4];
+                    break;
+                case 'Bedroom':
+                    urlMediaStream = aMP4CamList[5];
+                    break;
+                case 'Hall-2':
+                    urlMediaStream = aMP4CamList[6];
+                    break;
+                case 'Driveway':
+                    urlMediaStream = aMP4CamList[7];
+            }
+            loadNewVideo(urlMediaStream);
         }
-        loadNewVideo(urlMediaStream);
     };
 
 
@@ -233,44 +294,69 @@
      * @param {string} urlMediaStream 
      */
     var loadNewVideo = function (urlMediaStream) {
+        if (bDebug) {
             video.pause();
             video.src(urlMediaStream);
             video.load();
-            video.currentTime(nCurrentTime);
             video.play();
+        } else {
+            video.pause();
+            video.src(urlMediaStream);
+            video.load();
+            video.currentTime(nCurrentTime); // Probably don't need this here anymore
+            video.play();
+        }
     };
 
 
     /**
-     * TODO: Finish me
-     * @param {nCurrentCam} trapUrl  - Clip with the trap sequence.
-     * @param {nCurremtCam  returnTo - Which camera should we return to?  //TODO: Is this needed?. 
-     * @param {callback} [nextClip]  - Trap clips are often have a clip that appears next.
+     * 
+     * @param {string} trapUrl         Clip with the trap sequence.
+     * @param {nCurremtCam}  returnTo  Whsich camera should we return to?  
+     * @param {callback} [nexturl]     Trap clips are often have a clip that appears next.
      */
-    var triggerTrap = function (urlClip, returnTo, nextClip) {
+    //var triggerTrap = function (trapUrl, returnTo, nextUrl) {
+    //    console.log("clipA ended -- switching scenes");
+    //    video.src(trapUrl);
+    //    video.play();
 
-        playVideo(urlClip); 
-        
-        // Not sure if this ended syntax is correct....
-        if (nextClip) {
-            video.ended = function () {
-                playVideo(nextClip);
-            }
-        }
+    //    video.one('ended', function () {
+    //        console.log("clibB ended");
+    //        video.src(nextUrl);
+    //        video.play();
+    //    })
+    //};
+   
+
+    var triggerTrap = function (trapUrl, returnTo, nextUrl) {
+        console.log("clipA ended -- switching scenes");
+        video.src(trapUrl);
+        video.load();
+        video.play();
+        console.log("trapUrl: " + trapUrl );
+
+        video.one('ended', function () {
+            console.log("clibB ended");
+            video.src(nextUrl);
+            video.load();
+            video.play();
+            console.log("nextUrl: " + nextUrl);
+        })
     };
+    
 
-     
 
     /**
      * Video to play.
      * @param {url} clipUrl - Address of clip to play.
      */
     var playVideo = function (urlClip) {
-            video.pause()
-            video.src(urlClip);
-            video.load();
-            video.play();
+         //video.pause()
+        video.src(urlClip);
+        //video.load();
+        video.play();
     };
+
 
 
     init();
