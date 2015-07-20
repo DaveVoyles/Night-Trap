@@ -234,9 +234,11 @@
             switch (this.id) {
                 case 'Hall-1':
                     urlMediaStream = aTempLocal[1];
+                    console.log("1 - Augs")
                     break;
                 case 'Kitchen':
                     urlMediaStream = aTempLocal[2];
+                    console.log("2 - trap")
                     break;
                 case 'Entry-Way':
                      triggerTrap(aTempLocal[2], roomCam.bathroom, aTempLocal[1])
@@ -311,39 +313,23 @@
 
     /**
      * 
+     * hasPlayed variable prevents the footage from looping.
      * @param {string} trapUrl         Clip with the trap sequence.
-     * @param {nCurremtCam}  returnTo  Whsich camera should we return to?  
      * @param {callback} [nexturl]     Trap clips are often have a clip that appears next.
      */
-    //var triggerTrap = function (trapUrl, returnTo, nextUrl) {
-    //    console.log("clipA ended -- switching scenes");
-    //    video.src(trapUrl);
-    //    video.play();
-
-    //    video.one('ended', function () {
-    //        console.log("clibB ended");
-    //        video.src(nextUrl);
-    //        video.play();
-    //    })
-    //};
-   
-
-    var triggerTrap = function (trapUrl, returnTo, nextUrl) {
-        console.log("clipA ended -- switching scenes");
+    var triggerTrap = function (trapUrl, nextUrl) {
         video.src(trapUrl);
-        video.load();
         video.play();
-        console.log("trapUrl: " + trapUrl );
 
-        video.one('ended', function () {
-            console.log("clibB ended");
-            video.src(nextUrl);
-            video.load();
-            video.play();
-            console.log("nextUrl: " + nextUrl);
+        var hasPlayed = false; 
+        video.on('ended', function () { 
+            if (hasPlayed === false) {
+                video.src(nextUrl);
+                video.play();
+            }
+            hasPlayed = true;
         })
-    };
-    
+    }; 
 
 
     /**
@@ -351,12 +337,9 @@
      * @param {url} clipUrl - Address of clip to play.
      */
     var playVideo = function (urlClip) {
-         //video.pause()
         video.src(urlClip);
-        //video.load();
         video.play();
     };
-
 
 
     init();

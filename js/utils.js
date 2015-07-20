@@ -18,4 +18,18 @@
         }
     }
 
+
+
+    // http://stackoverflow.com/questions/16573974/ended-event-videojs-not-working
+    //var duration_time = Math.floor(this.duration());
+
+    //    this.on('timeupdate', function() {
+    //      var current_time = Math.floor(this.currentTime());
+
+    //      // End of video
+    //      if (current_time > 0 && (current_time == duration_time)) {
+    //        // Do something
+    //      }
+    //    });
+
 })();
