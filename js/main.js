@@ -24,30 +24,45 @@
       , Orange : "Orange"
     };
 
-    // whichCamera is currently selected
+    // Posters, which are set as the camera feed when room is empty
+    var aStills = {
+          HallOne    : "img/stills/BATHROOM_1.JPG"
+        , Kitchen    : "img/stills/KITCHEN_1.JPG"
+        , Entryway   : "img/stills/ENTRY-WAY_1.JPG"
+        , Livingroom : "img/stills/Living-ROom_1.JPG"
+        , Bathroom   : "img/stills/Bathroom_1.JPG"
+        , Bedroom    : "img/stills/Bedroom_1.JPG"
+        , HallTwo    : "img/stils/Hall-Two_1.JPG"
+        , Driveway   : "img/stills/Driveway_1.JPG"
+    };
+
+    /**
+     * Which camera is currently selected?
+     * You should also set the still to currently selected room when changing cameras, too.
+     */
     var roomCam = {
-        "hallOne"    : 0
-      , "kitchen"    : 1
-      , "entryWay"   : 2
-      , "livingRoom" : 3
-      , "bathroom"   : 4
-      , "bedroom"    : 5
-      , "hallTwo"    : 6
-      , "Driveway"   : 7
+          HallOne    : 0
+        , Kitchen    : 1
+        , Entryway   : 2
+        , Livingroom : 3
+        , Bathroom   : 4
+        , Bedroom    : 5
+        , HallTwo    : 6
+        , Driveway   : 7
     };
 
     /** Which url should this room be on at this moment? 
-     * @example: currentRoomUrl.hallOne = camHallOne.c21;
+     * @example: currentRoomUrl.HallOne = camHallOne.c21;
      */
     var currentRoomUrl = {
-          hallOne: ''
-        , kitchen: ''
-        , entryWay: ''
-        , livingRoom: ''
-        , bathroom: ''
-        , bedroom: ''
-        , hallTwo: ''
-        , driveway: ''
+          HallOne    : ''
+        , Kitchen    : ''
+        , Entryway   : ''
+        , LivingRoom : ''
+        , Bathroom   : ''
+        , Bedroom    : ''
+        , HallTwo    : ''
+        , Driveway   : ''
     };
 
     /* Temp videos for testing playback */
@@ -241,10 +256,10 @@
                     console.log("2 - trap")
                     break;
                 case 'Entry-Way':
-                     triggerTrap(aTempLocal[2], roomCam.bathroom, aTempLocal[1])
+                    triggerTrap(aTempLocal[2], aTempLocal[1], aStills.HallOne);
                     break;
                 case 'Living-Room':
-                     triggerTrap(aTempLocal[1], roomCam.bathroom, aTempLocal[0])
+                    triggerTrap(aTempLocal[1], aTempLocal[0], aStills.HallOne);
                     break;
                 case 'Bathroom':
                     urlMediaStream = aMP4CamList[4];
@@ -294,10 +309,12 @@
     /**
      * 
      * hasPlayed variable prevents the footage from looping.
-     * @param {string} trapUrl         Clip with the trap sequence.
-     * @param {callback} [nexturl]     Trap clips are often have a clip that appears next.
+     * Second 'ended' event draws poster to screen when 2nd clip has completed
+     * @param {string} trapUrl   Clip with the trap sequence.
+     * @param {string} [nexturl] Trap clips are often have a clip that appears next.
+     * @param {string} [still]   Image source to set after clips have completed   
      */
-    var triggerTrap = function (trapUrl, nextUrl) {
+    var triggerTrap = function (trapUrl, nextUrl, still) {
         playVideo(trapUrl);
         var hasPlayed = false;
 
@@ -306,6 +323,10 @@
                 playVideo(nextUrl);
             }
             hasPlayed = true;
+            video.on('ended', function () {
+                video.src(video.src);
+                video.poster(still);
+            })
         })
     }; 
 
