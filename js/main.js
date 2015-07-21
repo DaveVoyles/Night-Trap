@@ -30,7 +30,6 @@
         , driveWay: ''
     };
 
-    curre
 
     /* 0 | 1 Opening & General */
     var camMisc = {
