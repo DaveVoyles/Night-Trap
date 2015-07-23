@@ -265,9 +265,9 @@
      * @param {url} clipUrl - Address of clip to play.
      */
     var playVideo = function (urlClip) {
-            video.pause()
             video.src(urlClip);
             video.load();
+            video.currentTime(nCurrentTime);
             video.play();
     };
 
