@@ -330,7 +330,7 @@
 
 
     /**
-     * 
+     * TODO: SHOULD I DISABLE AUDIO IF VIDEO IS PLAYING?
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
      * @param {string} trapUrl   Clip with the trap sequence.
@@ -338,12 +338,15 @@
      * @param {string} [still]   Image source to set after clips have completed   
      */
     var triggerTrap = function (trapUrl, nextUrl, still) {
+        audio.pause();
         playVideo(trapUrl);
+
         var hasPlayed = false;
         video.on('ended', function () { 
             if (hasPlayed === false) {
                 playVideo(nextUrl);
             }
+
             hasPlayed = true;
             video.on('ended', function () {
                 video.src(video.src);
