@@ -258,6 +258,7 @@
         }
     };
 
+
     /**
      * Pulls url from Azure 
      * Get current timestamp for video
@@ -330,7 +331,6 @@
 
 
     /**
-     * TODO: SHOULD I DISABLE AUDIO IF VIDEO IS PLAYING?
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
      * @param {string} trapUrl   Clip with the trap sequence.
@@ -355,7 +355,6 @@
             })
         })
     }; 
-
 
 
     /**
