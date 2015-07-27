@@ -348,7 +348,7 @@
             video.on('ended', function () {
                 video.src(video.src);
                 video.poster(still);
-                playAudio(aAudioClips.crickets, true);
+                playAudio(aAudioClips.crickets);
             })
         })
     }; 
@@ -357,19 +357,15 @@
 
     /**
      * Audio to play during stills
-     * @param {bShouldLoop} - Stills need to loop. SFX for passwords / traps do not.
-     * @param {url} clipUrl - Address of clip to play
+     * @param {string} clipUrl      - Address of clip to play
+     * @param {bool}  [bShouldLoop] - Stills need to loop. SFX for passwords / traps do not.
      */
     var playAudio = function (urlClip, bShouldLoop) {
-        bShouldLoop = bShouldLoop || false;
-
-                if (typeof new Audio().loop == 'boolean') {
-            console.log("looping supported");
-        }
-
+        bShouldLoop = bShouldLoop || true;
         if (bShouldLoop) {
             audio.loop = bShouldLoop;
         }
+
         audio.src = urlClip;
         audio.play();
     };
