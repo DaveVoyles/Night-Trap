@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    // Audio element for SFX, passwords, and noises during stills
+    var audio           = null;
     // Are we in Debug mode?
     var bDebug          = true;
     var timer           = new Timer();
@@ -24,16 +26,24 @@
       , Orange : "Orange"
     };
 
+    // Path to SFX
+    var aAudioClips = {
+          change   : "sfx/CHANGE.mp3"
+        , crickets : "sfx/CRICK2.mp3"
+        , frogs    : "sfx/FROG2.mp3"
+        , denied   : "sfx/DENIED.mp3"
+    };
+
     // Posters, which are set as the camera feed when room is empty
     var aStills = {
-          HallOne    : "img/stills/BATHROOM_1.JPG"
-        , Kitchen    : "img/stills/KITCHEN_1.JPG"
-        , Entryway   : "img/stills/ENTRY-WAY_1.JPG"
+          HallOne    : "img/stills/BATHROOM_1.JPG   "
+        , Kitchen    : "img/stills/KITCHEN_1.JPG    "
+        , Entryway   : "img/stills/ENTRY-WAY_1.JPG  "
         , Livingroom : "img/stills/Living-ROom_1.JPG"
-        , Bathroom   : "img/stills/Bathroom_1.JPG"
-        , Bedroom    : "img/stills/Bedroom_1.JPG"
-        , HallTwo    : "img/stils/Hall-Two_1.JPG"
-        , Driveway   : "img/stills/Driveway_1.JPG"
+        , Bathroom   : "img/stills/Bathroom_1.JPG   "
+        , Bedroom    : "img/stills/Bedroom_1.JPG    "
+        , HallTwo    : "img/stils/Hall-Two_1.JPG    "
+        , Driveway   : "img/stills/Driveway_1.JPG   "
     };
 
     /**
@@ -202,7 +212,7 @@
 
     /**
      * Wires up event handlers for buttons.
-     * Sets src property for video player.
+     * Sets src property for video player and sets reference to audio tag
      */
     var init = function () {
         document.getElementById('Hall-1'     ).addEventListener('click', changeVideoStream, false);
@@ -214,6 +224,7 @@
         document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
         document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
 
+        audio = document.getElementById('audio-tag');
         initializeVideoStream();       
     };
 
@@ -317,7 +328,6 @@
     var triggerTrap = function (trapUrl, nextUrl, still) {
         playVideo(trapUrl);
         var hasPlayed = false;
-
         video.on('ended', function () { 
             if (hasPlayed === false) {
                 playVideo(nextUrl);
@@ -326,6 +336,9 @@
             video.on('ended', function () {
                 video.src(video.src);
                 video.poster(still);
+                audio.src = aAudioClips.crickets;
+                audio.play();
+                console.log(audio.src);
             })
         })
     }; 
