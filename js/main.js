@@ -224,23 +224,35 @@
         document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
         document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
 
-        audio = document.getElementById('audio-tag');
+        initializeAudio();
         initializeVideoStream();       
     };
 
 
     /**
+     * Check if browser supports audio -- if not, tell user to update
+     */
+    var initializeAudio = function () {
+        audio = document.getElementById('audio-tag');
+        if (!Modernizr.audio) {
+            window.location = "http://outdatedbrowser.com/en";
+        }
+    }
+
+
+    /**
+      * Check if browser supports audio -- if not, tell user to update
       * Loads video as soon as page loads for Video.js player
-      * Set the urlMediaStream on the video tag.
-      * @param {url} stream - The htttp address of the video clip
       */
-    var initializeVideoStream = function (stream) {
+    var initializeVideoStream = function () {
+        video = videojs('video-player');
+        if (!Modernizr.video) {
+            window.location = "http://outdatedbrowser.com/en";
+        }
         if (bDebug) {
-            video = videojs('video-player');
             video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);
             video.load();
         } else {
-            video = videojs('video-player');
             video.src([{ type: 'video/mp4', src: aMP4CamList[8] }]);
             video.load();
         }
@@ -336,12 +348,31 @@
             video.on('ended', function () {
                 video.src(video.src);
                 video.poster(still);
-                audio.src = aAudioClips.crickets;
-                audio.play();
-                console.log(audio.src);
+                playAudio(aAudioClips.crickets, true);
             })
         })
     }; 
+
+
+
+    /**
+     * Audio to play during stills
+     * @param {bShouldLoop} - Stills need to loop. SFX for passwords / traps do not.
+     * @param {url} clipUrl - Address of clip to play
+     */
+    var playAudio = function (urlClip, bShouldLoop) {
+        bShouldLoop = bShouldLoop || false;
+
+                if (typeof new Audio().loop == 'boolean') {
+            console.log("looping supported");
+        }
+
+        if (bShouldLoop) {
+            audio.loop = bShouldLoop;
+        }
+        audio.src = urlClip;
+        audio.play();
+    };
 
 
     /**
