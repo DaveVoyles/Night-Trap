@@ -211,6 +211,8 @@
     ];
 
 
+    var start = 0;
+    var elapsed = 0;
     /**
      * Wires up event handlers for buttons.
      * Sets src property for video player and sets reference to audio tag
@@ -230,7 +232,88 @@
 
         // Start the main loop.
         MainLoop.setUpdate(update).setDraw(draw).start();
+
+        start = new Date(); 
     };
+
+
+    // THESE TWO VARIABLES STORE THE TIME AND DATE WHEN THE PAGE IS LOADED
+    var startDate = new Date();
+    var startTime = startDate.getTime();
+
+    
+    // THIS FUNCTION CALCULATES THE SECONDS ELAPSED SINCE THE PAGE WAS LOADED
+    function seconds_elapsed ()    {
+        var date_now        = new Date ();
+        var time_now        = date_now.getTime ();
+        var time_diff       = time_now - startTime;
+        var seconds_elapsed = Math.floor ( time_diff / 1000 );
+
+        return ( seconds_elapsed );
+    }
+
+
+    // THIS FUNCTION TAKES THE SECONDS ELAPSED AND CONVERTS THEM FOR OUTPUT
+    var time_spent = function () {
+        // TAKE THE SECONDS ELAPSED
+        var secs = seconds_elapsed ();
+
+        // CONVERT SECONDS TO MINUTES AND SECONDS
+        var mins = Math.floor ( secs / 60 );
+        secs -= mins * 60;
+
+        // CONVERT MINUTES TO HOURS AND MINUTES
+        var hour = Math.floor ( mins / 60 );
+        mins -= hour * 60;
+
+        // DISPLAY THE FINAL OUTPUT TIME STRING
+        document.display.timeElapsed.value = pad ( hour ) + ":" + pad ( mins ) + ":" + pad ( secs );
+
+        // RECURSIVELY RE-RUN THE FUNCTION EVERY SECOND
+        setTimeout( "time_spent ()", 1000 );
+    };
+
+    var tSpent = function () {
+        // TAKE THE SECONDS ELAPSED
+        var secs = seconds_elapsed();
+
+        // CONVERT SECONDS TO MINUTES AND SECONDS
+        var mins = Math.floor ( secs / 60 );
+        secs -= mins * 60;
+
+        // RECURSIVELY RE-RUN THE FUNCTION EVERY SECOND
+        setTimeout( "tSpent()", 1000 );
+
+        return pad(secs);
+
+    };
+
+    // THIS FUNCTION INSERTS A LEADING ZERO (IF NECESSARY) TO PROVIDE UNIFORM OUTPUT
+    var pad = function ( num ) {
+        return ( ( num > 9 ) ? num : "0" + num );
+    };
+
+
+
+    var start_time = new Date();
+    var end_time   = new Date();
+
+    var elapsed_ms = end_time - start_time;
+    var seconds    = Math.round(elapsed_ms / 1000);
+    var minutes    = Math.round(seconds / 60);
+    var hours      = Math.round(minutes / 60);
+
+       var TrimSecondsMinutes = function (elapsed) {
+        if (elapsed >= 60)
+            return TrimSecondsMinutes(elapsed - 60);
+        return elapsed;
+    };
+
+
+    var sec        = TrimSecondsMinutes(seconds);
+    var min        = TrimSecondsMinutes(minutes);
+
+
 
 
     /**
@@ -269,7 +352,10 @@
      *      The amount of time since the last update, in seconds
      */
     var update = function (delta) {
-        console.log("I am updating");
+        //console.log("I am updating");
+        elapsed = new Date() - start;
+       console.log(elapsed);
+        eventsHallOne();
     };
 
 
@@ -292,7 +378,7 @@
      * @returns New video stream 
      */
     var changeVideoStream = function () {
-        nCurrentTime = video.currentTime();
+        //nCurrentTime = video.currentTime();
 
         if (bDebug) {
             switch (this.id) {
@@ -364,8 +450,6 @@
                 break;
         }        
     }
-
-
 
 
     /**
