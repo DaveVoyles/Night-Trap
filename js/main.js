@@ -50,7 +50,7 @@
      * Which camera is currently selected?
      * You should also set the still to currently selected room when changing cameras, too.
      */
-    var roomCam = {
+    var aRoomCam = {
           HallOne    : 0
         , Kitchen    : 1
         , Entryway   : 2
@@ -62,9 +62,9 @@
     };
 
     /** Which url should this room be on at this moment? 
-     * @example: currentRoomUrl.HallOne = camHallOne.c21;
+     * @example: aCurrentRoomUrl.HallOne = camHallOne.c21;
      */
-    var currentRoomUrl = {
+    var aCurrentRoomUrl = {
           HallOne    : ''
         , Kitchen    : ''
         , Entryway   : ''
@@ -210,6 +210,7 @@
         , 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ded-f1e52e2c2261/00000011-Intro.mp4?sv=2012-02-12&sr=c&si=0bf72883-4a5b-475e-be0f-bbe6ed7cbd3e&sig=2K7QFWy7Xrtpk4mUzv3ff87p5cu29sYomDDLyROWG6U%3D&st=2015-07-19T15%3A37%3A19Z&se=2115-06-25T15%3A37%3A19Z'
     ];
 
+
     /**
      * Wires up event handlers for buttons.
      * Sets src property for video player and sets reference to audio tag
@@ -225,7 +226,10 @@
         document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
 
         initializeAudio();
-        initializeVideoStream();       
+        initializeVideoStream();
+
+        // Start the main loop.
+        MainLoop.setUpdate(update).setDraw(draw).start();
     };
 
 
@@ -250,13 +254,34 @@
             window.location = "http://outdatedbrowser.com/en";
         }
         if (bDebug) {
-            video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);
+            video.src([{ type: 'video/mp4', src: camMisc.c11  }]);
             video.load();
         } else {
-            video.src([{ type: 'video/mp4', src: aMP4CamList[8] }]);
+            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
             video.load();
         }
     };
+
+
+    /**
+     * Update loop for checking when to change video scenes 
+     * @param {float} delta
+     *      The amount of time since the last update, in seconds
+     */
+    var update = function (delta) {
+        console.log("I am updating");
+    };
+
+
+     /**
+     * Draws the GUI to the screen
+     * @param {float} interpolationPercentage
+     *   How much to interpolate between frames.
+     */
+    var draw = function (interpolatePercentage) {
+
+    };
+
 
 
     /**
@@ -329,10 +354,24 @@
         }
     };
 
+    var eventsHallOne = function () {
+        switch (nCurrentTime) {
+            case 0.00:
+                console.log("0.00")
+                break;
+            case 5.00:
+                console.log(nCurrentTime);
+                break;
+        }        
+    }
+
+
+
 
     /**
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
+     * Sets the poster (background) between clips to the room you are currently viewing
      * @param {string} trapUrl   Clip with the trap sequence.
      * @param {string} [nexturl] Trap clips are often have a clip that appears next.
      * @param {string} [still]   Image source to set after clips have completed   
@@ -340,6 +379,7 @@
     var triggerTrap = function (trapUrl, nextUrl, still) {
         audio.pause();
         playVideo(trapUrl);
+        video.poster(still);
 
         var hasPlayed = false;
         video.on('ended', function () { 
@@ -350,7 +390,6 @@
             hasPlayed = true;
             video.on('ended', function () {
                 video.src(video.src);
-                video.poster(still);
                 playAudio(aAudioClips.crickets);
             })
         })

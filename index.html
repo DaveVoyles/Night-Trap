@@ -44,40 +44,44 @@
                    poster="/img/Night-Trap-32x-front.jpg">
                 <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
             </video> 
+            <!-- Used for SFX during room stills, PW changes, & trap misses-->
+            <audio id="audio-tag" type="audio/mpeg" ></audio>
         </div>
     </div>
 
     <div class="container">
       <!-- Example row of columns -->
       <div class="container">
-          <div class="text-center">NOTE: There isn't any audio for the opening video.</div>
           <p class="text-center"> Give it a few seconds to load for a better experience</p>
           <br />
           <div class="cam-btn-container container btn">
-                  <input id="Hall-1"     type="image" class="btn-icon" src="img/icons/Hall-1.jpg"       href="#" role="button" />
-                  <input id="Kitchen"    type="image" class="btn-icon" src="img/icons/Kitchen.jpg"      href="#" role="button" />
-                  <input id="Entry-Way"  type="image" class="btn-icon" src="img/icons/Entry-Way.jpg"    href="#" role="button" />
-                  <input id="Living-Room" type="image" class="btn-icon" src="img/icons/Living-Room.jpg" href="#" role="button" />
+                  <input id="Hall-1"      type="image"  class="btn-icon" src="img/icons/Hall-1.jpg"       href="#" role="button" />
+                  <input id="Kitchen"     type="image"  class="btn-icon" src="img/icons/Kitchen.jpg"      href="#" role="button" />
+                  <input id="Entry-Way"   type="image"  class="btn-icon" src="img/icons/Entry-Way.jpg"    href="#" role="button" />
+                  <input id="Living-Room" type="image"  class="btn-icon" src="img/icons/Living-Room.jpg"  href="#" role="button" />
                   <br />
                   <br />
-                  <input id="Bathroom"   type="image" class="btn-icon" src="img/icons/Bathroom.jpg"     href="#" role="button" />
-                  <input id="Bedroom"    type="image" class="btn-icon" src="img/icons/Bedroom.jpg"      href="#" role="button" />
-                  <input id="Hall-2"     type="image" class="btn-icon" src="img/icons/Hall-2.jpg"       href="#" role="button" />
-                  <input id="Driveway"   type="image" class="btn-icon" src="img/icons/Driveway.jpg"     href="#" role="button" />
+                  <input id="Bathroom"    type="image" class="btn-icon" src="img/icons/Bathroom.jpg"     href="#" role="button" />
+                  <input id="Bedroom"     type="image" class="btn-icon" src="img/icons/Bedroom.jpg"      href="#" role="button" />
+                  <input id="Hall-2"      type="image" class="btn-icon" src="img/icons/Hall-2.jpg"       href="#" role="button" />
+                  <input id="Driveway"    type="image" class="btn-icon" src="img/icons/Driveway.jpg"     href="#" role="button" />
          </div>
       </div>
 
       <footer>
-          <p>&copy; Dave Voyles 2015  | <a href="www.davevoyles.com">DaveVoyles.com</a> | <a href="https://github.com/DaveVoyles/Night-Trap">Source Code</a> </p>
+          <p>&copy; Dave Voyles 2015  | <a href="http://www.davevoyles.com">DaveVoyles.com</a> | <a href="https://github.com/DaveVoyles/Night-Trap">Source Code</a> </p>
       </footer>
     </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="/js/vendor/video-js/video.js"></script>
+        <!--<script src="/js/vendor/video-js/video.js"></script>-->
+        <script src="js/vendor/video-js/video.novtt.dev.js"></script>
         <!--<script>
         videojs.options.flash.swf = "http://example.com/path/to/video-js.swf
     </script>-->
+        <script src="js/vendor/mainloop/mainloop.js"></script>
+        <script src="js/timer.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>
