@@ -225,7 +225,6 @@
     };
 
 
-
     /**
      * Rooom buttons now changeVideoStream() when clicked.
      */
@@ -293,7 +292,7 @@
     var initializeAudio = function () {
         audio = document.getElementById('audio-tag');
         if (!Modernizr.audio) {
-            window.location = "http://outdatedbrowser.com/en";
+            window.open("http://outdatedbrowser.com/en", '_blank');
         }
     };
 
@@ -305,7 +304,7 @@
     var initializeVideoStream = function () {
         video = videojs('video-player');
         if (!Modernizr.video) {
-            window.location = "http://outdatedbrowser.com/en";
+            window.open("http://outdatedbrowser.com/en", '_blank');
         }
         if (bDebug) {
             video.src([{ type: 'video/mp4', src: camMisc.c11  }]);
@@ -316,7 +315,7 @@
         }
     };
 
-      
+     
     /**
      * Draws the GUI to the screen
      * @param {float} interpolationPercentage
