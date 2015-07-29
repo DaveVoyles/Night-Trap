@@ -6,7 +6,7 @@ A browser port of the Sega CD classic from Digital Pictures
 ----------
 ### About
 
-## [You can play / view it here.](http://nighttrap.azurewebsites.net/)
+## [You can play / view the Alpha here. May not always work.](nighttrap-test.azurewebsites.net)
 
 [Join the discussion on Reddit](https://www.reddit.com/r/gamedev/comments/3d9m9x/i_ported_night_trap_to_the_browser_today/)
 
