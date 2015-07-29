@@ -1,5 +1,5 @@
 (function () {
-    'use strict';
+    //'use strict';
 
     // Timer to keep track of user's time spent in-game
     var start          = new Date();
@@ -10,9 +10,10 @@
     var timer           = new Timer();
     var newClip         = null;
     // Camera (room) player currently has selected
-    var nCurrentCam     = null;   
+    var nCurrentCam     = null;
+    // elapsedTime() sets this value
+    var nCurrentTime    = 0;
     var video           = null;   
-    var nCurrentTime    = null;
     // Source for the video feed
     var urlMediaStream  = null;
     // Random password set by game 
@@ -271,7 +272,7 @@
         var seconds   = Math.round(elapsedMS / 1000);
         var minutes   = Math.round(seconds   /   60);
 
-        return seconds;
+        nCurrentTime = seconds;
     };
 
 
@@ -281,8 +282,13 @@
      *      The amount of time since the last update, in seconds
      */
     var update = function (delta) {
-        elapsedTime();       
-        console.log(secondsToTimeString (elapsedTime()));
+        elapsedTime();
+        eventsHallOne();
+
+        if (bDebug) {
+            console.log(secondsToTimeString(nCurrentTime));
+            console.log(nCurrentTime);
+        }
     };
 
 
@@ -322,7 +328,6 @@
      *   How much to interpolate between frames.
      */
     var draw = function (interpolatePercentage) {
-
     };
 
 
@@ -334,7 +339,6 @@
      * @returns New video stream 
      */
     var changeVideoStream = function () {
-        //nCurrentTime = video.currentTime();
 
         if (bDebug) {
             switch (this.id) {
@@ -396,13 +400,17 @@
         }
     };
 
+
+    /**
+     * All events occuring in Hall One are triggered from this
+     */
     var eventsHallOne = function () {
         switch (nCurrentTime) {
-            case 0.00:
-                console.log("0.00")
+            case 0:
+                console.log("Time is: " + nCurrentTime)
                 break;
-            case 5.00:
-                console.log(nCurrentTime);
+            case 7:
+                console.log("Time is: " + nCurrentTime)
                 break;
         }
     };
