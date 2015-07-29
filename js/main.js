@@ -218,6 +218,19 @@
      * Sets src property for video player and sets reference to audio tag
      */
     var init = function () {
+        wireButtonsToEvent();
+        initializeAudio();
+        initializeVideoStream();
+        MainLoop.setUpdate(update).setDraw(draw).start();
+    };
+
+
+
+    /**
+     * Rooom buttons now changeVideoStream() when clicked.
+     */
+    var wireButtonsToEvent = function () {
+
         document.getElementById('Hall-1'     ).addEventListener('click', changeVideoStream, false);
         document.getElementById('Kitchen'    ).addEventListener('click', changeVideoStream, false);
         document.getElementById('Entry-Way'  ).addEventListener('click', changeVideoStream, false);
@@ -226,150 +239,27 @@
         document.getElementById('Bedroom'    ).addEventListener('click', changeVideoStream, false);
         document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
         document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
-
-        initializeAudio();
-        initializeVideoStream();
-
-        // Start the main loop.
-        MainLoop.setUpdate(update).setDraw(draw).start();
-        moment().format();
     };
 
-
-    // THESE TWO VARIABLES STORE THE TIME AND DATE WHEN THE PAGE IS LOADED
-    var startDate = new Date();
-    var startTime = startDate.getTime();
-
-    
-    // THIS FUNCTION CALCULATES THE SECONDS ELAPSED SINCE THE PAGE WAS LOADED
-    function seconds_elapsed ()    {
-        var date_now        = new Date ();
-        var time_now        = date_now.getTime ();
-        var time_diff       = time_now - startTime;
-        var seconds_elapsed = Math.floor ( time_diff / 1000 );
-
-        return ( seconds_elapsed );
-    }
-
-
-    // THIS FUNCTION TAKES THE SECONDS ELAPSED AND CONVERTS THEM FOR OUTPUT
-    var time_spent = function () {
-        // TAKE THE SECONDS ELAPSED
-        var secs = seconds_elapsed ();
-
-        // CONVERT SECONDS TO MINUTES AND SECONDS
-        var mins = Math.floor ( secs / 60 );
-        secs -= mins * 60;
-
-        // CONVERT MINUTES TO HOURS AND MINUTES
-        var hour = Math.floor ( mins / 60 );
-        mins -= hour * 60;
-
-        // DISPLAY THE FINAL OUTPUT TIME STRING
-        document.display.timeElapsed.value = pad ( hour ) + ":" + pad ( mins ) + ":" + pad ( secs );
-
-        // RECURSIVELY RE-RUN THE FUNCTION EVERY SECOND
-        setTimeout( "time_spent ()", 1000 );
-    };
-
-    var tSpent = function () {
-        // TAKE THE SECONDS ELAPSED
-        var secs = seconds_elapsed();
-
-        // CONVERT SECONDS TO MINUTES AND SECONDS
-        var mins = Math.floor ( secs / 60 );
-        secs -= mins * 60;
-
-        // RECURSIVELY RE-RUN THE FUNCTION EVERY SECOND
-        setTimeout( "tSpent()", 1000 );
-
-        return pad(secs);
-
-    };
-
-    // THIS FUNCTION INSERTS A LEADING ZERO (IF NECESSARY) TO PROVIDE UNIFORM OUTPUT
-    var pad = function ( num ) {
-        return ( ( num > 9 ) ? num : "0" + num );
-    };
-
-
-
-    //var timerUtils = {
-    //    startTime: function () {
-    //        return new Date.getTime();
-    //    },
-
-    //    endTime: function () { 
-    //        return new Date.getTime();
-    //    },
-
-    //    elapsedMS: function () { 
-    //        return  this.endTime() - this.startTime();
-    //    },
-
-    //    seconds: function () {
-    //        return  Math.round(elapsed_MS() / 1000);
-    //     }
-    //};
-
-
-
-    var timers = function () {
-
-
-        var start_time = new Date();
-        var end_time   = new Date();
-
-        var elapsed_ms = end_time - start_time;
-        var seconds    = Math.round(elapsed_ms / 1000);
-        var minutes    = Math.round(seconds / 60);
-        var hours      = Math.round(minutes / 60);
-    }
-
-       var TrimSecondsMinutes = function (elapsed) {
-        if (elapsed >= 60)
-            return TrimSecondsMinutes(elapsed - 60);
-        return elapsed;
-       };
-
-
-    var secondsToTimeString = function (seconds) {
-    
-    var s = Math.floor(seconds%60);
-    var m = Math.floor((seconds*1000/(1000*60))%60);
-    var strFormat = "MM:SS";
-    
-    if(s < 10) s = "0" + s;
-    if(m < 10) m = "0" + m;
-
-    strFormat = strFormat.replace(/MM/, m);
-    strFormat = strFormat.replace(/SS/, s);
-    
-    return strFormat;
-}
-
-
-    //var sec        = TrimSecondsMinutes(seconds);
-    //var min        = TrimSecondsMinutes(minutes);
 
     /**
-     * Update loop for checking when to change video scenes 
-     * @param {float} delta
-     *      The amount of time since the last update, in seconds
+     * Converts seconds to "MM:SS"
+     * @param {float} seconds
+     *      Takes seconds
      */
-    var update = function (delta) {
+    var secondsToTimeString = function (seconds) {
 
-        elapsedTime();
-        //console.log(elapsedTime());
+        var s         = Math.floor(seconds % 60);
+        var m         = Math.floor((seconds * 1000 / (1000 * 60)) % 60);
+        var strFormat = "MM:SS";
 
-        //console.log(moment().get('second'));
-        var sec = moment().get('second');
-        //var format =   moment.duration(sec, 'minutes').format('h:mm:ss');
-        //var format = moment()
+        if (s < 10) s = "0" + s;
+        if (m < 10) m = "0" + m;
 
-        //var mom = moment(sec, 'mm:ss');
-        
-        console.log(secondsToTimeString (elapsedTime()));
+        strFormat = strFormat.replace(/MM/, m);
+        strFormat = strFormat.replace(/SS/, s);
+
+        return strFormat;
     };
 
 
@@ -378,13 +268,23 @@
      */
     var elapsedTime = function () {
         var end       = new Date();
-        var elapsedMS = end.getTime() - start.getTime(); 
+        var elapsedMS = end.getTime() - start.getTime();
         var seconds   = Math.round(elapsedMS / 1000);
-        var minutes   = Math.round(seconds / 60);
+        var minutes   = Math.round(seconds   /   60);
 
         return seconds;
     };
 
+
+    /**
+     * Update loop for checking when to change video scenes 
+     * @param {float} delta
+     *      The amount of time since the last update, in seconds
+     */
+    var update = function (delta) {
+        elapsedTime();       
+        console.log(secondsToTimeString (elapsedTime()));
+    };
 
 
     /**
@@ -395,13 +295,13 @@
         if (!Modernizr.audio) {
             window.location = "http://outdatedbrowser.com/en";
         }
-    }
+    };
 
 
     /**
-      * Check if browser supports audio -- if not, tell user to update
-      * Loads video as soon as page loads for Video.js player
-      */
+     * Check if browser supports audio -- if not, tell user to update
+     * Loads video as soon as page loads for Video.js player
+     */
     var initializeVideoStream = function () {
         video = videojs('video-player');
         if (!Modernizr.video) {
@@ -416,10 +316,8 @@
         }
     };
 
-
-    
-
-     /**
+      
+    /**
      * Draws the GUI to the screen
      * @param {float} interpolationPercentage
      *   How much to interpolate between frames.
@@ -427,7 +325,6 @@
     var draw = function (interpolatePercentage) {
 
     };
-
 
 
     /**
@@ -508,8 +405,8 @@
             case 5.00:
                 console.log(nCurrentTime);
                 break;
-        }        
-    }
+        }
+    };
 
 
     /**
