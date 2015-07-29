@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    // Timer to keep track of user's time spent in-game
+    var start          = new Date();
     // Audio element for SFX, passwords, and noises during stills
     var audio           = null;
     // Are we in Debug mode?
@@ -211,8 +213,6 @@
     ];
 
 
-    var start = 0;
-    var elapsed = 0;
     /**
      * Wires up event handlers for buttons.
      * Sets src property for video player and sets reference to audio tag
@@ -232,8 +232,7 @@
 
         // Start the main loop.
         MainLoop.setUpdate(update).setDraw(draw).start();
-
-        start = new Date(); 
+        moment().format();
     };
 
 
@@ -295,24 +294,96 @@
 
 
 
-    var start_time = new Date();
-    var end_time   = new Date();
+    //var timerUtils = {
+    //    startTime: function () {
+    //        return new Date.getTime();
+    //    },
 
-    var elapsed_ms = end_time - start_time;
-    var seconds    = Math.round(elapsed_ms / 1000);
-    var minutes    = Math.round(seconds / 60);
-    var hours      = Math.round(minutes / 60);
+    //    endTime: function () { 
+    //        return new Date.getTime();
+    //    },
+
+    //    elapsedMS: function () { 
+    //        return  this.endTime() - this.startTime();
+    //    },
+
+    //    seconds: function () {
+    //        return  Math.round(elapsed_MS() / 1000);
+    //     }
+    //};
+
+
+
+    var timers = function () {
+
+
+        var start_time = new Date();
+        var end_time   = new Date();
+
+        var elapsed_ms = end_time - start_time;
+        var seconds    = Math.round(elapsed_ms / 1000);
+        var minutes    = Math.round(seconds / 60);
+        var hours      = Math.round(minutes / 60);
+    }
 
        var TrimSecondsMinutes = function (elapsed) {
         if (elapsed >= 60)
             return TrimSecondsMinutes(elapsed - 60);
         return elapsed;
+       };
+
+
+    var secondsToTimeString = function (seconds) {
+    
+    var s = Math.floor(seconds%60);
+    var m = Math.floor((seconds*1000/(1000*60))%60);
+    var strFormat = "MM:SS";
+    
+    if(s < 10) s = "0" + s;
+    if(m < 10) m = "0" + m;
+
+    strFormat = strFormat.replace(/MM/, m);
+    strFormat = strFormat.replace(/SS/, s);
+    
+    return strFormat;
+}
+
+
+    //var sec        = TrimSecondsMinutes(seconds);
+    //var min        = TrimSecondsMinutes(minutes);
+
+    /**
+     * Update loop for checking when to change video scenes 
+     * @param {float} delta
+     *      The amount of time since the last update, in seconds
+     */
+    var update = function (delta) {
+
+        elapsedTime();
+        //console.log(elapsedTime());
+
+        //console.log(moment().get('second'));
+        var sec = moment().get('second');
+        //var format =   moment.duration(sec, 'minutes').format('h:mm:ss');
+        //var format = moment()
+
+        //var mom = moment(sec, 'mm:ss');
+        
+        console.log(secondsToTimeString (elapsedTime()));
     };
 
 
-    var sec        = TrimSecondsMinutes(seconds);
-    var min        = TrimSecondsMinutes(minutes);
+    /**
+     * Place in update() to get total time since user has started game.
+     */
+    var elapsedTime = function () {
+        var end       = new Date();
+        var elapsedMS = end.getTime() - start.getTime(); 
+        var seconds   = Math.round(elapsedMS / 1000);
+        var minutes   = Math.round(seconds / 60);
 
+        return seconds;
+    };
 
 
 
@@ -346,18 +417,7 @@
     };
 
 
-    /**
-     * Update loop for checking when to change video scenes 
-     * @param {float} delta
-     *      The amount of time since the last update, in seconds
-     */
-    var update = function (delta) {
-        //console.log("I am updating");
-        elapsed = new Date() - start;
-       console.log(elapsed);
-        eventsHallOne();
-    };
-
+    
 
      /**
      * Draws the GUI to the screen

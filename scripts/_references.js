@@ -30,3 +30,5 @@
 /// <reference path="../js/utils.js" />
 /// <reference path="../js/timer.js" />
 /// <reference path="../js/vendor/mainloop/mainloop.js" />
+/// <reference path="../js/vendor/moment/moment.min.js" />
+/// <reference path="../js/vendor/moment/moment.js" />
