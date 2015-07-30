@@ -18,6 +18,7 @@
     var nCurrentCam     = null;
     // elapsedTime() sets this value
     var nCurrentTime    = 0;
+    var timer           = document.getElementById('timer');
     var video           = null;   
     // Source for the video feed
     var urlMediaStream  = null;
@@ -261,12 +262,21 @@
 
 
     /**
+     * Draws current time on screen at 'timer' element.
+     */
+    var updateTimeOnScreen = function () {
+        timer.innerHTML = secondsToTimeString(nCurrentTime);
+    };
+
+
+    /**
      * Update loop for checking when to change video scenes 
      * @param {float} delta
      *      The amount of time since the last update, in seconds
      */
     var update = function (delta) {
         elapsedTime();
+        updateTimeOnScreen();
         //eventsHallOne();
 
         if (bDebug) {
@@ -312,6 +322,7 @@
      *   How much to interpolate between frames.
      */
     var draw = function (interpolatePercentage) {
+        // Do I really need this? 
     };
 
 
