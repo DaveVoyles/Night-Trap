@@ -1,8 +1,9 @@
 (function () {
     //'use strict';
 
+    var bCanUseTrap     = false;
     // Timer to keep track of user's time spent in-game
-    var start          = new Date();
+    var start           = new Date();
     // Audio element for SFX, passwords, and noises during stills
     var audio           = null;
     // Are we in Debug mode?
@@ -262,7 +263,7 @@
      */
     var update = function (delta) {
         elapsedTime();
-        eventsHallOne();
+        //eventsHallOne();
 
         if (bDebug) {
             //console.log(secondsToTimeString(nCurrentTime));
@@ -330,10 +331,10 @@
                     console.log("2 - trap");
                     break;
                 case 'Entry-Way':
-                    triggerTrap(aTempLocal[2], aTempLocal[1], aStills.HallOne);
+                    triggerTrap(aTempLocal[2], aTempLocal[1], aStills.HallOne, true);
                     break;
                 case 'Living-Room':
-                    triggerTrap(aTempLocal[1], aTempLocal[0], aStills.HallOne);
+                    triggerTrap(aTempLocal[2], null, aStills.HallOne, true);
                     break;
                 case 'Bathroom':
                     urlMediaStream = aMP4CamList[4];
@@ -381,15 +382,21 @@
 
 
     /**
+     * Sets video poster to image of room. Plays crickets when video clips are not active 
      * All events occuring in Hall One are triggered from this
      */
     var eventsHallOne = function () {
+        video.poster(aStills.HallOne);
+
         switch (nCurrentTime) {
             case 0:
                 triggerTrap(camHallOne.c21, camHallOne.c, aStills.HallOne);
                 break;
             case 7:
                 //console.log("Time is: " + nCurrentTime);
+                break;
+            default:
+                playAudio(aAudioClips.crickets);
                 break;
         }
     };
@@ -403,31 +410,105 @@
      * @param {string} [nexturl] Trap clips are often have a clip that appears next.
      * @param {string} [still]   Image source to set after clips have completed   
      */
-    var triggerTrap = function (trapUrl, nextUrl, still) {
-        playVideo(trapUrl);
-        video.poster(still);
+    //var triggerTrap = function (trapUrl, nextUrl, still) {
+    //    playVideo(trapUrl);
+    //    video.poster(still);
 
+    //    var hasPlayed = false;
+    //    video.on('ended', function() {
+    //        if (hasPlayed === false) {
+    //            playVideo(nextUrl);
+    //        }
+
+    //        hasPlayed = true;
+    //        video.on('ended', function() {
+    //            video.src(video.src);
+    //            playAudio(aAudioClips.crickets);
+    //        });
+    //    });
+    //}; 
+
+
+
+    var curUrlTrap  = null;
+    var curUrlNext  = null;
+    var curStill    = null;
+
+
+    var triggerTrap = function (urlTrap, urlNext, still, bCanCatch) {
+        bCanCatch     = bCanCatch || false;
         var hasPlayed = false;
+        video.poster(still);
+        playVideo(urlTrap);
+
+        // Setting global vars, to be accessed by trap(), since we can't pass them in as params
+        curUrlTrap  = urlTrap;
+        curUrlNext  = urlNext;
+        curStill    = still;
+
+        // Attach event handler so that user can TRY to catch
+        if (bCanCatch) {
+            toggleTrapListener(true);
+        }
+
+        // Did not catch..... so play next video
         video.on('ended', function() {
             if (hasPlayed === false) {
-                playVideo(nextUrl);
+                // If a video exists, play it
+                if (urlNext) {
+                    playVideo(urlNext);
+                } else { // Otherwise just use a still
+                    hasPlayed = true;
+                    playAudio(aAudioClips.crickets);
+                }
             }
 
+            // Video has already played, so use a still
             hasPlayed = true;
             video.on('ended', function() {
-                video.src(video.src);
                 playAudio(aAudioClips.crickets);
             });
         });
     }; 
 
 
+
     /**
-     * Audio to play during stills
+     * Can we use a trap in this scene? If so, change clips when user hits 'Trap' button
+     * Make it unsable again right after you trigger the video
+     */
+    var trap = function () {
+        if (bCanUseTrap) {
+            console.log("trap triggered");
+            playVideo(curUrlTrap);
+            toggleTrapListener(false);
+        }
+
+        // As soon as video ends....
+        video.on('ended', function () {
+            playVideo(curUrlNext);
+        })
+
+    };
+
+
+    var toggleTrapListener = function () {
+        if (true) {
+            document.getElementById('Trap').addEventListener(   'click', trap);
+        } else {
+            document.getElementById('Trap').removeEventListener('click', trap);
+        }
+    };
+
+
+    /**
+     * Audio to play during stills, and sets video.src to src so that the still image can play
      * @param {string} clipUrl      - Address of clip to play
      * @param {bool}  [bShouldLoop] - Stills need to loop. SFX for passwords / traps do not.
      */
     var playAudio = function (urlClip, bShouldLoop) {
+
+        video.src(video.src);
         bShouldLoop = bShouldLoop || true;
         if (bShouldLoop) {
             audio.loop = bShouldLoop;
