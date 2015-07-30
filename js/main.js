@@ -69,6 +69,7 @@
         , HallTwo    : 6
         , Driveway   : 7
     };
+    var currentCam = aCurrentCam.HallOne;
 
     /** Which url should this room be on at this moment? 
      * @example: aCurrentRoomUrl.HallOne = camHallOne.c21;
@@ -203,7 +204,8 @@
      * Sets src property for video player and sets reference to audio tag
      */
     var init = function () {
-        wireButtonsToEvent();
+        //wireButtonsToEvent(true);
+        toggleRoomButton(true);
         initializeAudio();
         initializeVideoStream();
         MainLoop.setUpdate(update).setDraw(draw).start();
@@ -213,16 +215,41 @@
     /**
      * Rooom buttons now changeVideoStream() when clicked.
      */
-    var wireButtonsToEvent = function () {
+    //var wireButtonsToEvent = function () {
 
-        document.getElementById('Hall-1'     ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Kitchen'    ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Entry-Way'  ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Living-Room').addEventListener('click', changeVideoStream, false);
-        document.getElementById('Bathroom'   ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Bedroom'    ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
-        document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Hall-1'     ).addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Kitchen'    ).addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Entry-Way'  ).addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Living-Room').addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Bathroom'   ).addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Bedroom'    ).addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
+    //    document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
+    //};
+
+
+
+    var toggleRoomButton = function (bCanListen) {
+
+        if (bCanListen === true) { 
+            document.getElementById('Hall-1'     ).addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Kitchen'    ).addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Entry-Way'  ).addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Living-Room').addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Bathroom'   ).addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Bedroom'    ).addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Hall-2'     ).addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Driveway'   ).addEventListener('click',    changeVideoStream, false);
+        } else {
+            document.getElementById('Hall-1'     ).removeEventListener('click', changeVideoStream, false);
+            document.getElementById('Kitchen'    ).removeEventListener('click', changeVideoStream, false);
+            document.getElementById('Entry-Way'  ).removeEventListener('click', changeVideoStream, false);
+            document.getElementById('Living-Room').removeEventListener('click', changeVideoStream, false);
+            document.getElementById('Bathroom'   ).removeEventListener('click', changeVideoStream, false);
+            document.getElementById('Bedroom'    ).removeEventListener('click', changeVideoStream, false);
+            document.getElementById('Hall-2'     ).removeEventListener('click', changeVideoStream, false);
+            document.getElementById('Driveway'   ).removeEventListener('click', changeVideoStream, false);
+        }
     };
 
 
@@ -256,7 +283,7 @@
         var seconds   = Math.round(elapsedMS / 1000);
         var minutes   = Math.round(seconds   /   60);
 
-        nCurrentTime = seconds;
+        nCurrentTime  = seconds;
     };
 
 
@@ -334,6 +361,7 @@
     var changeVideoStream = function () {
 
         if (bDebug) {
+            toggleRoomButton(false);
             switch (this.id) {
                 case 'Hall-1':
                     aCurrentCam.HallOne;
@@ -400,12 +428,12 @@
      */
     var eventsHallOne = function () {
         var currentUrl = '';
-         console.log('trying to change')
+         console.log('events Hall 1')
 
         // Is the user currently viewing hallOne?
         if (aCurrentCam.HallOne) {
             video.poster(aStills.HallOne);
-            console.log('switching to Hall 1');
+            console.log('aCurrentCam.HallOne');
             // TODO: Should case  
             switch (nCurrentTime) {
                 case 0 <= 7:
@@ -425,11 +453,11 @@
 
     var eventsBedroom = function () {
         var currentUrl = '';
-        console.log('trying to change')
+        console.log('eventsBedroom')
 
         if (aCurrentCam.Bedroom) {
             video.poster(aStills.Bathroom);
-             console.log('switching to Bedroom');
+             console.log('aCurrentCam.Bedroom');
             switch (nCurrentCam) {
                 case 0 < 5:
                     triggerTrap(camBedroom.c81, null, aStills.Bedroom, true);
