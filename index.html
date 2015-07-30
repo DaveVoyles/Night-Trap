@@ -22,67 +22,70 @@
         <link rel="stylesheet" href="css/video-js.css">
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Night Trap</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+                       <body>
+                           <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+                           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                               <div class="container">
+                                   <div class="navbar-header">
+                                       <a class="navbar-brand" href="#">Night Trap</a>
+                                   </div>
+                                   <div id="navbar" class="navbar-collapse collapse">
+                                   </div><!--/.navbar-collapse -->
+                               </div>
+                           </nav>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-        <div class="container">
-            <video id="video-player" class="video-js vjs-default-skin container"
-                   controls preload="none" width="740" height="560"
-                   poster="/img/Night-Trap-32x-front.jpg">
-                <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-            </video> 
-            <!-- Used for SFX during room stills, PW changes, & trap misses-->
-            <audio id="audio-tag" type="audio/mpeg" ></audio>
-        </div>
-    </div>
+                           <!-- Main jumbotron for a primary marketing message or call to action -->
+                           <div class="jumbotron">
+                               <div class="container">
+                                   <video id="video-player" class="video-js vjs-default-skin container"
+                                          controls preload="none" width="740" height="560"
+                                          poster="/img/Night-Trap-32x-front.jpg">
+                                       <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                                   </video>
+                                   <!-- Used for SFX during room stills, PW changes, & trap misses-->
+                                   <audio id="audio-tag" type="audio/mpeg"></audio>
+                               </div>
+                           </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="container">
-          <p class="text-center"> Give it a few seconds to load for a better experience</p>
-          <br />
-          <div class="cam-btn-container container btn">
-                  <input id="Hall-1"      type="image"  class="btn-icon" src="img/icons/Hall-1.jpg"       href="#" role="button" />
-                  <input id="Kitchen"     type="image"  class="btn-icon" src="img/icons/Kitchen.jpg"      href="#" role="button" />
-                  <input id="Entry-Way"   type="image"  class="btn-icon" src="img/icons/Entry-Way.jpg"    href="#" role="button" />
-                  <input id="Living-Room" type="image"  class="btn-icon" src="img/icons/Living-Room.jpg"  href="#" role="button" />
-                  <br />
-                  <br />
-                  <input id="Bathroom"    type="image" class="btn-icon" src="img/icons/Bathroom.jpg"     href="#" role="button" />
-                  <input id="Bedroom"     type="image" class="btn-icon" src="img/icons/Bedroom.jpg"      href="#" role="button" />
-                  <input id="Hall-2"      type="image" class="btn-icon" src="img/icons/Hall-2.jpg"       href="#" role="button" />
-                  <input id="Driveway"    type="image" class="btn-icon" src="img/icons/Driveway.jpg"     href="#" role="button" />
-         </div>
-      </div>
+                           <div class="container">
+                               <!-- Example row of columns -->
+                               <div class="container">
+                                   <p class="text-center"> Give it a few seconds to load for a better experience</p>
+                                   <br />
+                                   <div class="cam-btn-container container btn">
+                                       <input id="Trap" type="image" class="btn-icon" src="img/icons/trap-icon.gif" href="#" role="button" />
+                                       <br />
+                                       <input id="Hall-1" type="image" class="btn-icon" src="img/icons/Hall-1.jpg" href="#" role="button" />
+                                       <input id="Kitchen" type="image" class="btn-icon" src="img/icons/Kitchen.jpg" href="#" role="button" />
+                                       <input id="Entry-Way" type="image" class="btn-icon" src="img/icons/Entry-Way.jpg" href="#" role="button" />
+                                       <input id="Living-Room" type="image" class="btn-icon" src="img/icons/Living-Room.jpg" href="#" role="button" />
+                                       <br />
+                                       <br />
+                                       <input id="Bathroom" type="image" class="btn-icon" src="img/icons/Bathroom.jpg" href="#" role="button" />
+                                       <input id="Bedroom" type="image" class="btn-icon" src="img/icons/Bedroom.jpg" href="#" role="button" />
+                                       <input id="Hall-2" type="image" class="btn-icon" src="img/icons/Hall-2.jpg" href="#" role="button" />
+                                       <input id="Driveway" type="image" class="btn-icon" src="img/icons/Driveway.jpg" href="#" role="button" />
+                                   </div>
+                               </div>
 
-      <footer>
-          <p>&copy; Dave Voyles 2015  | <a href="http://www.davevoyles.com">DaveVoyles.com</a> | <a href="https://github.com/DaveVoyles/Night-Trap">Source Code</a> </p>
-      </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+                               <footer>
+                                   <p>&copy; Dave Voyles 2015  | <a href="http://www.davevoyles.com">DaveVoyles.com</a> | <a href="https://github.com/DaveVoyles/Night-Trap">Source Code</a> </p>
+                               </footer>
+                           </div> <!-- /container -->
+                           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+                           <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <!--<script src="/js/vendor/video-js/video.js"></script>-->
-        <script src="js/vendor/video-js/video.novtt.dev.js"></script>
-        <!--<script>
+                           <script src="js/vendor/bootstrap.min.js"></script>
+                           <!--<script src="/js/vendor/video-js/video.js"></script>-->
+                           <script src="js/vendor/video-js/video.novtt.dev.js"></script>
+                           <!--<script>
         videojs.options.flash.swf = "http://example.com/path/to/video-js.swf
     </script>-->
-        <script src="js/vendor/mainloop/mainloop.js"></script>
-        <script src="js/vendor/moment/moment.js"></script>
-        <script src="js/timer.js"></script>
-        <script src="js/main.js"></script>
-    </body>
+                           <script src="js/vendor/mainloop/mainloop.js"></script>
+                           <script src="js/vendor/moment/moment.js"></script>
+                           <script src="js/timer.js"></script>
+                           <script src="js/main.js"></script>
+                       </body>
 </html>

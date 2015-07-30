@@ -1,7 +1,11 @@
 (function () {
-    //'use strict';
+    'use strict';
 
-    var bCanUseTrap     = false;
+    // To be set in triggerTrap & accessed by trap(), since we can't pass them in as params
+    var curUrlTrap      = null;
+    var curUrlNext      = null;
+    var curStill        = null;
+
     // Timer to keep track of user's time spent in-game
     var start           = new Date();
     // Audio element for SFX, passwords, and noises during stills
@@ -23,9 +27,9 @@
     var curUserPassword = "Blue"; 
     var aPasswords      = {
         Purple : "Purple"
-      , Blue   : "Blue"
-      , Red    : "Red"
-      , Green  : "Green"
+      , Blue   : "Blue  "
+      , Red    : "Red   "
+      , Green  : "Green "
       , Yellow : "Yellow"
       , Orange : "Orange"
     };
@@ -34,7 +38,7 @@
     var aAudioClips = {
           change   : "sfx/CHANGE.mp3"
         , crickets : "sfx/CRICK2.mp3"
-        , frogs    : "sfx/FROG2.mp3"
+        , frogs    : "sfx/FROG2.mp3 "
         , denied   : "sfx/DENIED.mp3"
     };
 
@@ -403,38 +407,18 @@
 
 
     /**
+     * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * Sets the poster (background) between clips to the room you are currently viewing
-     * @param {string} trapUrl   Clip with the trap sequence.
-     * @param {string} [nexturl] Trap clips are often have a clip that appears next.
-     * @param {string} [still]   Image source to set after clips have completed   
+     * @param {string} urlTrap
+     *      Clip with the trap sequence.
+     * @param {string} [urlNext]
+     *      Trap clips are often have a clip that appears next.
+     * @param {string} [still]  
+     *      Image source to set after clips have completed  to.
+     * @param {bool} [bCanCatch]
+     *      Is there an opportunity to catch something here? default val is false.
      */
-    //var triggerTrap = function (trapUrl, nextUrl, still) {
-    //    playVideo(trapUrl);
-    //    video.poster(still);
-
-    //    var hasPlayed = false;
-    //    video.on('ended', function() {
-    //        if (hasPlayed === false) {
-    //            playVideo(nextUrl);
-    //        }
-
-    //        hasPlayed = true;
-    //        video.on('ended', function() {
-    //            video.src(video.src);
-    //            playAudio(aAudioClips.crickets);
-    //        });
-    //    });
-    //}; 
-
-
-
-    var curUrlTrap  = null;
-    var curUrlNext  = null;
-    var curStill    = null;
-
-
     var triggerTrap = function (urlTrap, urlNext, still, bCanCatch) {
         bCanCatch     = bCanCatch || false;
         var hasPlayed = false;
@@ -461,7 +445,7 @@
                     hasPlayed = true;
                     playAudio(aAudioClips.crickets);
                 }
-            }
+            };
 
             // Video has already played, so use a still
             hasPlayed = true;
@@ -472,29 +456,24 @@
     }; 
 
 
-
     /**
      * Can we use a trap in this scene? If so, change clips when user hits 'Trap' button
      * Make it unsable again right after you trigger the video
      */
     var trap = function () {
-        if (bCanUseTrap) {
-            console.log("trap triggered");
-            playVideo(curUrlTrap);
-            toggleTrapListener(false);
-        }
-
-        // As soon as video ends....
-        video.on('ended', function () {
-            playVideo(curUrlNext);
-        })
-
+        playVideo(curUrlTrap);
+        toggleTrapListener(false);
     };
 
 
-    var toggleTrapListener = function () {
-        if (true) {
-            document.getElementById('Trap').addEventListener(   'click', trap);
+    /**
+     * Toggles event listener for the trap button on / off
+     * @param {bShouldListen} bool
+     *      If true, adds listener. If false, removes listener
+     */
+    var toggleTrapListener = function (bShouldListen) {
+        if ( bShouldListen === true) {
+            document.getElementById('Trap').addEventListener('click', trap);
         } else {
             document.getElementById('Trap').removeEventListener('click', trap);
         }
