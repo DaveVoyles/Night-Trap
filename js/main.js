@@ -265,8 +265,8 @@
         eventsHallOne();
 
         if (bDebug) {
-            console.log(secondsToTimeString(nCurrentTime));
-            console.log(nCurrentTime);
+            //console.log(secondsToTimeString(nCurrentTime));
+            //console.log(nCurrentTime);
         }
     };
 
@@ -292,7 +292,7 @@
             window.open("http://outdatedbrowser.com/en", '_blank');
         }
         if (bDebug) {
-            video.src([{ type: 'video/mp4', src: camMisc.c11  }]);
+            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
             video.load();
         } else {
             video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
@@ -323,11 +323,11 @@
             switch (this.id) {
                 case 'Hall-1':
                     urlMediaStream = aTempLocal[1];
-                    console.log("1 - Augs")
+                    console.log("1 - Augs");
                     break;
                 case 'Kitchen':
                     urlMediaStream = aTempLocal[2];
-                    console.log("2 - trap")
+                    console.log("2 - trap");
                     break;
                 case 'Entry-Way':
                     triggerTrap(aTempLocal[2], aTempLocal[1], aStills.HallOne);
@@ -389,7 +389,7 @@
                 triggerTrap(camHallOne.c21, camHallOne.c, aStills.HallOne);
                 break;
             case 7:
-                console.log("Time is: " + nCurrentTime)
+                //console.log("Time is: " + nCurrentTime);
                 break;
         }
     };
@@ -404,22 +404,21 @@
      * @param {string} [still]   Image source to set after clips have completed   
      */
     var triggerTrap = function (trapUrl, nextUrl, still) {
-        audio.pause();
         playVideo(trapUrl);
         video.poster(still);
 
         var hasPlayed = false;
-        video.on('ended', function () { 
+        video.on('ended', function() {
             if (hasPlayed === false) {
                 playVideo(nextUrl);
             }
 
             hasPlayed = true;
-            video.on('ended', function () {
+            video.on('ended', function() {
                 video.src(video.src);
                 playAudio(aAudioClips.crickets);
-            })
-        })
+            });
+        });
     }; 
 
 
@@ -440,10 +439,11 @@
 
 
     /**
-     * Video to play.
+     * Pauses audio played during stills, sets new video source, & begins to play.
      * @param {url} clipUrl - Address of clip to play.
      */
     var playVideo = function (urlClip) {
+        audio.pause();
         video.src(urlClip);
         video.play();
     };
