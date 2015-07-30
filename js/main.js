@@ -59,7 +59,7 @@
      * Which camera is currently selected?
      * You should also set the still to currently selected room when changing cameras, too.
      */
-    var aRoomCam = {
+    var aCurrentCam = {
           HallOne    : 0
         , Kitchen    : 1
         , Entryway   : 2
@@ -180,7 +180,6 @@
         , c540281: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00540281.mp4'
     };
 
-
     //TODO: 1 too many here?
     /* 9 - Bathroom */
     var camBathroom = {
@@ -277,7 +276,8 @@
     var update = function (delta) {
         elapsedTime();
         updateTimeOnScreen();
-        //eventsHallOne();
+        eventsHallOne();
+        eventsBedroom();
 
         if (bDebug) {
             //console.log(secondsToTimeString(nCurrentTime));
@@ -327,69 +327,66 @@
 
 
     /**
-     * Pulls url from Azure 
-     * Get current timestamp for video
-     * Set the current stream to the ID ofs the button passed in
-     * Set current video time
-     * @returns New video stream 
+     * Set the current stream to the ID ofs the button passed in.
+     * Sets aCurrenntCam to the room user is viewing. 
+     * @example: aCurrentCam.HallOne;
      */
     var changeVideoStream = function () {
 
         if (bDebug) {
             switch (this.id) {
                 case 'Hall-1':
-                    urlMediaStream = aTempLocal[1];
-                    console.log("1 - Augs");
+                    aCurrentCam.HallOne;
                     break;
                 case 'Kitchen':
-                    urlMediaStream = aTempLocal[2];
-                    console.log("2 - trap");
+                    aCurrentCam.Kitchen;
                     break;
                 case 'Entry-Way':
-                    triggerTrap(aTempLocal[2], aTempLocal[1], aStills.HallOne, true);
+                    aCurrentCam.Kitchen;
                     break;
                 case 'Living-Room':
-                    triggerTrap(aTempLocal[2], null, aStills.HallOne, true);
+                    aCurrentCam.Livingroom;
                     break;
                 case 'Bathroom':
-                    urlMediaStream = aMP4CamList[4];
+                    aCurrentCam.Bathroom;
                     break;
                 case 'Bedroom':
-                    urlMediaStream = aMP4CamList[5];
+                    aCurrentCam.Bedroom;
                     break;
                 case 'Hall-2':
-                    urlMediaStream = aMP4CamList[6];
+                    aCurrentCam.Hall2;
                     break;
                 case 'Driveway':
-                    urlMediaStream = aMP4CamList[7];
+                    aCurrentCam.Driveway;
+                    break;
             }
-            playVideo(urlMediaStream);
+            //playVideo(urlMediaStream);
 
         } else {
             switch (this.id) {
-                case 'Hall-1':
-                    urlMediaStream = aMP4CamList[0];
-                    break;
-                case 'Kitchen':
-                    urlMediaStream = aMP4CamList[1];
-                    break;
-                case 'Entry-Way':
-                    urlMediaStream = aMP4CamList[2];
-                    break;
-                case 'Living-Room':
-                    urlMediaStream = aMP4CamList[3];
-                    break;
-                case 'Bathroom':
-                    urlMediaStream = aMP4CamList[4];
-                    break;
-                case 'Bedroom':
-                    urlMediaStream = aMP4CamList[5];
-                    break;
-                case 'Hall-2':
-                    urlMediaStream = aMP4CamList[6];
-                    break;
-                case 'Driveway':
-                    urlMediaStream = aMP4CamList[7];
+                //case 'Hall-1':
+                //    urlMediaStream = aMP4CamList[0];
+                //    break;
+                //case 'Kitchen':
+                //    urlMediaStream = aMP4CamList[1];
+                //    break;
+                //case 'Entry-Way':
+                //    urlMediaStream = aMP4CamList[2];
+                //    break;
+                //case 'Living-Room':
+                //    urlMediaStream = aMP4CamList[3];
+                //    break;
+                //case 'Bathroom':
+                //    urlMediaStream = aMP4CamList[4];
+                //    break;
+                //case 'Bedroom':
+                //    urlMediaStream = aMP4CamList[5];
+                //    break;
+                //case 'Hall-2':
+                //    urlMediaStream = aMP4CamList[6];
+                //    break;
+                //case 'Driveway':
+                //    urlMediaStream = aMP4CamList[7];
             }
             playVideo(urlMediaStream);
         }
@@ -397,22 +394,49 @@
 
 
     /**
-     * Sets video poster to image of room. Plays crickets when video clips are not active 
+     * Sets video poster to image of room. Plays crickets when video clips are not active. 
+     * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
      * All events occuring in Hall One are triggered from this
      */
     var eventsHallOne = function () {
-        video.poster(aStills.HallOne);
+        var currentUrl = '';
+         console.log('trying to change')
 
-        switch (nCurrentTime) {
-            case 0:
-                triggerTrap(camHallOne.c21, camHallOne.c, aStills.HallOne);
-                break;
-            case 7:
-                //console.log("Time is: " + nCurrentTime);
-                break;
-            default:
-                playAudio(aAudioClips.crickets);
-                break;
+        // Is the user currently viewing hallOne?
+        if (aCurrentCam.HallOne) {
+            video.poster(aStills.HallOne);
+            console.log('switching to Hall 1');
+            // TODO: Should case  
+            switch (nCurrentTime) {
+                case 0 <= 7:
+                    //currentUrl = camHallOne; // TODO: Do we need this?
+                    triggerTrap(camHallOne.c21, camHallOne.c, aStills.HallOne, true);
+                    break;
+                case 7:
+                    //console.log("Time is: " + nCurrentTime);
+                    break;
+                default:
+                    playAudio(aAudioClips.crickets);
+                    break;
+            }
+        }
+    };
+
+
+    var eventsBedroom = function () {
+        var currentUrl = '';
+        console.log('trying to change')
+
+        if (aCurrentCam.Bedroom) {
+            video.poster(aStills.Bathroom);
+             console.log('switching to Bedroom');
+            switch (nCurrentCam) {
+                case 0 < 5:
+                    triggerTrap(camBedroom.c81, null, aStills.Bedroom, true);
+                    break;
+                default:
+                    playAudio(aAudioClips.crickets);
+            }
         }
     };
 
@@ -484,7 +508,7 @@
      */
     var toggleTrapListener = function (bShouldListen) {
         if ( bShouldListen === true) {
-            document.getElementById('Trap').addEventListener('click', trap);
+            document.getElementById('Trap').addEventListener(   'click', trap);
         } else {
             document.getElementById('Trap').removeEventListener('click', trap);
         }
