@@ -236,14 +236,14 @@
     var toggleRoomButton = function (bCanListen) {
 
         if (bCanListen === true) { 
-            document.getElementById('Hall-1'     ).addEventListener('click',    changeVideoStream, false);
-            document.getElementById('Kitchen'    ).addEventListener('click',    changeVideoStream, false);
-            document.getElementById('Entry-Way'  ).addEventListener('click',    changeVideoStream, false);
-            document.getElementById('Living-Room').addEventListener('click',    changeVideoStream, false);
-            document.getElementById('Bathroom'   ).addEventListener('click',    changeVideoStream, false);
-            document.getElementById('Bedroom'    ).addEventListener('click',    changeVideoStream, false);
-            document.getElementById('Hall-2'     ).addEventListener('click',    changeVideoStream, false);
-            document.getElementById('Driveway'   ).addEventListener('click',    changeVideoStream, false);
+            document.getElementById('Hall-1'     ).addEventListener(   'click', changeVideoStream, false);
+            document.getElementById('Kitchen'    ).addEventListener(   'click', changeVideoStream, false);
+            document.getElementById('Entry-Way'  ).addEventListener(   'click', changeVideoStream, false);
+            document.getElementById('Living-Room').addEventListener(   'click', changeVideoStream, false);
+            document.getElementById('Bathroom'   ).addEventListener(   'click', changeVideoStream, false);
+            document.getElementById('Bedroom'    ).addEventListener(   'click', changeVideoStream, false);
+            document.getElementById('Hall-2'     ).addEventListener(   'click', changeVideoStream, false);
+            document.getElementById('Driveway'   ).addEventListener(   'click', changeVideoStream, false);
         } else {
             document.getElementById('Hall-1'     ).removeEventListener('click', changeVideoStream, false);
             document.getElementById('Kitchen'    ).removeEventListener('click', changeVideoStream, false);
@@ -369,10 +369,10 @@
                   nCurrentCam   = aCurrentCam.HallOne;
                     break;
                 case 'Kitchen':
-                  nCurrentCam   =  aCurrentCam.Kitchen;
+                  nCurrentCam   = aCurrentCam.Kitchen;
                     break;
                 case 'Entry-Way':
-                  nCurrentCam   =  aCurrentCam.Kitchen;
+                  nCurrentCam   = aCurrentCam.Kitchen;
                     break;
                 case 'Living-Room':
                   nCurrentCam   = aCurrentCam.Livingroom;
@@ -432,8 +432,6 @@
     var eventsBedroom = function () {
         console.log('eventsBedroom');
 
-
-
         // Switch events based on the time -- occurs whether or not player has this room selected
         switch (nCurrentTime) {
             case 0:  
@@ -452,10 +450,10 @@
                 playAudio(aAudioClips.crickets); // When video isn't playing, have the crickets playing
         }
 
-
         // Is user currently on this cam?
-        if (aCurrentCam.Bedroom) {
+        if (nCurrentCam === aCurrentCam.Bedroom) {
 
+            // Did we just select this camera?
             if (bJustSwitched === false) {
                 bJustSwitched = true;
                 console.log('currently watching bedroom');
