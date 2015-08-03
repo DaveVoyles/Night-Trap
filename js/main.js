@@ -1,10 +1,13 @@
 (function () {
     'use strict';
+    
+    var bJustSwitched = false;
 
     // To be set in triggerTrap & accessed by trap(), since we can't pass them in as params
     var curUrlTrap      = null;
     var curUrlNext      = null;
     var curStill        = null;
+    var isCatachable    = false;
 
     // Timer to keep track of user's time spent in-game
     var start           = new Date();
@@ -14,8 +17,6 @@
     var bDebug          = true;
     var timer           = new Timer();
     var newClip         = null;
-    // Camera (room) player currently has selected
-    var nCurrentCam     = null;
     // elapsedTime() sets this value
     var nCurrentTime    = 0;
     var timer           = document.getElementById('timer');
@@ -23,36 +24,36 @@
     // Source for the video feed
     var urlMediaStream  = null;
     // Random password set by game 
-    var ranPassword     = "Blue";
+    var ranPassword     = 'Blue';
     // What has the user selected?
-    var curUserPassword = "Blue"; 
+    var curUserPassword = 'Blue'; 
     var aPasswords      = {
-        Purple : "Purple"
-      , Blue   : "Blue  "
-      , Red    : "Red   "
-      , Green  : "Green "
-      , Yellow : "Yellow"
-      , Orange : "Orange"
+        Purple : 'Purple'
+      , Blue   : 'Blue  '
+      , Red    : 'Red   '
+      , Green  : 'Green '
+      , Yellow : 'Yellow'
+      , Orange : 'Orange'
     };
 
     // Path to SFX
     var aAudioClips = {
-          change   : "sfx/CHANGE.mp3"
-        , crickets : "sfx/CRICK2.mp3"
-        , frogs    : "sfx/FROG2.mp3 "
-        , denied   : "sfx/DENIED.mp3"
+          change   : 'sfx/CHANGE.mp3'
+        , crickets : 'sfx/CRICK2.mp3'
+        , frogs    : 'sfx/FROG2.mp3 '
+        , denied   : 'sfx/DENIED.mp3'
     };
 
     // Posters, which are set as the camera feed when room is empty
     var aStills = {
-          HallOne    : "img/stills/BATHROOM_1.JPG   "
-        , Kitchen    : "img/stills/KITCHEN_1.JPG    "
-        , Entryway   : "img/stills/ENTRY-WAY_1.JPG  "
-        , Livingroom : "img/stills/Living-ROom_1.JPG"
-        , Bathroom   : "img/stills/Bathroom_1.JPG   "
-        , Bedroom    : "img/stills/Bedroom_1.JPG    "
-        , HallTwo    : "img/stils/Hall-Two_1.JPG    "
-        , Driveway   : "img/stills/Driveway_1.JPG   "
+          HallOne    : 'img/stills/BATHROOM_1.JPG   '
+        , Kitchen    : 'img/stills/KITCHEN_1.JPG    '
+        , Entryway   : 'img/stills/ENTRY-WAY_1.JPG  '
+        , Livingroom : 'img/stills/Living-ROom_1.JPG'
+        , Bathroom   : 'img/stills/Bathroom_1.JPG   '
+        , Bedroom    : 'img/stills/Bedroom_1.JPG    '
+        , HallTwo    : 'img/stils/Hall-Two_1.JPG    '
+        , Driveway   : 'img/stills/Driveway_1.JPG   '
     };
 
     /**
@@ -69,21 +70,24 @@
         , HallTwo    : 6
         , Driveway   : 7
     };
-    var currentCam = aCurrentCam.HallOne;
+    // Camera (room) player currently has selected
+    var nCurrentCam = aCurrentCam.HallOne;
 
     /** Which url should this room be on at this moment? 
      * @example: aCurrentRoomUrl.HallOne = camHallOne.c21;
      */
     var aCurrentRoomUrl = {
-          HallOne    : ''
-        , Kitchen    : ''
-        , Entryway   : ''
-        , LivingRoom : ''
-        , Bathroom   : ''
-        , Bedroom    : ''
-        , HallTwo    : ''
-        , Driveway   : ''
+          HallOne    : 0
+        , Kitchen    : 1
+        , Entryway   : 2
+        , LivingRoom : 3
+        , Bathroom   : 4
+        , Bedroom    : 5
+        , HallTwo    : 6
+        , Driveway   : 7
     };
+    var sCurrentRoomUrl = '';
+
 
     /* Temp videos for testing playback */
     var aTempLocal = [
@@ -262,10 +266,10 @@
 
         var s         = Math.floor(seconds % 60);
         var m         = Math.floor((seconds * 1000 / (1000 * 60)) % 60);
-        var strFormat = "MM:SS";
+        var strFormat = 'MM:SS';
 
-        if (s < 10) s = "0" + s;
-        if (m < 10) m = "0" + m;
+        if (s < 10) s = '0' + s;
+        if (m < 10) m = '0' + m;
 
         strFormat = strFormat.replace(/MM/, m);
         strFormat = strFormat.replace(/SS/, s);
@@ -303,7 +307,7 @@
     var update = function (delta) {
         elapsedTime();
         updateTimeOnScreen();
-        eventsHallOne();
+        //eventsHallOne();
         eventsBedroom();
 
         if (bDebug) {
@@ -319,7 +323,7 @@
     var initializeAudio = function () {
         audio = document.getElementById('audio-tag');
         if (!Modernizr.audio) {
-            window.open("http://outdatedbrowser.com/en", '_blank');
+            window.open('http://outdatedbrowser.com/en', '_blank');
         }
     };
 
@@ -331,7 +335,7 @@
     var initializeVideoStream = function () {
         video = videojs('video-player');
         if (!Modernizr.video) {
-            window.open("http://outdatedbrowser.com/en", '_blank');
+            window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
             video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
@@ -356,68 +360,36 @@
     /**
      * Set the current stream to the ID ofs the button passed in.
      * Sets aCurrenntCam to the room user is viewing. 
-     * @example: aCurrentCam.HallOne;
+     * @example: nCurremtCam = aCurrentCam.HallOne;
      */
     var changeVideoStream = function () {
-
-        if (bDebug) {
             toggleRoomButton(false);
             switch (this.id) {
                 case 'Hall-1':
-                    aCurrentCam.HallOne;
+                  nCurrentCam   = aCurrentCam.HallOne;
                     break;
                 case 'Kitchen':
-                    aCurrentCam.Kitchen;
+                  nCurrentCam   =  aCurrentCam.Kitchen;
                     break;
                 case 'Entry-Way':
-                    aCurrentCam.Kitchen;
+                  nCurrentCam   =  aCurrentCam.Kitchen;
                     break;
                 case 'Living-Room':
-                    aCurrentCam.Livingroom;
+                  nCurrentCam   = aCurrentCam.Livingroom;
                     break;
                 case 'Bathroom':
-                    aCurrentCam.Bathroom;
+                   nCurrentCam  = aCurrentCam.Bathroom;
                     break;
                 case 'Bedroom':
-                    aCurrentCam.Bedroom;
+                    nCurrentCam = aCurrentCam.Bedroom;
                     break;
                 case 'Hall-2':
-                    aCurrentCam.Hall2;
+                    nCurrentCam = aCurrentCam.HallTwo;
                     break;
                 case 'Driveway':
-                    aCurrentCam.Driveway;
+                    nCurrentCam = aCurrentCam.Driveway;
                     break;
             }
-            //playVideo(urlMediaStream);
-
-        } else {
-            switch (this.id) {
-                //case 'Hall-1':
-                //    urlMediaStream = aMP4CamList[0];
-                //    break;
-                //case 'Kitchen':
-                //    urlMediaStream = aMP4CamList[1];
-                //    break;
-                //case 'Entry-Way':
-                //    urlMediaStream = aMP4CamList[2];
-                //    break;
-                //case 'Living-Room':
-                //    urlMediaStream = aMP4CamList[3];
-                //    break;
-                //case 'Bathroom':
-                //    urlMediaStream = aMP4CamList[4];
-                //    break;
-                //case 'Bedroom':
-                //    urlMediaStream = aMP4CamList[5];
-                //    break;
-                //case 'Hall-2':
-                //    urlMediaStream = aMP4CamList[6];
-                //    break;
-                //case 'Driveway':
-                //    urlMediaStream = aMP4CamList[7];
-            }
-            playVideo(urlMediaStream);
-        }
     };
 
 
@@ -428,7 +400,7 @@
      */
     var eventsHallOne = function () {
         var currentUrl = '';
-         console.log('events Hall 1')
+        console.log('events Hall 1');
 
         // Is the user currently viewing hallOne?
         if (aCurrentCam.HallOne) {
@@ -451,19 +423,52 @@
     };
 
 
-    var eventsBedroom = function () {
-        var currentUrl = '';
-        console.log('eventsBedroom')
+        var nextUrl   = '';
+        var nCaseTime = 0;
 
+    /**
+     * Should be run each frame -- sets current URL for events occuring in the room;
+     */
+    var eventsBedroom = function () {
+        console.log('eventsBedroom');
+
+
+
+        // Switch events based on the time -- occurs whether or not player has this room selected
+        switch (nCurrentTime) {
+            case 0:  
+                aCurrentRoomUrl.Bedroom = camBedroom.c81;
+                nextUrl                 = aStills.Bedroom;
+                isCatachable            = true;
+                nCaseTime               = 0;
+                break;
+            case 54:
+                aCurrentRoomUrl.Bedroom = camBedroom.c540281;
+                nextUrl                 = aStills.Bedroom;
+                isCatachable            = true;
+                nCaseTime               = 54;
+                break;
+            default:
+                playAudio(aAudioClips.crickets); // When video isn't playing, have the crickets playing
+        }
+
+
+        // Is user currently on this cam?
         if (aCurrentCam.Bedroom) {
-            video.poster(aStills.Bathroom);
-             console.log('aCurrentCam.Bedroom');
-            switch (nCurrentCam) {
-                case 0 < 5:
-                    triggerTrap(camBedroom.c81, null, aStills.Bedroom, true);
-                    break;
-                default:
-                    playAudio(aAudioClips.crickets);
+
+            if (bJustSwitched === false) {
+                bJustSwitched = true;
+                console.log('currently watching bedroom');
+
+                // Set the poster to bedroom, so that it looks correct between switching clips
+                video.poster(aStills.Bathroom);
+
+                var nCurrTimeIntoVid = nCaseTime - nCurrentTime;
+                console.log(nCurrTimeIntoVid);
+                triggerTrap(aCurrentRoomUrl.Bedroom, null, nextUrl, isCatachable);
+
+                // Set time based on how long event has been occurring
+                //video.currentTime(nCurrTimeIntoVid);
             }
         }
     };
