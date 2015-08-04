@@ -2,29 +2,63 @@
     'use strict';
     
     // Occurs right after user switches cameras 
-    var bJustSwitched = false;
+    var bJustSwitched = false; //TDO:L Do we still need this?
 
     // Can we hit the switch cam button again?
     var bCanListen    = true;
 
-    var curUrl = function(url) {
-        this.url = url;
-    };
-
-    curUrl.prototype = {
-        get () {
-            return this.url;
+    /**
+     * Url about to be drawn to the screen
+     */
+    var curUrl = { 
+        url: '',
+        get ()  {
+          return this.url;
         },
-        set () {
-
+        set (val) {
+            this.url = val;
         }
     };
 
+    /**
+     * When this scene completes, which URL will appear next?
+     */
+    var nextUrl  = {
+        url: '',
+        get ()  {
+          return this.url;
+        },
+        set (val) {
+            this.url = val;
+        }
+    };
 
-    // To be set in createVideoSeries() & accessed by trap(), since we can't pass them in as params
-    //var curUrl          = null;
-    var curUrlNext      = null;
-    var curStill        = null;
+    /**
+     * Which static image should appear when there isn't any movement in the room?
+     */
+    var curStill = {
+        still: '',
+        get () {
+            return this.still;
+        },
+        set (val) {
+            this.still = val;
+        }
+    };
+
+    /**
+    * Is it possible to catch someone in this scene?
+    */
+    var bCanCatch = {
+        bool: true,
+        get () {
+            return this.bCanCatch;
+        },
+        set (val) {
+            this.bCanCatch= val;
+        }
+    };
+
     var isCatachable    = false;
 
     // Timer to keep track of user's time spent in-game
@@ -312,7 +346,7 @@
         elapsedTime();
         updateTimeOnScreen();
         eventsHallOne();
-        eventsBedroom();
+        //eventsBedroom();
 
         if (bDebug) {
             //console.log(secondsToTimeString(nCurrentTime));
@@ -342,7 +376,8 @@
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+            //video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+              video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
             video.load();
         } else {
             video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
@@ -373,7 +408,7 @@
             switch (this.id) {
                 case 'Hall-1':
                     nCurrentCam = aCurrentCam.HallOne;
-                    curStill    = aStills.HallOne;
+                    curStill.set(aStills.HallOne);
                     break;
                 case 'Kitchen':
                     nCurrentCam = aCurrentCam.Kitchen;
@@ -404,8 +439,7 @@
                     curStill    = aStills.Driveway;
                     break;
             }
-        //setCurrentCam();
-           createVideoSeries(curUrl, nextUrl, null, isCatachable);
+           createVideoSeries(curUrl.get(), nextUrl.get(), bCanCatch.get());
     };
 
 
@@ -421,9 +455,12 @@
 
             switch (nCurrentTime) {
                 case 1:
-                    curUrl = camHallOne.c21;
-                    curUrlNext =
-                    isCatachable = true;
+                    //curUrl = camHallOne.c21;
+                    //curUrlNext =
+                    //isCatachable = true;
+                    curUrl.set(aTempLocal[1]);
+                    nextUrl.set(aTempLocal[2]);
+                    bCanCatch.set(true);
                     nCaseTime = 0;
                     break;
                 case 30:
@@ -467,70 +504,45 @@
 
 
     /**
-     * Sets the video player source on the camera player has just selected
-     */
-    var setCurrentCam = function () {
-
-        // Is user currently on this cam?
-        if (nCurrentCam === aCurrentCam.Bedroom) {
-
-            console.log('currently watching: ' + nCurrentCam);
-
-            // TODO: This value is incorrect.
-            var nCurrTimeIntoVid = nCaseTime - nCurrentTime;
-            //createVideoSeries(aCurrentRoomUrl.Bedroom, null, nextUrl, isCatachable);
-            createVideoSeries(curUrl, nextUrl, null, isCatachable);
-
-            //TODO: Set time based on how long event has been occurring
-            //video.currentTime(nCurrTimeIntoVid);
-            }
-    };
-
-    /**
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * @param {string} urlClip
+     * @param {string} currentVid
      *      Clip with the trap sequence.
-     * @param {string} [urlNext]
+     * @param {string} [nextVid]
      *      Trap clips are often have a clip that appears next.
-     * @param {string} [still]  
-     *      Image source to set after clips have completed  to.
-     * @param {bool} [bCanCatch]
+     * @param {bool} [bCatchable]
      *      Is there an opportunity to catch something here? default val is false.
      */
-    var createVideoSeries = function (urlClip, urlNext, still, bCanCatch) { //TODO: Maybe I should have another clip for the trap?
-        bCanCatch     = bCanCatch || false;
+    var createVideoSeries = function (currentVid, nextVid, bCatchable) { //TODO: Maybe I should have another clip for the trap?
         var hasPlayed = false;
-        video.poster(still);
-        playVideo(urlClip);
-
-        // Setting global vars, to be accessed by trap(), since we can't pass them in as params
-        //curUrlTrap  = urlTrap;
-        //curUrlNext  = urlNext;
-        //curStill    = still;
+        video.poster(curStill.get());
+        playVideo(currentVid);
 
         // Attach event handler so that user can TRY to catch
-        if (bCanCatch) {
+        if (bCanCatch.get() === true) {
             toggleTrapListener(true);
         }
 
         // Did not catch..... so play next video
         video.on('ended', function() {
             if (hasPlayed === false) {
-                // If a video exists, play it
-                if (urlNext) {
-                    playVideo(urlNext);
-                } else { // Otherwise just use a still
+
+                // TODO: May have to change this, b/c there will always be a URL video... I think.
+                if (nextVid) {
+                    playVideo(nextVid);
+
+                // Use a still if nextVid does not exist
+                } else { 
                     hasPlayed = true;
-                    playAudio(aAudioClips.crickets);
+                    displayStill();
                 }
             };
 
             // Video has already played, so use a still
             hasPlayed = true;
-            video.on('ended', function() {
-                playAudio(aAudioClips.crickets);
+            video.on('ended', function () {
+                displayStill();
             });
         });
     }; 
@@ -561,23 +573,14 @@
 
 
     /**
-     * Audio to play during stills, and sets video.src to src so that the still image can play
-     * @param {string} clipUrl     
-     *      Addres of clip to play
-     * @param {bool} [bShouldLoop] 
-     *      Stills need to loop. SFX for passwords / traps do not.
+     * Still to play when no action occurs. Sets video.src to src so that the still image can play
      */
-    var playAudio = function (urlClip, bShouldLoop) {
-
+    var displayStill = function () { 
         video.src(video.src);
-        bShouldLoop = bShouldLoop || true;
-        if (bShouldLoop) {
-            audio.loop = bShouldLoop;
-        }
-
-        audio.src = urlClip;
+        audio.src = aAudioClips.crickets;
         audio.play();
     };
+
 
     /**
      * Pauses audio played during stills, sets new video source, & begins to play.
