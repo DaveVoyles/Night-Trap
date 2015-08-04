@@ -594,6 +594,17 @@
     };
 
 
+    /**
+     * Plays a sound effect during gameplay. Used for traps, passwords
+     * @param {url} clipUrl 
+     *      Address of clip to play.
+     */
+    var playSfx = function (urlClip) {
+        audio.src = urlClip;
+        audio.play();
+    };
+
+
     init();
 
 })();
