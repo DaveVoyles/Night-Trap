@@ -1,7 +1,11 @@
 (function () {
     'use strict';
     
+    // Occurs right after user switches cameras 
     var bJustSwitched = false;
+
+    // Can we hit the switch cam button again?
+    var bCanListen    = true;
 
     // To be set in triggerTrap & accessed by trap(), since we can't pass them in as params
     var curUrlTrap      = null;
@@ -209,7 +213,7 @@
      */
     var init = function () {
         //wireButtonsToEvent(true);
-        toggleRoomButton(true);
+        toggleRoomButton();
         initializeAudio();
         initializeVideoStream();
         MainLoop.setUpdate(update).setDraw(draw).start();
@@ -219,21 +223,7 @@
     /**
      * Rooom buttons now changeVideoStream() when clicked.
      */
-    //var wireButtonsToEvent = function () {
-
-    //    document.getElementById('Hall-1'     ).addEventListener('click', changeVideoStream, false);
-    //    document.getElementById('Kitchen'    ).addEventListener('click', changeVideoStream, false);
-    //    document.getElementById('Entry-Way'  ).addEventListener('click', changeVideoStream, false);
-    //    document.getElementById('Living-Room').addEventListener('click', changeVideoStream, false);
-    //    document.getElementById('Bathroom'   ).addEventListener('click', changeVideoStream, false);
-    //    document.getElementById('Bedroom'    ).addEventListener('click', changeVideoStream, false);
-    //    document.getElementById('Hall-2'     ).addEventListener('click', changeVideoStream, false);
-    //    document.getElementById('Driveway'   ).addEventListener('click', changeVideoStream, false);
-    //};
-
-
-
-    var toggleRoomButton = function (bCanListen) {
+    var toggleRoomButton = function () {
 
         if (bCanListen === true) { 
             document.getElementById('Hall-1'     ).addEventListener(   'click', changeVideoStream, false);
@@ -363,7 +353,9 @@
      * @example: nCurremtCam = aCurrentCam.HallOne;
      */
     var changeVideoStream = function () {
-            toggleRoomButton(false);
+            bCanListen = false;
+            toggleRoomButton();
+
             switch (this.id) {
                 case 'Hall-1':
                   nCurrentCam   = aCurrentCam.HallOne;
@@ -390,6 +382,7 @@
                     nCurrentCam = aCurrentCam.Driveway;
                     break;
             }
+          setCurrentCam();
     };
 
 
@@ -434,7 +427,7 @@
 
         // Switch events based on the time -- occurs whether or not player has this room selected
         switch (nCurrentTime) {
-            case 0:  
+            case 1: // BUG: 0 Does not work. Maybe not enough time to load?
                 aCurrentRoomUrl.Bedroom = camBedroom.c81;
                 nextUrl                 = aStills.Bedroom;
                 isCatachable            = true;
@@ -447,30 +440,32 @@
                 nCaseTime               = 54;
                 break;
             default:
-                playAudio(aAudioClips.crickets); // When video isn't playing, have the crickets playing
         }
+    };
 
+
+    var setCurrentCam = function () {
+        console.log("trying to set current cam");
         // Is user currently on this cam?
         if (nCurrentCam === aCurrentCam.Bedroom) {
 
             // Did we just select this camera?
-            if (bJustSwitched === false) {
+            if (bJustSwitched === false) { 
+                console.log('currently watching: ' + nCurrentCam);
                 bJustSwitched = true;
-                console.log('currently watching bedroom');
 
                 // Set the poster to bedroom, so that it looks correct between switching clips
                 video.poster(aStills.Bathroom);
 
+                // TODO: This value is incorrect.
                 var nCurrTimeIntoVid = nCaseTime - nCurrentTime;
-                console.log(nCurrTimeIntoVid);
                 triggerTrap(aCurrentRoomUrl.Bedroom, null, nextUrl, isCatachable);
 
-                // Set time based on how long event has been occurring
+                //TODO: Set time based on how long event has been occurring
                 //video.currentTime(nCurrTimeIntoVid);
             }
         }
     };
-
 
     /**
      * Sets the poster (background) between clips to the room you are currently viewing
@@ -548,8 +543,10 @@
 
     /**
      * Audio to play during stills, and sets video.src to src so that the still image can play
-     * @param {string} clipUrl      - Address of clip to play
-     * @param {bool}  [bShouldLoop] - Stills need to loop. SFX for passwords / traps do not.
+     * @param {string} clipUrl     
+     *      Addres of clip to play
+     * @param {bool} [bShouldLoop] 
+     *      Stills need to loop. SFX for passwords / traps do not.
      */
     var playAudio = function (urlClip, bShouldLoop) {
 
@@ -563,10 +560,10 @@
         audio.play();
     };
 
-
     /**
      * Pauses audio played during stills, sets new video source, & begins to play.
-     * @param {url} clipUrl - Address of clip to play.
+     * @param {url} clipUrl 
+     *      Address of clip to play.
      */
     var playVideo = function (urlClip) {
         audio.pause();
