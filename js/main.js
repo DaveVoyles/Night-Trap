@@ -7,8 +7,22 @@
     // Can we hit the switch cam button again?
     var bCanListen    = true;
 
+    var curUrl = function(url) {
+        this.url = url;
+    };
+
+    curUrl.prototype = {
+        get () {
+            return this.url;
+        },
+        set () {
+
+        }
+    };
+
+
     // To be set in createVideoSeries() & accessed by trap(), since we can't pass them in as params
-    var curUrlTrap      = null;
+    //var curUrl          = null;
     var curUrlNext      = null;
     var curStill        = null;
     var isCatachable    = false;
@@ -391,7 +405,7 @@
                     break;
             }
         //setCurrentCam();
-                 createVideoSeries(curUrlTrap, nextUrl, null, isCatachable);
+           createVideoSeries(curUrl, nextUrl, null, isCatachable);
     };
 
 
@@ -401,59 +415,55 @@
      * All events occuring in Hall One are triggered from this
      */
     var eventsHallOne = function () {
-        console.log('events Hall 1');
+        if (nCurrentCam === aCurrentCam.HallOne) {
+            console.log('events Hall 1');
+            var nCaseTime = 0;
 
-        switch (nCurrentTime) {
-            case 0: 
-                curUrlTrap = camHallOne.c21;
-                curUrlNext   = 
-                isCatachable = true;
-                nCaseTime    = 0;
-                break;
-            case 30:
-                aCurrentRoomUrl.Bedroom = camBedroom.c540281;
-                nextUrl                 = null;
-                isCatachable            = false;
-                nCaseTime               = 30;
-                break;
-            default:
+            switch (nCurrentTime) {
+                case 1:
+                    curUrl = camHallOne.c21;
+                    curUrlNext =
+                    isCatachable = true;
+                    nCaseTime = 0;
+                    break;
+                case 30:
+                    aCurrentRoomUrl.Bedroom = camBedroom.c540281;
+                    nextUrl = null;
+                    isCatachable = false;
+                    nCaseTime = 30;
+                    break;
+                default:
+            }
         }
-        curStill     = aStills.HallOne;
     };
 
-
-        var nextUrl   = '';
-        var nCaseTime = 0;
 
     /**
      * Should be run each frame -- sets current URL for events occuring in the room;
      */
     var eventsBedroom = function () {
-        console.log('eventsBedroom');
+        if (nCurrentCam === aCurrentCam.Bedroom) {
+            console.log('eventsBedroom');
+            var nCaseTime = 0;
 
-        // Switch events based on the time -- occurs whether or not player has this room selected
-        switch (nCurrentTime) {
-            case 1: // BUG: 0 Does not work. Maybe not enough time to load?
-                //aCurrentRoomUrl.Bedroom = camBedroom.c81;
-                //nextUrl                 = aStills.Bedroom; //TODO: Can probably get rid of these now 
-                //isCatachable            = true;
-                //nCaseTime               = 0;
-                curUrlTrap   = camBedroom.c81;
-                curUrlNext   = aStills.Bedroom;
-                isCatachable = true;
-                nCaseTime    = 0;
-                break;
-            case 54:
-                aCurrentRoomUrl.Bedroom = camBedroom.c540281;
-                nextUrl                 = aStills.Bedroom;
-                isCatachable            = true;
-                nCaseTime               = 54;
-                break;
-            default:
+            // Switch events based on the time -- occurs whether or not player has this room selected
+            switch (nCurrentTime) {
+                case 1: // BUG: 0 Does not work. Maybe not enough time to load?
+                    curUrl = camBedroom.c81;
+                    curUrlNext = aStills.Bedroom;
+                    isCatachable = true;
+                    nCaseTime = 0;
+                    break;
+                case 54:
+                    aCurrentRoomUrl.Bedroom = camBedroom.c540281;
+                    nextUrl = aStills.Bedroom;
+                    isCatachable = true;
+                    nCaseTime = 54;
+                    break;
+                default:
+            }
         }
     };
-
-
 
 
     /**
@@ -469,7 +479,7 @@
             // TODO: This value is incorrect.
             var nCurrTimeIntoVid = nCaseTime - nCurrentTime;
             //createVideoSeries(aCurrentRoomUrl.Bedroom, null, nextUrl, isCatachable);
-            createVideoSeries(curUrlTrap, nextUrl, null, isCatachable);
+            createVideoSeries(curUrl, nextUrl, null, isCatachable);
 
             //TODO: Set time based on how long event has been occurring
             //video.currentTime(nCurrTimeIntoVid);
@@ -531,7 +541,7 @@
      * Make it unsable again right after you trigger the video
      */
     var trap = function () {
-        playVideo(curUrlTrap);
+        playVideo(curUrl);
         toggleTrapListener(false);
     };
 
