@@ -7,7 +7,7 @@
     // Can we hit the switch cam button again?
     var bCanListen    = true;
 
-    // To be set in triggerTrap & accessed by trap(), since we can't pass them in as params
+    // To be set in createVideoSeries() & accessed by trap(), since we can't pass them in as params
     var curUrlTrap      = null;
     var curUrlNext      = null;
     var curStill        = null;
@@ -297,7 +297,7 @@
     var update = function (delta) {
         elapsedTime();
         updateTimeOnScreen();
-        //eventsHallOne();
+        eventsHallOne();
         eventsBedroom();
 
         if (bDebug) {
@@ -348,8 +348,8 @@
 
 
     /**
-     * Set the current stream to the ID ofs the button passed in.
-     * Sets aCurrenntCam to the room user is viewing. 
+     * Sets aCurrentCam to the room user is viewing. 
+     * sets currentStill to match that room as well.
      * @example: nCurremtCam = aCurrentCam.HallOne;
      */
     var changeVideoStream = function () {
@@ -358,31 +358,40 @@
 
             switch (this.id) {
                 case 'Hall-1':
-                  nCurrentCam   = aCurrentCam.HallOne;
+                    nCurrentCam = aCurrentCam.HallOne;
+                    curStill    = aStills.HallOne;
                     break;
                 case 'Kitchen':
-                  nCurrentCam   = aCurrentCam.Kitchen;
+                    nCurrentCam = aCurrentCam.Kitchen;
+                    curStill    = aStills.Kitchen;
                     break;
                 case 'Entry-Way':
-                  nCurrentCam   = aCurrentCam.Kitchen;
+                    nCurrentCam = aCurrentCam.Kitchen;
+                    curStill    = aStills.Entryway;
                     break;
                 case 'Living-Room':
-                  nCurrentCam   = aCurrentCam.Livingroom;
+                    nCurrentCam = aCurrentCam.Livingroom;
+                    curStill    = aStills.Livingroom;
                     break;
                 case 'Bathroom':
-                   nCurrentCam  = aCurrentCam.Bathroom;
+                    nCurrentCam = aCurrentCam.Bathroom;
+                    curStill    = aStills.Bathroom;
                     break;
                 case 'Bedroom':
                     nCurrentCam = aCurrentCam.Bedroom;
+                    curStill    = aStills.Bedroom;
                     break;
                 case 'Hall-2':
                     nCurrentCam = aCurrentCam.HallTwo;
+                    curStill    = aStills.HallTwo;
                     break;
                 case 'Driveway':
                     nCurrentCam = aCurrentCam.Driveway;
+                    curStill    = aStills.Driveway;
                     break;
             }
-          setCurrentCam();
+        //setCurrentCam();
+                 createVideoSeries(curUrlTrap, nextUrl, null, isCatachable);
     };
 
 
@@ -392,27 +401,24 @@
      * All events occuring in Hall One are triggered from this
      */
     var eventsHallOne = function () {
-        var currentUrl = '';
         console.log('events Hall 1');
 
-        // Is the user currently viewing hallOne?
-        if (aCurrentCam.HallOne) {
-            video.poster(aStills.HallOne);
-            console.log('aCurrentCam.HallOne');
-            // TODO: Should case  
-            switch (nCurrentTime) {
-                case 0 <= 7:
-                    //currentUrl = camHallOne; // TODO: Do we need this?
-                    triggerTrap(camHallOne.c21, camHallOne.c, aStills.HallOne, true);
-                    break;
-                case 7:
-                    //console.log("Time is: " + nCurrentTime);
-                    break;
-                default:
-                    playAudio(aAudioClips.crickets);
-                    break;
-            }
+        switch (nCurrentTime) {
+            case 0: 
+                curUrlTrap = camHallOne.c21;
+                curUrlNext   = 
+                isCatachable = true;
+                nCaseTime    = 0;
+                break;
+            case 30:
+                aCurrentRoomUrl.Bedroom = camBedroom.c540281;
+                nextUrl                 = null;
+                isCatachable            = false;
+                nCaseTime               = 30;
+                break;
+            default:
         }
+        curStill     = aStills.HallOne;
     };
 
 
@@ -428,10 +434,14 @@
         // Switch events based on the time -- occurs whether or not player has this room selected
         switch (nCurrentTime) {
             case 1: // BUG: 0 Does not work. Maybe not enough time to load?
-                aCurrentRoomUrl.Bedroom = camBedroom.c81;
-                nextUrl                 = aStills.Bedroom;
-                isCatachable            = true;
-                nCaseTime               = 0;
+                //aCurrentRoomUrl.Bedroom = camBedroom.c81;
+                //nextUrl                 = aStills.Bedroom; //TODO: Can probably get rid of these now 
+                //isCatachable            = true;
+                //nCaseTime               = 0;
+                curUrlTrap   = camBedroom.c81;
+                curUrlNext   = aStills.Bedroom;
+                isCatachable = true;
+                nCaseTime    = 0;
                 break;
             case 54:
                 aCurrentRoomUrl.Bedroom = camBedroom.c540281;
@@ -444,34 +454,33 @@
     };
 
 
+
+
+    /**
+     * Sets the video player source on the camera player has just selected
+     */
     var setCurrentCam = function () {
-        console.log("trying to set current cam");
+
         // Is user currently on this cam?
         if (nCurrentCam === aCurrentCam.Bedroom) {
 
-            // Did we just select this camera?
-            if (bJustSwitched === false) { 
-                console.log('currently watching: ' + nCurrentCam);
-                bJustSwitched = true;
+            console.log('currently watching: ' + nCurrentCam);
 
-                // Set the poster to bedroom, so that it looks correct between switching clips
-                video.poster(aStills.Bathroom);
+            // TODO: This value is incorrect.
+            var nCurrTimeIntoVid = nCaseTime - nCurrentTime;
+            //createVideoSeries(aCurrentRoomUrl.Bedroom, null, nextUrl, isCatachable);
+            createVideoSeries(curUrlTrap, nextUrl, null, isCatachable);
 
-                // TODO: This value is incorrect.
-                var nCurrTimeIntoVid = nCaseTime - nCurrentTime;
-                triggerTrap(aCurrentRoomUrl.Bedroom, null, nextUrl, isCatachable);
-
-                //TODO: Set time based on how long event has been occurring
-                //video.currentTime(nCurrTimeIntoVid);
+            //TODO: Set time based on how long event has been occurring
+            //video.currentTime(nCurrTimeIntoVid);
             }
-        }
     };
 
     /**
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * @param {string} urlTrap
+     * @param {string} urlClip
      *      Clip with the trap sequence.
      * @param {string} [urlNext]
      *      Trap clips are often have a clip that appears next.
@@ -480,16 +489,16 @@
      * @param {bool} [bCanCatch]
      *      Is there an opportunity to catch something here? default val is false.
      */
-    var triggerTrap = function (urlTrap, urlNext, still, bCanCatch) {
+    var createVideoSeries = function (urlClip, urlNext, still, bCanCatch) { //TODO: Maybe I should have another clip for the trap?
         bCanCatch     = bCanCatch || false;
         var hasPlayed = false;
         video.poster(still);
-        playVideo(urlTrap);
+        playVideo(urlClip);
 
         // Setting global vars, to be accessed by trap(), since we can't pass them in as params
-        curUrlTrap  = urlTrap;
-        curUrlNext  = urlNext;
-        curStill    = still;
+        //curUrlTrap  = urlTrap;
+        //curUrlNext  = urlNext;
+        //curStill    = still;
 
         // Attach event handler so that user can TRY to catch
         if (bCanCatch) {
@@ -533,7 +542,7 @@
      *      If true, adds listener. If false, removes listener
      */
     var toggleTrapListener = function (bShouldListen) {
-        if ( bShouldListen === true) {
+        if (bShouldListen === true) {
             document.getElementById('Trap').addEventListener(   'click', trap);
         } else {
             document.getElementById('Trap').removeEventListener('click', trap);
