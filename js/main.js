@@ -42,7 +42,7 @@
     /**
      * Url about to be drawn to the screen
      */
-    var curUrl = { 
+    var sCurUrl = { 
         url: '',
         get ()  {
           return this.url;
@@ -55,7 +55,7 @@
     /**
      * When this scene completes, which URL will appear next?
      */
-    var nextUrl  = {
+    var sNextUrl  = {
         url: '',
         get ()  {
           return this.url;
@@ -68,7 +68,7 @@
     /**
      * Which static image should appear when there isn't any movement in the room?
      */
-    var curStill = {
+    var sCurStill = {
         still: '',
         get () {
             return this.still;
@@ -94,12 +94,12 @@
     var isCatachable    = false;
 
     // Timer to keep track of user's time spent in-game
-    var start           = new Date();
+    var nTimeStart      = new Date();
     // Audio element for SFX, passwords, and noises during stills
-    var audio           = null;
+    var audioElem       = null;
     // Are we in Debug mode?
     var bDebug          = true;
-    var timer           = new Timer();
+    //var timer           = new Timer();
     var newClip         = null;
     // elapsedTime() sets this value
     var nCurrentTime    = 0;
@@ -353,7 +353,7 @@
      */
     var elapsedTime = function () {
         var end       = new Date();
-        var elapsedMS = end.getTime() - start.getTime();
+        var elapsedMS = end.getTime() - nTimeStart.getTime();
         var seconds   = Math.round(elapsedMS / 1000);
         var minutes   = Math.round(seconds   /   60);
 
@@ -391,7 +391,7 @@
      * Check if browser supports audio -- if not, tell user to update
      */
     var initializeAudio = function () {
-        audio = document.getElementById('audio-tag');
+        audioElem = document.getElementById('audio-tag');
         if (!Modernizr.audio) {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
@@ -441,38 +441,38 @@
             switch (this.id) {
                 case 'Hall-1':
                     nCurrentCam = aCurrentCam.HallOne;
-                    curStill.set(aStills.HallOne);
+                    sCurStill.set(aStills.HallOne);
                     break;
                 case 'Kitchen':
                     nCurrentCam = aCurrentCam.Kitchen;
-                    curStill    = aStills.Kitchen;
+                    sCurStill    = aStills.Kitchen;
                     break;
                 case 'Entry-Way':
                     nCurrentCam = aCurrentCam.Kitchen;
-                    curStill    = aStills.Entryway;
+                    sCurStill    = aStills.Entryway;
                     break;
                 case 'Living-Room':
                     nCurrentCam = aCurrentCam.Livingroom;
-                    curStill    = aStills.Livingroom;
+                    sCurStill    = aStills.Livingroom;
                     break;
                 case 'Bathroom':
                     nCurrentCam = aCurrentCam.Bathroom;
-                    curStill    = aStills.Bathroom;
+                    sCurStill    = aStills.Bathroom;
                     break;
                 case 'Bedroom':
                     nCurrentCam = aCurrentCam.Bedroom;
-                    curStill.set(aStills.Bedroom);
+                    sCurStill.set(aStills.Bedroom);
                     break;
                 case 'Hall-2':
                     nCurrentCam = aCurrentCam.HallTwo;
-                    curStill    = aStills.HallTwo;
+                    sCurStill    = aStills.HallTwo;
                     break;
                 case 'Driveway':
                     nCurrentCam = aCurrentCam.Driveway;
-                    curStill    = aStills.Driveway;
+                    sCurStill    = aStills.Driveway;
                     break;
             }
-           createVideoSeries(curUrl.get(), nextUrl.get(), bCanCatch.get());
+           createVideoSeries(sCurUrl.get(), sNextUrl.get(), bCanCatch.get());
     };
 
 
@@ -488,14 +488,14 @@
 
             switch (nCurrentTime) {
                 case 1:
-                    curUrl   .set(aTempLocal[1]);
-                    nextUrl  .set(aTempLocal[2]);
+                    sCurUrl   .set(aTempLocal[1]);
+                    sNextUrl  .set(aTempLocal[2]);
                     bCanCatch.set(true);
                     nCaseTime = 0;
                     break;
                 case 30:
-                    curUrl   .set(aTempLocal[1]);
-                    nextUrl  .set(aTempLocal[2]);
+                    sCurUrl   .set(aTempLocal[1]);
+                    sNextUrl  .set(aTempLocal[2]);
                     bCanCatch.set(false);
                     nCaseTime = 30;
                     break;
@@ -520,14 +520,14 @@
                     //nextUrl.set(aStills.Bedroom);
                     //bCanCatch.set(true);
                     //nCaseTime = 0;
-                    curUrl.set(aTempLocal[1]);
-                    nextUrl.set(null);
+                    sCurUrl.set(aTempLocal[1]);
+                    sNextUrl.set(null);
                     bCanCatch.set(true);
                     nCaseTime = 0;
                     break;
                 case 54:
                     aCurrentRoomUrl.Bedroom = camBedroom.c540281;
-                    nextUrl = aStills.Bedroom;
+                    sNextUrl = aStills.Bedroom;
                     isCatachable = true;
                     nCaseTime = 54;
                     break;
@@ -550,7 +550,7 @@
      */
     var createVideoSeries = function (currentVid, nextVid, bCatchable) { //TODO: Maybe I should have another clip for the trap?
         var hasPlayed = false;
-        video.poster(curStill.get());
+        video.poster(sCurStill.get());
         playVideo(currentVid);
 
         // Attach event handler so that user can TRY to catch
@@ -588,7 +588,7 @@
      * Make it unsable again right after you trigger the video
      */
     var trap = function () {
-        playVideo(curUrl);
+        playVideo(sCurUrl);
         toggleTrapListener(false);
     };
 
@@ -612,8 +612,8 @@
      */
     var displayStill = function () { 
         video.src(video.src);
-        audio.src = aAudioClips.crickets;
-        audio.play();
+        audioElem.src = aAudioClips.crickets;
+        audioElem.play();
     };
 
 
@@ -623,7 +623,7 @@
      *      Address of clip to play.
      */
     var playVideo = function (urlClip) {
-        audio.pause();
+        audioElem.pause();
         video.src(urlClip);
         video.play();
     };
@@ -635,8 +635,8 @@
      *      Address of clip to play.
      */
     var playSfx = function (urlClip) {
-        audio.src = urlClip;
-        audio.play();
+        audioElem.src = urlClip;
+        audioElem.play();
     };
 
 
