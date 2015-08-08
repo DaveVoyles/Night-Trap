@@ -110,15 +110,19 @@
         }
     };
 
-
     var timerElem       = document.getElementById('timer');
     var video           = null;   
-    // Source for the video feed
-    var urlMediaStream  = null;
-    // Random password set by game 
-    var ranPassword     = 'Blue';
     // What has the user selected?
-    var curUserPassword = 'Blue'; 
+    var sCurUserPassword = {
+        pass: 'Blue',
+        get () {
+            return this.pass;
+        },
+        set (val) {
+            this.pass = val;
+        }
+    };
+    // List of passwords that the game can select
     var aPasswords      = {
         Purple : 'Purple'
       , Blue   : 'Blue  '
@@ -127,6 +131,8 @@
       , Yellow : 'Yellow'
       , Orange : 'Orange'
     };
+    // Random password set by game 
+    var ranPassword = 'Blue';
 
     // Path to SFX
     var aAudioClips = {
