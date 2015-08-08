@@ -55,10 +55,10 @@
     /**
      * When this scene completes, which URL will appear next?
      */
-    var sNextUrl  = {
+    var sNextUrl = {
         url: '',
-        get ()  {
-          return this.url;
+        get () {
+            return this.url;
         },
         set (val) {
             this.url = val;
@@ -91,8 +91,6 @@
         }
     };
 
-    var isCatachable    = false;
-
     // Timer to keep track of user's time spent in-game
     var nTimeStart      = new Date();
     // Audio element for SFX, passwords, and noises during stills
@@ -100,10 +98,20 @@
     // Are we in Debug mode?
     var bDebug          = true;
     //var timer           = new Timer();
-    var newClip         = null;
+
     // elapsedTime() sets this value
-    var nCurrentTime    = 0;
-    var timer           = document.getElementById('timer');
+    var nCurrentTime = {
+        time: 0,
+        get () {
+            return this.time;
+        },
+        set (val) {
+            this.time = val;
+        }
+    };
+
+
+    var timerElem       = document.getElementById('timer');
     var video           = null;   
     // Source for the video feed
     var urlMediaStream  = null;
@@ -357,7 +365,7 @@
         var seconds   = Math.round(elapsedMS / 1000);
         var minutes   = Math.round(seconds   /   60);
 
-        nCurrentTime  = seconds;
+        nCurrentTime.set(seconds);
     };
 
 
@@ -365,7 +373,7 @@
      * Draws current time on screen at 'timer' element.
      */
     var updateTimeOnScreen = function () {
-        timer.innerHTML = secondsToTimeString(nCurrentTime);
+        timerElem.innerHTML = secondsToTimeString(nCurrentTime.get());
     };
 
 
@@ -486,7 +494,7 @@
             console.log('events Hall 1');
             var nCaseTime = 0;
 
-            switch (nCurrentTime) {
+            switch (nCurrentTime.get()) {
                 case 1:
                     sCurUrl   .set(aTempLocal[1]);
                     sNextUrl  .set(aTempLocal[2]);
@@ -514,7 +522,7 @@
             var nCaseTime = 0;
 
             // Switch events based on the time -- occurs whether or not player has this room selected
-            switch (nCurrentTime) {
+            switch (nCurrentTime.get()) {
                 case 1: 
                     //curUrl.set(camBedroom.c81);
                     //nextUrl.set(aStills.Bedroom);
@@ -528,7 +536,6 @@
                 case 54:
                     aCurrentRoomUrl.Bedroom = camBedroom.c540281;
                     sNextUrl = aStills.Bedroom;
-                    isCatachable = true;
                     nCaseTime = 54;
                     break;
                 default:
