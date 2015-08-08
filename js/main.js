@@ -8,6 +8,38 @@
     var bCanListen    = true;
 
     /**
+     * How many augers has the user caught?
+     */
+     var nTotalCaught = {
+        caught: 0,
+        get () {
+            return this.caught;
+        },
+        set (val) {
+            this.caught = val;
+        },
+        increment () {
+            this.caught ++;
+        }
+     };
+
+    /**
+     * How many augers has the user missed?
+     */
+    var nTotalMissed = {
+        missed: 0,
+        get () {
+            return this.missed;
+        },
+        set (val) {
+            this.missed = val;
+        },
+        increment () {
+            this.missed ++;
+        }
+    };
+
+    /**
      * Url about to be drawn to the screen
      */
     var curUrl = { 
@@ -398,7 +430,8 @@
 
     /**
      * Sets aCurrentCam to the room user is viewing. 
-     * sets currentStill to match that room as well.
+     * Sets currentStill to match that room, so that poster can be set between videos.
+     * createVideoSeries is called after properties have been set.
      * @example: nCurremtCam = aCurrentCam.HallOne;
      */
     var changeVideoStream = function () {
@@ -428,7 +461,7 @@
                     break;
                 case 'Bedroom':
                     nCurrentCam = aCurrentCam.Bedroom;
-                    curStill    = aStills.Bedroom;
+                    curStill.set(aStills.Bedroom);
                     break;
                 case 'Hall-2':
                     nCurrentCam = aCurrentCam.HallTwo;
@@ -455,18 +488,15 @@
 
             switch (nCurrentTime) {
                 case 1:
-                    //curUrl = camHallOne.c21;
-                    //curUrlNext =
-                    //isCatachable = true;
-                    curUrl.set(aTempLocal[1]);
-                    nextUrl.set(aTempLocal[2]);
+                    curUrl   .set(aTempLocal[1]);
+                    nextUrl  .set(aTempLocal[2]);
                     bCanCatch.set(true);
                     nCaseTime = 0;
                     break;
                 case 30:
-                    aCurrentRoomUrl.Bedroom = camBedroom.c540281;
-                    nextUrl = null;
-                    isCatachable = false;
+                    curUrl   .set(aTempLocal[1]);
+                    nextUrl  .set(aTempLocal[2]);
+                    bCanCatch.set(false);
                     nCaseTime = 30;
                     break;
                 default:
@@ -485,10 +515,14 @@
 
             // Switch events based on the time -- occurs whether or not player has this room selected
             switch (nCurrentTime) {
-                case 1: // BUG: 0 Does not work. Maybe not enough time to load?
-                    curUrl = camBedroom.c81;
-                    curUrlNext = aStills.Bedroom;
-                    isCatachable = true;
+                case 1: 
+                    //curUrl.set(camBedroom.c81);
+                    //nextUrl.set(aStills.Bedroom);
+                    //bCanCatch.set(true);
+                    //nCaseTime = 0;
+                    curUrl.set(aTempLocal[1]);
+                    nextUrl.set(null);
+                    bCanCatch.set(true);
                     nCaseTime = 0;
                     break;
                 case 54:
@@ -530,6 +564,7 @@
 
                 // TODO: May have to change this, b/c there will always be a URL video... I think.
                 if (nextVid) {
+                    console.log('playing next vid');
                     playVideo(nextVid);
 
                 // Use a still if nextVid does not exist
@@ -573,7 +608,7 @@
 
 
     /**
-     * Still to play when no action occurs. Sets video.src to src so that the still image can play
+     * Still to play when no action occurs. Sets video.src to src so that the still image can be dispayed as a poster
      */
     var displayStill = function () { 
         video.src(video.src);
@@ -584,7 +619,7 @@
 
     /**
      * Pauses audio played during stills, sets new video source, & begins to play.
-     * @param {url} clipUrl 
+     * @param {string} clipUrl 
      *      Address of clip to play.
      */
     var playVideo = function (urlClip) {
@@ -596,7 +631,7 @@
 
     /**
      * Plays a sound effect during gameplay. Used for traps, passwords
-     * @param {url} clipUrl 
+     * @param {string} clipUrl 
      *      Address of clip to play.
      */
     var playSfx = function (urlClip) {
