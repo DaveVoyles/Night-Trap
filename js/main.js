@@ -102,8 +102,6 @@
     var audioElem       = null;
     // Are we in Debug mode?
     var bDebug          = true;
-    //var timer           = new Timer();
-
     // elapsedTime() sets this value
     var nCurrentTime = {
         time: 0,
