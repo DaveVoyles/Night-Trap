@@ -495,10 +495,10 @@
 
 
     /**
-     * Sets video poster to image of room. Plays crickets when video clips are not active. 
-     * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
-     * All events occuring in Hall One are triggered from this
-     */
+    * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
+    * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
+    * Switch events based on the time -- occurs whether or not player has this room selected
+    */
     var eventsHallOne = function () {
         if (nCurrentCam === aCurrentCam.HallOne) {
             console.log('events Hall 1');
@@ -506,14 +506,14 @@
 
             switch (nCurrentTime.get()) {
                 case 1:
-                    sCurUrl   .set(aTempLocal[1]);
-                    sNextUrl  .set(aTempLocal[2]);
+                    sCurUrl  .set(aTempLocal[1]);
+                    sNextUrl .set(aTempLocal[2]);
                     bCanCatch.set(true);
                     nCaseTime = 0;
                     break;
                 case 30:
-                    sCurUrl   .set(aTempLocal[1]);
-                    sNextUrl  .set(aTempLocal[2]);
+                    sCurUrl  .set(aTempLocal[1]);
+                    sNextUrl .set(aTempLocal[2]);
                     bCanCatch.set(false);
                     nCaseTime = 30;
                     break;
@@ -524,20 +524,17 @@
 
 
     /**
-     * Should be run each frame -- sets current URL for events occuring in the room;
+     * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
+     * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
+     * Switch events based on the time -- occurs whether or not player has this room selected
      */
     var eventsBedroom = function () {
         if (nCurrentCam === aCurrentCam.Bedroom) {
             console.log('eventsBedroom');
             var nCaseTime = 0;
 
-            // Switch events based on the time -- occurs whether or not player has this room selected
             switch (nCurrentTime.get()) {
                 case 1: 
-                    //curUrl.set(camBedroom.c81);
-                    //nextUrl.set(aStills.Bedroom);
-                    //bCanCatch.set(true);
-                    //nCaseTime = 0;
                     sCurUrl.set(aTempLocal[1]);
                     sNextUrl.set(null);
                     bCanCatch.set(true);
@@ -605,14 +602,14 @@
      * Make it unsable again right after you trigger the video
      */
     var trap = function () {
-        playVideo(sCurUrl);
+        playVideo(sCurUrl.get());
         toggleTrapListener(false);
     };
 
 
     /**
      * Toggles event listener for the trap button on / off
-     * @param {bShouldListen} bool
+     * @param {bool} bShouldListen
      *      If true, adds listener. If false, removes listener
      */
     var toggleTrapListener = function (bShouldListen) {
