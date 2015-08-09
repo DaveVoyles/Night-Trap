@@ -427,11 +427,13 @@
         }
         if (bDebug) {
             //video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
-              video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
+            video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
             video.load();
+            video.play();
         } else {
             video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
             video.load();
+            video.play();
         }
     };
 
