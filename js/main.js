@@ -1,11 +1,16 @@
 (function () {
     'use strict';
     
-    // Occurs right after user switches cameras 
-    var bJustSwitched = false; //TDO:L Do we still need this?
-
     // Can we hit the switch cam button again?
-    var bCanListen    = true;
+    var bCanListen = {
+        bool: true,
+        get () {
+            return this.bool;
+        },
+        set (val) {
+            this.bool = val;
+        }
+    };
 
     /**
      * How many augers has the user caught?
@@ -283,7 +288,6 @@
         , c540281: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00540281.mp4'
     };
 
-    //TODO: 1 too many here?
     /* 9 - Bathroom */
     var camBathroom = {
         // Sarah enters bathroom from bedroom. Enters mirror
@@ -319,7 +323,7 @@
      */
     var toggleRoomButton = function () {
 
-        if (bCanListen === true) { 
+        if (bCanListen.get() === true) { 
             document.getElementById('Hall-1'     ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Kitchen'    ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Entry-Way'  ).addEventListener(   'click', changeVideoStream, false);
@@ -449,7 +453,7 @@
      * @example: nCurremtCam = aCurrentCam.HallOne;
      */
     var changeVideoStream = function () {
-            bCanListen = false;
+            bCanListen.set(false); //TODO: May need to set this to true somewhere else...
             toggleRoomButton();
 
             switch (this.id) {
@@ -459,19 +463,19 @@
                     break;
                 case 'Kitchen':
                     nCurrentCam = aCurrentCam.Kitchen;
-                    sCurStill    = aStills.Kitchen;
+                    sCurStill.set(aStills.Kitchen);
                     break;
                 case 'Entry-Way':
                     nCurrentCam = aCurrentCam.Kitchen;
-                    sCurStill    = aStills.Entryway;
+                    sCurStill.set(aStills.Entryway);
                     break;
                 case 'Living-Room':
                     nCurrentCam = aCurrentCam.Livingroom;
-                    sCurStill    = aStills.Livingroom;
+                    sCurStill.set(aStills.Livingroom);
                     break;
                 case 'Bathroom':
                     nCurrentCam = aCurrentCam.Bathroom;
-                    sCurStill    = aStills.Bathroom;
+                    sCurStill.set(aStills.Bathroom);
                     break;
                 case 'Bedroom':
                     nCurrentCam = aCurrentCam.Bedroom;
@@ -479,11 +483,11 @@
                     break;
                 case 'Hall-2':
                     nCurrentCam = aCurrentCam.HallTwo;
-                    sCurStill    = aStills.HallTwo;
+                    sCurStill.set(aStills.HallTwo);
                     break;
                 case 'Driveway':
                     nCurrentCam = aCurrentCam.Driveway;
-                    sCurStill    = aStills.Driveway;
+                    sCurStill(aStills.Driveway);
                     break;
             }
            createVideoSeries(sCurUrl.get(), sNextUrl.get(), bCanCatch.get());
