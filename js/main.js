@@ -569,15 +569,15 @@
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * @param {string} currentVid
+     * @param {string} currentVidUrl
      *      Clip with the trap sequence.
      * @param {string} [nextVid]
      *      Trap clips are often have a clip that appears next.
      */
-    var createVideoSeries = function (currentVid, nextVid) { //TODO: Maybe I should have another clip for the trap?
+    var createVideoSeries = function (currentVidUrl, nextVidUrl) { //TODO: Maybe I should have another clip for the trap?
         var hasPlayed = false;
         video.poster(sCurStill.get());
-        playVideo(currentVid);
+        playVideo(currentVidUrl);
 
         // Attach event handler so that user can TRY to catch
         if (bCanCatch.get() === true) {
@@ -589,9 +589,9 @@
             if (hasPlayed === false) {
 
                 // TODO: May have to change this, b/c there will always be a URL video... I think.
-                if (nextVid) {
+                if (nextVidUrl) {
                     console.log('playing next vid');
-                    playVideo(nextVid);
+                    playVideo(nextVidUrl);
 
                 // Use a still if nextVid does not exist
                 } else { 
@@ -615,7 +615,8 @@
      */
     var trap = function () {
         console.log('trap btn hit');
-        playVideo(sCurTrapUrl.get()); 
+        //playVideo(sCurTrapUrl.get()); 
+        createVideoSeries(sCurTrapUrl.get(), sNextUrl.get());
         toggleTrapListener(false);
     };
 
