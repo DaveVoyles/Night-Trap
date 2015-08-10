@@ -71,6 +71,7 @@
     };
 
     /**
+<<<<<<< HEAD
      * Which trap scene will be triggered if the user hits the trap button?
      */
     var sCurTrapUrl = {
@@ -84,6 +85,8 @@
     };
 
     /**
+=======
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
      * Which static image should appear when there isn't any movement in the room?
      */
     var sCurStill = {
@@ -95,6 +98,7 @@
             this.still = val;
         }
     };
+<<<<<<< HEAD
 
     /**
     * Is it possible to catch someone in this scene?
@@ -126,6 +130,39 @@
         }
     };
 
+=======
+
+    /**
+    * Is it possible to catch someone in this scene?
+    */
+    var bCanCatch = {
+        bool: true,
+        get () {
+            return this.bCanCatch;
+        },
+        set (val) {
+            this.bCanCatch= val;
+        }
+    };
+
+    // Timer to keep track of user's time spent in-game
+    var nTimeStart      = new Date();
+    // Audio element for SFX, passwords, and noises during stills
+    var audioElem       = null;
+    // Are we in Debug mode?
+    var bDebug          = true;
+    // elapsedTime() sets this value
+    var nCurrentTime = {
+        time: 0,
+        get () {
+            return this.time;
+        },
+        set (val) {
+            this.time = val;
+        }
+    };
+
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
     var timerElem       = document.getElementById('timer');
     var video           = null;   
     // What has the user selected?
@@ -146,6 +183,31 @@
       , Green  : 'Green '
       , Yellow : 'Yellow'
       , Orange : 'Orange'
+<<<<<<< HEAD
+    };
+    // Random password set by game 
+    var ranPassword = 'Blue';
+
+    // Path to SFX
+    var aAudioClips = {
+          change   : 'sfx/CHANGE.mp3'
+        , crickets : 'sfx/CRICK2.mp3'
+        , frogs    : 'sfx/FROG2.mp3 '
+        , denied   : 'sfx/DENIED.mp3'
+    };
+
+    // Posters, which are set as the camera feed when room is empty
+    var aStills = {
+          HallOne    : 'img/stills/BATHROOM_1.JPG   '
+        , Kitchen    : 'img/stills/KITCHEN_1.JPG    '
+        , Entryway   : 'img/stills/ENTRY-WAY_1.JPG  '
+        , Livingroom : 'img/stills/Living-ROom_1.JPG'
+        , Bathroom   : 'img/stills/Bathroom_1.JPG   '
+        , Bedroom    : 'img/stills/Bedroom_1.JPG    '
+        , HallTwo    : 'img/stils/Hall-Two_1.JPG    '
+        , Driveway   : 'img/stills/Driveway_1.JPG   '
+=======
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
     };
     // Random password set by game 
     var ranPassword = 'Blue';
@@ -187,6 +249,23 @@
     // Camera (room) player currently has selected
     var nCurrentCam = aCurrentCam.HallOne;
 
+    /**
+     * Which camera is currently selected?
+     * You should also set the still to currently selected room when changing cameras, too.
+     */
+    var aCurrentCam = {
+          HallOne    : 0
+        , Kitchen    : 1
+        , Entryway   : 2
+        , Livingroom : 3
+        , Bathroom   : 4
+        , Bedroom    : 5
+        , HallTwo    : 6
+        , Driveway   : 7
+    };
+    // Camera (room) player currently has selected
+    var nCurrentCam = aCurrentCam.HallOne;
+
     /** Which url should this room be on at this moment? 
      * @example: aCurrentRoomUrl.HallOne = camHallOne.c21;
      */
@@ -201,8 +280,13 @@
         , Driveway   : 7
     };
     var sCurrentRoomUrl = '';
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
     /* Temp videos for testing playback */
     var aTempLocal = [
         'video/00180291.mp4',
@@ -412,12 +496,27 @@
         if (bDebug) {
             //console.log(secondsToTimeString(nCurrentTime));
             //console.log(nCurrentTime);
+<<<<<<< HEAD
+=======
         }
     };
 
 
     /**
      * Check if browser supports audio -- if not, tell user to update
+     */
+    var initializeAudio = function () {
+        audioElem = document.getElementById('audio-tag');
+        if (!Modernizr.audio) {
+            window.open('http://outdatedbrowser.com/en', '_blank');
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
+        }
+    };
+
+
+    /**
+     * Check if browser supports audio -- if not, tell user to update
+<<<<<<< HEAD
      */
     var initializeAudio = function () {
         audioElem = document.getElementById('audio-tag');
@@ -431,6 +530,10 @@
      * Check if browser supports audio -- if not, tell user to update
      * Loads video as soon as page loads for Video.js player
      */
+=======
+     * Loads video as soon as page loads for Video.js player
+     */
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
     var initializeVideoStream = function () {
         video = videojs('video-player');
         if (!Modernizr.video) {
@@ -439,12 +542,21 @@
         if (bDebug) {
             //video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
             video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
+<<<<<<< HEAD
             video.load();
             video.play();
         } else {
             video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
             video.load();
             video.play();
+=======
+            video.load();
+            video.play();
+        } else {
+            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+            video.load();
+            video.play();
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
         }
     };
 
@@ -519,9 +631,14 @@
 
             switch (nCurrentTime.get()) {
                 case 1:
+<<<<<<< HEAD
                     sCurUrl  .set(aTempLocal[1]);    // 2 augs
                     sNextUrl.set(aTempLocal[0]);     // Sarah 
                     sCurTrapUrl.set(aTempLocal[2]);  // Caught
+=======
+                    sCurUrl  .set(aTempLocal[1]);
+                    sNextUrl .set(aTempLocal[2]);
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
                     bCanCatch.set(true);
                     nCaseTime = 0;
                     break;
@@ -532,12 +649,57 @@
                     nCaseTime = 30;
                     break;
                 default:
+<<<<<<< HEAD
             }
         }   
     };
 
 
     /**
+     * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
+     * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
+     * Switch events based on the time -- occurs whether or not player has this room selected
+     */
+    var eventsBedroom = function () {
+        if (nCurrentCam === aCurrentCam.Bedroom) {
+            console.log('eventsBedroom');
+            var nCaseTime = 0;
+
+            switch (nCurrentTime.get()) {
+                case 1: 
+                    sCurUrl.set(aTempLocal[1]);
+                    sNextUrl.set(null);
+                    bCanCatch.set(true);
+                    nCaseTime = 0;
+                    break;
+                case 54:
+                    aCurrentRoomUrl.Bedroom = camBedroom.c540281;
+                    sNextUrl = aStills.Bedroom;
+                    nCaseTime = 54;
+                    break;
+                default:
+=======
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
+            }
+        }
+    };
+
+
+    /**
+<<<<<<< HEAD
+     * Sets the poster (background) between clips to the room you are currently viewing
+     * hasPlayed variable prevents the footage from looping.
+     * Second 'ended' event draws poster to screen when 2nd clip has completed
+     * @param {string} currentVidUrl
+     *      Clip with the trap sequence.
+     * @param {string} [nextVid]
+     *      Trap clips are often have a clip that appears next.
+     */
+    var createVideoSeries = function (currentVidUrl, nextVidUrl) { //TODO: Maybe I should have another clip for the trap?
+        var hasPlayed = false;
+        video.poster(sCurStill.get());
+        playVideo(currentVidUrl);
+=======
      * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
      * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
      * Switch events based on the time -- occurs whether or not player has this room selected
@@ -569,15 +731,18 @@
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * @param {string} currentVidUrl
+     * @param {string} currentVid
      *      Clip with the trap sequence.
      * @param {string} [nextVid]
      *      Trap clips are often have a clip that appears next.
+     * @param {bool} [bCatchable]
+     *      Is there an opportunity to catch something here? default val is false.
      */
-    var createVideoSeries = function (currentVidUrl, nextVidUrl) { //TODO: Maybe I should have another clip for the trap?
+    var createVideoSeries = function (currentVid, nextVid, bCatchable) { //TODO: Maybe I should have another clip for the trap?
         var hasPlayed = false;
         video.poster(sCurStill.get());
-        playVideo(currentVidUrl);
+        playVideo(currentVid);
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
 
         // Attach event handler so that user can TRY to catch
         if (bCanCatch.get() === true) {
@@ -589,9 +754,15 @@
             if (hasPlayed === false) {
 
                 // TODO: May have to change this, b/c there will always be a URL video... I think.
+<<<<<<< HEAD
                 if (nextVidUrl) {
                     console.log('playing next vid');
                     playVideo(nextVidUrl);
+=======
+                if (nextVid) {
+                    console.log('playing next vid');
+                    playVideo(nextVid);
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
 
                 // Use a still if nextVid does not exist
                 } else { 
@@ -614,8 +785,12 @@
      * Make it unsable again right after you trigger the video
      */
     var trap = function () {
+<<<<<<< HEAD
         console.log('trap btn hit');
         createVideoSeries(sCurTrapUrl.get(), sNextUrl.get());
+=======
+        playVideo(sCurUrl.get());
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
         toggleTrapListener(false);
     };
 
@@ -627,7 +802,11 @@
      */
     var toggleTrapListener = function (bShouldListen) {
         if (bShouldListen === true) {
+<<<<<<< HEAD
             document.getElementById('Trap').addEventListener   ('click', trap);
+=======
+            document.getElementById('Trap').addEventListener(   'click', trap);
+>>>>>>> 8622ba21140e5d9d946d1898c6e288291a088221
         } else {
             document.getElementById('Trap').removeEventListener('click', trap);
         }
