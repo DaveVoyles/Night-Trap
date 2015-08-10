@@ -615,7 +615,6 @@
      */
     var trap = function () {
         console.log('trap btn hit');
-        //playVideo(sCurTrapUrl.get()); 
         createVideoSeries(sCurTrapUrl.get(), sNextUrl.get());
         toggleTrapListener(false);
     };
