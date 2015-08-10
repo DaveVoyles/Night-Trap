@@ -6,13 +6,11 @@ A browser port of the Sega CD classic from Digital Pictures
 ----------
 ### About
 
-## [You can play / view it here.](http://nighttrap.azurewebsites.net/)
+## [You can play / view the Alpha here. May not always work.](http://nighttrap-test.azurewebsites.net)
 
 [Join the discussion on Reddit](https://www.reddit.com/r/gamedev/comments/3d9m9x/i_ported_night_trap_to_the_browser_today/)
 
 [Follow along with the development diary](http://www.davevoyles.com/deconstructing-night-trap/)
-
-[Check the Alpha branch for the latest build](https://github.com/DaveVoyles/Night-Trap/tree/alpha)
 
 ![] (http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg)
 
