@@ -267,10 +267,10 @@
 
     /**
      * Used with aCurrentCam to set the potential values
-     * @example: currentCam.set(aCurrentCam.Bathroom);
+     * @example: nCurrentCam.set(aCurrentCam.Bathroom);
      * @returns: {Object} cam: 4
      */ 
-    var currentCam = {
+    var nCurrentCam = {
         cam: aCurrentCam,
         get () {
             return this.cam;
@@ -279,24 +279,6 @@
             this.cam = val;
         }
     };
-
-
-
-    /** Which url should this room be on at this moment? 
-     * @example: aCurrentRoomUrl.HallOne = camHallOne.c21;
-     */
-    var aCurrentRoomUrl = {
-          HallOne    : 0
-        , Kitchen    : 1
-        , Entryway   : 2
-        , LivingRoom : 3
-        , Bathroom   : 4
-        , Bedroom    : 5
-        , HallTwo    : 6
-        , Driveway   : 7
-    };
-    var sCurrentRoomUrl = '';
-
 
     /* Temp videos for testing playback */
     var aTempLocal = [
@@ -561,35 +543,35 @@
 
             switch (this.id) {
                 case 'Hall-1':
-                    currentCam.set(aCurrentCam.HallOne);
+                    nCurrentCam.set(aCurrentCam.HallOne);
                     sCurStill.set(aStills.HallOne);
                     break;
                 case 'Kitchen':
-                    currentCam.set(aCurrentCam.Kitchen);
+                    nCurrentCam.set(aCurrentCam.Kitchen);
                     sCurStill.set(aStills.Kitchen);
                     break;
                 case 'Entry-Way':
-                    currentCam.set(aCurrentCam.Entryway);
+                    nCurrentCam.set(aCurrentCam.Entryway);
                     sCurStill.set(aStills.Entryway);
                     break;
                 case 'Living-Room':
-                    currentCam.set(aCurrentCam.Livingroom);
+                    nCurrentCam.set(aCurrentCam.Livingroom);
                     sCurStill.set(aStills.Livingroom);
                     break;
                 case 'Bathroom':
-                    currentCam.set(aCurrentCam.Bathroom);
+                    nCurrentCam.set(aCurrentCam.Bathroom);
                     sCurStill.set(aStills.Bathroom);
                     break;
                 case 'Bedroom':
-                    currentCam.set(aCurrentCam.Bedroom);
+                    nCurrentCam.set(aCurrentCam.Bedroom);
                     sCurStill.set(aStills.Bedroom);
                     break;
                 case 'Hall-2':
-                    currentCam.set(aCurrentCam.HallTwo);
+                    nCurrentCam.set(aCurrentCam.HallTwo);
                     sCurStill.set(aStills.HallTwo);
                     break;
                 case 'Driveway':
-                    currentCam.set(aCurrentCam.Driveway);
+                    nCurrentCam.set(aCurrentCam.Driveway);
                     sCurStill(aStills.Driveway);
                     break;
             }
@@ -633,19 +615,16 @@
     var eventsBedroom = function () {
         if (nCurrentCam.get(aCurrentCam.Bedroom) === aCurrentCam.Bedroom) {
             console.log('eventsBedroom');
-            var nCaseTime = 0;
 
             switch (nCurrentTime.get()) {
                 case 1: 
                     sCurUrl.set(aTempLocal[1]);
                     sNextUrl.set(null);
                     bCanCatch.set(true);
-                    nCaseTime = 0;
                     break;
                 case 54:
-                    aCurrentRoomUrl.Bedroom = camBedroom.c540281;
+                    sCurUrl.set(camBedroom.c540281);
                     sNextUrl = aStills.Bedroom;
-                    nCaseTime = 54;
                     break;
                 default:
             }
