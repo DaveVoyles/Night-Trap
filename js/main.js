@@ -176,7 +176,6 @@
         }
     };
 
-
     /**
     * Is it possible to catch someone in this scene?
     */
@@ -265,8 +264,23 @@
         , HallTwo    : 6
         , Driveway   : 7
     };
-    // Camera (room) player currently has selected
-    var nCurrentCam = aCurrentCam.HallOne;
+
+    /**
+     * Used with aCurrentCam to set the potential values
+     * @example: currentCam.set(aCurrentCam.Bathroom);
+     * @returns: {Object} cam: 4
+     */ 
+    var currentCam = {
+        cam: aCurrentCam,
+        get () {
+            return this.cam;
+        },
+        set (val) {
+            this.cam = val;
+        }
+    };
+
+
 
     /** Which url should this room be on at this moment? 
      * @example: aCurrentRoomUrl.HallOne = camHallOne.c21;
@@ -547,35 +561,35 @@
 
             switch (this.id) {
                 case 'Hall-1':
-                    nCurrentCam = aCurrentCam.HallOne;
+                    currentCam.set(aCurrentCam.HallOne);
                     sCurStill.set(aStills.HallOne);
                     break;
                 case 'Kitchen':
-                    nCurrentCam = aCurrentCam.Kitchen;
+                    currentCam.set(aCurrentCam.Kitchen);
                     sCurStill.set(aStills.Kitchen);
                     break;
                 case 'Entry-Way':
-                    nCurrentCam = aCurrentCam.Kitchen;
+                    currentCam.set(aCurrentCam.Entryway);
                     sCurStill.set(aStills.Entryway);
                     break;
                 case 'Living-Room':
-                    nCurrentCam = aCurrentCam.Livingroom;
+                    currentCam.set(aCurrentCam.Livingroom);
                     sCurStill.set(aStills.Livingroom);
                     break;
                 case 'Bathroom':
-                    nCurrentCam = aCurrentCam.Bathroom;
+                    currentCam.set(aCurrentCam.Bathroom);
                     sCurStill.set(aStills.Bathroom);
                     break;
                 case 'Bedroom':
-                    nCurrentCam = aCurrentCam.Bedroom;
+                    currentCam.set(aCurrentCam.Bedroom);
                     sCurStill.set(aStills.Bedroom);
                     break;
                 case 'Hall-2':
-                    nCurrentCam = aCurrentCam.HallTwo;
+                    currentCam.set(aCurrentCam.HallTwo);
                     sCurStill.set(aStills.HallTwo);
                     break;
                 case 'Driveway':
-                    nCurrentCam = aCurrentCam.Driveway;
+                    currentCam.set(aCurrentCam.Driveway);
                     sCurStill(aStills.Driveway);
                     break;
             }
@@ -587,9 +601,10 @@
     * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
     * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
     * Switch events based on the time -- occurs whether or not player has this room selected
+    * Need to set nCurrentTime.get() for each case as well, so that it can be used to set currentTime() on video player.
     */
     var eventsHallOne = function () {
-        if (nCurrentCam === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
+        //if (nCurrentCam === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
             switch (nCurrentTime.get()) {
                 case 1: 
                     sCurUrl    .set(aTempLocal[1]);   // 2 augs
@@ -602,11 +617,11 @@
                     sCurUrl  .set(aTempLocal[1]);
                     sNextUrl .set(aTempLocal[2]);
                     bCanCatch.set(false);
-                    nCaseTime = 30;
+                    nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); 
                     break;
                 default:
             }
-        }
+        //}
     };
 
 
@@ -616,7 +631,7 @@
      * Switch events based on the time -- occurs whether or not player has this room selected
      */
     var eventsBedroom = function () {
-        if (nCurrentCam === aCurrentCam.Bedroom) {
+        if (nCurrentCam.get(aCurrentCam.Bedroom) === aCurrentCam.Bedroom) {
             console.log('eventsBedroom');
             var nCaseTime = 0;
 
