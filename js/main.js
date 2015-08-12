@@ -96,23 +96,22 @@
         }
     };
 
-    //TODO: Can probably get rid of this, now that we have nCaseTimeRoom
-    //var nCaseTime = {
-    //    time: 0,
-    //    get () {
-    //        return this.time;
-    //    },
-    //    set (val) {
-    //        this.time = val;
-    //    }
-    //};
-
-
     /**
-     * @returns {object} new objet for each room containing name and time
+     * Used to hold the time for when an event should occur in each room. This value is then subtracted from 
+     * nCurrentTime.get(), which returns a new value used to set the currentTime() on the video player when switching rooms.
+     * @returns {object} new Object for each room containing name and time
      */
-       var nCaseRoomTime = {
+    var nCaseRoomTime = {
         hallOne:  {
+            time: 0,
+            getTime: function () {
+                return time;
+            },
+            setTime: function (val) {
+                time = val;
+            }
+        },
+        kitchen:  {
             time: 0,
             getTime: function () {
                 return time;
@@ -121,12 +120,57 @@
                 time = val;
             }
         },
+        entryWay:  {
+            time: 0,
+            getTime: function () {
+                return time;
+            },
+           setTime: function (val) {
+                time = val;
+            }
+        },
+        livingRoom:  {
+            time: 0,
+            getTime: function () {
+                return time;
+            },
+           setTime: function (val) {
+                time = val;
+            }
+        },
+         bathroom:  {
+            time: 0,
+            getTime: function () {
+                return time;
+            },
+           setTime: function (val) {
+                time = val;
+            }
+         },
         bedroom:  {
             time: 0,
             getTime: function () {
                 return time;
             },
             setTime: function (val) {
+                time = val;
+            }
+        },
+        hallTwo:  {
+            time: 0,
+            getTime: function () {
+                return time;
+            },
+           setTime: function (val) {
+                time = val;
+            }
+        },
+        driveWay:  {
+            time: 0,
+            getTime: function () {
+                return time;
+            },
+           setTime: function (val) {
                 time = val;
             }
         }
@@ -445,11 +489,6 @@
         updateTimeOnScreen();
         eventsHallOne();
         //eventsBedroom();
-
-        if (bDebug) {
-            //console.log(secondsToTimeString(nCurrentTime));
-            //console.log(nCurrentTime);
-        }
     };
 
 
@@ -544,59 +583,20 @@
     };
 
 
-    var elapsedTimeHall = function (val) {
-        var end       = new Date();
-        //var elapsedMS = end.getTime() - nTimeStart.getTime();
-        var elapsedMS = end.getTime() - val;
-        var seconds   = Math.round(elapsedMS / 1000);
-        var minutes   = Math.round(seconds   /   60);
-
-        nCurrentTime.set(seconds);
-    };
-
-
-    var time  = 0;
-    var timer = null;
-
-    function pad(val) {
-        var valString = val + '';
-
-        if (valString.length < 2) {
-            //return "0" + valString;
-            return valString;
-        } else {
-            return valString;
-        }
-    };
-
-    var min = 0;
-    var setTime = function() {
-        time++;
-        var minutes = pad(parseInt(time / 60));
-        console.log(minutes);
-
-        min = minutes;
-    };
-
-
-
     /**
     * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
     * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
     * Switch events based on the time -- occurs whether or not player has this room selected
     */
     var eventsHallOne = function () {
-        if (nCurrentCam === aCurrentCam.HallOne) {
-            time++;
+        if (nCurrentCam === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
             switch (nCurrentTime.get()) {
-                case 1: // Called ` 60 times
-                    sCurUrl    .set(aTempLocal[1]);    // 2 augs
-                    sNextUrl   .set(aTempLocal[0]);     // Sarah 
-                    sCurTrapUrl.set(aTempLocal[2]);  // Caught
+                case 1: 
+                    sCurUrl    .set(aTempLocal[1]);   // 2 augs
+                    sNextUrl   .set(aTempLocal[0]);   // Sarah 
+                    sCurTrapUrl.set(aTempLocal[2]);   // Caught
                     bCanCatch.set(true);
-                    // How much time has elapsed between when this event had staretd and when the user actually moves to the room?
-                    nCaseRoomTime.hallOne.setTime(6);
-                    console.log(nCaseRoomTime.hallOne.getTime());
+                    nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); 
                     break;
                 case 30:
                     sCurUrl  .set(aTempLocal[1]);
@@ -606,7 +606,7 @@
                     break;
                 default:
             }
-        }   
+        }
     };
 
 
@@ -715,6 +715,24 @@
 
 
     /**
+     * Useful when viewer enters a room after a video was supposed to have started.
+     * Need to apply Math.floor, otherwise Blink throws an error regarding non-finite numbers.
+     * Result is then used to set the currentTime on video player. 
+     * @param   {float} caseTime 
+     * @param   {float} currentTime 
+     * @returns {float} 
+     *      Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
+     */
+    var nTimeDiff = function (caseTime, currentTime) {
+        var floorCurrentTime = Math.floor(currentTime);
+        var floorCaseTime    = Math.floor(caseTime);
+        var result           = floorCurrentTime - floorCaseTime;
+
+        return result;
+    };
+
+
+    /**
      * Pauses audio played during stills, sets new video source, & begins to play.
      * @param {string} clipUrl 
      *      Address of clip to play.
@@ -722,11 +740,9 @@
     var playVideo = function (urlClip) {
         audioElem.pause();
         video.src(urlClip);
+        var diff = nTimeDiff(nCaseRoomTime.hallOne.getTime(), nCurrentTime.get());
         video.play();
-        //video.currentTime(nCasetime - nCurrentTime.get());  
-        //video.currentTime(min);
-        console.log('time is:' + min);
-        //console.log('video.currentTime()' + video.currentTime());
+        video.currentTime(diff);
     };
 
 
