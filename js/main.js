@@ -2,7 +2,7 @@
     'use strict';
 
 
-   var roomObj                 = {
+   var room                    = {
         hallOne: {
             stillUrl: 'img/stills/HALL-ONE_1.JPG',
 
@@ -48,6 +48,55 @@
         }
     };
 
+    var current = {
+        stillUrl: '',
+        getStillUrl () {
+            return this.stillUrl;
+        },
+        setStillUrl (val) {
+            this.stillUrl = val;
+        },
+
+        bCanCatch: true,
+        getCanCatch () {
+            return this.bCanCatch;
+        },
+        setCanCatch (val) {
+            this.bCanCatch = val;
+        },
+
+        time: 0,
+        getTime: function() {
+            return this.time;
+        },
+        setTime: function(val) {
+            this.time = val;
+        },
+
+        curUrl: '',
+        getCurUrl () {
+            return this.curUrl;
+        },
+        setCurUrl (val) {
+            this.curUrl = val;
+        },
+
+        nextUrl: '',
+        getNextUrl() {
+            return this.nextUrl;
+        },
+        setNextUrl (val) {
+            this.nextUrl = val;
+        },
+
+        trapUrl: '',
+        getTrapUrl () {
+            return this.trapUrl;
+        },
+        setTrapUrl (val) {
+            this.trapUrl = val;
+        }
+    };
 
     // Can we hit the switch cam button again?
     var bCanListen             = {
@@ -597,16 +646,13 @@
             switch (this.id) {
                 // Curr, Next, Trap, Catch, Time, canm, & maybe still?
                 case 'Hall-1':
-                    nCurrentCam           .set(aCurrentCam.HallOne); // TODO: Prob don't need this now...
-                    sCurUrl               .set(    roomObj.hallOne.getCurUrl  ());  // 2 augs
-                    sNextUrl              .set(    roomObj.hallOne.getNextUrl ());  // Sarah 
-                    sCurTrapUrl           .set(    roomObj.hallOne.getTrapUrl ());  // Caught
-                    bCanCatch             .set(    roomObj.hallOne.getCanCatch());  
-                    nCaseRoomTime.hallOne .setTime(roomObj.hallOne.getTime    ());
-
-                    //TODO: Can probably replace this
-                    // bCanCatch, NextUrl, StillUrl, and TrapUrl are all set here
-                    sCurStill.set(roomObj.hallOne.stillUrl);
+                    //nCurrentCam           .set(aCurrentCam.HallOne); // TODO: Prob don't need this now...
+                    current.setCurUrl  (room.hallOne.getCurUrl());
+                    current.setNextUrl (room.hallOne.getNextUrl());
+                    current.setTrapUrl (room.hallOne.getTrapUrl());
+                    current.setCanCatch(room.hallOne.getCanCatch());
+                    current.setTime    (room.hallOne.getTime());
+                    current.setStillUrl(room.hallOne.stillUrl);
                     break;
                 case 'Kitchen':
                     nCurrentCam.set(aCurrentCam.Kitchen);
@@ -637,7 +683,7 @@
                     sCurStill(aStills.Driveway);
                     break;
             }
-            createVideoSeries(sCurUrl.get(), sNextUrl.get(), bCanCatch.get());
+            createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getCanCatch());
     };
 
 
@@ -651,11 +697,11 @@
         //if (nCurrentCam.get() === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
         switch (nCurrentTime.get()) {
             case 1: 
-                    roomObj.hallOne.setCurUrl( aTempLocal[2]);   
-                    roomObj.hallOne.setNextUrl(aTempLocal[0]);   
-                    roomObj.hallOne.setTrapUrl(aTempLocal[1]);  
-                    roomObj.hallOne.setCanCatch(true);
-                    roomObj.hallOne.setTime(nCurrentTime.get());
+                    room.hallOne.setCurUrl( aTempLocal[2]);   
+                    room.hallOne.setNextUrl(aTempLocal[0]);   
+                    room.hallOne.setTrapUrl(aTempLocal[1]);  
+                    room.hallOne.setCanCatch(true);
+                    room.hallOne.setTime(nCurrentTime.get());
 
                     //roomObj.hallOne.curUrl.set(aTempLocal[1]);
                     //sCurUrl    .set(aTempLocal[1]);   // 2 augs
@@ -668,7 +714,7 @@
                     sCurUrl  .set(aTempLocal[1]);
                     sNextUrl .set(aTempLocal[2]);
                     bCanCatch.set(false);
-                    nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); 
+                    nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); //TODO: Don't think I need this 
                     break;
                 default:
             }
@@ -725,7 +771,6 @@
         video.on('ended', function() {
             if (hasPlayed       === false) {
                 if (nextVidUrl) {
-                    console.log(nextVidUrl);
                     playVideo(nextVidUrl);
 
                 // Use a still if nextVidUrl does not exist
@@ -737,7 +782,6 @@
 
             // Video has already played, so use a still
             hasPlayed           = true;
-            console.log('using a still');
             video.on('ended', function () {
                 displayStill();
             });
@@ -807,7 +851,7 @@
         audioElem.pause();
         video.src(urlClip);
         // TODO: Change param so that it is not ONLY hall one
-        var diff                = nTimeDiff(roomObj.hallOne.getTime(), nCurrentTime.get()); 
+        var diff                = nTimeDiff(room.hallOne.getTime(), nCurrentTime.get()); 
         video.play();
         video.currentTime(diff);
     };
