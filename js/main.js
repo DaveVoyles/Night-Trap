@@ -52,7 +52,8 @@
      * Obj to get / set current values for the game.
      * @property {string} stillUrl    - Background image when room is empty.
      * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
-     * @property {float}  triggerTime - How far into the game should this time be triggered?  
+     * @property {float}  triggerTime - Time into the game should curUrl should be set.  
+     * @property {float}  time        - Current time stamp when curUrl is being set. 
      * @property {sting}  curUrl      - Url should be set as video.src() right now.
      * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
      * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url. 
@@ -72,6 +73,14 @@
         },
         setCanCatch (val) {
             this.bCanCatch = val;
+        },
+
+        time: 0,
+        getTime () {
+            return this.time;
+        },
+        setTime (val) {
+            this.time = val;
         },
 
         triggerTime: 0,
@@ -156,17 +165,6 @@
     var audioElem              = null;
     // Are we in Debug mode?
     var bDebug                 = true;
-    // elapsedTime() sets this value
-    var nCurrentTime           = {
-        time: 0,
-        get () {
-            return this.time;
-        },
-        set (val) {
-            this.time          = val;
-        }
-    };
-
     var timerElem              = document.getElementById('timer');
     var video                  = null;   
     // What has the user selected?
@@ -392,7 +390,7 @@
         var seconds           = Math.round(elapsedMS / 1000);
         var minutes           = Math.round(seconds   /   60);
 
-        nCurrentTime.set(seconds);
+        current.setTime(seconds);
     };
 
 
@@ -400,7 +398,7 @@
      * Draws current time on screen at 'timer' element.
      */
     var updateTimeOnScreen    = function () {
-        timerElem.innerHTML   = secondsToTimeString(nCurrentTime.get());
+        timerElem.innerHTML = secondsToTimeString(current.getTime());
     };
 
 
@@ -524,13 +522,13 @@
     * Need to set nCurrentTime.get() for each case as well, so that it can be used to set currentTime() on video player.
     */
     var eventsHallOne         = function () {
-        switch (nCurrentTime.get()) {
+          switch (current.getTime()) {
             case 1: 
                 room.hallOne.setCurUrl  (aTempLocal[2]);   
                 room.hallOne.setNextUrl (aTempLocal[0]);   
                 room.hallOne.setTrapUrl (aTempLocal[1]);  
                 room.hallOne.setCanCatch(true);
-                room.hallOne.setTime    (nCurrentTime.get());
+                room.hallOne.setTime    (current.getTime());
                 break;
             case 30:
             
@@ -548,8 +546,8 @@
     var eventsBedroom         = function () {
         if (nCurrentCam.get()   === aCurrentCam.Bedroom) {
             console.log('eventsBedroom');
-
-            switch (nCurrentTime.get()) {
+        //switch (nCurrentTime.get()) {
+          switch (current.getTime()) {
                 case 1: 
                     sCurUrl.set(aTempLocal[1]);
                     sNextUrl.set(null);
@@ -669,7 +667,7 @@
         audioElem.pause();
         video.src(urlClip);
         // TODO: Change param so that it is not ONLY hall one
-        var diff                = nTimeDiff(current.getTriggerTime(), nCurrentTime.get()); 
+          var diff                = nTimeDiff(current.getTriggerTime(), current.getTime()); 
         video.play();
         video.currentTime(diff);
     };
