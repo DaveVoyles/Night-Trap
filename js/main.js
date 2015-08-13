@@ -2,9 +2,9 @@
     'use strict';
 
 
-   var roomObj = {
+   var roomObj                 = {
         hallOne: {
-            stillUrl: 'img/stills/Hall-1.JPG',
+            stillUrl: 'img/stills/HALL-ONE_1.JPG',
 
             bCanCatch: true,
             getCanCatch () {
@@ -16,10 +16,10 @@
 
             time: 0,
             getTime: function() {
-                return time;
+                return this.time;
             },
             setTime: function(val) {
-                this.time = val;
+                this.time      = val;
             },
 
             curUrl: '',
@@ -27,7 +27,7 @@
                 return this.curUrl;
             },
             setCurUrl (val) {
-                this.curUrl = val;
+                this.curUrl    = val;
             },
 
             nextUrl: '',
@@ -35,7 +35,7 @@
                 return this.nextUrl;
             },
             setNextUrl (val) {
-                this.nextUrl = val;
+                this.nextUrl   = val;
             },
 
             trapUrl: '',
@@ -43,33 +43,33 @@
                 return this.trapUrl;
             },
             setTrapUrl (val) {
-                this.trapUrl = val;
+                this.trapUrl   = val;
             }
         }
     };
 
 
     // Can we hit the switch cam button again?
-    var bCanListen = {
+    var bCanListen             = {
         bool: true,
         get () {
             return this.bool;
         },
         set (val) {
-            this.bool = val;
+            this.bool          = val;
         }
     };
 
     /**
      * How many augers has the user caught?
      */
-    var nTotalCaught = {
+    var nTotalCaught           = {
         caught: 0,
         get () {
             return this.caught;
         },
         set (val) {
-            this.caught = val;
+            this.caught        = val;
         },
         increment () {
             this.caught ++;
@@ -79,13 +79,13 @@
     /**
      * How many augers has the user missed?
      */
-    var nTotalMissed = {
+    var nTotalMissed           = {
         missed: 0,
         get () {
             return this.missed;
         },
         set (val) {
-            this.missed = val;
+            this.missed        = val;
         },
         increment () {
             this.missed ++;
@@ -95,68 +95,69 @@
     /**
      * Url about to be drawn to the screen
      */
-    var sCurUrl = {
+    var sCurUrl                = {
         url: '',
         get () {
             return this.url;
         },
         set (val) {
-            this.url = val;
+            this.url           = val;
         }
     };
 
     /**
      * When this scene completes, which URL will appear next?
      */
-    var sNextUrl = {
+    var sNextUrl               = {
         url: '',
         get () {
             return this.url;
         },
         set (val) {
-            this.url = val;
+            this.url           = val;
         }
     };
 
     /**
      * Which trap scene will be triggered if the user hits the trap button?
      */
-    var sCurTrapUrl = {
+    var sCurTrapUrl            = {
         url: '',
         get () {
             return this.url;
         },
         set (val) {
-            this.url = val;
+            this.url           = val;
         }
     };
 
     /**
      * Which static image should appear when there isn't any movement in the room?
      */
-    var sCurStill = {
+    var sCurStill              = {
         still: '',
         get () {
             return this.still;
         },
         set (val) {
-            this.still = val;
+            this.still         = val;
         }
     };
 
+    //TODO: Can prob get rid of this
     /**
      * Used to hold the time for when an event should occur in each room. This value is then subtracted from 
      * nCurrentTime.get(), which returns a new value used to set the currentTime() on the video player when switching rooms.
      * @returns {object} new Object for each room containing name and time
      */
-    var nCaseRoomTime = {
+    var nCaseRoomTime          = {
         hallOne:  {
             time: 0,
             getTime: function () {
-                return time;
+                return this.time;
             },
             setTime: function (val) {
-                time = val;
+                this.time      = val;
             }
         },
         kitchen:  {
@@ -165,7 +166,7 @@
                 return time;
             },
            setTime: function (val) {
-                time = val;
+                time           = val;
             }
         },
         entryWay:  {
@@ -174,7 +175,7 @@
                 return time;
             },
            setTime: function (val) {
-                time = val;
+                time           = val;
             }
         },
         livingRoom:  {
@@ -183,16 +184,16 @@
                 return time;
             },
            setTime: function (val) {
-                time = val;
+                time           = val;
             }
         },
-         bathroom:  {
+        bathroom:  {
             time: 0,
             getTime: function () {
                 return time;
             },
            setTime: function (val) {
-                time = val;
+                time           = val;
             }
          },
         bedroom:  {
@@ -201,7 +202,7 @@
                 return time;
             },
             setTime: function (val) {
-                time = val;
+                time           = val;
             }
         },
         hallTwo:  {
@@ -210,7 +211,7 @@
                 return time;
             },
            setTime: function (val) {
-                time = val;
+                time           = val;
             }
         },
         driveWay:  {
@@ -219,7 +220,7 @@
                 return time;
             },
            setTime: function (val) {
-                time = val;
+                time           = val;
             }
         }
     };
@@ -227,47 +228,47 @@
     /**
     * Is it possible to catch someone in this scene?
     */
-    var bCanCatch = {
+    var bCanCatch              = {
         bool: true,
         get () {
             return this.bCanCatch;
         },
         set (val) {
-            this.bCanCatch= val;
+            this.bCanCatch     = val;
         }
     };
 
     // Timer to keep track of user's time spent in-game
-    var nTimeStart      = new Date();
+    var nTimeStart             = new Date();
     // Audio element for SFX, passwords, and noises during stills
-    var audioElem       = null;
+    var audioElem              = null;
     // Are we in Debug mode?
-    var bDebug          = true;
+    var bDebug                 = true;
     // elapsedTime() sets this value
-    var nCurrentTime = {
+    var nCurrentTime           = {
         time: 0,
         get () {
             return this.time;
         },
         set (val) {
-            this.time = val;
+            this.time          = val;
         }
     };
 
-    var timerElem       = document.getElementById('timer');
-    var video           = null;   
+    var timerElem              = document.getElementById('timer');
+    var video                  = null;   
     // What has the user selected?
-    var sCurUserPassword = {
+    var sCurUserPassword       = {
         pass: 'Blue',
         get () {
             return this.pass;
         },
         set (val) {
-            this.pass = val;
+            this.pass          = val;
         }
     };
     // List of passwords that the game can select
-    var aPasswords      = {
+    var aPasswords             = {
         Purple : 'Purple'
       , Blue   : 'Blue  '
       , Red    : 'Red   '
@@ -276,10 +277,10 @@
       , Orange : 'Orange'
     };
     // Random password set by game 
-    var ranPassword = 'Blue';
+    var ranPassword            = 'Blue';
 
     // Path to SFX
-    var aAudioClips = {
+    var aAudioClips            = {
           change   : 'sfx/CHANGE.mp3'
         , crickets : 'sfx/CRICK2.mp3'
         , frogs    : 'sfx/FROG2.mp3 '
@@ -287,7 +288,7 @@
     };
 
     // Posters, which are set as the camera feed when room is empty
-    var aStills = {
+    var aStills                = {
           HallOne    : 'img/stills/BATHROOM_1.JPG   '
         , Kitchen    : 'img/stills/KITCHEN_1.JPG    '
         , Entryway   : 'img/stills/ENTRY-WAY_1.JPG  '
@@ -302,7 +303,7 @@
      * Which camera is currently selected?
      * You should also set the still to currently selected room when changing cameras, too.
      */
-    var aCurrentCam = {
+    var aCurrentCam            = {
           HallOne    : 0
         , Kitchen    : 1
         , Entryway   : 2
@@ -318,32 +319,32 @@
      * @example: nCurrentCam.set(aCurrentCam.Bathroom);
      * @returns: {Object} cam: 4
      */ 
-    var nCurrentCam = {
+    var nCurrentCam            = {
         cam: aCurrentCam,
         get () {
             return this.cam;
         },
         set (val) {
-            this.cam = val;
+            this.cam           = val;
         }
     };
 
     /* Temp videos for testing playback */
-    var aTempLocal = [
+    var aTempLocal             = [
         'video/00180291.mp4',
         'video/00352291.mp4',
         'video/00431292.mp4'
     ];
 
     /* 0 | 1 Opening & General */
-    var camMisc = {
+    var camMisc                = {
         DPWORLDD: '',
         // Intro briefing
         c11: 'https://nighttrap.blob.core.windows.net/vid/intro/00000011-Intro.mp4'
     };
 
     /* 2 - Hall-1 */
-    var camHallOne = {
+    var camHallOne             = {
          // Augers enter through back door, walk to basement
           c21:      'https://nighttrap.blob.core.windows.net/vid/hallone/00000021.mp4'
         // TRAP: Augers caught in hall
@@ -353,7 +354,7 @@
     };
 
     /* 3 - Kitchen */
-    var camKitchen = {
+    var camKitchen             = {
          // 1 Auger walks in from Entry. Can catch at 4 Sec
           c1200431: 'https://nighttrap.blob.core.windows.net/vid/kitchen/01200431.mp4'
         // 1 Auger caught in kitchen when trying to access fridge
@@ -363,7 +364,7 @@
     };
 
     /* 4- Living-Room */
-    var camLivingRoom = {
+    var camLivingRoom          = {
          // Augers enter from outside
           c232241: 'https://nighttrap.blob.core.windows.net/vid/livingroom/00232241.mp4'
         // TRAP: Augers caught on bookshelf
@@ -381,7 +382,7 @@
     };
 
     /* 5 - Driveway */
-    var camDriveway = {
+    var camDriveway            = {
         //  Girls enter the driveway, meet eddy, walk in. Can catch at ~6 Sec.
           c1440451: 'https://nighttrap.blob.core.windows.net/vid/driveway/01440451.mp4'
         // TRAP: Launching auger from roof
@@ -389,7 +390,7 @@
     };
 
     /* 6 - Entryway */
-    var camEntryway = {
+    var camEntryway            = {
         // 1 Auger walks in from beneath stairs. Looks outside. Can be caught
           c1320261: 'https://nighttrap.blob.core.windows.net/vid/entryway/01320261.mp4'
         // 1 Auger caught in  entryway
@@ -401,7 +402,7 @@
     };
 
     /* 7 - Hall-2 */
-    var camHallTwo = {
+    var camHallTwo             = {
         // Auger enters hall 2 from bedroom
           c310471: 'https://nighttrap.blob.core.windows.net/vid/halltwo/00310471.mp4'
         // Auger walks in from Bathroom.
@@ -413,7 +414,7 @@
     };
 
     /* 8 - Bedroom */
-    var camBedroom = {
+    var camBedroom             = {
         //Sarah staring at mirror, 3 augers enter two go to bathroom one to hall-2
            c81:    'https://nighttrap.blob.core.windows.net/vid/bedroom/00000081.mp4'
         // TRAP: Augers caught 
@@ -425,7 +426,7 @@
     };
 
     /* 9 - Bathroom */
-    var camBathroom = {
+    var camBathroom            = {
         // Sarah enters bathroom from bedroom. Enters mirror
           c180291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00180291.mp4'
         // 2 Augers enter bathroom from bedroom, 1 catchable
@@ -440,12 +441,11 @@
         , c500291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00500291.mp4'
     };
 
-
     /**
      * Wires up event handlers for buttons.
      * Sets src property for video player and sets reference to audio tag
      */
-    var init = function () {
+    var init                   = function () {
         toggleRoomButton();
         initializeAudio();
         initializeVideoStream();
@@ -456,9 +456,9 @@
     /**
      * Rooom buttons now changeVideoStream() when clicked.
      */
-    var toggleRoomButton = function () {
+    var toggleRoomButton      = function () {
 
-        if (bCanListen.get() === true) { 
+        if (bCanListen.get()  === true) { 
             document.getElementById('Hall-1'     ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Kitchen'    ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Entry-Way'  ).addEventListener(   'click', changeVideoStream, false);
@@ -485,17 +485,17 @@
      * @param {float} seconds
      *      Takes seconds and returns it in string format of MM:SS for on screen timer
      */
-    var secondsToTimeString = function (seconds) {
+    var secondsToTimeString   = function (seconds) {
 
-        var s         = Math.floor(seconds % 60);
-        var m         = Math.floor((seconds * 1000 / (1000 * 60)) % 60);
-        var strFormat = 'MM:SS';
+        var s                 = Math.floor(seconds % 60);
+        var m                 = Math.floor((seconds * 1000 / (1000 * 60)) % 60);
+        var strFormat         = 'MM:SS';
 
-        if (s < 10) s = '0' + s;
-        if (m < 10) m = '0' + m;
+        if (s < 10) s         = '0' + s;
+        if (m < 10) m         = '0' + m;
 
-        strFormat = strFormat.replace(/MM/, m);
-        strFormat = strFormat.replace(/SS/, s);
+        strFormat             = strFormat.replace(/MM/, m);
+        strFormat             = strFormat.replace(/SS/, s);
 
         return strFormat;
     };
@@ -504,11 +504,11 @@
     /**
      * Place in update() to get total time since user has started game.
      */
-    var elapsedTime = function () {
-        var end       = new Date();
-        var elapsedMS = end.getTime() - nTimeStart.getTime();
-        var seconds   = Math.round(elapsedMS / 1000);
-        var minutes   = Math.round(seconds   /   60);
+    var elapsedTime           = function () {
+        var end               = new Date();
+        var elapsedMS         = end.getTime() - nTimeStart.getTime();
+        var seconds           = Math.round(elapsedMS / 1000);
+        var minutes           = Math.round(seconds   /   60);
 
         nCurrentTime.set(seconds);
     };
@@ -517,8 +517,8 @@
     /**
      * Draws current time on screen at 'timer' element.
      */
-    var updateTimeOnScreen = function () {
-        timerElem.innerHTML = secondsToTimeString(nCurrentTime.get());
+    var updateTimeOnScreen    = function () {
+        timerElem.innerHTML   = secondsToTimeString(nCurrentTime.get());
     };
 
 
@@ -527,7 +527,7 @@
      * @param {float} delta
      *      The amount of time since the last update, in seconds
      */
-    var update = function (delta) {
+    var update                = function (delta) {
         elapsedTime();
         updateTimeOnScreen();
         eventsHallOne();
@@ -538,8 +538,8 @@
     /**
      * Check if browser supports audio -- if not, tell user to update
      */
-    var initializeAudio = function () {
-        audioElem = document.getElementById('audio-tag');
+    var initializeAudio       = function () {
+        audioElem             = document.getElementById('audio-tag');
         if (!Modernizr.audio) {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
@@ -553,7 +553,7 @@
      * does not work.
      */
     var initializeVideoStream = function () {
-        video = videojs('video-player');
+        video                 = videojs('video-player');
         if (!Modernizr.video) {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
@@ -578,7 +578,7 @@
      * @param {float} interpolationPercentage
      *   How much to interpolate between frames.
      */
-    var draw = function (interpolatePercentage) {
+    var draw                  = function (interpolatePercentage) {
         // Do I really need this? 
     };
 
@@ -587,9 +587,9 @@
      * Sets aCurrentCam to the room user is viewing. 
      * Sets currentStill to match that room, so that poster can be set between videos.
      * createVideoSeries is called after properties have been set.
-     * @example: nCurremtCam = aCurrentCam.HallOne;
+     * @example: nCurremtCam  = aCurrentCam.HallOne;
      */
-    var changeVideoStream = function () {
+    var changeVideoStream     = function () {
             bCanListen.set(false); //TODO: May need to set this to true somewhere else...
             toggleRoomButton();
 
@@ -645,12 +645,11 @@
     * Switch events based on the time -- occurs whether or not player has this room selected
     * Need to set nCurrentTime.get() for each case as well, so that it can be used to set currentTime() on video player.
     */
-    var eventsHallOne = function () {
+    var eventsHallOne         = function () {
         //if (nCurrentCam.get() === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
         switch (nCurrentTime.get()) {
-            //TODO: These can stay, but suggest using the new obj and placing them all in there for orgnization
             case 1: 
-                    roomObj.hallOne.setCurUrl(aTempLocal[1]);    // 2 Augs
+                    roomObj.hallOne.setCurUrl( aTempLocal[1]);    // 2 Augs
                     roomObj.hallOne.setNextUrl(aTempLocal[0]);   // Sarah
                     roomObj.hallOne.setTrapUrl(aTempLocal[2]);   // Caught
                     roomObj.hallOne.setCanCatch(true);
@@ -680,8 +679,8 @@
      * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
      * Switch events based on the time -- occurs whether or not player has this room selected
      */
-    var eventsBedroom = function () {
-        if (nCurrentCam.get() === aCurrentCam.Bedroom) {
+    var eventsBedroom         = function () {
+        if (nCurrentCam.get()   === aCurrentCam.Bedroom) {
             console.log('eventsBedroom');
 
             switch (nCurrentTime.get()) {
@@ -692,7 +691,7 @@
                     break;
                 case 54:
                     sCurUrl.set(camBedroom.c540281);
-                    sNextUrl = aStills.Bedroom;
+                    sNextUrl    = aStills.Bedroom;
                     break;
                 default:
             }
@@ -709,31 +708,31 @@
      * @param {string} [nextVid]
      *      Trap clips are often have a clip that appears next.
      */
-    var createVideoSeries = function (currentVidUrl, nextVidUrl) { //TODO: Maybe I should have another clip for the trap?
-        var hasPlayed = false;
+    var createVideoSeries     = function (currentVidUrl, nextVidUrl) { //TODO: Maybe I should have another clip for the trap?
+        var hasPlayed           = false;
         video.poster(sCurStill.get());
         playVideo(currentVidUrl);
 
         // Attach event handler so that user can TRY to catch
-        if (bCanCatch.get() === true) {
+        if (bCanCatch.get()     === true) {
             toggleTrapListener(true);
         }
 
         // Did not catch / no change to catch.....so play next video
         video.on('ended', function() {
-            if (hasPlayed === false) {
+            if (hasPlayed       === false) {
                 if (nextVidUrl) {
                     playVideo(nextVidUrl);
 
                 // Use a still if nextVidUrl does not exist
                 } else { 
-                    hasPlayed = true;
+                    hasPlayed   = true;
                     displayStill();
                 }
             };
 
             // Video has already played, so use a still
-            hasPlayed = true;
+            hasPlayed           = true;
             console.log('using a still');
             video.on('ended', function () {
                 displayStill();
@@ -746,7 +745,7 @@
      * Can we use a trap in this scene? If so, change clips when user hits 'Trap' button
      * Make it unsable again right after you trigger the video
      */
-    var trap = function () {
+    var trap                  = function () {
         createVideoSeries(sCurTrapUrl.get(), sNextUrl.get());
         toggleTrapListener(false);
     };
@@ -757,8 +756,8 @@
      * @param {bool} bShouldListen
      *      If true, adds listener. If false, removes listener
      */
-    var toggleTrapListener = function (bShouldListen) {
-        if (bShouldListen === true) {
+    var toggleTrapListener    = function (bShouldListen) {
+        if (bShouldListen       === true) {
             document.getElementById('Trap').addEventListener   ('click', trap);
         } else {
             document.getElementById('Trap').removeEventListener('click', trap);
@@ -769,9 +768,9 @@
     /**
      * Still to play when no action occurs. Sets video.src to src so that the still image can be dispayed as a poster
      */
-    var displayStill = function () { 
+    var displayStill          = function () { 
         video.src(video.src);
-        audioElem.src = aAudioClips.crickets;
+        audioElem.src           = aAudioClips.crickets;
         audioElem.play();
     };
 
@@ -785,10 +784,10 @@
      * @returns {float} 
      *      Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
-    var nTimeDiff = function (caseTime, currentTime) {
-        var floorCurrentTime = Math.floor(currentTime);
-        var floorCaseTime    = Math.floor(caseTime);
-        var result           = floorCurrentTime - floorCaseTime;
+    var nTimeDiff             = function (caseTime, currentTime) {
+        var floorCurrentTime    = Math.floor(currentTime);
+        var floorCaseTime       = Math.floor(caseTime);
+        var result              = floorCurrentTime - floorCaseTime;
 
         return result;
     };
@@ -799,10 +798,11 @@
      * @param {string} clipUrl 
      *      Address of clip to play.
      */
-    var playVideo = function (urlClip) {
+    var playVideo             = function (urlClip) {
         audioElem.pause();
         video.src(urlClip);
-        var diff = nTimeDiff(nCaseRoomTime.hallOne.getTime(), nCurrentTime.get());
+        // TODO: Change param so that it is not ONLY hall one
+        var diff                = nTimeDiff(roomObj.hallOne.getTime(), nCurrentTime.get()); 
         video.play();
         video.currentTime(diff);
     };
@@ -813,8 +813,8 @@
      * @param {string} clipUrl 
      *      Address of clip to play.
      */
-    var playSfx = function (urlClip) {
-        audioElem.src = urlClip;
+    var playSfx               = function (urlClip) {
+        audioElem.src           = urlClip;
         audioElem.play();
     };
 
