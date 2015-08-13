@@ -1,6 +1,54 @@
 (function() {
     'use strict';
 
+
+   var roomObj = {
+        hallOne: {
+            stillUrl: 'img/stills/Hall-1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return time;
+            },
+            setTime: function(val) {
+                this.time = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl = val;
+            }
+        }
+    };
+
+
     // Can we hit the switch cam button again?
     var bCanListen = {
         bool: true,
@@ -398,7 +446,6 @@
      * Sets src property for video player and sets reference to audio tag
      */
     var init = function () {
-        //wireButtonsToEvent(true);
         toggleRoomButton();
         initializeAudio();
         initializeVideoStream();
@@ -501,7 +548,9 @@
 
     /**
      * Check if browser supports audio -- if not, tell user to update
-     * Loads video as soon as page loads for Video.js player
+     * Loads video as soon as page loads for Video.js player.
+     * Disable right-click controls for video player. Cannot reference videoJs directly, event listener
+     * does not work.
      */
     var initializeVideoStream = function () {
         video = videojs('video-player');
@@ -518,9 +567,12 @@
             video.load();
             video.play();
         }
-    };
 
-     
+        document.getElementById('video-player').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        }, false);
+    };
+   
     /**
      * Draws the GUI to the screen
      * @param {float} interpolationPercentage
@@ -543,8 +595,16 @@
 
             switch (this.id) {
                 case 'Hall-1':
-                    nCurrentCam.set(aCurrentCam.HallOne);
-                    sCurStill.set(aStills.HallOne);
+                    nCurrentCam           .set(aCurrentCam.HallOne); // TODO: Prob don't need this now...
+                    sCurUrl               .set(    roomObj.hallOne.getCurUrl()  );  // 2 augs
+                    sNextUrl              .set(    roomObj.hallOne.getNextUrl() );  // Sarah 
+                    sCurTrapUrl           .set(    roomObj.hallOne.getTrapUrl() );  // Caught
+                    bCanCatch             .set(    roomObj.hallOne.getCanCatch());  
+                    nCaseRoomTime.hallOne .setTime(roomObj.hallOne.getTime()    );
+
+                    //TODO: Can probably replace this
+                    // bCanCatch, NextUrl, StillUrl, and TrapUrl are all set here
+                    sCurStill.set(roomObj.hallOne.stillUrl);
                     break;
                 case 'Kitchen':
                     nCurrentCam.set(aCurrentCam.Kitchen);
@@ -575,7 +635,7 @@
                     sCurStill(aStills.Driveway);
                     break;
             }
-           createVideoSeries(sCurUrl.get(), sNextUrl.get(), bCanCatch.get());
+            createVideoSeries(sCurUrl.get(), sNextUrl.get(), bCanCatch.get());
     };
 
 
@@ -586,14 +646,22 @@
     * Need to set nCurrentTime.get() for each case as well, so that it can be used to set currentTime() on video player.
     */
     var eventsHallOne = function () {
-        //if (nCurrentCam === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
-            switch (nCurrentTime.get()) {
-                case 1: 
-                    sCurUrl    .set(aTempLocal[1]);   // 2 augs
-                    sNextUrl   .set(aTempLocal[0]);   // Sarah 
-                    sCurTrapUrl.set(aTempLocal[2]);   // Caught
-                    bCanCatch.set(true);
-                    nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); 
+        //if (nCurrentCam.get() === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
+        switch (nCurrentTime.get()) {
+            //TODO: These can stay, but suggest using the new obj and placing them all in there for orgnization
+            case 1: 
+                    roomObj.hallOne.setCurUrl(aTempLocal[1]);    // 2 Augs
+                    roomObj.hallOne.setNextUrl(aTempLocal[0]);   // Sarah
+                    roomObj.hallOne.setTrapUrl(aTempLocal[2]);   // Caught
+                    roomObj.hallOne.setCanCatch(true);
+                    roomObj.hallOne.setTime(nCurrentTime.get());
+
+                    //roomObj.hallOne.curUrl.set(aTempLocal[1]);
+                    //sCurUrl    .set(aTempLocal[1]);   // 2 augs
+                    //sNextUrl   .set(aTempLocal[0]);   // Sarah 
+                    //sCurTrapUrl.set(aTempLocal[2]);   // Caught
+                    //bCanCatch.set(true);
+                    //nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); 
                     break;
                 case 30:
                     sCurUrl  .set(aTempLocal[1]);
@@ -613,7 +681,7 @@
      * Switch events based on the time -- occurs whether or not player has this room selected
      */
     var eventsBedroom = function () {
-        if (nCurrentCam.get(aCurrentCam.Bedroom) === aCurrentCam.Bedroom) {
+        if (nCurrentCam.get() === aCurrentCam.Bedroom) {
             console.log('eventsBedroom');
 
             switch (nCurrentTime.get()) {
