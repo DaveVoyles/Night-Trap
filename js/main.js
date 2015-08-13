@@ -507,18 +507,6 @@
         , denied   : 'sfx/DENIED.mp3'
     };
 
-    // Posters, which are set as the camera feed when room is empty
-    var aStills                = {
-          HallOne    : 'img/stills/BATHROOM_1.JPG   '
-        , Kitchen    : 'img/stills/KITCHEN_1.JPG    '
-        , Entryway   : 'img/stills/ENTRY-WAY_1.JPG  '
-        , Livingroom : 'img/stills/Living-ROom_1.JPG'
-        , Bathroom   : 'img/stills/Bathroom_1.JPG   '
-        , Bedroom    : 'img/stills/Bedroom_1.JPG    '
-        , HallTwo    : 'img/stils/Hall-Two_1.JPG    '
-        , Driveway   : 'img/stills/Driveway_1.JPG   '
-    };
-
     /* Temp videos for testing playback */
     var aTempLocal             = [
         'video/00180291.mp4',
@@ -852,11 +840,9 @@
 
 
     /**
-    * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
-    * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
-    * Switch events based on the time -- occurs whether or not player has this room selected
-    * Need to set nCurrentTime.get() for each case as well, so that it can be used to set currentTime() on video player.
-    */
+     * Sets values of this particular room each time current.getTime() matches the case value.
+     * Case is equal to the current number of seconds into the game.
+     */
     var eventsHallOne         = function () {
           switch (current.getTime()) {
             case 1: 
@@ -875,27 +861,23 @@
 
 
     /**
-     * Should be run each frame -- sets URLs for events occuring in the room, as well as bCanCatch.
-     * Case is equal to the current timestamp, converted from 'MM:SS' to seconds.
-     * Switch events based on the time -- occurs whether or not player has this room selected
+     * Sets values of this particular room each time current.getTime() matches the case value.
+     * Case is equal to the current number of seconds into the game.
      */
     var eventsBedroom         = function () {
-        if (nCurrentCam.get()   === aCurrentCam.Bedroom) {
-            console.log('eventsBedroom');
-        //switch (nCurrentTime.get()) {
-          switch (current.getTime()) {
-                case 1: 
-                    sCurUrl.set(aTempLocal[1]);
-                    sNextUrl.set(null);
-                    bCanCatch.set(true);
-                    break;
-                case 54:
-                    sCurUrl.set(camBedroom.c540281);
-                    sNextUrl    = aStills.Bedroom;
-                    break;
-                default:
+        switch (current.getTime()) {
+            case 1: 
+                room.bedroom.setCurUrl  (aTempLocal[2]);   
+                room.bedroom.setNextUrl (aTempLocal[0]);   
+                room.bedroom.setTrapUrl (aTempLocal[1]);  
+                room.bedroom.setCanCatch(true);
+                room.bedroom.setTime    (current.getTime());
+                break;
+            case 30:
+            
+                break;
+            default:
             }
-        }
     };
 
 
