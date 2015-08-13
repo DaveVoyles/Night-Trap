@@ -48,6 +48,15 @@
         }
     };
 
+    /**
+     * Obj to get / set current values for the game.
+     * @property {string} stillUrl    - Background image when room is empty.
+     * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
+     * @property {float}  triggerTime - How far into the game should this time be triggered?  
+     * @property {sting}  curUrl      - Url should be set as video.src() right now.
+     * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
+     * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url. 
+     */
     var current = {
         stillUrl: '',
         getStillUrl () {
@@ -65,12 +74,12 @@
             this.bCanCatch = val;
         },
 
-        time: 0,
-        getTime: function() {
-            return this.time;
+        triggerTime: 0,
+        getTriggerTime: function() {
+            return this.triggerTime;
         },
-        setTime: function(val) {
-            this.time = val;
+        setTriggerTime: function(val) {
+            this.triggerTime = val;
         },
 
         curUrl: '',
@@ -468,12 +477,12 @@
 
             switch (this.id) {
                 case 'Hall-1':
-                    current.setCurUrl  (room.hallOne.getCurUrl  ());
-                    current.setNextUrl (room.hallOne.getNextUrl ());
-                    current.setTrapUrl (room.hallOne.getTrapUrl ());
-                    current.setCanCatch(room.hallOne.getCanCatch());
-                    current.setTime    (room.hallOne.getTime    ());
-                    current.setStillUrl(room.hallOne.stillUrl     );
+                    current.setCurUrl     (room.hallOne.getCurUrl  ());
+                    current.setNextUrl    (room.hallOne.getNextUrl ());
+                    current.setTrapUrl    (room.hallOne.getTrapUrl ());
+                    current.setCanCatch   (room.hallOne.getCanCatch());
+                    current.setTriggerTime(room.hallOne.getTime    ());
+                    current.setStillUrl   (room.hallOne.stillUrl     );
                     break;
                 case 'Kitchen':
                     nCurrentCam.set(aCurrentCam.Kitchen);
@@ -660,7 +669,7 @@
         audioElem.pause();
         video.src(urlClip);
         // TODO: Change param so that it is not ONLY hall one
-        var diff                = nTimeDiff(room.hallOne.getTime(), nCurrentTime.get()); 
+        var diff                = nTimeDiff(current.getTriggerTime(), nCurrentTime.get()); 
         video.play();
         video.currentTime(diff);
     };
