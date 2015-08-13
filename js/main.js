@@ -1,10 +1,320 @@
 (function() {
     'use strict';
 
-
-   var room                    = {
+    /**
+     * TODO: Probably need a trigger timespawn for settings traps
+     * Obj to get / set current values for the each room.
+     * @property {string} stillUrl    - Background image when room is empty.
+     * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
+     * @property {float}  time        - Current time stamp when curUrl is being set. 
+     * @property {sting}  curUrl      - Url should be set as video.src() right now.
+     * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
+     * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url. 
+     */
+    var room = {
         hallOne: {
             stillUrl: 'img/stills/HALL-ONE_1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return this.time;
+            },
+            setTime: function(val) {
+                this.time      = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl    = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl   = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl   = val;
+            }
+        },
+        kitchen: {
+            stillUrl: 'img/stills/KITCHEN_1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return this.time;
+            },
+            setTime: function(val) {
+                this.time      = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl    = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl   = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl   = val;
+            }
+        },
+        entryWay: {
+            stillUrl: 'img/stills/Entry-Way-1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return this.time;
+            },
+            setTime: function(val) {
+                this.time      = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl    = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl   = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl   = val;
+            }
+        },
+        livingRoom: {
+            stillUrl: 'img/stills/Living-Room_1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return this.time;
+            },
+            setTime: function(val) {
+                this.time      = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl    = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl   = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl   = val;
+            }
+        },
+        bathroom: {
+            stillUrl: 'img/stills/HALL-ONE_1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return this.time;
+            },
+            setTime: function(val) {
+                this.time      = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl    = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl   = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl   = val;
+            }
+        },
+        bedroom: {
+            stillUrl: 'img/stills/BEDROOM_1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return this.time;
+            },
+            setTime: function(val) {
+                this.time      = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl    = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl   = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl   = val;
+            }
+        },
+         hallTwo: {
+            stillUrl: 'img/stills/HALL-TWO_1.JPG',
+
+            bCanCatch: true,
+            getCanCatch () {
+                return this.bCanCatch;
+            },
+            setCanCatch (val) {
+                this.bCanCatch = val;
+            },
+
+            time: 0,
+            getTime: function() {
+                return this.time;
+            },
+            setTime: function(val) {
+                this.time      = val;
+            },
+
+            curUrl: '',
+            getCurUrl () {
+                return this.curUrl;
+            },
+            setCurUrl (val) {
+                this.curUrl    = val;
+            },
+
+            nextUrl: '',
+            getNextUrl() {
+                return this.nextUrl;
+            },
+            setNextUrl (val) {
+                this.nextUrl   = val;
+            },
+
+            trapUrl: '',
+            getTrapUrl () {
+                return this.trapUrl;
+            },
+            setTrapUrl (val) {
+                this.trapUrl   = val;
+            }
+         },
+         driveway: {
+            stillUrl: 'img/stills/Driveway_1.JPG',
 
             bCanCatch: true,
             getCanCatch () {
@@ -464,10 +774,8 @@
 
 
     /**
-     * Sets aCurrentCam to the room user is viewing. 
-     * Sets currentStill to match that room, so that poster can be set between videos.
+     * When user selects a room, this takes the current values from the room and applies them to the current object.
      * createVideoSeries is called after properties have been set.
-     * @example: nCurremtCam  = aCurrentCam.HallOne;
      */
     var changeVideoStream     = function () {
             bCanListen.set(false); //TODO: May need to set this to true somewhere else...
@@ -483,32 +791,60 @@
                     current.setStillUrl   (room.hallOne.stillUrl     );
                     break;
                 case 'Kitchen':
-                    nCurrentCam.set(aCurrentCam.Kitchen);
-                    sCurStill.set(aStills.Kitchen);
+                    current.setCurUrl     (room.kitchen.getCurUrl  ());
+                    current.setNextUrl    (room.kitchen.getNextUrl ());
+                    current.setTrapUrl    (room.kitchen.getTrapUrl ());
+                    current.setCanCatch   (room.kitchen.getCanCatch());
+                    current.setTriggerTime(room.kitchen.getTime    ());
+                    current.setStillUrl   (room.kitchen.stillUrl     );
                     break;
                 case 'Entry-Way':
-                    nCurrentCam.set(aCurrentCam.Entryway);
-                    sCurStill.set(aStills.Entryway);
+                    current.setCurUrl     (room.entryway.getCurUrl  ());
+                    current.setNextUrl    (room.entryway.getNextUrl ());
+                    current.setTrapUrl    (room.entryway.getTrapUrl ());
+                    current.setCanCatch   (room.entryway.getCanCatch());
+                    current.setTriggerTime(room.entryway.getTime    ());
+                    current.setStillUrl   (room.entryWay.stillUrl     );
                     break;
                 case 'Living-Room':
-                    nCurrentCam.set(aCurrentCam.Livingroom);
-                    sCurStill.set(aStills.Livingroom);
+                    current.setCurUrl     (room.livingRoom.getCurUrl  ());
+                    current.setNextUrl    (room.livingRoom.getNextUrl ());
+                    current.setTrapUrl    (room.livingRoom.getTrapUrl ());
+                    current.setCanCatch   (room.livingRoom.getCanCatch());
+                    current.setTriggerTime(room.livingRoom.getTime    ());
+                    current.setStillUrl   (room.livingRoom.stillUrl     );
                     break;
                 case 'Bathroom':
-                    nCurrentCam.set(aCurrentCam.Bathroom);
-                    sCurStill.set(aStills.Bathroom);
+                    current.setCurUrl     (room.bathroom.getCurUrl  ());
+                    current.setNextUrl    (room.bathroom.getNextUrl ());
+                    current.setTrapUrl    (room.bathroom.getTrapUrl ());
+                    current.setCanCatch   (room.bathroom.getCanCatch());
+                    current.setTriggerTime(room.bathroom.getTime    ());
+                    current.setStillUrl   (room.bathroom.stillUrl     );
                     break;
                 case 'Bedroom':
-                    nCurrentCam.set(aCurrentCam.Bedroom);
-                    sCurStill.set(aStills.Bedroom);
+                    current.setCurUrl     (room.bedroom.getCurUrl  ());
+                    current.setNextUrl    (room.bedroom.getNextUrl ());
+                    current.setTrapUrl    (room.bedroom.getTrapUrl ());
+                    current.setCanCatch   (room.bedroom.getCanCatch());
+                    current.setTriggerTime(room.bedroom.getTime    ());
+                    current.setStillUrl   (room.bedroom.stillUrl     );
                     break;
                 case 'Hall-2':
-                    nCurrentCam.set(aCurrentCam.HallTwo);
-                    sCurStill.set(aStills.HallTwo);
+                    current.setCurUrl     (room.hallTwo.getCurUrl  ());
+                    current.setNextUrl    (room.hallTwo.getNextUrl ());
+                    current.setTrapUrl    (room.hallTwo.getTrapUrl ());
+                    current.setCanCatch   (room.hallTwo.getCanCatch());
+                    current.setTriggerTime(room.hallTwo.getTime    ());
+                    current.setStillUrl   (room.hallTwo.stillUrl     );
                     break;
                 case 'Driveway':
-                    nCurrentCam.set(aCurrentCam.Driveway);
-                    sCurStill(aStills.Driveway);
+                    current.setCurUrl     (room.driveWay.getCurUrl  ());
+                    current.setNextUrl    (room.driveWay.getNextUrl ());
+                    current.setTrapUrl    (room.driveWay.getTrapUrl ());
+                    current.setCanCatch   (room.driveWay.getCanCatch());
+                    current.setTriggerTime(room.driveWay.getTime    ());
+                    current.setStillUrl   (room.driveway.stillUrl     );
                     break;
             }
             createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getCanCatch(), current.getStillUrl());
@@ -567,10 +903,8 @@
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * @param {string} currentVidUrl
-     *      Clip with the trap sequence.
-     * @param {string} [nextVid]
-     *      Trap clips are often have a clip that appears next.
+     * @param {string} curVidUrl -  Clip with the trap sequence.
+     * @param {string} [nextVid] -  Trap clips are often have a clip that appears next.
      */
     var createVideoSeries = function (curVidUrl, nextVidUrl, bCanCatch, stillUrl) {
         //TODO: Maybe I should have another clip for the trap?
