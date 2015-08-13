@@ -593,14 +593,16 @@
             bCanListen.set(false); //TODO: May need to set this to true somewhere else...
             toggleRoomButton();
 
+        // TODO: Turn all of these into 'currentObj' object 
             switch (this.id) {
+                // Curr, Next, Trap, Catch, Time, canm, & maybe still?
                 case 'Hall-1':
                     nCurrentCam           .set(aCurrentCam.HallOne); // TODO: Prob don't need this now...
-                    sCurUrl               .set(    roomObj.hallOne.getCurUrl()  );  // 2 augs
-                    sNextUrl              .set(    roomObj.hallOne.getNextUrl() );  // Sarah 
-                    sCurTrapUrl           .set(    roomObj.hallOne.getTrapUrl() );  // Caught
+                    sCurUrl               .set(    roomObj.hallOne.getCurUrl  ());  // 2 augs
+                    sNextUrl              .set(    roomObj.hallOne.getNextUrl ());  // Sarah 
+                    sCurTrapUrl           .set(    roomObj.hallOne.getTrapUrl ());  // Caught
                     bCanCatch             .set(    roomObj.hallOne.getCanCatch());  
-                    nCaseRoomTime.hallOne .setTime(roomObj.hallOne.getTime()    );
+                    nCaseRoomTime.hallOne .setTime(roomObj.hallOne.getTime    ());
 
                     //TODO: Can probably replace this
                     // bCanCatch, NextUrl, StillUrl, and TrapUrl are all set here
@@ -649,9 +651,9 @@
         //if (nCurrentCam.get() === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
         switch (nCurrentTime.get()) {
             case 1: 
-                    roomObj.hallOne.setCurUrl( aTempLocal[1]);    // 2 Augs
-                    roomObj.hallOne.setNextUrl(aTempLocal[0]);   // Sarah
-                    roomObj.hallOne.setTrapUrl(aTempLocal[2]);   // Caught
+                    roomObj.hallOne.setCurUrl( aTempLocal[2]);   
+                    roomObj.hallOne.setNextUrl(aTempLocal[0]);   
+                    roomObj.hallOne.setTrapUrl(aTempLocal[1]);  
                     roomObj.hallOne.setCanCatch(true);
                     roomObj.hallOne.setTime(nCurrentTime.get());
 
@@ -708,7 +710,8 @@
      * @param {string} [nextVid]
      *      Trap clips are often have a clip that appears next.
      */
-    var createVideoSeries     = function (currentVidUrl, nextVidUrl) { //TODO: Maybe I should have another clip for the trap?
+    var createVideoSeries = function (currentVidUrl, nextVidUrl) {
+        //TODO: Maybe I should have another clip for the trap?
         var hasPlayed           = false;
         video.poster(sCurStill.get());
         playVideo(currentVidUrl);
@@ -722,6 +725,7 @@
         video.on('ended', function() {
             if (hasPlayed       === false) {
                 if (nextVidUrl) {
+                    console.log(nextVidUrl);
                     playVideo(nextVidUrl);
 
                 // Use a still if nextVidUrl does not exist
@@ -772,6 +776,7 @@
         video.src(video.src);
         audioElem.src           = aAudioClips.crickets;
         audioElem.play();
+        //TODO: Needed to make this repeatable again
     };
 
 
