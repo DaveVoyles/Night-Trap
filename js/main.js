@@ -6,7 +6,8 @@
      * Obj to get / set current values for the each room.
      * @property {string} stillUrl    - Background image when room is empty.
      * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
-     * @property {float}  time        - Current time stamp when curUrl is being set. 
+     * @property {float}  time        - Current time stamp when curUrl is being set.
+     * @property {float}  catchTime   - When can the user catch an auger? 
      * @property {sting}  curUrl      - Url should be set as video.src() right now.
      * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
      * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url. 
@@ -29,6 +30,14 @@
             },
             setTime: function(val) {
                 this.time      = val;
+            },
+
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
             },
 
             curUrl: '',
@@ -74,6 +83,14 @@
                 this.time      = val;
             },
 
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
+            },
+
             curUrl: '',
             getCurUrl () {
                 return this.curUrl;
@@ -115,6 +132,14 @@
             },
             setTime: function(val) {
                 this.time      = val;
+            },
+
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
             },
 
             curUrl: '',
@@ -160,6 +185,14 @@
                 this.time      = val;
             },
 
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
+            },
+
             curUrl: '',
             getCurUrl () {
                 return this.curUrl;
@@ -201,6 +234,14 @@
             },
             setTime: function(val) {
                 this.time      = val;
+            },
+
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
             },
 
             curUrl: '',
@@ -246,6 +287,14 @@
                 this.time      = val;
             },
 
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
+            },
+
             curUrl: '',
             getCurUrl () {
                 return this.curUrl;
@@ -287,6 +336,14 @@
             },
             setTime: function(val) {
                 this.time      = val;
+            },
+
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
             },
 
             curUrl: '',
@@ -332,6 +389,14 @@
                 this.time      = val;
             },
 
+            catchTime: 0,
+            getCatchTime () {
+                return this.CatchTime;
+            },
+            setCatchTime (val) {
+                this.catchTime = val;
+            },
+
             curUrl: '',
             getCurUrl () {
                 return this.curUrl;
@@ -364,6 +429,7 @@
      * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
      * @property {float}  triggerTime - Time into the game should curUrl should be set.  
      * @property {float}  time        - Current time stamp when curUrl is being set. 
+     * @property {float}  catchTime   - When can the user catch an auger?
      * @property {sting}  curUrl      - Url should be set as video.src() right now.
      * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
      * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url. 
@@ -399,6 +465,14 @@
         },
         setTriggerTime: function(val) {
             this.triggerTime = val;
+        },
+
+        catchTime: 0,
+        getCatchTime () {
+            return this.CatchTime;
+        },
+        setCatchTime (val) {
+            this.catchTime = val;
         },
 
         curUrl: '',
