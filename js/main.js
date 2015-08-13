@@ -141,152 +141,6 @@
         }
     };
 
-    /**
-     * Url about to be drawn to the screen
-     */
-    var sCurUrl                = {
-        url: '',
-        get () {
-            return this.url;
-        },
-        set (val) {
-            this.url           = val;
-        }
-    };
-
-    /**
-     * When this scene completes, which URL will appear next?
-     */
-    var sNextUrl               = {
-        url: '',
-        get () {
-            return this.url;
-        },
-        set (val) {
-            this.url           = val;
-        }
-    };
-
-    /**
-     * Which trap scene will be triggered if the user hits the trap button?
-     */
-    var sCurTrapUrl            = {
-        url: '',
-        get () {
-            return this.url;
-        },
-        set (val) {
-            this.url           = val;
-        }
-    };
-
-    /**
-     * Which static image should appear when there isn't any movement in the room?
-     */
-    var sCurStill              = {
-        still: '',
-        get () {
-            return this.still;
-        },
-        set (val) {
-            this.still         = val;
-        }
-    };
-
-    //TODO: Can prob get rid of this
-    /**
-     * Used to hold the time for when an event should occur in each room. This value is then subtracted from 
-     * nCurrentTime.get(), which returns a new value used to set the currentTime() on the video player when switching rooms.
-     * @returns {object} new Object for each room containing name and time
-     */
-    var nCaseRoomTime          = {
-        hallOne:  {
-            time: 0,
-            getTime: function () {
-                return this.time;
-            },
-            setTime: function (val) {
-                this.time      = val;
-            }
-        },
-        kitchen:  {
-            time: 0,
-            getTime: function () {
-                return time;
-            },
-           setTime: function (val) {
-                time           = val;
-            }
-        },
-        entryWay:  {
-            time: 0,
-            getTime: function () {
-                return time;
-            },
-           setTime: function (val) {
-                time           = val;
-            }
-        },
-        livingRoom:  {
-            time: 0,
-            getTime: function () {
-                return time;
-            },
-           setTime: function (val) {
-                time           = val;
-            }
-        },
-        bathroom:  {
-            time: 0,
-            getTime: function () {
-                return time;
-            },
-           setTime: function (val) {
-                time           = val;
-            }
-         },
-        bedroom:  {
-            time: 0,
-            getTime: function () {
-                return time;
-            },
-            setTime: function (val) {
-                time           = val;
-            }
-        },
-        hallTwo:  {
-            time: 0,
-            getTime: function () {
-                return time;
-            },
-           setTime: function (val) {
-                time           = val;
-            }
-        },
-        driveWay:  {
-            time: 0,
-            getTime: function () {
-                return time;
-            },
-           setTime: function (val) {
-                time           = val;
-            }
-        }
-    };
-
-    /**
-    * Is it possible to catch someone in this scene?
-    */
-    var bCanCatch              = {
-        bool: true,
-        get () {
-            return this.bCanCatch;
-        },
-        set (val) {
-            this.bCanCatch     = val;
-        }
-    };
-
     // Timer to keep track of user's time spent in-game
     var nTimeStart             = new Date();
     // Audio element for SFX, passwords, and noises during stills
@@ -346,36 +200,6 @@
         , Bedroom    : 'img/stills/Bedroom_1.JPG    '
         , HallTwo    : 'img/stils/Hall-Two_1.JPG    '
         , Driveway   : 'img/stills/Driveway_1.JPG   '
-    };
-
-    /**
-     * Which camera is currently selected?
-     * You should also set the still to currently selected room when changing cameras, too.
-     */
-    var aCurrentCam            = {
-          HallOne    : 0
-        , Kitchen    : 1
-        , Entryway   : 2
-        , Livingroom : 3
-        , Bathroom   : 4
-        , Bedroom    : 5
-        , HallTwo    : 6
-        , Driveway   : 7
-    };
-
-    /**
-     * Used with aCurrentCam to set the potential values
-     * @example: nCurrentCam.set(aCurrentCam.Bathroom);
-     * @returns: {Object} cam: 4
-     */ 
-    var nCurrentCam            = {
-        cam: aCurrentCam,
-        get () {
-            return this.cam;
-        },
-        set (val) {
-            this.cam           = val;
-        }
     };
 
     /* Temp videos for testing playback */
@@ -642,17 +466,14 @@
             bCanListen.set(false); //TODO: May need to set this to true somewhere else...
             toggleRoomButton();
 
-        // TODO: Turn all of these into 'currentObj' object 
             switch (this.id) {
-                // Curr, Next, Trap, Catch, Time, canm, & maybe still?
                 case 'Hall-1':
-                    //nCurrentCam           .set(aCurrentCam.HallOne); // TODO: Prob don't need this now...
-                    current.setCurUrl  (room.hallOne.getCurUrl());
-                    current.setNextUrl (room.hallOne.getNextUrl());
-                    current.setTrapUrl (room.hallOne.getTrapUrl());
+                    current.setCurUrl  (room.hallOne.getCurUrl  ());
+                    current.setNextUrl (room.hallOne.getNextUrl ());
+                    current.setTrapUrl (room.hallOne.getTrapUrl ());
                     current.setCanCatch(room.hallOne.getCanCatch());
-                    current.setTime    (room.hallOne.getTime());
-                    current.setStillUrl(room.hallOne.stillUrl);
+                    current.setTime    (room.hallOne.getTime    ());
+                    current.setStillUrl(room.hallOne.stillUrl     );
                     break;
                 case 'Kitchen':
                     nCurrentCam.set(aCurrentCam.Kitchen);
@@ -683,7 +504,7 @@
                     sCurStill(aStills.Driveway);
                     break;
             }
-            createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getCanCatch());
+            createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getCanCatch(), current.getStillUrl());
     };
 
 
@@ -694,31 +515,19 @@
     * Need to set nCurrentTime.get() for each case as well, so that it can be used to set currentTime() on video player.
     */
     var eventsHallOne         = function () {
-        //if (nCurrentCam.get() === aCurrentCam.HallOne) { //TODO: May need to move this. How do I set the timer if the player is not watching this room? It would never get called!
         switch (nCurrentTime.get()) {
             case 1: 
-                    room.hallOne.setCurUrl( aTempLocal[2]);   
-                    room.hallOne.setNextUrl(aTempLocal[0]);   
-                    room.hallOne.setTrapUrl(aTempLocal[1]);  
-                    room.hallOne.setCanCatch(true);
-                    room.hallOne.setTime(nCurrentTime.get());
-
-                    //roomObj.hallOne.curUrl.set(aTempLocal[1]);
-                    //sCurUrl    .set(aTempLocal[1]);   // 2 augs
-                    //sNextUrl   .set(aTempLocal[0]);   // Sarah 
-                    //sCurTrapUrl.set(aTempLocal[2]);   // Caught
-                    //bCanCatch.set(true);
-                    //nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); 
-                    break;
-                case 30:
-                    sCurUrl  .set(aTempLocal[1]);
-                    sNextUrl .set(aTempLocal[2]);
-                    bCanCatch.set(false);
-                    nCaseRoomTime.hallOne.setTime(nCurrentTime.get()); //TODO: Don't think I need this 
-                    break;
-                default:
+                room.hallOne.setCurUrl  (aTempLocal[2]);   
+                room.hallOne.setNextUrl (aTempLocal[0]);   
+                room.hallOne.setTrapUrl (aTempLocal[1]);  
+                room.hallOne.setCanCatch(true);
+                room.hallOne.setTime    (nCurrentTime.get());
+                break;
+            case 30:
+            
+                break;
+            default:
             }
-        //}
     };
 
 
@@ -756,14 +565,14 @@
      * @param {string} [nextVid]
      *      Trap clips are often have a clip that appears next.
      */
-    var createVideoSeries = function (currentVidUrl, nextVidUrl) {
+    var createVideoSeries = function (curVidUrl, nextVidUrl, bCanCatch, stillUrl) {
         //TODO: Maybe I should have another clip for the trap?
         var hasPlayed           = false;
-        video.poster(sCurStill.get());
-        playVideo(currentVidUrl);
+        video.poster(stillUrl);
+        playVideo(curVidUrl);
 
         // Attach event handler so that user can TRY to catch
-        if (bCanCatch.get()     === true) {
+        if (bCanCatch     === true) {
             toggleTrapListener(true);
         }
 
