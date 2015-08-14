@@ -34,7 +34,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -85,7 +85,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -115,7 +115,7 @@
                 this.trapUrl   = val;
             }
         },
-        entryWay: {
+        entryway: {
             stillUrl: 'img/stills/Entry-Way-1.JPG',
 
             bCanCatch: true,
@@ -136,7 +136,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -187,7 +187,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -238,7 +238,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -289,7 +289,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -319,7 +319,7 @@
                 this.trapUrl   = val;
             }
         },
-         hallTwo: {
+        hallTwo: {
             stillUrl: 'img/stills/HALL-TWO_1.JPG',
 
             bCanCatch: true,
@@ -340,7 +340,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -370,7 +370,7 @@
                 this.trapUrl   = val;
             }
          },
-         driveway: {
+        driveway: {
             stillUrl: 'img/stills/Driveway_1.JPG',
 
             bCanCatch: true,
@@ -391,7 +391,7 @@
 
             catchTime: 0,
             getCatchTime () {
-                return this.CatchTime;
+                return this.catchTime;
             },
             setCatchTime (val) {
                 this.catchTime = val;
@@ -425,14 +425,14 @@
 
     /**
      * Obj to get / set current values for the game.
-     * @property {string} stillUrl    - Background image when room is empty.
-     * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
-     * @property {float}  triggerTime - Time into the game should curUrl should be set.  
-     * @property {float}  time        - Current time stamp when curUrl is being set. 
-     * @property {float}  catchTime   - When can the user catch an auger?
-     * @property {sting}  curUrl      - Url should be set as video.src() right now.
-     * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
-     * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url. 
+     * @property {string} stillUrl     - Background image when room is empty.
+     * @property {bool}   bCanCatch    - Is there a character who can be caught in the scene?
+     * @property {float}  urlChangeTime - Time into the game should curUrl should be set.  
+     * @property {float}  time          - Current time stamp when curUrl is being set. 
+     * @property {float}  catchTime     - When can the user catch an auger?
+     * @property {sting}  curUrl        - Url should be set as video.src() right now.
+     * @property {string} nextUrl       - NextUrl to be set as video.src() when curUrl finishes.
+     * @property {string} trapUrl       - If a character can be trapped in the scene, have it trigger this Url. 
      */
     var current = {
         stillUrl: '',
@@ -459,17 +459,17 @@
             this.time = val;
         },
 
-        triggerTime: 0,
-        getTriggerTime: function() {
-            return this.triggerTime;
+        urlChangeTime: 0,
+        getUrlChangeTime: function() {
+            return this.urlChangeTime;
         },
-        setTriggerTime: function(val) {
-            this.triggerTime = val;
+        setUrlChangeTime: function(val) {
+            this.urlChangeTime = val;
         },
 
         catchTime: 0,
         getCatchTime () {
-            return this.CatchTime;
+            return this.catchTime;
         },
         setCatchTime (val) {
             this.catchTime = val;
@@ -794,6 +794,7 @@
         elapsedTime();
         updateTimeOnScreen();
         eventsHallOne();
+        calcCatchTime(current.getCatchTime());
         //eventsBedroom();
     };
 
@@ -856,71 +857,72 @@
 
             switch (this.id) {
                 case 'Hall-1':
-                    current.setCurUrl     (room.hallOne.getCurUrl  ());
-                    current.setNextUrl    (room.hallOne.getNextUrl ());
-                    current.setTrapUrl    (room.hallOne.getTrapUrl ());
-                    current.setCanCatch   (room.hallOne.getCanCatch());
-                    current.setTriggerTime(room.hallOne.getTime    ());
-                    current.setStillUrl   (room.hallOne.stillUrl     );
+                    current.setCurUrl       (room.hallOne.getCurUrl   ());
+                    current.setNextUrl      (room.hallOne.getNextUrl  ());
+                    current.setTrapUrl      (room.hallOne.getTrapUrl  ());
+                    current.setCanCatch     (room.hallOne.getCanCatch ());
+                    current.setCatchTime    (room.hallOne.getCatchTime());
+                    current.setUrlChangeTime(room.hallOne.getTime     ());
+                    current.setStillUrl     (room.hallOne.stillUrl      );
                     break;
                 case 'Kitchen':
-                    current.setCurUrl     (room.kitchen.getCurUrl  ());
-                    current.setNextUrl    (room.kitchen.getNextUrl ());
-                    current.setTrapUrl    (room.kitchen.getTrapUrl ());
-                    current.setCanCatch   (room.kitchen.getCanCatch());
-                    current.setTriggerTime(room.kitchen.getTime    ());
-                    current.setStillUrl   (room.kitchen.stillUrl     );
+                    current.setCurUrl       (room.kitchen.getCurUrl  ());
+                    current.setNextUrl      (room.kitchen.getNextUrl ());
+                    current.setTrapUrl      (room.kitchen.getTrapUrl ());
+                    current.setCanCatch     (room.kitchen.getCanCatch());
+                    current.setUrlChangeTime(room.kitchen.getTime    ());
+                    current.setStillUrl     (room.kitchen.stillUrl     );
                     break;
                 case 'Entry-Way':
-                    current.setCurUrl     (room.entryway.getCurUrl  ());
-                    current.setNextUrl    (room.entryway.getNextUrl ());
-                    current.setTrapUrl    (room.entryway.getTrapUrl ());
-                    current.setCanCatch   (room.entryway.getCanCatch());
-                    current.setTriggerTime(room.entryway.getTime    ());
-                    current.setStillUrl   (room.entryWay.stillUrl     );
+                    current.setCurUrl       (room.entryway.getCurUrl  ());
+                    current.setNextUrl      (room.entryway.getNextUrl ());
+                    current.setTrapUrl      (room.entryway.getTrapUrl ());
+                    current.setCanCatch     (room.entryway.getCanCatch());
+                    current.setUrlChangeTime(room.entryway.getTime    ());
+                    current.setStillUrl     (room.entryway.stillUrl     );
                     break;
                 case 'Living-Room':
-                    current.setCurUrl     (room.livingRoom.getCurUrl  ());
-                    current.setNextUrl    (room.livingRoom.getNextUrl ());
-                    current.setTrapUrl    (room.livingRoom.getTrapUrl ());
-                    current.setCanCatch   (room.livingRoom.getCanCatch());
-                    current.setTriggerTime(room.livingRoom.getTime    ());
-                    current.setStillUrl   (room.livingRoom.stillUrl     );
+                    current.setCurUrl       (room.livingRoom.getCurUrl  ());
+                    current.setNextUrl      (room.livingRoom.getNextUrl ());
+                    current.setTrapUrl      (room.livingRoom.getTrapUrl ());
+                    current.setCanCatch     (room.livingRoom.getCanCatch());
+                    current.setUrlChangeTime(room.livingRoom.getTime    ());
+                    current.setStillUrl     (room.livingRoom.stillUrl     );
                     break;
                 case 'Bathroom':
-                    current.setCurUrl     (room.bathroom.getCurUrl  ());
-                    current.setNextUrl    (room.bathroom.getNextUrl ());
-                    current.setTrapUrl    (room.bathroom.getTrapUrl ());
-                    current.setCanCatch   (room.bathroom.getCanCatch());
-                    current.setTriggerTime(room.bathroom.getTime    ());
-                    current.setStillUrl   (room.bathroom.stillUrl     );
+                    current.setCurUrl       (room.bathroom.getCurUrl  ());
+                    current.setNextUrl      (room.bathroom.getNextUrl ());
+                    current.setTrapUrl      (room.bathroom.getTrapUrl ());
+                    current.setCanCatch     (room.bathroom.getCanCatch());
+                    current.setUrlChangeTime(room.bathroom.getTime    ());
+                    current.setStillUrl     (room.bathroom.stillUrl     );
                     break;
                 case 'Bedroom':
-                    current.setCurUrl     (room.bedroom.getCurUrl  ());
-                    current.setNextUrl    (room.bedroom.getNextUrl ());
-                    current.setTrapUrl    (room.bedroom.getTrapUrl ());
-                    current.setCanCatch   (room.bedroom.getCanCatch());
-                    current.setTriggerTime(room.bedroom.getTime    ());
-                    current.setStillUrl   (room.bedroom.stillUrl     );
+                    current.setCurUrl       (room.bedroom.getCurUrl  ());
+                    current.setNextUrl      (room.bedroom.getNextUrl ());
+                    current.setTrapUrl      (room.bedroom.getTrapUrl ());
+                    current.setCanCatch     (room.bedroom.getCanCatch());
+                    current.setUrlChangeTime(room.bedroom.getTime    ());
+                    current.setStillUrl     (room.bedroom.stillUrl     );
                     break;
                 case 'Hall-2':
-                    current.setCurUrl     (room.hallTwo.getCurUrl  ());
-                    current.setNextUrl    (room.hallTwo.getNextUrl ());
-                    current.setTrapUrl    (room.hallTwo.getTrapUrl ());
-                    current.setCanCatch   (room.hallTwo.getCanCatch());
-                    current.setTriggerTime(room.hallTwo.getTime    ());
-                    current.setStillUrl   (room.hallTwo.stillUrl     );
+                    current.setCurUrl       (room.hallTwo.getCurUrl  ());
+                    current.setNextUrl      (room.hallTwo.getNextUrl ());
+                    current.setTrapUrl      (room.hallTwo.getTrapUrl ());
+                    current.setCanCatch     (room.hallTwo.getCanCatch());
+                    current.setUrlChangeTime(room.hallTwo.getTime    ());
+                    current.setStillUrl     (room.hallTwo.stillUrl     );
                     break;
                 case 'Driveway':
-                    current.setCurUrl     (room.driveWay.getCurUrl  ());
-                    current.setNextUrl    (room.driveWay.getNextUrl ());
-                    current.setTrapUrl    (room.driveWay.getTrapUrl ());
-                    current.setCanCatch   (room.driveWay.getCanCatch());
-                    current.setTriggerTime(room.driveWay.getTime    ());
-                    current.setStillUrl   (room.driveway.stillUrl     );
+                    current.setCurUrl       (room.driveway.getCurUrl  ());
+                    current.setNextUrl      (room.driveway.getNextUrl ());
+                    current.setTrapUrl      (room.driveway.getTrapUrl ());
+                    current.setCanCatch     (room.driveway.getCanCatch());
+                    current.setUrlChangeTime(room.driveway.getTime    ());
+                    current.setStillUrl     (room.driveway.stillUrl     );
                     break;
             }
-            createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getCanCatch(), current.getStillUrl());
+        createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getCanCatch(), current.getCatchTime(), current.getStillUrl());
     };
 
 
@@ -931,11 +933,13 @@
     var eventsHallOne         = function () {
           switch (current.getTime()) {
             case 1: 
-                room.hallOne.setCurUrl  (aTempLocal[2]);   
-                room.hallOne.setNextUrl (aTempLocal[0]);   
-                room.hallOne.setTrapUrl (aTempLocal[1]);  
-                room.hallOne.setCanCatch(true);
-                room.hallOne.setTime    (current.getTime());
+                room.hallOne.setCurUrl   (aTempLocal[2]);   
+                room.hallOne.setNextUrl  (aTempLocal[0]);   
+                room.hallOne.setTrapUrl  (aTempLocal[1]);  
+                room.hallOne.setCanCatch (true);
+                room.hallOne.setCatchTime(4);
+                console.log(room.hallOne.getCatchTime());
+                room.hallOne.setTime     (current.getTime());
                 break;
             case 30:
             
@@ -973,22 +977,23 @@
      * @param {string} curVidUrl -  Clip with the trap sequence.
      * @param {string} [nextVid] -  Trap clips are often have a clip that appears next.
      */
-    var createVideoSeries = function (curVidUrl, nextVidUrl, bCanCatch, stillUrl) {
-        //TODO: Maybe I should have another clip for the trap?
+    var createVideoSeries = function (sCurVidUrl, sNextVidUrl, sTrapUrl, bCanCatch, nCatchTime, sStillUrl) {
+  
         var hasPlayed           = false;
-        video.poster(stillUrl);
-        playVideo(curVidUrl);
+        video.poster(sStillUrl);
+        playVideo(sCurVidUrl);
 
         // Attach event handler so that user can TRY to catch
-        if (bCanCatch     === true) {
-            toggleTrapListener(true);
+        if (bCanCatch === true) {
+            //calcCatchTime(nCatchTime); //NOTE: May not work here b/c this is only called once, not in update
+            //toggleTrapListener(true); //TODO: Remove this line when calcCatchTime works
         }
 
         // Did not catch / no change to catch.....so play next video
         video.on('ended', function() {
             if (hasPlayed       === false) {
-                if (nextVidUrl) {
-                    playVideo(nextVidUrl);
+                if (sNextVidUrl) {
+                    playVideo(sNextVidUrl);
 
                 // Use a still if nextVidUrl does not exist
                 } else { 
@@ -1007,7 +1012,7 @@
 
 
     /**
-     * Can we use a trap in this scene? If so, change clips when user hits 'Trap' button
+     * Change clips when user hits 'Trap' button
      * Make it unsable again right after you trigger the video
      */
     var trap                  = function () {
@@ -1017,18 +1022,18 @@
 
     /**
      * Haver a buffer 1 second before / after catchTime to allow users to try to catch a character.
+     * If current.getTime() is between this buffer, then allow user to set the trap.
      * @param nCatchTime - When can the user trigger the trap? 
      */
     var calcCatchTime         = function(nCatchTime) {
-        var time = 0;
         var before = nCatchTime - 1;
         var after  = nCatchTime + 1;
-        var buffer = 0; //TODO: Change this
+  
+        if (current.getTime() > before && current.getTime() < after) {
+            console.log('can trigger trap');
+            toggleTrapListener(true);
+        }
 
-        // TODO: If current time is between this buffer, then allow user to set the trap
-        // Either use the trap() funcion above, or toggleTrapListener.
-
-        return time;
     };
 
     /**
@@ -1083,7 +1088,7 @@
         audioElem.pause();
         video.src(urlClip);
         // TODO: Change param so that it is not ONLY hall one
-          var diff                = nTimeDiff(current.getTriggerTime(), current.getTime()); 
+          var diff                = nTimeDiff(current.getUrlChangeTime(), current.getTime()); 
         video.play();
         video.currentTime(diff);
     };
