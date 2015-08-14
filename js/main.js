@@ -551,29 +551,40 @@
     var bDebug                 = true;
     var timerElem              = document.getElementById('timer');
     var video                  = null;   
-    // What has the user selected?
-    var sCurUserPassword       = {
-        pass: 'Blue',
-        get () {
-            return this.pass;
+
+    /**
+     * @property passwords       - List of potential passwprds
+     * @property sCurUserPass    - Which password does the user currently have?
+     * @property sCurPass        - Password which is currently correct.
+     * @property generateRanPass - Creates a random password from the password list
+     */
+    var password = {
+        passwords: {
+            Purple: 'Purple',
+            Blue:   'Blue  ',
+            Red:    'Red   ',
+            Green:  'Green ',
+            Yellow: 'Yellow',
+            Orange: 'Orange'
         },
-        set (val) {
-            this.pass          = val;
+
+        sCurUserPass: {
+            pass: 'Blue',
+            get () {
+                return this.pass;
+            },
+            set (val) {
+                this.pass = val;
+            }
+        },
+
+        curPass: 'Blue',
+        generateRanPass () {
+            //TODO: Fill this in
         }
     };
-    // List of passwords that the game can select
-    var aPasswords             = {
-        Purple : 'Purple'
-      , Blue   : 'Blue  '
-      , Red    : 'Red   '
-      , Green  : 'Green '
-      , Yellow : 'Yellow'
-      , Orange : 'Orange'
-    };
-    // Random password set by game 
-    var ranPassword            = 'Blue';
 
-    // Path to SFX
+ // Path to SFX
     var aAudioClips            = {
           change   : 'sfx/CHANGE.mp3'
         , crickets : 'sfx/CRICK2.mp3'
@@ -1000,10 +1011,25 @@
      * Make it unsable again right after you trigger the video
      */
     var trap                  = function () {
-        createVideoSeries(sCurTrapUrl.get(), sNextUrl.get());
+        createVideoSeries(current.getTrapUrl(), current.getNextUrl());  
         toggleTrapListener(false);
     };
 
+    /**
+     * Haver a buffer 1 second before / after catchTime to allow users to try to catch a character.
+     * @param nCatchTime - When can the user trigger the trap? 
+     */
+    var calcCatchTime         = function(nCatchTime) {
+        var time = 0;
+        var before = nCatchTime - 1;
+        var after  = nCatchTime + 1;
+        var buffer = 0; //TODO: Change this
+
+        // TODO: If current time is between this buffer, then allow user to set the trap
+        // Either use the trap() funcion above, or toggleTrapListener.
+
+        return time;
+    };
 
     /**
      * Toggles event listener for the trap button on / off
