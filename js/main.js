@@ -985,9 +985,11 @@
 
       console.log(arguments);
         var hasPlayed           = false;
+        toggleTrapListener(false);        //TOOD: May be temorarily placed here
         video.poster(sStillUrl);
         playVideo(sCurVidUrl);
 
+      //TODO: CalcCatch Time may handle this in update for us. May be able to delete this and the param
         // Attach event handler so that user can TRY to catch
         if (bCanCatch === true) {
             //calcCatchTime(nCatchTime); //NOTE: May not work here b/c this is only called once, not in update
@@ -1049,7 +1051,7 @@
      */
     var toggleTrapListener    = function (bShouldListen) {
         bShouldListen = typeof 'undefined' ? bShouldListen : false;
-      console.log(bShouldListen);
+        console.log(bShouldListen);     //TODO: Works fine when this is here. When I remove it, stops working. WTH?
         if (bShouldListen       === true) {
             document.getElementById('Trap').addEventListener   ('click', trap);
         } else {
