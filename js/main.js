@@ -1051,7 +1051,7 @@
      */
     var toggleTrapListener    = function (bShouldListen) {
         bShouldListen = typeof 'undefined' ? bShouldListen : false;
-        console.log(bShouldListen);     //TODO: Works fine when this is here. When I remove it, stops working. WTH?
+//        console.log(bShouldListen);     //TODO: Works fine when this is here. When I remove it, stops working. WTH?
         if (bShouldListen       === true) {
             document.getElementById('Trap').addEventListener   ('click', trap);
         } else {
@@ -1075,9 +1075,9 @@
      * Useful when viewer enters a room after a video was supposed to have started.
      * Need to apply Math.floor, otherwise Blink throws an error regarding non-finite numbers.
      * Result is then used to set the currentTime on video player. 
-     * @param   {float} - caseTime
-     * @param   {float} - currentTime
-     * @returns {float} - Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
+     * @param   {float} caseTime     - Which event (time) is creating this object?
+     * @param   {float} currentTime  - What is the current game time when this function is called?
+     * @returns {float} Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
     var nTimeDiff             = function (caseTime, currentTime) {
         var floorCurrentTime    = Math.floor(currentTime);
@@ -1107,7 +1107,7 @@
      * @param {string} clipUrl - Address of clip to play.
      */
     var playSfx               = function (urlClip) {
-        audioElem.src           = urlClip;
+        audioElem.src = urlClip;
         audioElem.play();
     };
 
