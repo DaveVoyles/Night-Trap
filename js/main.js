@@ -1030,6 +1030,12 @@
 
 
     /**
+     * TODO: Need to set a bool so that if:
+     * TODO: User springs a trap then....
+     * TODO: Switches to a new room...
+     * TODO: Then switches back to the original room....
+     * TODO: That video is not going to be a still, and will not set back to the original vid for room
+     * TODO: which was set but the case #
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
