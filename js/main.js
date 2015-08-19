@@ -1037,21 +1037,19 @@
      * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
      */
     var createTrapVidSeries = function (trapUrl, nextUrl) {
-      var hasPlayed  = false;
       video.src(trapUrl);
       video.play();
 
       // Video has already played & there is no nextUrl, so use a still
       video.on('ended', function () {
         if (nextUrl === null) {
-          hasPlayed = true;
           displayStill();
         } else {
           // Play next video here  & when it ends, set a still
           video.src(nextUrl);
           video.play();
 
-          hasPlayed = true;
+
           video.on('ended', function () {
             displayStill();
           });
