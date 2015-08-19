@@ -827,8 +827,6 @@
      * createVideoSeries is called after properties have been set.
      */
     var changeVideoStream     = function () {
-            toggleRoomButton();
-
             switch (this.id) {
                 case 'Hall-1':
                     current.setCurUrl       (room.hallOne.getCurUrl     ());
@@ -983,21 +981,19 @@
      * @param {string}  sCurVidUrl   - Clip with the trap sequence.
      * @param {string} [sNextVidUrl] - Trap clips are often have a clip that appears next.
      * @param {string} [sTrapUrl]    - Path to URL w/ trap video.
-     * @param {string}  sStillUrl    - Paht to URL w/ poster image.
+     * @param {string}  sStillUrl    - Path to URL w/ poster image.
      */
     var createVideoSeries = function (sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
         console.log(arguments);
 
-        // First video but no clip?
+        // At beginning of game, user clicks on a room w/ out a video
         if (sCurVidUrl ===  null) {            //TODO: This may have to be set to check if it is '' as well
-          console.log('trying to set poster');
           video.poster(sStillUrl);
           displayStill();
           return;
         }
 
-        var hasPlayed           = false;
-        toggleTrapListener(false);        //TOOD: May be temorarily placed here
+        var hasPlayed = false;
         video.poster(sStillUrl);
         playVideo(sCurVidUrl);
 
@@ -1008,8 +1004,7 @@
                     playVideo(sNextVidUrl);
 
                 // Use a still if nextVidUrl does not exist
-                } else { 
-                    hasPlayed   = true;
+                } else {
                     displayStill();
                 }
             };
@@ -1026,7 +1021,6 @@
     /**
      * Change clips when user hits 'Trap' button
      * Make it unusable again right after you trigger the video
-     * TODO: Consider refactoring this so that it just sets the new src() on video player instead of creating a whole new video series
      * TODO: Need to set video.currentTime(0) on this as well! Otherwise we miss most of the trap vid!
      */
     var trap                  = function () {
@@ -1043,7 +1037,7 @@
      * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
      */
     var createTrapVidSeries = function (trapUrl, nextUrl) {
-      var hasPlayed           = false;
+      var hasPlayed  = false;
       video.src(trapUrl);
       video.play();
 
@@ -1057,7 +1051,7 @@
           video.src(nextUrl);
           video.play();
 
-          hasPlayed           = true;
+          hasPlayed = true;
           video.on('ended', function () {
             displayStill();
           });
@@ -1090,7 +1084,6 @@
      */
     var toggleTrapListener    = function (bShouldListen) {
         bShouldListen = typeof 'undefined' ? bShouldListen : false;
-//        console.log(bShouldListen);     //TODO: Works fine when this is here. When I remove it, stops working. WTH?
         if (bShouldListen       === true) {
             document.getElementById('Trap').addEventListener   ('click', trap);
         } else {
