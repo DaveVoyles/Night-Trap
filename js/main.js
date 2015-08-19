@@ -500,29 +500,19 @@
         }
     };
 
-    // Can we hit the switch cam button again?
-    var bCanListen             = {
-        bool: true,
-        get () {
-            return this.bool;
-        },
-        set (val) {
-            this.bool          = val;
-        }
-    };
 
     /**
      * How many augers has the user caught?
      */
     var nTotalCaught           = {
         caught: 0,
-        get () {
+        get: function () {
             return this.caught;
         },
-        set (val) {
+        set: function (val) {
             this.caught        = val;
         },
-        increment () {
+        increment: function () {
             this.caught ++;
         }
     };
@@ -532,13 +522,13 @@
      */
     var nTotalMissed           = {
         missed: 0,
-        get () {
+        get: function () {
             return this.missed;
         },
-        set (val) {
+        set: function (val) {
             this.missed        = val;
         },
-        increment () {
+        increment: function () {
             this.missed ++;
         }
     };
@@ -709,7 +699,7 @@
      * Sets src property for video player and sets reference to audio tag
      */
     var init                   = function () {
-        toggleRoomButton();
+        registerRoomButton();
         initializeAudio();
         initializeVideoStream();
         MainLoop.setUpdate(update).setDraw(draw).start();
@@ -719,9 +709,7 @@
     /**
      * Room buttons now changeVideoStream() when clicked.
      */
-    var toggleRoomButton      = function () {
-
-        if (bCanListen.get()  === true) { 
+    var registerRoomButton      = function () {
             document.getElementById('Hall-1'     ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Kitchen'    ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Entry-Way'  ).addEventListener(   'click', changeVideoStream, false);
@@ -730,16 +718,6 @@
             document.getElementById('Bedroom'    ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Hall-2'     ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Driveway'   ).addEventListener(   'click', changeVideoStream, false);
-        } else {
-            document.getElementById('Hall-1'     ).removeEventListener('click', changeVideoStream, false);
-            document.getElementById('Kitchen'    ).removeEventListener('click', changeVideoStream, false);
-            document.getElementById('Entry-Way'  ).removeEventListener('click', changeVideoStream, false);
-            document.getElementById('Living-Room').removeEventListener('click', changeVideoStream, false);
-            document.getElementById('Bathroom'   ).removeEventListener('click', changeVideoStream, false);
-            document.getElementById('Bedroom'    ).removeEventListener('click', changeVideoStream, false);
-            document.getElementById('Hall-2'     ).removeEventListener('click', changeVideoStream, false);
-            document.getElementById('Driveway'   ).removeEventListener('click', changeVideoStream, false);
-        }
     };
 
 
@@ -849,7 +827,6 @@
      * createVideoSeries is called after properties have been set.
      */
     var changeVideoStream     = function () {
-            bCanListen.set(false); //TODO: May need to set this to true somewhere else...
             toggleRoomButton();
 
             switch (this.id) {
@@ -919,6 +896,7 @@
                     current.setStillUrl     (room.driveway.stillUrl       );
                     break;
             }
+        console.log('selected: ' + this.id);
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
     };
 
@@ -975,23 +953,24 @@
     var eventsBathroom     = function () {
         switch (current.getTime()) {
           case 1:
-            room.bedroom.setCurUrl   (null);
-            room.bedroom.setNextUrl  (null);
-            room.bedroom.setTrapUrl  (null);
-            room.bedroom.setCatchTime(null);
-            room.bedroom.setTime     (current.getTime());
+            room.bathroom.setCurUrl   (null);
+            room.bathroom.setNextUrl  (null);
+            room.bathroom.setTrapUrl  (null);
+            room.bathroom.setCatchTime(null);
+            room.bathroom.setTime     (current.getTime());
             break;
           case 18:
             room.bathroom.setCurUrl(camBathroom.c180291);
             room.bathroom.setNextUrl(null);
             room.bathroom.setTrapUrl(null);
-            room.bathroom.SetTime(current.getTime());
+            room.bathroom.setTime(current.getTime());
             break;
           case 37:
             room.bathroom.setCurUrl(camBathroom.c352291);
             room.bathroom.setTrapUrl(camBathroom.c431292);
             room.bathroom.setCatchTime(43);
             room.bathroom.setTime(current.getTime());
+            break;
           default:
         }
     };
@@ -1010,12 +989,10 @@
         console.log(arguments);
 
         // First video but no clip?
-        if (sCurVidUrl === '') {
-          console.log(sCurVidUrl);
-          video.src(video.src);
-          video.poster(sStillUrl);    //TODO: Look into this
-          audioElem.src = aAudioClips.crickets;
-          audioElem.play();
+        if (sCurVidUrl ===  null) {            //TODO: This may have to be set to check if it is '' as well
+          console.log('trying to set poster');
+          video.poster(sStillUrl);
+          displayStill();
           return;
         }
 
