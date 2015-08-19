@@ -17,10 +17,10 @@
             stillUrl: 'img/stills/HALL-ONE_1.JPG',
 
             bCanCatch: true,
-            getCanCatch () {
+            getCanCatch: function () {
                 return this.bCanCatch;
             },
-            setCanCatch (val) {
+            setCanCatch: function (val) {
                 this.bCanCatch = val;
             },
 
@@ -33,34 +33,34 @@
             },
 
             catchTime: 0,
-            getCatchTime () {
+            getCatchTime: function () {
                 return this.catchTime;
             },
-            setCatchTime (val) {
+            setCatchTime: function (val) {
                 this.catchTime = val;
             },
 
             curUrl: '',
-            getCurUrl () {
+            getCurUrl: function () {
                 return this.curUrl;
             },
-            setCurUrl (val) {
+            setCurUrl: function (val) {
                 this.curUrl    = val;
             },
 
             nextUrl: '',
-            getNextUrl() {
+            getNextUrl: function () {
                 return this.nextUrl;
             },
-            setNextUrl (val) {
+            setNextUrl: function (val) {
                 this.nextUrl   = val;
             },
 
             trapUrl: '',
-            getTrapUrl () {
+            getTrapUrl: function () {
                 return this.trapUrl;
             },
-            setTrapUrl (val) {
+            setTrapUrl: function (val) {
                 this.trapUrl   = val;
             }
         },
@@ -68,359 +68,359 @@
             stillUrl: 'img/stills/KITCHEN_1.JPG',
 
             bCanCatch: true,
-            getCanCatch () {
-                return this.bCanCatch;
+            getCanCatch: function () {
+              return this.bCanCatch;
             },
-            setCanCatch (val) {
-                this.bCanCatch = val;
+            setCanCatch: function (val) {
+              this.bCanCatch = val;
             },
 
             time: 0,
             getTime: function() {
-                return this.time;
+              return this.time;
             },
             setTime: function(val) {
-                this.time      = val;
+              this.time      = val;
             },
 
             catchTime: 0,
-            getCatchTime () {
-                return this.catchTime;
+            getCatchTime: function () {
+              return this.catchTime;
             },
-            setCatchTime (val) {
-                this.catchTime = val;
+            setCatchTime: function (val) {
+              this.catchTime = val;
             },
 
             curUrl: '',
-            getCurUrl () {
-                return this.curUrl;
+            getCurUrl: function () {
+              return this.curUrl;
             },
-            setCurUrl (val) {
-                this.curUrl    = val;
+            setCurUrl: function (val) {
+              this.curUrl    = val;
             },
 
             nextUrl: '',
-            getNextUrl() {
-                return this.nextUrl;
+            getNextUrl: function () {
+              return this.nextUrl;
             },
-            setNextUrl (val) {
-                this.nextUrl   = val;
+            setNextUrl: function (val) {
+              this.nextUrl   = val;
             },
 
             trapUrl: '',
-            getTrapUrl () {
-                return this.trapUrl;
+            getTrapUrl: function () {
+              return this.trapUrl;
             },
-            setTrapUrl (val) {
-                this.trapUrl   = val;
+            setTrapUrl: function (val) {
+              this.trapUrl   = val;
             }
         },
         entryway: {
             stillUrl: 'img/stills/Entry-Way-1.JPG',
 
             bCanCatch: true,
-            getCanCatch () {
-                return this.bCanCatch;
+            getCanCatch: function () {
+              return this.bCanCatch;
             },
-            setCanCatch (val) {
-                this.bCanCatch = val;
+            setCanCatch: function (val) {
+              this.bCanCatch = val;
             },
 
             time: 0,
             getTime: function() {
-                return this.time;
+              return this.time;
             },
             setTime: function(val) {
-                this.time      = val;
+              this.time      = val;
             },
 
             catchTime: 0,
-            getCatchTime () {
-                return this.catchTime;
+            getCatchTime: function () {
+              return this.catchTime;
             },
-            setCatchTime (val) {
-                this.catchTime = val;
+            setCatchTime: function (val) {
+              this.catchTime = val;
             },
 
             curUrl: '',
-            getCurUrl () {
-                return this.curUrl;
+            getCurUrl: function () {
+              return this.curUrl;
             },
-            setCurUrl (val) {
-                this.curUrl    = val;
+            setCurUrl: function (val) {
+              this.curUrl    = val;
             },
 
             nextUrl: '',
-            getNextUrl() {
-                return this.nextUrl;
+            getNextUrl: function () {
+              return this.nextUrl;
             },
-            setNextUrl (val) {
-                this.nextUrl   = val;
+            setNextUrl: function (val) {
+              this.nextUrl   = val;
             },
 
             trapUrl: '',
-            getTrapUrl () {
-                return this.trapUrl;
+            getTrapUrl: function () {
+              return this.trapUrl;
             },
-            setTrapUrl (val) {
-                this.trapUrl   = val;
+            setTrapUrl: function (val) {
+              this.trapUrl   = val;
             }
         },
         livingRoom: {
             stillUrl: 'img/stills/Living-Room_1.JPG',
 
             bCanCatch: true,
-            getCanCatch () {
-                return this.bCanCatch;
+            getCanCatch: function () {
+              return this.bCanCatch;
             },
-            setCanCatch (val) {
-                this.bCanCatch = val;
+            setCanCatch: function (val) {
+              this.bCanCatch = val;
             },
 
             time: 0,
             getTime: function() {
-                return this.time;
+              return this.time;
             },
             setTime: function(val) {
-                this.time      = val;
+              this.time      = val;
             },
 
             catchTime: 0,
-            getCatchTime () {
-                return this.catchTime;
+            getCatchTime: function () {
+              return this.catchTime;
             },
-            setCatchTime (val) {
-                this.catchTime = val;
+            setCatchTime: function (val) {
+              this.catchTime = val;
             },
 
             curUrl: '',
-            getCurUrl () {
-                return this.curUrl;
+            getCurUrl: function () {
+              return this.curUrl;
             },
-            setCurUrl (val) {
-                this.curUrl    = val;
+            setCurUrl: function (val) {
+              this.curUrl    = val;
             },
 
             nextUrl: '',
-            getNextUrl() {
-                return this.nextUrl;
+            getNextUrl: function () {
+              return this.nextUrl;
             },
-            setNextUrl (val) {
-                this.nextUrl   = val;
+            setNextUrl: function (val) {
+              this.nextUrl   = val;
             },
 
             trapUrl: '',
-            getTrapUrl () {
-                return this.trapUrl;
+            getTrapUrl: function () {
+              return this.trapUrl;
             },
-            setTrapUrl (val) {
-                this.trapUrl   = val;
+            setTrapUrl: function (val) {
+              this.trapUrl   = val;
             }
         },
         bathroom: {
-            stillUrl: 'img/stills/HALL-ONE_1.JPG',
+            stillUrl: 'img/stills/BATHROOM_1.JPG',
 
             bCanCatch: true,
-            getCanCatch () {
-                return this.bCanCatch;
+            getCanCatch: function () {
+              return this.bCanCatch;
             },
-            setCanCatch (val) {
-                this.bCanCatch = val;
+            setCanCatch: function (val) {
+              this.bCanCatch = val;
             },
 
             time: 0,
             getTime: function() {
-                return this.time;
+              return this.time;
             },
             setTime: function(val) {
-                this.time      = val;
+              this.time      = val;
             },
 
             catchTime: 0,
-            getCatchTime () {
-                return this.catchTime;
+            getCatchTime: function () {
+              return this.catchTime;
             },
-            setCatchTime (val) {
-                this.catchTime = val;
+            setCatchTime: function (val) {
+              this.catchTime = val;
             },
 
             curUrl: '',
-            getCurUrl () {
-                return this.curUrl;
+            getCurUrl: function () {
+              return this.curUrl;
             },
-            setCurUrl (val) {
-                this.curUrl    = val;
+            setCurUrl: function (val) {
+              this.curUrl    = val;
             },
 
             nextUrl: '',
-            getNextUrl() {
-                return this.nextUrl;
+            getNextUrl: function () {
+              return this.nextUrl;
             },
-            setNextUrl (val) {
-                this.nextUrl   = val;
+            setNextUrl: function (val) {
+              this.nextUrl   = val;
             },
 
             trapUrl: '',
-            getTrapUrl () {
-                return this.trapUrl;
+            getTrapUrl: function () {
+              return this.trapUrl;
             },
-            setTrapUrl (val) {
-                this.trapUrl   = val;
+            setTrapUrl: function (val) {
+              this.trapUrl   = val;
             }
         },
         bedroom: {
             stillUrl: 'img/stills/BEDROOM_1.JPG',
 
             bCanCatch: true,
-            getCanCatch () {
-                return this.bCanCatch;
+            getCanCatch: function () {
+              return this.bCanCatch;
             },
-            setCanCatch (val) {
-                this.bCanCatch = val;
+            setCanCatch: function (val) {
+              this.bCanCatch = val;
             },
 
             time: 0,
             getTime: function() {
-                return this.time;
+              return this.time;
             },
             setTime: function(val) {
-                this.time      = val;
+              this.time      = val;
             },
 
             catchTime: 0,
-            getCatchTime () {
-                return this.catchTime;
+            getCatchTime: function () {
+              return this.catchTime;
             },
-            setCatchTime (val) {
-                this.catchTime = val;
+            setCatchTime: function (val) {
+              this.catchTime = val;
             },
 
             curUrl: '',
-            getCurUrl () {
-                return this.curUrl;
+            getCurUrl: function () {
+              return this.curUrl;
             },
-            setCurUrl (val) {
-                this.curUrl    = val;
+            setCurUrl: function (val) {
+              this.curUrl    = val;
             },
 
             nextUrl: '',
-            getNextUrl() {
-                return this.nextUrl;
+            getNextUrl: function () {
+              return this.nextUrl;
             },
-            setNextUrl (val) {
-                this.nextUrl   = val;
+            setNextUrl: function (val) {
+              this.nextUrl   = val;
             },
 
             trapUrl: '',
-            getTrapUrl () {
-                return this.trapUrl;
+            getTrapUrl: function () {
+              return this.trapUrl;
             },
-            setTrapUrl (val) {
-                this.trapUrl   = val;
+            setTrapUrl: function (val) {
+              this.trapUrl   = val;
             }
         },
         hallTwo: {
             stillUrl: 'img/stills/HALL-TWO_1.JPG',
 
             bCanCatch: true,
-            getCanCatch () {
-                return this.bCanCatch;
+            getCanCatch: function () {
+              return this.bCanCatch;
             },
-            setCanCatch (val) {
-                this.bCanCatch = val;
+            setCanCatch: function (val) {
+              this.bCanCatch = val;
             },
 
             time: 0,
             getTime: function() {
-                return this.time;
+              return this.time;
             },
             setTime: function(val) {
-                this.time      = val;
+              this.time      = val;
             },
 
             catchTime: 0,
-            getCatchTime () {
-                return this.catchTime;
+            getCatchTime: function () {
+              return this.catchTime;
             },
-            setCatchTime (val) {
-                this.catchTime = val;
+            setCatchTime: function (val) {
+              this.catchTime = val;
             },
 
             curUrl: '',
-            getCurUrl () {
-                return this.curUrl;
+            getCurUrl: function () {
+              return this.curUrl;
             },
-            setCurUrl (val) {
-                this.curUrl    = val;
+            setCurUrl: function (val) {
+              this.curUrl    = val;
             },
 
             nextUrl: '',
-            getNextUrl() {
-                return this.nextUrl;
+            getNextUrl: function () {
+              return this.nextUrl;
             },
-            setNextUrl (val) {
-                this.nextUrl   = val;
+            setNextUrl: function (val) {
+              this.nextUrl   = val;
             },
 
             trapUrl: '',
-            getTrapUrl () {
-                return this.trapUrl;
+            getTrapUrl: function () {
+              return this.trapUrl;
             },
-            setTrapUrl (val) {
-                this.trapUrl   = val;
+            setTrapUrl: function (val) {
+              this.trapUrl   = val;
             }
-         },
+        },
         driveway: {
             stillUrl: 'img/stills/Driveway_1.JPG',
 
-            bCanCatch: true,
-            getCanCatch () {
-                return this.bCanCatch;
-            },
-            setCanCatch (val) {
-                this.bCanCatch = val;
-            },
+          bCanCatch: true,
+          getCanCatch: function () {
+            return this.bCanCatch;
+          },
+          setCanCatch: function (val) {
+            this.bCanCatch = val;
+          },
 
-            time: 0,
-            getTime: function() {
-                return this.time;
-            },
-            setTime: function(val) {
-                this.time      = val;
-            },
+          time: 0,
+          getTime: function() {
+            return this.time;
+          },
+          setTime: function(val) {
+            this.time      = val;
+          },
 
-            catchTime: 0,
-            getCatchTime () {
-                return this.catchTime;
-            },
-            setCatchTime (val) {
-                this.catchTime = val;
-            },
+          catchTime: 0,
+          getCatchTime: function () {
+            return this.catchTime;
+          },
+          setCatchTime: function (val) {
+            this.catchTime = val;
+          },
 
-            curUrl: '',
-            getCurUrl () {
-                return this.curUrl;
-            },
-            setCurUrl (val) {
-                this.curUrl    = val;
-            },
+          curUrl: '',
+          getCurUrl: function () {
+            return this.curUrl;
+          },
+          setCurUrl: function (val) {
+            this.curUrl    = val;
+          },
 
-            nextUrl: '',
-            getNextUrl() {
-                return this.nextUrl;
-            },
-            setNextUrl (val) {
-                this.nextUrl   = val;
-            },
+          nextUrl: '',
+          getNextUrl: function () {
+            return this.nextUrl;
+          },
+          setNextUrl: function (val) {
+            this.nextUrl   = val;
+          },
 
-            trapUrl: '',
-            getTrapUrl () {
-                return this.trapUrl;
-            },
-            setTrapUrl (val) {
-                this.trapUrl   = val;
-            }
-        }
+          trapUrl: '',
+          getTrapUrl: function () {
+            return this.trapUrl;
+          },
+          setTrapUrl: function (val) {
+            this.trapUrl   = val;
+          }
+        },
     };
 
     /**
@@ -439,23 +439,23 @@
         getStillUrl () {
             return this.stillUrl;
         },
-        setStillUrl (val) {
+        setStillUrl: function (val) {
             this.stillUrl = val;
         },
 
         bCanCatch: true,
-        getCanCatch () {
+        getCanCatch: function () {
             return this.bCanCatch;
         },
-        setCanCatch (val) {
+        setCanCatch: function (val) {
             this.bCanCatch = val;
         },
 
         time: 0,
-        getTime () {
+        getTime: function () {
             return this.time;
         },
-        setTime (val) {
+        setTime: function (val) {
             this.time = val;
         },
 
@@ -468,34 +468,34 @@
         },
 
         catchTime: 0,
-        getCatchTime () {
+        getCatchTime: function () {
             return this.catchTime;
         },
-        setCatchTime (val) {
+        setCatchTime: function (val) {
             this.catchTime = val;
         },
 
         curUrl: '',
-        getCurUrl () {
+        getCurUrl: function () {
             return this.curUrl;
         },
-        setCurUrl (val) {
+        setCurUrl: function (val) {
             this.curUrl = val;
         },
 
         nextUrl: '',
-        getNextUrl() {
+        getNextUrl: function () {
             return this.nextUrl;
         },
-        setNextUrl (val) {
+        setNextUrl: function (val) {
             this.nextUrl = val;
         },
 
         trapUrl: '',
-        getTrapUrl () {
+        getTrapUrl: function () {
             return this.trapUrl;
         },
-        setTrapUrl (val) {
+        setTrapUrl: function (val) {
             this.trapUrl = val;
         }
     };
@@ -579,7 +579,7 @@
         },
 
         curPass: 'Blue',
-        generateRanPass () {
+        generateRanPass:  function () {
             //TODO: Fill this in
         }
     };
@@ -791,8 +791,10 @@
     var update                = function (delta) {
         elapsedTime();
         updateTimeOnScreen();
-        eventsHallOne();
         calcCatchTime(current.getCatchTime()); // TODO: Does this need to happen each frame?
+        eventsHallOne();
+        eventsBedroom();
+        eventsBathroom();
     };
 
 
@@ -819,7 +821,6 @@
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-            //video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
             video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
             video.load();
             video.play();
@@ -918,7 +919,7 @@
                     current.setStillUrl     (room.driveway.stillUrl       );
                     break;
             }
-        createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getCanCatch(), current.getCatchTime(), current.getStillUrl());
+        createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
     };
 
 
@@ -928,20 +929,11 @@
      */
     var eventsHallOne         = function () {
           switch (current.getTime()) {
-            case 1: 
-//                room.hallOne.setCurUrl   (aTempLocal[2]);
-//                room.hallOne.setNextUrl  (aTempLocal[0]);
-//                room.hallOne.setTrapUrl  (aTempLocal[1]);
-//                room.hallOne.setCanCatch (true);
-//                room.hallOne.setCatchTime(4);
-//                console.log(room.hallOne.getCatchTime());
-//                room.hallOne.setTime     (current.getTime());
-
+            case 1:
                 room.hallOne.setCurUrl(camHallOne.c21);
                 room.hallOne.setNextUrl(null);
                 room.hallOne.setTrapUrl(camHallOne.c130422);
-                room.hallOne.setCanCatch(true);
-                room.hallOne.setCatchTime(13);
+                room.hallOne.setCatchTime(3);
                 room.hallOne.setTime(current.getTime());
                 break;
             case 30:
@@ -958,47 +950,83 @@
      */
     var eventsBedroom         = function () {
         switch (current.getTime()) {
-            case 1: 
-                room.bedroom.setCurUrl  (aTempLocal[2]);   
-                room.bedroom.setNextUrl (aTempLocal[0]);   
-                room.bedroom.setTrapUrl (aTempLocal[1]);  
-                room.bedroom.setCanCatch(true);
-                room.bedroom.setTime    (current.getTime());
+            case 1:
+                room.bedroom.setCurUrl   (camBedroom.c81);
+                room.bedroom.setNextUrl  (null);
+                room.bedroom.setTrapUrl  (camBedroom.c352482);
+                room.bedroom.setCatchTime(34);
+                room.bedroom.setTime     (current.getTime());
                 break;
-            case 30:
-            
+            case 54:
+                room.bedroom.setCurUrl(camBedroom.c540281);
+                room.bedroom.setNextUrl(null);
+                room.bedroom.setCatchTime(null);
+                room.bedroom.setTime(current.getTime());
                 break;
             default:
             }
     };
 
 
+    /**
+     * Sets values of this particular room each time current.getTime() matches the case value.
+     * Case is equal to the current number of seconds into the game.
+     */
+    var eventsBathroom     = function () {
+        switch (current.getTime()) {
+          case 1:
+            room.bedroom.setCurUrl   (null);
+            room.bedroom.setNextUrl  (null);
+            room.bedroom.setTrapUrl  (null);
+            room.bedroom.setCatchTime(null);
+            room.bedroom.setTime     (current.getTime());
+            break;
+          case 18:
+            room.bathroom.setCurUrl(camBathroom.c180291);
+            room.bathroom.setNextUrl(null);
+            room.bathroom.setTrapUrl(null);
+            room.bathroom.SetTime(current.getTime());
+            break;
+          case 37:
+            room.bathroom.setCurUrl(camBathroom.c352291);
+            room.bathroom.setTrapUrl(camBathroom.c431292);
+            room.bathroom.setCatchTime(43);
+            room.bathroom.setTime(current.getTime());
+          default:
+        }
+    };
+
 
     /**
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * @param {string} curVidUrl - Clip with the trap sequence.
-     * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
+     * @param {string}  sCurVidUrl   - Clip with the trap sequence.
+     * @param {string} [sNextVidUrl] - Trap clips are often have a clip that appears next.
+     * @param {string} [sTrapUrl]    - Path to URL w/ trap video.
+     * @param {string}  sStillUrl    - Paht to URL w/ poster image.
      */
-    var createVideoSeries = function (sCurVidUrl, sNextVidUrl, sTrapUrl, bCanCatch, nCatchTime, sStillUrl) {
+    var createVideoSeries = function (sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
+        console.log(arguments);
 
-      console.log(arguments);
+        // First video but no clip?
+        if (sCurVidUrl === '') {
+          console.log(sCurVidUrl);
+          video.src(video.src);
+          video.poster(sStillUrl);    //TODO: Look into this
+          audioElem.src = aAudioClips.crickets;
+          audioElem.play();
+          return;
+        }
+
         var hasPlayed           = false;
         toggleTrapListener(false);        //TOOD: May be temorarily placed here
         video.poster(sStillUrl);
         playVideo(sCurVidUrl);
 
-      //TODO: CalcCatch Time may handle this in update for us. May be able to delete this and the param
-        // Attach event handler so that user can TRY to catch
-        if (bCanCatch === true) {
-            //calcCatchTime(nCatchTime); //NOTE: May not work here b/c this is only called once, not in update
-//            toggleTrapListener(true);
-        }
-
-        // Did not catch / no change to catch.....so play next video
+         // Did not catch / no chance to catch....so play next video
         video.on('ended', function() {
-            if (hasPlayed       === false) {
+            if (hasPlayed === false) {
                 if (sNextVidUrl) {
                     playVideo(sNextVidUrl);
 
@@ -1021,10 +1049,44 @@
     /**
      * Change clips when user hits 'Trap' button
      * Make it unusable again right after you trigger the video
+     * TODO: Consider refactoring this so that it just sets the new src() on video player instead of creating a whole new video series
+     * TODO: Need to set video.currentTime(0) on this as well! Otherwise we miss most of the trap vid!
      */
     var trap                  = function () {
-        createVideoSeries(current.getTrapUrl(), current.getNextUrl());  
+        createTrapVidSeries(current.getTrapUrl(), current.getNextUrl());
         toggleTrapListener(false);
+    };
+
+
+    /**
+     * Sets the poster (background) between clips to the room you are currently viewing
+     * hasPlayed variable prevents the footage from looping.
+     * Second 'ended' event draws poster to screen when 2nd clip has completed
+     * @param {string} curVidUrl - Clip with the trap sequence.
+     * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
+     */
+    var createTrapVidSeries = function (trapUrl, nextUrl) {
+      var hasPlayed           = false;
+      video.src(trapUrl);
+      video.play();
+
+      // Video has already played & there is no nextUrl, so use a still
+      video.on('ended', function () {
+        if (nextUrl === null) {
+          hasPlayed = true;
+          displayStill();
+        } else {
+          // Play next video here  & when it ends, set a still
+          video.src(nextUrl);
+          video.play();
+
+          hasPlayed           = true;
+          video.on('ended', function () {
+            displayStill();
+          });
+        }
+      });
+
     };
 
 
@@ -1061,13 +1123,13 @@
 
 
     /**
-     * Still to play when no action occurs. Sets video.src to src so that the still image can be dispayed as a poster
+     * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
+     * TODO: Needed to make this audio repeatable again
      */
     var displayStill          = function () { 
         video.src(video.src);
-        audioElem.src           = aAudioClips.crickets;
+        audioElem.src = aAudioClips.crickets;
         audioElem.play();
-        //TODO: Needed to make this audio repeatable again
     };
 
 
@@ -1080,9 +1142,9 @@
      * @returns {float} Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
     var nTimeDiff             = function (caseTime, currentTime) {
-        var floorCurrentTime    = Math.floor(currentTime);
-        var floorCaseTime       = Math.floor(caseTime   );
-        var result              = floorCurrentTime - floorCaseTime;
+        var floorCurrentTime  = Math.floor(currentTime);
+        var floorCaseTime     = Math.floor(caseTime   );
+        var result            = floorCurrentTime - floorCaseTime;
 
         return result;
     };
@@ -1091,12 +1153,13 @@
     /**
      * Pauses audio played during stills, sets new video source, & begins to play.
      * @param {string} clipUrl - Address of clip to play.
+     * TODO: Do not need diff if it is not a trap. Move this to the trap
      */
     var playVideo             = function (urlClip) {
+        var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+
         audioElem.pause();
         video.src(urlClip);
-        // TODO: Change param so that it is not ONLY hall one
-          var diff                = nTimeDiff(current.getUrlChangeTime(), current.getTime()); 
         video.play();
         video.currentTime(diff);
     };
