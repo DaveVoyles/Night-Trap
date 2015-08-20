@@ -62,6 +62,14 @@
             },
             setTrapUrl: function (val) {
                 this.trapUrl   = val;
+            },
+
+            bTrapSprung: true,
+            getTrapSprung: function () {
+              return this.bTrapSprung;
+            },
+            setTrapSprung: function (val){
+              this.bTrapSprung = val;
             }
         },
         kitchen: {
@@ -419,12 +427,21 @@
           },
           setTrapUrl: function (val) {
             this.trapUrl   = val;
+          },
+
+          bTrapSprung: true,
+          getTrapSprung: function () {
+            return this.bTrapSprung;
+          },
+          setTrapSprung: function (val){
+            this.bTrapSprung = val;
           }
-        },
+        }
     };
 
     /**
      * Obj to get / set current values for the game.
+     * @property {string} cam           - Room the user has currently selected
      * @property {string} stillUrl      - Background image when room is empty.
      * @property {bool}   bCanCatch     - Is there a character who can be caught in the scene?
      * @property {float}  urlChangeTime - Time into the game should curUrl should be set.  
@@ -432,9 +449,26 @@
      * @property {float}  catchTime     - When can the user catch an auger?
      * @property {sting}  curUrl        - Url should be set as video.src() right now.
      * @property {string} nextUrl       - NextUrl to be set as video.src() when curUrl finishes.
-     * @property {string} trapUrl       - If a character can be trapped in the scene, have it trigger this Url. 
+     * @property {string} trapUrl       - If a character can be trapped in the scene, have it trigger this Url.
      */
     var current = {
+        cam: {
+           camHallOne   : 'hallOne'
+          ,camKitchen   : 'kitchen'
+          ,camEntryway  : 'entryway'
+          ,camLivingRoom: 'livingroom'
+          ,camBathroom  : 'bathroom'
+          ,camBedroom   : 'bedroom'
+          ,camHallTwo   : 'hallTwo'
+          ,camDriveway  : 'driveway'
+        },
+        getCam: function () {
+          return this.cam;
+        },
+        setCam: function (val){
+          this.cam = val;
+        },
+
         stillUrl: '',
         getStillUrl () {
             return this.stillUrl;
@@ -829,6 +863,7 @@
     var changeVideoStream     = function () {
             switch (this.id) {
                 case 'Hall-1':
+                    current.setCam          ('hallOne'                    );
                     current.setCurUrl       (room.hallOne.getCurUrl     ());
                     current.setNextUrl      (room.hallOne.getNextUrl    ());
                     current.setTrapUrl      (room.hallOne.getTrapUrl    ());
@@ -838,6 +873,7 @@
                     current.setStillUrl     (room.hallOne.stillUrl        );
                     break;
                 case 'Kitchen':
+                    current.setCam          ('kitchen'                    );
                     current.setCurUrl       (room.kitchen.getCurUrl     ());
                     current.setNextUrl      (room.kitchen.getNextUrl    ());
                     current.setTrapUrl      (room.kitchen.getTrapUrl    ());
@@ -846,6 +882,7 @@
                     current.setStillUrl     (room.kitchen.stillUrl        );
                     break;
                 case 'Entry-Way':
+                    current.setCam          ('entryway'                   );
                     current.setCurUrl       (room.entryway.getCurUrl    ());
                     current.setNextUrl      (room.entryway.getNextUrl   ());
                     current.setTrapUrl      (room.entryway.getTrapUrl   ());
@@ -854,6 +891,7 @@
                     current.setStillUrl     (room.entryway.stillUrl       );
                     break;
                 case 'Living-Room':
+                    current.setCam          ('livingroom'                 );
                     current.setCurUrl       (room.livingRoom.getCurUrl  ());
                     current.setNextUrl      (room.livingRoom.getNextUrl ());
                     current.setTrapUrl      (room.livingRoom.getTrapUrl ());
@@ -862,6 +900,7 @@
                     current.setStillUrl     (room.livingRoom.stillUrl     );
                     break;
                 case 'Bathroom':
+                    curent.setCam           ('bathroom'                   );
                     current.setCurUrl       (room.bathroom.getCurUrl    ());
                     current.setNextUrl      (room.bathroom.getNextUrl   ());
                     current.setTrapUrl      (room.bathroom.getTrapUrl   ());
@@ -870,6 +909,7 @@
                     current.setStillUrl     (room.bathroom.stillUrl       );
                     break;
                 case 'Bedroom':
+                    current.setCam          ('bedroom'                    );
                     current.setCurUrl       (room.bedroom.getCurUrl     ());
                     current.setNextUrl      (room.bedroom.getNextUrl    ());
                     current.setTrapUrl      (room.bedroom.getTrapUrl    ());
@@ -878,6 +918,7 @@
                     current.setStillUrl     (room.bedroom.stillUrl        );
                     break;
                 case 'Hall-2':
+                    current.setCam          ('hallTwo'                    );
                     current.setCurUrl       (room.hallTwo.getCurUrl     ());
                     current.setNextUrl      (room.hallTwo.getNextUrl    ());
                     current.setTrapUrl      (room.hallTwo.getTrapUrl    ());
@@ -886,6 +927,7 @@
                     current.setStillUrl     (room.hallTwo.stillUrl        );
                     break;
                 case 'Driveway':
+                    current.setCam          ('driveway'                   );
                     current.setCurUrl       (room.driveway.getCurUrl    ());
                     current.setNextUrl      (room.driveway.getNextUrl   ());
                     current.setTrapUrl      (room.driveway.getTrapUrl   ());
@@ -894,7 +936,7 @@
                     current.setStillUrl     (room.driveway.stillUrl       );
                     break;
             }
-        console.log('selected: ' + this.id);
+        console.log('selected: ' + current.getCam());
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
     };
 
@@ -1043,6 +1085,7 @@
      * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
      */
     var createTrapVidSeries = function (trapUrl, nextUrl) {
+      current.
       video.src(trapUrl);
       video.play();
 
@@ -1061,8 +1104,9 @@
           });
         }
       });
-
     };
+
+
 
 
     /**
