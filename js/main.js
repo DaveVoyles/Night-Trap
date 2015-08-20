@@ -1085,7 +1085,37 @@
      * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
      */
     var createTrapVidSeries = function (trapUrl, nextUrl) {
-      current.
+
+      // Mark trap as having been sprung after user selects a room.
+      //TODO: Need to set this to false, somewhere else. Probably in the NEXT case statement? (ex: beginning of it)
+      switch (current.getCam()){
+        case 'hallOne':
+          room.hallOne.setTrapSprung(true);
+          break;
+        case 'kitchen':
+          room.kitchen.setTrapSprung(true);
+          break;
+        case 'entryway':
+          room.entryway.setTrapSprung(true);
+          break;
+        case 'livingroom':
+          room.livingRoom.setTrapSprung(true);
+          break;
+        case 'bathroom':
+          room.bathroom.setTrapSprung(true);
+          break;
+        case 'bedroom':
+          room.bedroom.setTrapSprung(true);
+          break;
+        case 'hallTwo':
+          room.hallTwo.setTrapSprung(true);
+          break;
+        case 'driveway':
+          room.driveway.setTrapSprung(true);
+          break;
+      }
+
+
       video.src(trapUrl);
       video.play();
 
