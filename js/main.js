@@ -900,7 +900,7 @@
                     current.setStillUrl     (room.livingRoom.stillUrl     );
                     break;
                 case 'Bathroom':
-                    curent.setCam           ('bathroom'                   );
+                    current.setCam           ('bathroom'                   );
                     current.setCurUrl       (room.bathroom.getCurUrl    ());
                     current.setNextUrl      (room.bathroom.getNextUrl   ());
                     current.setTrapUrl      (room.bathroom.getTrapUrl   ());
