@@ -789,7 +789,7 @@
      * Wires up event handlers for buttons.
      * Sets src property for video player and sets reference to audio tag
      */
-    var init                   = function () {
+    var init                   = function init () {
         registerRoomButton();
         initializeAudio();
         initializeVideoStream();
@@ -800,7 +800,7 @@
     /**
      * Room buttons now changeVideoStream() when clicked.
      */
-    var registerRoomButton      = function () {
+    var registerRoomButton      = function registerRoomButton () {
             document.getElementById('Hall-1'     ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Kitchen'    ).addEventListener(   'click', changeVideoStream, false);
             document.getElementById('Entry-Way'  ).addEventListener(   'click', changeVideoStream, false);
@@ -816,7 +816,7 @@
      * Converts seconds to "MM:SS"
      * @param {float} seconds - Takes seconds and returns it in string format of MM:SS for on screen timer
      */
-    var secondsToTimeString   = function (seconds) {
+    var secondsToTimeString   = function secondsToTimeString (seconds) {
 
         var s                 = Math.floor(seconds % 60);
         var m                 = Math.floor((seconds * 1000 / (1000 * 60)) % 60);
@@ -835,7 +835,7 @@
     /**
      * Place in update() to get total time since user has started game.
      */
-    var elapsedTime           = function () {
+    var elapsedTime           = function elapsedTime () {
         var end               = new Date();
         var elapsedMS         = end.getTime() - nTimeStart.getTime();
         var seconds           = Math.round(elapsedMS / 1000);
@@ -848,7 +848,7 @@
     /**
      * Draws current time on screen at 'timer' element.
      */
-    var updateTimeOnScreen    = function () {
+    var updateTimeOnScreen    = function updateTimeOnScreen () {
         timerElem.innerHTML = secondsToTimeString(current.getTime());
     };
 
@@ -857,7 +857,7 @@
      * Update loop for checking when to change video scenes 
      * @param {float} delta - The amount of time since the last update, in seconds
      */
-    var update                = function (delta) {
+    var update                = function update (delta) {
         elapsedTime();
         updateTimeOnScreen();
         calcCatchTime(current.getCatchTime()); // TODO: Does this need to happen each frame?
@@ -870,7 +870,7 @@
     /**
      * Check if browser supports audio -- if not, create a new window & tell user to update
      */
-    var initializeAudio       = function () {
+    var initializeAudio       = function  initializeAudio () {
         audioElem             = document.getElementById('audio-tag');
         if (!Modernizr.audio) {
             window.open('http://outdatedbrowser.com/en', '_blank');
@@ -884,7 +884,7 @@
      * Disable right-click controls for video player. Cannot reference videoJs directly, event listener
      * does not work.
      */
-    var initializeVideoStream = function () {
+    var initializeVideoStream = function initializeVideoStream () {
         video                 = videojs('video-player');
         if (!Modernizr.video) {
             window.open('http://outdatedbrowser.com/en', '_blank');
@@ -908,7 +908,7 @@
      * Draws the GUI to the screen
      * @param {float} interpolationPercentage - How much to interpolate between frames.
      */
-    var draw                  = function (interpolatePercentage) {
+    var draw                  = function draw (interpolatePercentage) {
         // Do I really need this? 
     };
 
@@ -917,87 +917,86 @@
      * When user selects a room, this takes the current values from the room and applies them to the current object.
      * createVideoSeries is called after properties have been set.
      */
-    var changeVideoStream     = function () {
-            switch (this.id) {
-                case 'Hall-1':
-                    current.setCam          ('hallOne'                    );
-                    current.setCurUrl       (room.hallOne.getCurUrl     ());
-                    current.setNextUrl      (room.hallOne.getNextUrl    ());
-                    current.setTrapUrl      (room.hallOne.getTrapUrl    ());
-                    current.setCatchTime    (room.hallOne.getCatchTime  ());
-                    current.setCanCatch     (room.hallOne.getCanCatch   ());
-                    current.setUrlChangeTime(room.hallOne.getTime       ());
-                    current.setStillUrl     (room.hallOne.stillUrl        );
-                    current.setTrapSprung   (room.hallOne.getTrapSprung ());
-                    console.log(current.getTrapSprung());
-                    break;
-                case 'Kitchen':
-                    current.setCam          ('kitchen'                    );
-                    current.setCurUrl       (room.kitchen.getCurUrl     ());
-                    current.setNextUrl      (room.kitchen.getNextUrl    ());
-                    current.setTrapUrl      (room.kitchen.getTrapUrl    ());
-                    current.setCanCatch     (room.kitchen.getCanCatch   ());
-                    current.setUrlChangeTime(room.kitchen.getTime       ());
-                    current.setStillUrl     (room.kitchen.stillUrl        );
-                    break;
-                case 'Entry-Way':
-                    current.setCam          ('entryway'                   );
-                    current.setCurUrl       (room.entryway.getCurUrl    ());
-                    current.setNextUrl      (room.entryway.getNextUrl   ());
-                    current.setTrapUrl      (room.entryway.getTrapUrl   ());
-                    current.setCanCatch     (room.entryway.getCanCatch  ());
-                    current.setUrlChangeTime(room.entryway.getTime      ());
-                    current.setStillUrl     (room.entryway.stillUrl       );
-                    break;
-                case 'Living-Room':
-                    current.setCam          ('livingroom'                 );
-                    current.setCurUrl       (room.livingRoom.getCurUrl  ());
-                    current.setNextUrl      (room.livingRoom.getNextUrl ());
-                    current.setTrapUrl      (room.livingRoom.getTrapUrl ());
-                    current.setCanCatch     (room.livingRoom.getCanCatch());
-                    current.setUrlChangeTime(room.livingRoom.getTime    ());
-                    current.setStillUrl     (room.livingRoom.stillUrl     );
-                    break;
-                case 'Bathroom':
-                    current.setCam           ('bathroom'                   );
-                    current.setCurUrl       (room.bathroom.getCurUrl    ());
-                    current.setNextUrl      (room.bathroom.getNextUrl   ());
-                    current.setTrapUrl      (room.bathroom.getTrapUrl   ());
-                    current.setCanCatch     (room.bathroom.getCanCatch  ());
-                    current.setUrlChangeTime(room.bathroom.getTime      ());
-                    current.setStillUrl     (room.bathroom.stillUrl       );
-                    break;
-                case 'Bedroom':
-                    current.setCam          ('bedroom'                    );
-                    current.setCurUrl       (room.bedroom.getCurUrl     ());
-                    current.setNextUrl      (room.bedroom.getNextUrl    ());
-                    current.setTrapUrl      (room.bedroom.getTrapUrl    ());
-                    current.setCanCatch     (room.bedroom.getCanCatch   ());
-                    current.setUrlChangeTime(room.bedroom.getTime       ());
-                    current.setStillUrl     (room.bedroom.stillUrl        );
-                    current.setTrapSprung   (room.bedroom.getTrapSprung ());
+    var changeVideoStream     = function changeVideoStream () {
+          switch (this.id) {
+              case 'Hall-1':
+                  current.setCam          ('hallOne'                    );
+                  current.setCurUrl       (room.hallOne.getCurUrl     ());
+                  current.setNextUrl      (room.hallOne.getNextUrl    ());
+                  current.setTrapUrl      (room.hallOne.getTrapUrl    ());
+                  current.setCatchTime    (room.hallOne.getCatchTime  ());
+                  current.setCanCatch     (room.hallOne.getCanCatch   ());
+                  current.setUrlChangeTime(room.hallOne.getTime       ());
+                  current.setStillUrl     (room.hallOne.stillUrl        );
+                  current.setTrapSprung   (room.hallOne.getTrapSprung ());
                   console.log(current.getTrapSprung());
-                    break;
-                case 'Hall-2':
-                    current.setCam          ('hallTwo'                    );
-                    current.setCurUrl       (room.hallTwo.getCurUrl     ());
-                    current.setNextUrl      (room.hallTwo.getNextUrl    ());
-                    current.setTrapUrl      (room.hallTwo.getTrapUrl    ());
-                    current.setCanCatch     (room.hallTwo.getCanCatch   ());
-                    current.setUrlChangeTime(room.hallTwo.getTime       ());
-                    current.setStillUrl     (room.hallTwo.stillUrl        );
-                    break;
-                case 'Driveway':
-                    current.setCam          ('driveway'                   );
-                    current.setCurUrl       (room.driveway.getCurUrl    ());
-                    current.setNextUrl      (room.driveway.getNextUrl   ());
-                    current.setTrapUrl      (room.driveway.getTrapUrl   ());
-                    current.setCanCatch     (room.driveway.getCanCatch  ());
-                    current.setUrlChangeTime(room.driveway.getTime      ());
-                    current.setStillUrl     (room.driveway.stillUrl       );
-                    break;
-            }
-        console.log('selected: ' + current.getCam());
+                  break;
+              case 'Kitchen':
+                  current.setCam          ('kitchen'                    );
+                  current.setCurUrl       (room.kitchen.getCurUrl     ());
+                  current.setNextUrl      (room.kitchen.getNextUrl    ());
+                  current.setTrapUrl      (room.kitchen.getTrapUrl    ());
+                  current.setCanCatch     (room.kitchen.getCanCatch   ());
+                  current.setUrlChangeTime(room.kitchen.getTime       ());
+                  current.setStillUrl     (room.kitchen.stillUrl        );
+                  break;
+              case 'Entry-Way':
+                  current.setCam          ('entryway'                   );
+                  current.setCurUrl       (room.entryway.getCurUrl    ());
+                  current.setNextUrl      (room.entryway.getNextUrl   ());
+                  current.setTrapUrl      (room.entryway.getTrapUrl   ());
+                  current.setCanCatch     (room.entryway.getCanCatch  ());
+                  current.setUrlChangeTime(room.entryway.getTime      ());
+                  current.setStillUrl     (room.entryway.stillUrl       );
+                  break;
+              case 'Living-Room':
+                  current.setCam          ('livingroom'                 );
+                  current.setCurUrl       (room.livingRoom.getCurUrl  ());
+                  current.setNextUrl      (room.livingRoom.getNextUrl ());
+                  current.setTrapUrl      (room.livingRoom.getTrapUrl ());
+                  current.setCanCatch     (room.livingRoom.getCanCatch());
+                  current.setUrlChangeTime(room.livingRoom.getTime    ());
+                  current.setStillUrl     (room.livingRoom.stillUrl     );
+                  break;
+              case 'Bathroom':
+                  current.setCam           ('bathroom'                   );
+                  current.setCurUrl       (room.bathroom.getCurUrl    ());
+                  current.setNextUrl      (room.bathroom.getNextUrl   ());
+                  current.setTrapUrl      (room.bathroom.getTrapUrl   ());
+                  current.setCanCatch     (room.bathroom.getCanCatch  ());
+                  current.setUrlChangeTime(room.bathroom.getTime      ());
+                  current.setStillUrl     (room.bathroom.stillUrl       );
+                  break;
+              case 'Bedroom':
+                  current.setCam          ('bedroom'                    );
+                  current.setCurUrl       (room.bedroom.getCurUrl     ());
+                  current.setNextUrl      (room.bedroom.getNextUrl    ());
+                  current.setTrapUrl      (room.bedroom.getTrapUrl    ());
+                  current.setCanCatch     (room.bedroom.getCanCatch   ());
+                  current.setUrlChangeTime(room.bedroom.getTime       ());
+                  current.setStillUrl     (room.bedroom.stillUrl        );
+                  current.setTrapSprung   (room.bedroom.getTrapSprung ());
+                console.log(current.getTrapSprung());
+                  break;
+              case 'Hall-2':
+                  current.setCam          ('hallTwo'                    );
+                  current.setCurUrl       (room.hallTwo.getCurUrl     ());
+                  current.setNextUrl      (room.hallTwo.getNextUrl    ());
+                  current.setTrapUrl      (room.hallTwo.getTrapUrl    ());
+                  current.setCanCatch     (room.hallTwo.getCanCatch   ());
+                  current.setUrlChangeTime(room.hallTwo.getTime       ());
+                  current.setStillUrl     (room.hallTwo.stillUrl        );
+                  break;
+              case 'Driveway':
+                  current.setCam          ('driveway'                   );
+                  current.setCurUrl       (room.driveway.getCurUrl    ());
+                  current.setNextUrl      (room.driveway.getNextUrl   ());
+                  current.setTrapUrl      (room.driveway.getTrapUrl   ());
+                  current.setCanCatch     (room.driveway.getCanCatch  ());
+                  current.setUrlChangeTime(room.driveway.getTime      ());
+                  current.setStillUrl     (room.driveway.stillUrl       );
+                  break;
+          }
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
     };
 
@@ -1005,29 +1004,23 @@
     /**
      * Sets values of this particular room each time current.getTime() matches the case value.
      * Case is equal to the current number of seconds into the game.
+     * NOTE: Need to set current.GetTime() and setTrapSprung(false) for EACH case
      */
-    var eventsHallOne         = function () {
-          switch (current.getTime()) {
-            case 1:
-                room.hallOne.setCurUrl(camHallOne.c21);
-                room.hallOne.setNextUrl(null);
-                room.hallOne.setTrapUrl(camHallOne.c130422);
-                room.hallOne.setCatchTime(3);
-                room.hallOne.setTime(current.getTime());
-                break;
-            case 30:
-            
-                break;
-            default:
-            }
+    var eventsHallOne         = function eventsHallOne () {
+        switch (current.getTime()) {
+          case 1:
+              room.hallOne.setCurUrl(camHallOne.c21);
+              room.hallOne.setNextUrl(null);
+              room.hallOne.setTrapUrl(camHallOne.c130422);
+              room.hallOne.setCatchTime(3);
+              room.hallOne.setTime(current.getTime());
+              room.hallOne.setTrapSprung(false);
+              break;
+          }
     };
 
 
-    /**
-     * Sets values of this particular room each time current.getTime() matches the case value.
-     * Case is equal to the current number of seconds into the game.
-     */
-    var eventsBedroom         = function () {
+    var eventsBedroom         = function eventsBedroom () {
         switch (current.getTime()) {
             case 1:
                 room.bedroom.setCurUrl   (camBedroom.c81);
@@ -1047,32 +1040,26 @@
     };
 
 
-    /**
-     * Sets values of this particular room each time current.getTime() matches the case value.
-     * Case is equal to the current number of seconds into the game.
-     */
-    var eventsBathroom     = function () {
+    var eventsBathroom     = function eventsBathroom () {
         switch (current.getTime()) {
-          case 1:
-            room.bathroom.setCurUrl   (null);
-            room.bathroom.setNextUrl  (null);
-            room.bathroom.setTrapUrl  (null);
-            room.bathroom.setCatchTime(null);
-            room.bathroom.setTime     (current.getTime());
-            break;
-          case 18:
-            room.bathroom.setCurUrl(camBathroom.c180291);
-            room.bathroom.setNextUrl(null);
-            room.bathroom.setTrapUrl(null);
-            room.bathroom.setTime(current.getTime());
-            break;
-          case 37:
-            room.bathroom.setCurUrl(camBathroom.c352291);
-            room.bathroom.setTrapUrl(camBathroom.c431292);
-            room.bathroom.setCatchTime(43);
-            room.bathroom.setTime(current.getTime());
-            break;
+            case 18:
+              room.bathroom.setCurUrl(camBathroom.c180291);
+              room.bathroom.setNextUrl(null);
+              room.bathroom.setTrapUrl(null);
+              room.bathroom.setTime(current.getTime());
+              break;
+            case 37:
+              room.bathroom.setCurUrl(camBathroom.c352291);
+              room.bathroom.setTrapUrl(camBathroom.c431292);
+              room.bathroom.setCatchTime(43);
+              room.bathroom.setTime(current.getTime());
+              break;
           default:
+              room.bathroom.setCurUrl   (null);
+              room.bathroom.setNextUrl  (null);
+              room.bathroom.setTrapUrl  (null);
+              room.bathroom.setCatchTime(null);
+              room.bathroom.setTime     (current.getTime());
         }
     };
 
@@ -1086,7 +1073,7 @@
      * @param {string} [sTrapUrl]    - Path to URL w/ trap video.
      * @param {string}  sStillUrl    - Path to URL w/ poster image.
      */
-    var createVideoSeries = function (sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
+    var createVideoSeries = function createVideoSeries (sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
         console.log(arguments);
 
         /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
@@ -1107,7 +1094,6 @@
                 if (sNextVidUrl) {
                     playVideo(sNextVidUrl);
 
-                // Use a still if nextVidUrl does not exist
                 } else {
                     displayStill();
                 }
@@ -1127,7 +1113,7 @@
      * Make it unusable again right after you trigger the video
      * TODO: Need to set video.currentTime(0) on this as well! Otherwise we miss most of the trap vid!
      */
-    var trap                  = function () {
+    var trap                  = function trap () {
         createTrapVidSeries(current.getTrapUrl(), current.getNextUrl());
         toggleTrapListener(false);
     };
@@ -1140,7 +1126,7 @@
      * @param {string} curVidUrl - Clip with the trap sequence.
      * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
      */
-    var createTrapVidSeries = function (sTrapUrl, sNextUrl) {
+    var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl) {
 
       // Mark trap as having been sprung after user selects a room.
       //TODO: Need to set this to false, somewhere else. Probably in the NEXT case statement? (ex: beginning of it)
@@ -1197,7 +1183,7 @@
      * If current.getTime() is between this buffer, then allow user to set the trap.
      * @param {float} nCatchTime - When can the user trigger the trap?
      */
-    var calcCatchTime         = function(nCatchTime) {
+    var calcCatchTime         = function calcCatchTime (nCatchTime) {
         var before = nCatchTime - 1;
         var after  = nCatchTime + 1;
   
@@ -1213,7 +1199,7 @@
      * Toggles event listener for the trap button on / off
      * @param {bool} bShouldListen - If true, adds listener. If false, removes listener
      */
-    var toggleTrapListener    = function (bShouldListen) {
+    var toggleTrapListener    = function toggleTrapListener (bShouldListen) {
         bShouldListen = typeof 'undefined' ? bShouldListen : false;
         if (bShouldListen       === true) {
             document.getElementById('Trap').addEventListener   ('click', trap);
@@ -1227,7 +1213,7 @@
      * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
      * TODO: Needed to make this audio repeatable again
      */
-    var displayStill          = function () { 
+    var displayStill          = function displayStill () {
         video.src(video.src);
         audioElem.src = aAudioClips.crickets;
         audioElem.play();
@@ -1242,7 +1228,7 @@
      * @param   {float} currentTime  - What is the current game time when this function is called?
      * @returns {float} Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
-    var nTimeDiff             = function (caseTime, currentTime) {
+    var nTimeDiff             = function  nTimeDiff(caseTime, currentTime) {
         var floorCurrentTime  = Math.floor(currentTime);
         var floorCaseTime     = Math.floor(caseTime   );
         var result            = floorCurrentTime - floorCaseTime;
@@ -1256,7 +1242,7 @@
      * @param {string} clipUrl - Address of clip to play.
      * TODO: Do not need diff if it is not a trap. Move this to the trap
      */
-    var playVideo             = function (urlClip) {
+    var playVideo             = function playVideo (urlClip) {
         var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
 
         audioElem.pause();
@@ -1270,7 +1256,7 @@
      * Plays a sound effect during gameplay. Used for traps, passwords
      * @param {string} clipUrl - Address of clip to play.
      */
-    var playSfx               = function (urlClip) {
+    var playSfx               = function playSfx (urlClip) {
         audioElem.src = urlClip;
         audioElem.play();
     };
