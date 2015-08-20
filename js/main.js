@@ -2,7 +2,6 @@
     'use strict';
 
     /**
-     * TODO: Probably need a trigger timespawn for settings traps
      * Obj to get / set current values for the each room.
      * @property {string} stillUrl    - Background image when room is empty.
      * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
@@ -10,7 +9,8 @@
      * @property {float}  catchTime   - When can the user catch an auger? 
      * @property {sting}  curUrl      - Url should be set as video.src() right now.
      * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
-     * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url. 
+     * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url.
+     * @property {bool}   bTrapSpring - Has the user set the trap in this current scene yet?
      */
     var room = {
         hallOne: {
@@ -64,7 +64,7 @@
                 this.trapUrl   = val;
             },
 
-            bTrapSprung: true,
+            bTrapSprung: false,
             getTrapSprung: function () {
               return this.bTrapSprung;
             },
@@ -121,6 +121,14 @@
             },
             setTrapUrl: function (val) {
               this.trapUrl   = val;
+            },
+
+            bTrapSprung: false,
+            getTrapSprung: function () {
+              return this.bTrapSprung;
+            },
+            setTrapSprung: function (val){
+              this.bTrapSprung = val;
             }
         },
         entryway: {
@@ -172,6 +180,14 @@
             },
             setTrapUrl: function (val) {
               this.trapUrl   = val;
+            },
+
+            bTrapSprung: false,
+            getTrapSprung: function () {
+              return this.bTrapSprung;
+            },
+            setTrapSprung: function (val){
+              this.bTrapSprung = val;
             }
         },
         livingRoom: {
@@ -223,6 +239,14 @@
             },
             setTrapUrl: function (val) {
               this.trapUrl   = val;
+            },
+
+            bTrapSprung: false,
+            getTrapSprung: function () {
+              return this.bTrapSprung;
+            },
+            setTrapSprung: function (val){
+              this.bTrapSprung = val;
             }
         },
         bathroom: {
@@ -274,6 +298,14 @@
             },
             setTrapUrl: function (val) {
               this.trapUrl   = val;
+            },
+
+            bTrapSprung: false,
+            getTrapSprung: function () {
+              return this.bTrapSprung;
+            },
+            setTrapSprung: function (val){
+              this.bTrapSprung = val;
             }
         },
         bedroom: {
@@ -325,7 +357,15 @@
             },
             setTrapUrl: function (val) {
               this.trapUrl   = val;
-            }
+            },
+
+            bTrapSprung: false,
+            getTrapSprung: function () {
+              return this.bTrapSprung;
+            },
+            setTrapSprung: function (val){
+              this.bTrapSprung = val;
+          }
         },
         hallTwo: {
             stillUrl: 'img/stills/HALL-TWO_1.JPG',
@@ -376,6 +416,14 @@
             },
             setTrapUrl: function (val) {
               this.trapUrl   = val;
+            },
+
+            bTrapSprung: false,
+            getTrapSprung: function () {
+              return this.bTrapSprung;
+            },
+            setTrapSprung: function (val){
+              this.bTrapSprung = val;
             }
         },
         driveway: {
@@ -429,7 +477,7 @@
             this.trapUrl   = val;
           },
 
-          bTrapSprung: true,
+          bTrapSprung: false,
           getTrapSprung: function () {
             return this.bTrapSprung;
           },
@@ -450,6 +498,7 @@
      * @property {sting}  curUrl        - Url should be set as video.src() right now.
      * @property {string} nextUrl       - NextUrl to be set as video.src() when curUrl finishes.
      * @property {string} trapUrl       - If a character can be trapped in the scene, have it trigger this Url.
+     * @property {bool}   bTrapSpring   - Has the user set the trap in this current scene yet?
      */
     var current = {
         cam: {
@@ -494,7 +543,7 @@
         },
 
         urlChangeTime: 0,
-        getUrlChangeTime: function() {
+        getUrlChangeTime: function () {
             return this.urlChangeTime;
         },
         setUrlChangeTime: function(val) {
@@ -531,6 +580,14 @@
         },
         setTrapUrl: function (val) {
             this.trapUrl = val;
+        },
+
+        bTrapSprung: true,
+            getTrapSprung: function () {
+          return this.bTrapSprung;
+        },
+        setTrapSprung: function (val){
+          this.bTrapSprung = val;
         }
     };
 
@@ -871,6 +928,8 @@
                     current.setCanCatch     (room.hallOne.getCanCatch   ());
                     current.setUrlChangeTime(room.hallOne.getTime       ());
                     current.setStillUrl     (room.hallOne.stillUrl        );
+                    current.setTrapSprung   (room.hallOne.getTrapSprung ());
+                    console.log(current.getTrapSprung());
                     break;
                 case 'Kitchen':
                     current.setCam          ('kitchen'                    );
@@ -916,6 +975,8 @@
                     current.setCanCatch     (room.bedroom.getCanCatch   ());
                     current.setUrlChangeTime(room.bedroom.getTime       ());
                     current.setStillUrl     (room.bedroom.stillUrl        );
+                    current.setTrapSprung   (room.bedroom.getTrapSprung ());
+                  console.log(current.getTrapSprung());
                     break;
                 case 'Hall-2':
                     current.setCam          ('hallTwo'                    );
@@ -1028,8 +1089,9 @@
     var createVideoSeries = function (sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
         console.log(arguments);
 
-        // At beginning of game, user clicks on a room w/ out a video
-        if (sCurVidUrl ===  null) {            //TODO: This may have to be set to check if it is '' as well
+        /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
+         * and returns to that same room before a new clip is set to begin */
+        if (sCurVidUrl ===  null || current.getTrapSprung() === true) {            //TODO: This may have to be set to check if it is '' as well
           video.poster(sStillUrl);
           displayStill();
           return;
@@ -1072,60 +1134,53 @@
 
 
     /**
-     * TODO: Need to set a bool so that if:
-     * TODO: User springs a trap then....
-     * TODO: Switches to a new room...
-     * TODO: Then switches back to the original room....
-     * TODO: That video is not going to be a still, and will not set back to the original vid for room
-     * TODO: which was set but the case #
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
      * @param {string} curVidUrl - Clip with the trap sequence.
      * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
      */
-    var createTrapVidSeries = function (trapUrl, nextUrl) {
+    var createTrapVidSeries = function (sTrapUrl, sNextUrl) {
 
       // Mark trap as having been sprung after user selects a room.
       //TODO: Need to set this to false, somewhere else. Probably in the NEXT case statement? (ex: beginning of it)
       switch (current.getCam()){
         case 'hallOne':
-          room.hallOne.setTrapSprung(true);
+          room.hallOne   .setTrapSprung(true);
           break;
         case 'kitchen':
-          room.kitchen.setTrapSprung(true);
+          room.kitchen   .setTrapSprung(true);
           break;
         case 'entryway':
-          room.entryway.setTrapSprung(true);
+          room.entryway  .setTrapSprung(true);
           break;
         case 'livingroom':
           room.livingRoom.setTrapSprung(true);
           break;
         case 'bathroom':
-          room.bathroom.setTrapSprung(true);
+          room.bathroom  .setTrapSprung(true);
           break;
         case 'bedroom':
-          room.bedroom.setTrapSprung(true);
+          room.bedroom   .setTrapSprung(true);
           break;
         case 'hallTwo':
-          room.hallTwo.setTrapSprung(true);
+          room.hallTwo   .setTrapSprung(true);
           break;
         case 'driveway':
-          room.driveway.setTrapSprung(true);
+          room.driveway  .setTrapSprung(true);
           break;
       }
 
-
-      video.src(trapUrl);
+      video.src(sTrapUrl);
       video.play();
 
       // Video has already played & there is no nextUrl, so use a still
       video.on('ended', function () {
-        if (nextUrl === null) {
+        if (sNextUrl === null) {
           displayStill();
         } else {
           // Play next video here  & when it ends, set a still
-          video.src(nextUrl);
+          video.src(sNextUrl);
           video.play();
 
 
@@ -1135,8 +1190,6 @@
         }
       });
     };
-
-
 
 
     /**
