@@ -1020,6 +1020,7 @@
         room.hallOne.setCatchTime (catchTime)        ;
         room.hallOne.setTime      (current.getTime());
         room.hallOne.setTrapSprung(false)            ;
+        room.hallOne.setTime      (current.getTime());
     };
 
     var buildStateKitchen = function buildStateKitchen (curUrl, nextUrl, trapUrl, catchTime) {
@@ -1029,6 +1030,7 @@
         room.kitchen.setCatchTime (catchTime)        ;
         room.kitchen.setTime      (current.getTime());
         room.kitchen.setTrapSprung(false)            ;
+        room.kitchen.setTime      (current.getTime());
     };
 
     var buildStateEntryway = function buildStateEntryway (curUrl, nextUrl, trapUrl, catchTime) {
@@ -1038,6 +1040,7 @@
         room.entryway.setCatchTime (catchTime)        ;
         room.entryway.setTime      (current.getTime());
         room.entryway.setTrapSprung(false)            ;
+        room.entryway.setTime      (current.getTime());
     };
 
     var buildStateLivingRoom = function buildStateLivingRoom (curUrl, nextUrl, trapUrl, catchTime) {
@@ -1047,6 +1050,7 @@
         room.livingRoom.setCatchTime (catchTime)        ;
         room.livingRoom.setTime      (current.getTime());
         room.livingRoom.setTrapSprung(false)            ;
+        room.livingRoom.setTime      (current.getTime());
     };
 
     var buildStateBathroom = function buildStateBathroom (curUrl, nextUrl, trapUrl, catchTime) {
@@ -1056,6 +1060,7 @@
         room.bathroom.setCatchTime (catchTime)        ;
         room.bathroom.setTime      (current.getTime());
         room.bathroom.setTrapSprung(false)            ;
+        room.bathroom.setTime      (current.getTime());
     };
 
     var buildStateBedroom = function buildStateBedroom (curUrl, nextUrl, trapUrl, catchTime) {
@@ -1064,7 +1069,8 @@
         room.bedroom.setTrapUrl   (trapUrl)          ;
         room.bedroom.setCatchTime (catchTime)        ;
         room.bedroom.setTime      (current.getTime());
-        room.bedroom.setTrapSprung(false)            ;
+        room.bedroom.setTrapSprung(false);           ;
+        room.hallOne.setTime      (current.getTime());
     };
 
     var buildStateHallTwo = function buildStateHallTwo (curUrl, nextUrl, trapUrl, catchTime) {
@@ -1074,6 +1080,7 @@
         room.hallTwo.setCatchTime (catchTime)        ;
         room.hallTwo.setTime      (current.getTime());
         room.hallTwo.setTrapSprung(false)            ;
+        room.hallOne.setTime      (current.getTime());
     };
 
     var buildStateDriveway = function buildStateDriveway (curUrl, nextUrl, trapUrl, catchTime) {
@@ -1083,6 +1090,7 @@
         room.driveway.setCatchTime (catchTime)        ;
         room.driveway.setTime      (current.getTime());
         room.driveway.setTrapSprung(false)            ;
+        room.hallOne.setTime        (current.getTime());
     };
 
 
@@ -1100,6 +1108,11 @@
               buildStateHallOne(camHallOne.c21, null, camHallOne.c130422, null);
               break;
         }
+
+      //TODO: Probably need to move this outside of this func
+      if (room.hallOne.getTrapSprung() === true /* && Case has changed */){
+          room.hallOne.setTrapSprung(false);
+      }
     };
 
 
