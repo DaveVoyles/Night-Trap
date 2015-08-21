@@ -1002,6 +1002,87 @@
 
 
     /**
+     *  Sets the current values for each room, which will then be used the events function to
+     * then set these values if user has current room selected
+     * @Param {string} [curUrl]    - Path to video which should be set at this point in time.
+     * @Param {string} [nextUrl]   - Path to video that should play when curUrl is completed.
+     * @Param {string} [trapUrl]   - Path to video containing the trap scene.
+     * @Param {float}  [catchTime] - Moment when user can trigger a trap.
+     */
+    var buildStateHallOne = function buildStateHallOne (curUrl, nextUrl, trapUrl, catchTime) {
+        room.hallOne.setCurUrl    (curUrl)           ;
+        room.hallOne.setNextUrl   (nextUrl)          ;
+        room.hallOne.setTrapUrl   (trapUrl)          ;
+        room.hallOne.setCatchTime (catchTime)        ;
+        room.hallOne.setTime      (current.getTime());
+        room.hallOne.setTrapSprung(false)            ;
+    };
+
+    var buildStateKitchen = function buildStateKitchen (curUrl, nextUrl, trapUrl, catchTime) {
+        room.kitchen.setCurUrl    (curUrl)           ;
+        room.kitchen.setNextUrl   (nextUrl)          ;
+        room.kitchen.setTrapUrl   (trapUrl)          ;
+        room.kitchen.setCatchTime (catchTime)        ;
+        room.kitchen.setTime      (current.getTime());
+        room.kitchen.setTrapSprung(false)            ;
+    };
+
+    var buildStateEntryway = function buildStateEntryway (curUrl, nextUrl, trapUrl, catchTime) {
+        room.entryway.setCurUrl    (curUrl)           ;
+        room.entryway.setNextUrl   (nextUrl)          ;
+        room.entryway.setTrapUrl   (trapUrl)          ;
+        room.entryway.setCatchTime (catchTime)        ;
+        room.entryway.setTime      (current.getTime());
+        room.entryway.setTrapSprung(false)            ;
+    };
+
+    var buildStateLivingRoom = function buildStateLivingRoom (curUrl, nextUrl, trapUrl, catchTime) {
+        room.livingRoom.setCurUrl    (curUrl)           ;
+        room.livingRoom.setNextUrl   (nextUrl)          ;
+        room.livingRoom.setTrapUrl   (trapUrl)          ;
+        room.livingRoom.setCatchTime (catchTime)        ;
+        room.livingRoom.setTime      (current.getTime());
+        room.livingRoom.setTrapSprung(false)            ;
+    };
+
+    var buildStateBathroom = function buildStateBathroom (curUrl, nextUrl, trapUrl, catchTime) {
+        room.bathroom.setCurUrl    (curUrl)           ;
+        room.bathroom.setNextUrl   (nextUrl)          ;
+        room.bathroom.setTrapUrl   (trapUrl)          ;
+        room.bathroom.setCatchTime (catchTime)        ;
+        room.bathroom.setTime      (current.getTime());
+        room.bathroom.setTrapSprung(false)            ;
+    };
+
+    var buildStateBedroom = function buildStateBedroom (curUrl, nextUrl, trapUrl, catchTime) {
+        room.bedroom.setCurUrl    (curUrl)           ;
+        room.bedroom.setNextUrl   (nextUrl)          ;
+        room.bedroom.setTrapUrl   (trapUrl)          ;
+        room.bedroom.setCatchTime (catchTime)        ;
+        room.bedroom.setTime      (current.getTime());
+        room.bedroom.setTrapSprung(false)            ;
+    };
+
+    var buildStateHallTwo = function buildStateHallTwo (curUrl, nextUrl, trapUrl, catchTime) {
+        room.hallTwo.setCurUrl    (curUrl)           ;
+        room.hallTwo.setNextUrl   (nextUrl)          ;
+        room.hallTwo.setTrapUrl   (trapUrl)          ;
+        room.hallTwo.setCatchTime (catchTime)        ;
+        room.hallTwo.setTime      (current.getTime());
+        room.hallTwo.setTrapSprung(false)            ;
+    };
+
+    var buildStateDriveway = function buildStateDriveway (curUrl, nextUrl, trapUrl, catchTime) {
+        room.driveway.setCurUrl    (curUrl)           ;
+        room.driveway.setNextUrl   (nextUrl)          ;
+        room.driveway.setTrapUrl   (trapUrl)          ;
+        room.driveway.setCatchTime (catchTime)        ;
+        room.driveway.setTime      (current.getTime());
+        room.driveway.setTrapSprung(false)            ;
+    };
+
+
+    /**
      * Sets values of this particular room each time current.getTime() matches the case value.
      * Case is equal to the current number of seconds into the game.
      * NOTE: Need to set current.GetTime() and setTrapSprung(false) for EACH case
@@ -1009,57 +1090,37 @@
     var eventsHallOne         = function eventsHallOne () {
         switch (current.getTime()) {
           case 1:
-              room.hallOne.setCurUrl(camHallOne.c21);
-              room.hallOne.setNextUrl(null);
-              room.hallOne.setTrapUrl(camHallOne.c130422);
-              room.hallOne.setCatchTime(3);
-              room.hallOne.setTime(current.getTime());
-              room.hallOne.setTrapSprung(false);
+              buildStateHallOne(camHallOne.c21, null, camHallOne.c130422, 3);
               break;
-          }
+          case 54:
+              buildStateHallOne(camHallOne.c21, null, camHallOne.c130422, null);
+              break;
+        }
     };
 
 
     var eventsBedroom         = function eventsBedroom () {
         switch (current.getTime()) {
-            case 1:
-                room.bedroom.setCurUrl   (camBedroom.c81);
-                room.bedroom.setNextUrl  (null);
-                room.bedroom.setTrapUrl  (camBedroom.c352482);
-                room.bedroom.setCatchTime(34);
-                room.bedroom.setTime     (current.getTime());
-                break;
-            case 54:
-                room.bedroom.setCurUrl(camBedroom.c540281);
-                room.bedroom.setNextUrl(null);
-                room.bedroom.setCatchTime(null);
-                room.bedroom.setTime(current.getTime());
-                break;
-            default:
-            }
+          case 1:
+            buildStateBedroom(camBedroom.c81, null, camBedroom.c352482, 34);
+            break;
+          case 54:
+            buildStateBedroom(camBedroom.c540281, null, null, null);
+            break;
+        }
     };
 
 
     var eventsBathroom     = function eventsBathroom () {
         switch (current.getTime()) {
             case 18:
-              room.bathroom.setCurUrl(camBathroom.c180291);
-              room.bathroom.setNextUrl(null);
-              room.bathroom.setTrapUrl(null);
-              room.bathroom.setTime(current.getTime());
+              buildStateBathroom(camBathroom.c180291, null, null, null);
               break;
             case 37:
-              room.bathroom.setCurUrl(camBathroom.c352291);
-              room.bathroom.setTrapUrl(camBathroom.c431292);
-              room.bathroom.setCatchTime(43);
-              room.bathroom.setTime(current.getTime());
+              buildStateBathroom(camBathroom.c352291, null,  camBathroom.c431292, 43);
               break;
           default:
-              room.bathroom.setCurUrl   (null);
-              room.bathroom.setNextUrl  (null);
-              room.bathroom.setTrapUrl  (null);
-              room.bathroom.setCatchTime(null);
-              room.bathroom.setTime     (current.getTime());
+              buildStateBathroom(null, null, null, null);
         }
     };
 
