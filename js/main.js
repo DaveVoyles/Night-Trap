@@ -1090,7 +1090,7 @@
         room.driveway.setCatchTime (catchTime)        ;
         room.driveway.setTime      (current.getTime());
         room.driveway.setTrapSprung(false)            ;
-        room.hallOne.setTime        (current.getTime());
+        room.hallOne .setTime      (current.getTime());
     };
 
 
@@ -1104,15 +1104,11 @@
           case 1:
               buildStateHallOne(camHallOne.c21, null, camHallOne.c130422, 3);
               break;
-          case 54:
-              buildStateHallOne(camHallOne.c21, null, camHallOne.c130422, null);
+          case 10:
+              buildStateHallOne(camHallOne.c1152221, null, null, null);
+              room.hallOne.setTrapSprung(false);       //TODO: Can prob move this into build state function
               break;
         }
-
-      //TODO: Probably need to move this outside of this func
-      if (room.hallOne.getTrapSprung() === true /* && Case has changed */){
-          room.hallOne.setTrapSprung(false);
-      }
     };
 
 
@@ -1322,11 +1318,14 @@
      */
     var playVideo             = function playVideo (urlClip) {
         var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
-
+        // TODO: Should we ALWAYS have to use diff?  Or only if switching back into a room?
+              console.log('playing video');
         audioElem.pause();
+        video.pause();
         video.src(urlClip);
+        video.load();
         video.play();
-        video.currentTime(diff);
+//        video.currentTime(diff);
     };
 
 
