@@ -912,12 +912,25 @@
         // Do I really need this? 
     };
 
+    /**
+     * This is the greatest library ever.
+     */
+    Object.observe(current,
+      function (changes){
+        if (changes[1]!== undefined) {
+          console.log('Changes: ', changes[1].name);
+          console.log('Old Val: ', changes[1].oldValue);
+        }
+
+    });
 
     /**
      * When user selects a room, this takes the current values from the room and applies them to the current object.
      * createVideoSeries is called after properties have been set.
      */
     var changeVideoStream     = function changeVideoStream () {
+
+
           switch (this.id) {
             case 'Hall-1':
                   current.setCam          ('hallOne'                    );
