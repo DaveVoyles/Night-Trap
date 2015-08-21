@@ -919,7 +919,7 @@
      */
     var changeVideoStream     = function changeVideoStream () {
           switch (this.id) {
-              case 'Hall-1':
+            case 'Hall-1':
                   current.setCam          ('hallOne'                    );
                   current.setCurUrl       (room.hallOne.getCurUrl     ());
                   current.setNextUrl      (room.hallOne.getNextUrl    ());
@@ -929,7 +929,6 @@
                   current.setUrlChangeTime(room.hallOne.getTime       ());
                   current.setStillUrl     (room.hallOne.stillUrl        );
                   current.setTrapSprung   (room.hallOne.getTrapSprung ());
-                  console.log(current.getTrapSprung());
                   break;
               case 'Kitchen':
                   current.setCam          ('kitchen'                    );
@@ -939,6 +938,7 @@
                   current.setCanCatch     (room.kitchen.getCanCatch   ());
                   current.setUrlChangeTime(room.kitchen.getTime       ());
                   current.setStillUrl     (room.kitchen.stillUrl        );
+                  current.setTrapSprung   (room.kitchen.getTrapSprung ());
                   break;
               case 'Entry-Way':
                   current.setCam          ('entryway'                   );
@@ -948,6 +948,7 @@
                   current.setCanCatch     (room.entryway.getCanCatch  ());
                   current.setUrlChangeTime(room.entryway.getTime      ());
                   current.setStillUrl     (room.entryway.stillUrl       );
+                  current.setTrapSprung   (room.entryway.getTrapSprung ());
                   break;
               case 'Living-Room':
                   current.setCam          ('livingroom'                 );
@@ -957,6 +958,7 @@
                   current.setCanCatch     (room.livingRoom.getCanCatch());
                   current.setUrlChangeTime(room.livingRoom.getTime    ());
                   current.setStillUrl     (room.livingRoom.stillUrl     );
+                  current.setTrapSprung   (room.livingRoom.getTrapSprung ());
                   break;
               case 'Bathroom':
                   current.setCam           ('bathroom'                   );
@@ -966,6 +968,7 @@
                   current.setCanCatch     (room.bathroom.getCanCatch  ());
                   current.setUrlChangeTime(room.bathroom.getTime      ());
                   current.setStillUrl     (room.bathroom.stillUrl       );
+                  current.setTrapSprung   (room.bathroom.getTrapSprung ());
                   break;
               case 'Bedroom':
                   current.setCam          ('bedroom'                    );
@@ -976,7 +979,6 @@
                   current.setUrlChangeTime(room.bedroom.getTime       ());
                   current.setStillUrl     (room.bedroom.stillUrl        );
                   current.setTrapSprung   (room.bedroom.getTrapSprung ());
-                console.log(current.getTrapSprung());
                   break;
               case 'Hall-2':
                   current.setCam          ('hallTwo'                    );
@@ -986,6 +988,7 @@
                   current.setCanCatch     (room.hallTwo.getCanCatch   ());
                   current.setUrlChangeTime(room.hallTwo.getTime       ());
                   current.setStillUrl     (room.hallTwo.stillUrl        );
+                  current.setTrapSprung   (room.hallTwo.getTrapSprung ());
                   break;
               case 'Driveway':
                   current.setCam          ('driveway'                   );
@@ -995,6 +998,7 @@
                   current.setCanCatch     (room.driveway.getCanCatch  ());
                   current.setUrlChangeTime(room.driveway.getTime      ());
                   current.setStillUrl     (room.driveway.stillUrl       );
+                  current.setTrapSprung   (room.driveway.getTrapSprung ());
                   break;
           }
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
@@ -1002,7 +1006,7 @@
 
 
     /**
-     *  Sets the current values for each room, which will then be used the events function to
+     * Sets the current values for each room, which will then be used the events function to
      * then set these values if user has current room selected
      * @Param {string} [curUrl]    - Path to video which should be set at this point in time.
      * @Param {string} [nextUrl]   - Path to video that should play when curUrl is completed.
