@@ -912,25 +912,19 @@
         // Do I really need this? 
     };
 
+
     /**
      * This is the greatest library ever.
      */
-    Object.observe(current,
-      function (changes){
-        if (changes[1]!== undefined) {
-          console.log('Changes: ', changes[1].name);
-          console.log('Old Val: ', changes[1].oldValue);
-        }
+//nk 182
 
-    });
+
 
     /**
      * When user selects a room, this takes the current values from the room and applies them to the current object.
      * createVideoSeries is called after properties have been set.
      */
     var changeVideoStream     = function changeVideoStream () {
-
-
           switch (this.id) {
             case 'Hall-1':
                   current.setCam          ('hallOne'                    );
@@ -1117,7 +1111,7 @@
           case 1:
               buildStateHallOne(camHallOne.c21, null, camHallOne.c130422, 3);
               break;
-          case 10:
+          case 8:
               buildStateHallOne(camHallOne.c1152221, null, null, null);
               room.hallOne.setTrapSprung(false);       //TODO: Can prob move this into build state function
               break;
@@ -1161,7 +1155,6 @@
      * @param {string}  sStillUrl    - Path to URL w/ poster image.
      */
     var createVideoSeries = function createVideoSeries (sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
-        console.log(arguments);
 
         /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
          * and returns to that same room before a new clip is set to begin */
@@ -1184,7 +1177,7 @@
                 } else {
                     displayStill();
                 }
-            };
+            }
 
             // Video has already played, so use a still
             hasPlayed           = true;
@@ -1311,9 +1304,9 @@
      * Useful when viewer enters a room after a video was supposed to have started.
      * Need to apply Math.floor, otherwise Blink throws an error regarding non-finite numbers.
      * Result is then used to set the currentTime on video player. 
-     * @param   {float} caseTime     - Which event (time) is creating this object?
-     * @param   {float} currentTime  - What is the current game time when this function is called?
-     * @returns {float} Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
+     * @param   {number} caseTime     - Which event (time) is creating this object?
+     * @param   {number} currentTime  - What is the current game time when this function is called?
+     * @returns {number} Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
     var nTimeDiff             = function  nTimeDiff(caseTime, currentTime) {
         var floorCurrentTime  = Math.floor(currentTime);
@@ -1332,12 +1325,27 @@
     var playVideo             = function playVideo (urlClip) {
         var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
         // TODO: Should we ALWAYS have to use diff?  Or only if switching back into a room?
-              console.log('playing video');
         audioElem.pause();
-        video.pause();
         video.src(urlClip);
         video.load();
         video.play();
+
+        Object.observe(room.hallOne,  function (changes) {
+            var oldUrl = room.hallOne.getCurUrl();
+
+            if (changes[1]!== undefined) {
+              var curUrl = changes[1].oldValue;
+
+              if (oldUrl !== curUrl){
+                video.src(curUrl);
+                video.load();
+                video.play();
+              }
+            }
+
+          }
+        );
+
 //        video.currentTime(diff);
     };
 
