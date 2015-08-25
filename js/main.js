@@ -1333,39 +1333,95 @@
      */
     var updateVidSource = function updateVidSource () {
 
-        Object.observe(room.hallOne,  function (changes) {
-            if (changes[0]!== undefined) {
-                var oldUrl = changes[0].oldValue;
-                var newUrl = room.hallOne.getCurUrl();
+      Object.observe(room.hallOne,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.hallOne.getCurUrl();
 
-                if (oldUrl !== newUrl && current.getCam() === 'hallOne') {
-                  playVideo(newUrl);
-                }
-            }
-        });
+          if (oldUrl !== newUrl && current.getCam() === 'hallOne') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
+      Object.observe(room.kitchen,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.kitchen.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === 'kitchen') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
+      Object.observe(room.entryway,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.entryway.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === 'entryway') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
+      Object.observe(room.livingRoom,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.livingRoom.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === 'livingroom') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
+      Object.observe(room.bathroom,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.bathroom.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === 'bathroom') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
+      Object.observe(room.bedroom,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.bedroom.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === 'bedroom') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
+      Object.observe(room.hallTwo,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.hallTwo.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === 'hallTwo') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
+      Object.observe(room.driveway,  function (changes) {
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = room.driveway.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === 'driveway') {
+            playVideo(newUrl);
+          }
+        }
+      });
+
     };
-
-
-//    var updateVidSource = function updateVidSource () {
-//      Object.observe(current,  function (changes) {
-//        var oldUrl = current.getCurUrl();
-//        console.log(oldUrl);
-//        console.log(changes);
-//
-//        if (changes[1] !== undefined) {
-//          console.log('changes');
-////          var curUrl = changes[1].oldValue;
-//
-//
-////          if (oldUrl !== curUrl){
-////            video.src(curUrl);
-////            video.load();
-////            video.play();
-////          }
-//        }
-//      });
-//    };
-
 
 
     /**
