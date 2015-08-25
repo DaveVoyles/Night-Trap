@@ -1339,20 +1339,10 @@
                 var oldUrl = room.hallOne.getCurUrl();
 
                 if (oldUrl !== newUrl && current.getCam() === 'hallOne') {
-                  updateVid(oldUrl);
+                  playVideo(oldUrl);
                 }
             }
         });
-    };
-
-
-    /**
-     * TODO: Maybe I could just make this playVideo and have it work recursively?
-     */
-    var updateVid = function updateVid (sUrl) {
-      video.src(sUrl);
-      video.load();
-      video.play();
     };
 
 
