@@ -1329,7 +1329,17 @@
         video.src(urlClip);
         video.load();
         video.play();
+//        video.currentTime(diff);
+        updateVidSource();
+    };
 
+
+    /**
+     * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
+     * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
+     * then that new URL is passed into the video player & played.
+     */
+    var updateVidSource = function updateVidSource () {
         Object.observe(room.hallOne,  function (changes) {
             var oldUrl = room.hallOne.getCurUrl();
 
@@ -1342,11 +1352,7 @@
                 video.play();
               }
             }
-
-          }
-        );
-
-//        video.currentTime(diff);
+        });
     };
 
 
