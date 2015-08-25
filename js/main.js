@@ -694,7 +694,7 @@
         // TRAP: Augers caught in hall
         , c130422:  'https://nighttrap.blob.core.windows.net/vid/hallone/00130422.mp4'
         // Tony, Jeff, & Dad enter from basement
-        , c1152221: 'https://nighttrap.blob.core.windows.net/vid/hallone/02500221.mp4'
+        , c1152221: 'https://nighttrap.blob.core.windows.net/vid/hallone/02500221.mp4'           //TODO: These numbers don't match
     };
 
     /* 3 - Kitchen */
@@ -903,7 +903,8 @@
             e.preventDefault();
         }, false);
     };
-   
+
+
     /**
      * Draws the GUI to the screen
      * @param {float} interpolationPercentage - How much to interpolate between frames.
@@ -911,13 +912,6 @@
     var draw                  = function draw (interpolatePercentage) {
         // Do I really need this? 
     };
-
-
-    /**
-     * This is the greatest library ever.
-     */
-//nk 182
-
 
 
     /**
@@ -1104,7 +1098,6 @@
     /**
      * Sets values of this particular room each time current.getTime() matches the case value.
      * Case is equal to the current number of seconds into the game.
-     * NOTE: Need to set current.GetTime() and setTrapSprung(false) for EACH case
      */
     var eventsHallOne         = function eventsHallOne () {
         switch (current.getTime()) {
@@ -1113,7 +1106,6 @@
               break;
           case 8:
               buildStateHallOne(camHallOne.c1152221, null, null, null);
-              room.hallOne.setTrapSprung(false);       //TODO: Can prob move this into build state function
               break;
         }
     };
@@ -1139,7 +1131,7 @@
             case 37:
               buildStateBathroom(camBathroom.c352291, null,  camBathroom.c431292, 43);
               break;
-          default:
+          default:  // Only needed if the room does not have an event occurring as soon as the game starts
               buildStateBathroom(null, null, null, null);
         }
     };
@@ -1340,20 +1332,50 @@
      * then that new URL is passed into the video player & played.
      */
     var updateVidSource = function updateVidSource () {
+
         Object.observe(room.hallOne,  function (changes) {
-            var oldUrl = room.hallOne.getCurUrl();
+            if (changes[0]!== undefined) {
+                var newUrl = changes[0].oldValue;
+                var oldUrl = room.hallOne.getCurUrl();
 
-            if (changes[1]!== undefined) {
-              var curUrl = changes[1].oldValue;
-
-              if (oldUrl !== curUrl){
-                video.src(curUrl);
-                video.load();
-                video.play();
-              }
+                if (oldUrl !== newUrl && current.getCam() === 'hallOne') {
+                  updateVid(oldUrl);
+                }
             }
         });
     };
+
+
+    /**
+     * TODO: Maybe I could just make this playVideo and have it work recursively?
+     */
+    var updateVid = function updateVid (sUrl) {
+      video.src(sUrl);
+      video.load();
+      video.play();
+    };
+
+
+//    var updateVidSource = function updateVidSource () {
+//      Object.observe(current,  function (changes) {
+//        var oldUrl = current.getCurUrl();
+//        console.log(oldUrl);
+//        console.log(changes);
+//
+//        if (changes[1] !== undefined) {
+//          console.log('changes');
+////          var curUrl = changes[1].oldValue;
+//
+//
+////          if (oldUrl !== curUrl){
+////            video.src(curUrl);
+////            video.load();
+////            video.play();
+////          }
+//        }
+//      });
+//    };
+
 
 
     /**
