@@ -863,7 +863,7 @@
         calcCatchTime(current.getCatchTime()); // TODO: Does this need to happen each frame?
         eventsHallOne();
         eventsBedroom();
-        eventsBathroom();
+//        eventsBathroom();
     };
 
 
@@ -1016,14 +1016,14 @@
      * @param {string} [trapUrl]   - Path to video containing the trap scene.
      * @param {float}  [catchTime] - Moment when user can trigger a trap.
      */
-    var buildState = function buildState (oRoom,curUrl, nextUrl, trapUrl, catchTime) {
-      oRoom.setCurUrl    (curUrl)           ;
-      oRoom.setNextUrl   (nextUrl)          ;
-      oRoom.setTrapUrl   (trapUrl)          ;
-      oRoom.setCatchTime (catchTime)        ;
-      oRoom.setTime      (current.getTime());
-      oRoom.setTrapSprung(false)            ;
-      oRoom.setTime      (current.getTime());
+    var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime) {
+        oRoom.setCurUrl    (curUrl)           ;
+        oRoom.setNextUrl   (nextUrl)          ;
+        oRoom.setTrapUrl   (trapUrl)          ;
+        oRoom.setCatchTime (catchTime)        ;
+        oRoom.setTime      (current.getTime());
+        oRoom.setTrapSprung(false)            ;
+        oRoom.setTime      (current.getTime());
     };
 
 
@@ -1045,26 +1045,26 @@
 
 
     var eventsBedroom         = function eventsBedroom () {
-        var br = room.bedroom
+        var br = room.bedroom;
         switch (current.getTime()) {
           case 1:
             buildState(br, camBedroom.c81, null, camBedroom.c352482, 34);
             break;
-          case 54:
+          case 14:
             buildState(br, camBedroom.c540281, null, null, null);
             break;
         }
     };
 
 
-    var eventsBathroom     = function eventsBathroom () {
-        var bath = room.bathroom
+    var eventsBathroom       = function eventsBathroom () {
+        var bath = room.bathroom;
         switch (current.getTime()) {
             case 18:
-              buildState(bath, camBathroom.c180291, null, null, null);)
+              buildState(bath, camBathroom.c180291, null, null, null);
               break;
             case 37:
-              buildState(bath, amBathroom.c352291, null,  camBathroom.c431292, 43);
+              buildState(bath, camBathroom.c352291, null,  camBathroom.c431292, 43);
               break;
           default:  // Only needed if the room does not have an event occurring as soon as the game starts
               buildState(bath, null, null, null, null);
@@ -1085,7 +1085,8 @@
 
         /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
          * and returns to that same room before a new clip is set to begin */
-        if (sCurVidUrl ===  null || current.getTrapSprung() === true) {            //TODO: This may have to be set to check if it is '' as well
+        //TODO: This may have to be set to check if it is '' as well
+         if (sCurVidUrl ===  null || current.getTrapSprung() === true) {
           video.poster(sStillUrl);
           displayStill();
           return;
@@ -1136,7 +1137,6 @@
     var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl) {
 
       // Mark trap as having been sprung after user selects a room.
-      //TODO: Need to set this to false, somewhere else. Probably in the NEXT case statement? (ex: beginning of it)
       switch (current.getCam()){
         case 'hallOne':
           room.hallOne   .setTrapSprung(true);
@@ -1262,28 +1262,6 @@
 
 
     /**
-     * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
-     * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
-     * then that new URL is passed into the video player & played.
-     * @param {object} - Name of the room
-     * @param {string{ - Name of the room
-     */
-    var observeRoom = function observeRoom (oRoom, sRoomName) {
-      Object.observe(oRoom,  function (changes) {
-
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = oRoom.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'sRoomName') {
-            playVideo(newUrl);
-          }
-        }
-      });
-    };
-
-
-    /**
      * Sets Object.observe for each room in the game.
      */
     var updateVidSource = function updateVidSource () {
@@ -1295,8 +1273,31 @@
       observeRoom(room.bedroom,    'bedroom'   );
       observeRoom(room.hallTwo,    'hallTwo'   );
       observeRoom(room.driveway,   'driveway'  );
-
     };
+
+
+    /**
+     * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
+     * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
+     * then that new URL is passed into the video player & played.
+     * @param {object} - Name of the room
+     * @param {string{ - Name of the room
+         */
+    var observeRoom = function observeRoom (oRoom, sRoomName) {
+      Object.observe(oRoom,  function (changes) {
+
+        if (changes[0]!== undefined) {
+          var oldUrl = changes[0].oldValue;
+          var newUrl = oRoom.getCurUrl();
+
+          if (oldUrl !== newUrl && current.getCam() === sRoomName) {
+            console.log('does this get called?');
+            playVideo(newUrl);
+          }
+        }
+      });
+    };
+
 
     /**
      * Plays a sound effect during gameplay. Used for traps, passwords
