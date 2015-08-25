@@ -1330,99 +1330,38 @@
      * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
      * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
      * then that new URL is passed into the video player & played.
+     * @Param {object} - Name of the room
+     * @Param {string{ - Name of the room
      */
-    var updateVidSource = function updateVidSource () {
+    var observeRoom = function observeRoom (oRoom, sRoomName) {
+      Object.observe(oRoom,  function (changes) {
 
-      Object.observe(room.hallOne,  function (changes) {
         if (changes[0]!== undefined) {
           var oldUrl = changes[0].oldValue;
-          var newUrl = room.hallOne.getCurUrl();
+          var newUrl = oRoom.getCurUrl();
 
-          if (oldUrl !== newUrl && current.getCam() === 'hallOne') {
+          if (oldUrl !== newUrl && current.getCam() === 'sRoomName') {
             playVideo(newUrl);
           }
         }
       });
-
-      Object.observe(room.kitchen,  function (changes) {
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = room.kitchen.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'kitchen') {
-            playVideo(newUrl);
-          }
-        }
-      });
-
-      Object.observe(room.entryway,  function (changes) {
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = room.entryway.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'entryway') {
-            playVideo(newUrl);
-          }
-        }
-      });
-
-      Object.observe(room.livingRoom,  function (changes) {
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = room.livingRoom.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'livingroom') {
-            playVideo(newUrl);
-          }
-        }
-      });
-
-      Object.observe(room.bathroom,  function (changes) {
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = room.bathroom.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'bathroom') {
-            playVideo(newUrl);
-          }
-        }
-      });
-
-      Object.observe(room.bedroom,  function (changes) {
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = room.bedroom.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'bedroom') {
-            playVideo(newUrl);
-          }
-        }
-      });
-
-      Object.observe(room.hallTwo,  function (changes) {
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = room.hallTwo.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'hallTwo') {
-            playVideo(newUrl);
-          }
-        }
-      });
-
-      Object.observe(room.driveway,  function (changes) {
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = room.driveway.getCurUrl();
-
-          if (oldUrl !== newUrl && current.getCam() === 'driveway') {
-            playVideo(newUrl);
-          }
-        }
-      });
-
     };
 
+
+    /**
+     * Sets Object.observe for each room in the game.
+     */
+    var updateVidSource = function updateVidSource () {
+      observeRoom(room.hallOne,    'hallOne'   );
+      observeRoom(room.kitchen,    'kitchen'   );
+      observeRoom(room.entryway,   'entryway'  );
+      observeRoom(room.livingRoom, 'livingroom');
+      observeRoom(room.bathroom,   'bathroom'  );
+      observeRoom(room.bedroom,    'bedroom'   );
+      observeRoom(room.hallTwo,    'hallTwo'   );
+      observeRoom(room.driveway,   'driveway'  );
+
+    };
 
     /**
      * Plays a sound effect during gameplay. Used for traps, passwords
