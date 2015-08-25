@@ -499,6 +499,7 @@
      * @property {string} nextUrl       - NextUrl to be set as video.src() when curUrl finishes.
      * @property {string} trapUrl       - If a character can be trapped in the scene, have it trigger this Url.
      * @property {bool}   bTrapSpring   - Has the user set the trap in this current scene yet?
+     * @property {bool}   bJustSwitched - Has a new video feed come up since the user selected this room?
      */
     var current = {
         cam: {
@@ -588,6 +589,14 @@
         },
         setTrapSprung: function (val){
           this.bTrapSprung = val;
+        },
+
+        bJustSwitched: false,
+        getJustSwitched: function () {
+          return this.bJustSwitched;
+        },
+        setJustSwitched: function (val){
+          this.bJustSwitched = val;
         }
     };
 
@@ -920,6 +929,7 @@
      * Considered refactoring this, but it actually made it more difficult to read.
      */
     var changeVideoStream     = function changeVideoStream () {
+          current.setJustSwitched(true);
           switch (this.id) {
             case 'Hall-1':
                   current.setCam          ('hallOne'                    );
@@ -1236,6 +1246,7 @@
      * @returns {number} Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
     var nTimeDiff             = function  nTimeDiff(caseTime, currentTime) {
+        current.setJustSwitched(false);
         var floorCurrentTime  = Math.floor(currentTime);
         var floorCaseTime     = Math.floor(caseTime   );
         var result            = floorCurrentTime - floorCaseTime;
@@ -1246,17 +1257,19 @@
 
     /**
      * Pauses audio played during stills, sets new video source, & begins to play.
+     * Only use diff if the user has selected a room after a video has started playing.
      * @param {string} clipUrl - Address of clip to play.
      * TODO: Do not need diff if it is not a trap. Move this to the trap
      */
     var playVideo             = function playVideo (urlClip) {
-        var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
-        // TODO: Should we ALWAYS have to use diff?  Or only if switching back into a room?
         audioElem.pause();
         video.src(urlClip);
         video.load();
         video.play();
-//        video.currentTime(diff);
+        if (current.getJustSwitched() === true){
+           var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+           video.currentTime(diff);
+        }
         updateVidSource();
     };
 
@@ -1281,8 +1294,8 @@
      * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
      * then that new URL is passed into the video player & played.
      * @param {object} - Name of the room
-     * @param {string{ - Name of the room
-         */
+     * @param {string} - Name of the room
+     */
     var observeRoom = function observeRoom (oRoom, sRoomName) {
       Object.observe(oRoom,  function (changes) {
 
@@ -1291,7 +1304,6 @@
           var newUrl = oRoom.getCurUrl();
 
           if (oldUrl !== newUrl && current.getCam() === sRoomName) {
-            console.log('does this get called?');
             playVideo(newUrl);
           }
         }
