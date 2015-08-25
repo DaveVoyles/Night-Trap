@@ -1335,11 +1335,11 @@
 
         Object.observe(room.hallOne,  function (changes) {
             if (changes[0]!== undefined) {
-                var newUrl = changes[0].oldValue;
-                var oldUrl = room.hallOne.getCurUrl();
+                var oldUrl = changes[0].oldValue;
+                var newUrl = room.hallOne.getCurUrl();
 
                 if (oldUrl !== newUrl && current.getCam() === 'hallOne') {
-                  playVideo(oldUrl);
+                  playVideo(newUrl);
                 }
             }
         });
