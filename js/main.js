@@ -917,6 +917,7 @@
     /**
      * When user selects a room, this takes the current values from the room and applies them to the current object.
      * createVideoSeries is called after properties have been set.
+     * Considered refactoring this, but it actually made it more difficult to read.
      */
     var changeVideoStream     = function changeVideoStream () {
           switch (this.id) {
@@ -1009,11 +1010,11 @@
     /**
      * Sets the current values for each room, which will then be used the events function to
      * then set these values if user has current room selected
-     * @Param: {object} oRoom      - Name of the room we should be setting values for
-     * @Param {string} [curUrl]    - Path to video which should be set at this point in time.
-     * @Param {string} [nextUrl]   - Path to video that should play when curUrl is completed.
-     * @Param {string} [trapUrl]   - Path to video containing the trap scene.
-     * @Param {float}  [catchTime] - Moment when user can trigger a trap.
+     * @param {object}  oRoom      - Name of the room we should be setting values for
+     * @param {string} [curUrl]    - Path to video which should be set at this point in time.
+     * @param {string} [nextUrl]   - Path to video that should play when curUrl is completed.
+     * @param {string} [trapUrl]   - Path to video containing the trap scene.
+     * @param {float}  [catchTime] - Moment when user can trigger a trap.
      */
     var buildState = function buildState (oRoom,curUrl, nextUrl, trapUrl, catchTime) {
       oRoom.setCurUrl    (curUrl)           ;
@@ -1264,8 +1265,8 @@
      * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
      * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
      * then that new URL is passed into the video player & played.
-     * @Param {object} - Name of the room
-     * @Param {string{ - Name of the room
+     * @param {object} - Name of the room
+     * @param {string{ - Name of the room
      */
     var observeRoom = function observeRoom (oRoom, sRoomName) {
       Object.observe(oRoom,  function (changes) {
