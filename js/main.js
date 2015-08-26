@@ -5,8 +5,8 @@
      * Obj to get / set current values for the each room.
      * @property {string} stillUrl    - Background image when room is empty.
      * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
-     * @property {float}  time        - Current time stamp when curUrl is being set.
-     * @property {float}  catchTime   - When can the user catch an auger? 
+     * @property {number} time        - Current time stamp when curUrl is being set.
+     * @property {number} catchTime   - When can the user catch an auger?
      * @property {sting}  curUrl      - Url should be set as video.src() right now.
      * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
      * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url.
@@ -492,14 +492,14 @@
      * @property {string} cam           - Room the user has currently selected
      * @property {string} stillUrl      - Background image when room is empty.
      * @property {bool}   bCanCatch     - Is there a character who can be caught in the scene?
-     * @property {float}  urlChangeTime - Time into the game should curUrl should be set.  
-     * @property {float}  time          - Current time stamp when curUrl is being set. 
-     * @property {float}  catchTime     - When can the user catch an auger?
+     * @property {number} urlChangeTime - Time into the game should curUrl should be set.
+     * @property {number} time          - Current time stamp when curUrl is being set.
+     * @property {number} catchTime     - When can the user catch an auger?
      * @property {sting}  curUrl        - Url should be set as video.src() right now.
      * @property {string} nextUrl       - NextUrl to be set as video.src() when curUrl finishes.
      * @property {string} trapUrl       - If a character can be trapped in the scene, have it trigger this Url.
      * @property {bool}   bTrapSpring   - Has the user set the trap in this current scene yet?
-     * @property {bool}   bJustSwitched - Has a new video feed come up since the user selected this room?
+     * @property {bool}   bJustSwitched - Has the currentUrl switched since the user selected this room?
      */
     var current = {
         cam: {
@@ -823,7 +823,7 @@
 
     /**
      * Converts seconds to "MM:SS"
-     * @param {float} seconds - Takes seconds and returns it in string format of MM:SS for on screen timer
+     * @param {number} seconds - Takes seconds and returns it in string format of MM:SS for on screen timer
      */
     var secondsToTimeString   = function secondsToTimeString (seconds) {
 
@@ -864,15 +864,16 @@
 
     /**
      * Update loop for checking when to change video scenes 
-     * @param {float} delta - The amount of time since the last update, in seconds
+     * @param {number} delta - The amount of time since the last update, in seconds
      */
     var update                = function update (delta) {
         elapsedTime();
         updateTimeOnScreen();
         calcCatchTime(current.getCatchTime()); // TODO: Does this need to happen each frame?
         eventsHallOne();
+        eventsKitchen();
         eventsBedroom();
-//        eventsBathroom();
+        eventsBathroom();
     };
 
 
@@ -1021,10 +1022,10 @@
      * Sets the current values for each room, which will then be used the events function to
      * then set these values if user has current room selected
      * @param {object}  oRoom      - Name of the room we should be setting values for
-     * @param {string} [curUrl]    - Path to video which should be set at this point in time.
+     * @param {string}  curUrl     - Path to video which should be set at this point in time.
      * @param {string} [nextUrl]   - Path to video that should play when curUrl is completed.
      * @param {string} [trapUrl]   - Path to video containing the trap scene.
-     * @param {float}  [catchTime] - Moment when user can trigger a trap.
+     * @param {number} [catchTime] - Moment when user can trigger a trap.
      */
     var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime) {
         oRoom.setCurUrl    (curUrl)           ;
@@ -1058,10 +1059,13 @@
         var br = room.bedroom;
         switch (current.getTime()) {
           case 1:
-            buildState(br, camBedroom.c81, null, camBedroom.c352482, 34);
+            buildState(br, camBedroom.c81,    null, camBedroom.c352482, 34);
             break;
-          case 14:
+          case 54:
             buildState(br, camBedroom.c540281, null, null, null);
+            break;
+          case 72: // This time is a guess. See the spreadsheet
+              buildState(br, /* Missing video clip */ null, null, null);
             break;
         }
     };
@@ -1076,9 +1080,27 @@
             case 37:
               buildState(bath, camBathroom.c352291, null,  camBathroom.c431292, 43);
               break;
+            case 48:
+              buildState(bath, camBathroom.c500291, null, camBathroom.c430249b, 49);
+            break;
           default:  // Only needed if the room does not have an event occurring as soon as the game starts
               buildState(bath, null, null, null, null);
         }
+    };
+
+    var eventsKitchen = function eventsKitchen () {
+      var kitch = room.Kitchen;
+      switch (current.getTime()){
+        case 81:
+            buildState(kitch, camKitchen.c1200431, null, camKitchen.c1240632, 83);
+            break;
+        case 90:
+          buildState(kitch, camKitchen.c1481231);
+          break;
+        default:
+          buildState(kitch, null, null, null, null);
+      }
+
     };
 
 
@@ -1198,7 +1220,7 @@
     /**
      * Have a buffer 1 second before / after catchTime to allow users to try to catch a character.
      * If current.getTime() is between this buffer, then allow user to set the trap.
-     * @param {float} nCatchTime - When can the user trigger the trap?
+     * @param {number} nCatchTime - When can the user trigger the trap?
      */
     var calcCatchTime         = function calcCatchTime (nCatchTime) {
         var before = nCatchTime - 1;
