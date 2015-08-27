@@ -1039,7 +1039,6 @@
         oRoom.setCatchTime (catchTime)        ;
         oRoom.setTime      (current.getTime());
         oRoom.setTrapSprung(false)            ;
-        oRoom.setTime      (current.getTime());
     };
 
 
