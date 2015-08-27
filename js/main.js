@@ -718,11 +718,13 @@
 
     /* 4- Living-Room */
     var camLivingRoom          = {
-         // Augers enter from outside
-          c232241:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00232241.mp4'
+        // Mom enters from bookshelf
+          c1572241: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01572241.mp4'
+         // Augers enter from outside. Marked as 3230241 in the doc. TODO: Look at correcting this
+         ,c232241:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00232241.mp4'
         // TRAP: Augers caught on bookshelf
         , c271442:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271442.mp4'
-        // Augers Escape
+        // Augers Escape  TODO: Listed as 3330841 in excel spreadsheet
         , c271641:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271641.mp4'
         // TRAP: Auger caught on library 
         , c554164a: 'https://nighttrap.blob.core.windows.net/vid/livingroom/0554164a.mp4'
@@ -730,8 +732,6 @@
         , c1001241 :'https://nighttrap.blob.core.windows.net/vid/livingroom/01001241.mp4'
         // TRAP: Augers caught on right side of living room
         , c1071042: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01071042.mp4'
-        // Mom enters from bookshelf
-        , c1572241: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01572241.mp4'
     };
 
     /* 5 - Driveway */
@@ -869,11 +869,16 @@
     var update                = function update (delta) {
         elapsedTime();
         updateTimeOnScreen();
-        calcCatchTime(current.getCatchTime()); // TODO: Does this need to happen each frame?
+        calcCatchTime(current.getCatchTime());
+
         eventsHallOne();
         eventsKitchen();
-        eventsBedroom();
+        eventsEntry();
+        eventsLiving();
         eventsBathroom();
+        eventsBedroom();
+        eventshallTwo();
+        eventsDriveway();
     };
 
 
@@ -1054,22 +1059,42 @@
         }
     };
 
-
-    var eventsBedroom         = function eventsBedroom () {
-        var br = room.bedroom;
-        switch (current.getTime()) {
-          case 1:
-            buildState(br, camBedroom.c81,    null, camBedroom.c352482, 34);
+    var eventsKitchen = function eventsKitchen () {
+        var kitch = room.Kitchen;
+        switch (current.getTime()){
+          case 81:
+            buildState(kitch, camKitchen.c1200431, null, camKitchen.c1240632, 83);
             break;
-          case 54:
-            buildState(br, camBedroom.c540281, null, null, null);
+          case 90:
+            buildState(kitch, camKitchen.c1481231);
             break;
-          case 72: // This time is a guess. See the spreadsheet
-              buildState(br, /* Missing video clip */ null, null, null);
-            break;
+          default:
+            buildState(kitch, null, null, null, null);
         }
     };
 
+    // TODO: Need timestamps
+    var eventsEntry = function eventsEntry () {
+        var entry = room.entryway;
+        switch (current.getTime()){
+          default:
+              buildState(entry, null, null);
+        }
+    };
+
+    var eventsLiving = function eventsLiving () {
+      var living = room.livingRoom;
+        switch(current.getTime()) {
+          case 60:
+              buildState(living, cam.livingRoom.c1572241, null, null);
+              break;
+          case 117:
+              //
+            break;
+          default:
+            buildState(living, null, null);
+        }
+    };
 
     var eventsBathroom       = function eventsBathroom () {
         var bath = room.bathroom;
@@ -1082,25 +1107,42 @@
               break;
             case 48:
               buildState(bath, camBathroom.c500291, null, camBathroom.c430249b, 49);
-            break;
+              break;
           default:  // Only needed if the room does not have an event occurring as soon as the game starts
               buildState(bath, null, null, null, null);
         }
     };
 
-    var eventsKitchen = function eventsKitchen () {
-      var kitch = room.Kitchen;
-      switch (current.getTime()){
-        case 81:
-            buildState(kitch, camKitchen.c1200431, null, camKitchen.c1240632, 83);
+    var eventsBedroom         = function eventsBedroom () {
+        var br = room.bedroom;
+        switch (current.getTime()) {
+          case 1:
+            buildState(br, camBedroom.c81,    null, camBedroom.c352482, 34);
             break;
-        case 90:
-          buildState(kitch, camKitchen.c1481231);
-          break;
-        default:
-          buildState(kitch, null, null, null, null);
-      }
+          case 54:
+            buildState(br, camBedroom.c540281, null, null, null);
+            break;
+          case 72: // This time is a guess. See the spreadsheet
+            buildState(br, /* Missing video clip */ null, null, null);
+            break;
+        }
+    };
 
+    var eventshallTwo = function eventsHallTwo () {
+        var hall = room.hallTwo;
+        switch (current.getTime()) {
+
+          default:
+            buildState(hall, null, null, null);
+        }
+    };
+
+    var eventsDriveway = function eventsDriveway () {
+        var drive = room.driveway;
+        switch(current.getTime()) {
+          default:
+            buildState(drive, null, null, null);
+        }
     };
 
 
@@ -1162,13 +1204,12 @@
     /**
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
-     * Second 'ended' event draws poster to screen when 2nd clip has completed
+     * Second 'ended' event draws poster to screen when 2nd clip has completed.
+     * Mark trap as having been sprung after user selects a room.
      * @param {string} curVidUrl - Clip with the trap sequence.
      * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
      */
     var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl) {
-
-      // Mark trap as having been sprung after user selects a room.
       switch (current.getCam()){
         case 'hallOne':
           room.hallOne   .setTrapSprung(true);
@@ -1208,7 +1249,7 @@
           video.src(sNextUrl);
           video.play();
 
-
+          // When second video has finished, use a still
           video.on('ended', function () {
             displayStill();
           });
