@@ -520,7 +520,7 @@
         },
 
         stillUrl: '',
-        getStillUrl () {
+        getStillUrl: function () {
             return this.stillUrl;
         },
         setStillUrl: function (val) {
@@ -613,7 +613,7 @@
             this.caught        = val;
         },
         increment: function () {
-            this.caught ++;
+            this.caught += 1;
         }
     };
 
@@ -629,7 +629,7 @@
             this.missed        = val;
         },
         increment: function () {
-            this.missed ++;
+            this.missed += 1;
         }
     };
 
@@ -673,7 +673,13 @@
 
         curPass: 'BLUE',
         generateRanPass:  function () {
-            //TODO: Fill this in
+            var result;
+            var count = 0;
+            for (var prop in this.passwords)
+              if (Math.random() < 1/++count)
+                result = prop;
+            return result;
+
         },
         setStyleColor: function () {
           switch(this.pass){
