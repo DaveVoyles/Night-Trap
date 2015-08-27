@@ -640,38 +640,65 @@
     // Are we in Debug mode?
     var bDebug                 = true;
     var timerElem              = document.getElementById('timer');
+    var passElem               = document.getElementById('pass');
     var video                  = null;   
 
     /**
-     * @property {string}   passwords       - List of potential passwords
+     * @property {string}   passwords       - List of potential passwords.
      * @property {string}   sCurUserPass    - Which password does the user currently have?
      * @property {string}   sCurPass        - Password which is currently correct.
-     * @property {function} generateRanPass - Creates a random password from the password list
+     * @function            generateRanPass - Creates a random password from the password list.
+     * @function            setStyleColor   - Sets the style color on the HTML element 'pass'.
      */
     var password = {
         passwords: {
-            Purple: 'Purple',
-            Blue:   'Blue  ',
-            Red:    'Red   ',
-            Green:  'Green ',
-            Yellow: 'Yellow',
-            Orange: 'Orange'
+            Purple: 'PURPLE',
+            Blue:   'BLUE  ',
+            Red:    'RED   ',
+            Green:  'GREEN ',
+            Yellow: 'YELLOW',
+            Orange: 'ORANGE'
         },
 
         sCurUserPass: {
-            pass: 'Blue',
-            get () {
+            pass: 'BLUE',
+            get: function () {
+                password.setCodeColor();
                 return this.pass;
             },
-            set (val) {
+            set: function (val) {
                 this.pass = val;
             }
         },
 
-        curPass: 'Blue',
+        curPass: 'BLUE',
         generateRanPass:  function () {
             //TODO: Fill this in
-        }
+        },
+        setStyleColor: function () {
+          switch(this.pass){
+            case 'BLUE':
+              passElem.style.color = 'Blue'  ;
+              break;
+            case 'PURPLE':
+              passElem.style.color = 'Purple';
+              break;
+            case 'RED':
+              passElem.style.color = 'Red'   ;
+              break;
+            case 'GREEN':
+              passElem.style.color = 'Green' ;
+              break;
+            case 'YELLOW':
+              passElem.style.color = 'Yellow';
+              break;
+            case 'ORANGE':
+              passElem.style.color = 'Orange';
+              break;
+            default:
+              passElem.style.color = 'Blue'  ;
+          }
+      }
     };
 
  // Path to SFX
@@ -863,22 +890,31 @@
 
 
     /**
+     * Displays current password on screen.
+     */
+    var updatePasswordOnScreen = function updatePasswordOnScreen () {
+        passElem.innerHTML = password.sCurUserPass.get() ;
+    };
+
+
+    /**
      * Update loop for checking when to change video scenes 
      * @param {number} delta - The amount of time since the last update, in seconds
      */
     var update                = function update (delta) {
         elapsedTime();
         updateTimeOnScreen();
+        updatePasswordOnScreen();
         calcCatchTime(current.getCatchTime());
 
         eventsHallOne();
-        eventsKitchen();
-        eventsEntry();
-        eventsLiving();
-        eventsBathroom();
+//        eventsKitchen();
+//        eventsEntry();
+//        eventsLiving();
+//        eventsBathroom();
         eventsBedroom();
-        eventshallTwo();
-        eventsDriveway();
+//        eventshallTwo();
+//        eventsDriveway();
     };
 
 
@@ -1018,6 +1054,16 @@
                   current.setStillUrl     (room.driveway.stillUrl       );
                   current.setTrapSprung   (room.driveway.getTrapSprung ());
                   break;
+//              default:               //TODO: Not sure if I need this....
+//                  current.setCam          ('hallOne'                    );
+//                  current.setCurUrl       (room.hallOne.getCurUrl     ());
+//                  current.setNextUrl      (room.hallOne.getNextUrl    ());
+//                  current.setTrapUrl      (room.hallOne.getTrapUrl    ());
+//                  current.setCatchTime    (room.hallOne.getCatchTime  ());
+//                  current.setCanCatch     (room.hallOne.getCanCatch   ());
+//                  current.setUrlChangeTime(room.hallOne.getTime       ());
+//                  current.setStillUrl     (room.hallOne.stillUrl        );
+//                  current.setTrapSprung   (room.hallOne.getTrapSprung ());
           }
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
     };
@@ -1047,13 +1093,13 @@
      * Case is equal to the current number of seconds into the game.
      */
     var eventsHallOne         = function eventsHallOne () {
-        var h1 = room.hallOne;
+        var hall = room.hallOne;
         switch (current.getTime()) {
           case 1:
-              buildState(h1, camHallOne.c21, null, camHallOne.c130422, 3);
+              buildState(hall, camHallOne.c21, null, camHallOne.c130422, 3);
               break;
           case 8:
-              buildState(h1, camHallOne.c1152221, null, null, null);
+              buildState(hall, camHallOne.c1152221, null, null, null);
               break;
         }
     };
@@ -1068,7 +1114,7 @@
             buildState(kitch, camKitchen.c1481231);
             break;
           default:
-            buildState(kitch, null, null, null, null);
+            buildState(kitch, null, null);
         }
     };
 
@@ -1077,12 +1123,12 @@
         var entry = room.entryway;
         switch (current.getTime()){
           default:
-              buildState(entry, null, null);
+              buildState(entry, null);
         }
     };
 
     var eventsLiving = function eventsLiving () {
-      var living = room.livingRoom;
+        var living = room.livingRoom;
         switch(current.getTime()) {
           case 60:
               buildState(living, cam.livingRoom.c1572241, null, null);
@@ -1091,7 +1137,7 @@
               //
             break;
           default:
-            buildState(living, null, null);
+            buildState(living, null);
         }
     };
 
@@ -1108,7 +1154,7 @@
               buildState(bath, camBathroom.c500291, null, camBathroom.c430249b, 49);
               break;
           default:  // Only needed if the room does not have an event occurring as soon as the game starts
-              buildState(bath, null, null, null, null);
+              buildState(bath, null);
         }
     };
 
@@ -1132,7 +1178,7 @@
         switch (current.getTime()) {
 
           default:
-            buildState(hall, null, null, null);
+            buildState(hall, null);
         }
     };
 
@@ -1140,7 +1186,7 @@
         var drive = room.driveway;
         switch(current.getTime()) {
           default:
-            buildState(drive, null, null, null);
+            buildState(drive, null);
         }
     };
 
