@@ -471,7 +471,7 @@
 
           trapUrl: '',
           getTrapUrl: function () {
-            return this.trapUrl;
+            return this.trapUrl;                                               xw
           },
           setTrapUrl: function (val) {
             this.trapUrl   = val;
@@ -661,27 +661,52 @@
             Yellow: 'YELLOW',
             Orange: 'ORANGE'
         },
-
+        sfxPath: {
+          Purple: 'sfx/',
+          Blue:   'sfx/',
+          Red:    'sfx/',
+          Green:  'sfx/',
+          Yellow: 'sfx/',
+          Orange: 'sfx/'
+        },
         sCurUserPass: {
             pass: 'BLUE',
             get: function () {
-                password.setStyleColor();
+                password.setStyleColor();   //TODO:  Should probably move this to set
                 return this.pass;
             },
             set: function (val) {
                 this.pass = val;
             }
         },
-
         curPass: 'BLUE',
         generateRanPass:  function () {
             var result;
             var count = 0;
             for (var prop in this.passwords)
-              if (Math.random() < 1/++count)
+              if (Math.random() < 1/++count) {
                 result = prop;
+                switch(result){
+                  case Purple:
+                    playSfx(sfxPath.Purple);
+                    break;
+                  case playSfx(sfxPath.Blue);
+                    break;
+                  case Red:
+                    playSfx(sfxPath.Red);
+                    break;
+                  case Green:
+                    playSfx(sfxPath.Green);
+                    break;
+                  case Yellow:
+                    playSfx(sfxPath.Yellow);
+                    break;
+                  case Orange:
+                    playSfx(sfxPath.Orange);
+                    break;
+                }
+              }
             return result;
-
         },
         setStyleColor: function () {
           switch(this.pass){
