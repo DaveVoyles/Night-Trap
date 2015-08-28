@@ -639,8 +639,10 @@
     var audioElem              = null;
     // Are we in Debug mode?
     var bDebug                 = true;
-    var timerElem              = document.getElementById('timer');
-    var passElem               = document.getElementById('pass');
+    var timerElem              = document.getElementById('timer'   );
+    var passElem               = document.getElementById('pass'    );
+    var possibleElem           = document.getElementById('possible');
+    var capturedElem           = document.getElementById('captured');
     var video                  = null;   
 
     /**
@@ -663,7 +665,7 @@
         sCurUserPass: {
             pass: 'BLUE',
             get: function () {
-                password.setCodeColor();
+                password.setStyleColor();
                 return this.pass;
             },
             set: function (val) {
