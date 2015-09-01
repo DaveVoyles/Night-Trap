@@ -70,6 +70,14 @@
             },
             setTrapSprung: function (val){
               this.bTrapSprung = val;
+            },
+
+            nPotentialCaught: 0,
+            getPotentialCaught: function () {
+              return this.nPotentialCaught;
+            },
+            setPotentialCaught: function (val) {
+              this.nPotentialCaught = val;
             }
         },
         kitchen: {
@@ -129,6 +137,14 @@
             },
             setTrapSprung: function (val){
               this.bTrapSprung = val;
+            },
+
+            nPotentialCaught: 0,
+            getPotentialCaught: function () {
+              return this.nPotentialCaught;
+            },
+            setPotentialCaught: function (val) {
+              this.nPotentialCaught = val;
             }
         },
         entryway: {
@@ -188,6 +204,14 @@
             },
             setTrapSprung: function (val){
               this.bTrapSprung = val;
+            },
+
+            nPotentialCaught: 0,
+            getPotentialCaught: function () {
+              return this.nPotentialCaught;
+            },
+            setPotentialCaught: function (val) {
+              this.nPotentialCaught = val;
             }
         },
         livingRoom: {
@@ -247,6 +271,14 @@
             },
             setTrapSprung: function (val){
               this.bTrapSprung = val;
+            },
+
+            nPotentialCaught: 0,
+            getPotentialCaught: function () {
+              return this.nPotentialCaught;
+            },
+            setPotentialCaught: function (val) {
+              this.nPotentialCaught = val;
             }
         },
         bathroom: {
@@ -306,6 +338,14 @@
             },
             setTrapSprung: function (val){
               this.bTrapSprung = val;
+            },
+
+            nPotentialCaught: 0,
+            getPotentialCaught: function () {
+              return this.nPotentialCaught;
+            },
+            setPotentialCaught: function (val) {
+              this.nPotentialCaught = val;
             }
         },
         bedroom: {
@@ -365,6 +405,14 @@
             },
             setTrapSprung: function (val){
               this.bTrapSprung = val;
+          },
+
+          nPotentialCaught: 0,
+          getPotentialCaught: function () {
+            return this.nPotentialCaught;
+          },
+          setPotentialCaught: function (val) {
+            this.nPotentialCaught = val;
           }
         },
         hallTwo: {
@@ -424,6 +472,14 @@
             },
             setTrapSprung: function (val){
               this.bTrapSprung = val;
+            },
+
+            nPotentialCaught: 0,
+            getPotentialCaught: function () {
+              return this.nPotentialCaught;
+            },
+            setPotentialCaught: function (val) {
+              this.nPotentialCaught = val;
             }
         },
         driveway: {
@@ -471,7 +527,7 @@
 
           trapUrl: '',
           getTrapUrl: function () {
-            return this.trapUrl;                                               xw
+            return this.trapUrl;
           },
           setTrapUrl: function (val) {
             this.trapUrl   = val;
@@ -484,22 +540,31 @@
           setTrapSprung: function (val){
             this.bTrapSprung = val;
           }
+        },
+
+        nPotentialCaught: 0,
+        getPotentialCaught: function () {
+          return this.nPotentialCaught;
+        },
+        setPotentialCaught: function (val) {
+          this.nPotentialCaught = val;
         }
     };
 
     /**
      * Obj to get / set current values for the game.
-     * @property {string} cam           - Room the user has currently selected
-     * @property {string} stillUrl      - Background image when room is empty.
-     * @property {bool}   bCanCatch     - Is there a character who can be caught in the scene?
-     * @property {number} urlChangeTime - Time into the game should curUrl should be set.
-     * @property {number} time          - Current time stamp when curUrl is being set.
-     * @property {number} catchTime     - When can the user catch an auger?
-     * @property {sting}  curUrl        - Url should be set as video.src() right now.
-     * @property {string} nextUrl       - NextUrl to be set as video.src() when curUrl finishes.
-     * @property {string} trapUrl       - If a character can be trapped in the scene, have it trigger this Url.
-     * @property {bool}   bTrapSpring   - Has the user set the trap in this current scene yet?
-     * @property {bool}   bJustSwitched - Has the currentUrl switched since the user selected this room?
+     * @property {string} cam              - Room the user has currently selected
+     * @property {string} stillUrl         - Background image when room is empty.
+     * @property {bool}   bCanCatch        - Is there a character who can be caught in the scene?
+     * @property {number} urlChangeTime    - Time into the game should curUrl should be set.
+     * @property {number} time             - Current time stamp when curUrl is being set.
+     * @property {number} catchTime        - When can the user catch an auger?
+     * @property {sting}  curUrl           - Url should be set as video.src() right now.
+     * @property {string} nextUrl          - NextUrl to be set as video.src() when curUrl finishes.
+     * @property {string} trapUrl          - If a character can be trapped in the scene, have it trigger this Url.
+     * @property {bool}   bTrapSpring      - Has the user set the trap in this current scene yet?
+     * @property {bool}   bJustSwitched    - Has the currentUrl switched since the user selected this room?
+     * @property {number} nPotentialCaught - Number of augers that could have been caught in this scene
      */
     var current = {
         cam: {
@@ -597,6 +662,14 @@
         },
         setJustSwitched: function (val){
           this.bJustSwitched = val;
+        },
+
+        nPotentialCaught: 0,
+        getPotentialCaught: function () {
+          return this.nPotentialCaught;
+        },
+        setPotentialCaught: function (val) {
+          this.nPotentialCaught = val;
         }
     };
 
@@ -1097,13 +1170,14 @@
     /**
      * Sets the current values for each room, which will then be used the events function to
      * then set these values if user has current room selected
-     * @param {object}  oRoom      - Name of the room we should be setting values for
-     * @param {string}  curUrl     - Path to video which should be set at this point in time.
-     * @param {string} [nextUrl]   - Path to video that should play when curUrl is completed.
-     * @param {string} [trapUrl]   - Path to video containing the trap scene.
-     * @param {number} [catchTime] - Moment when user can trigger a trap.
+     * @param {object}  oRoom           - Name of the room we should be setting values for
+     * @param {string}  curUrl          - Path to video which should be set at this point in time.
+     * @param {string} [nextUrl]        - Path to video that should play when curUrl is completed.
+     * @param {string} [trapUrl]        - Path to video containing the trap scene.
+     * @param {number} [catchTime]      - Moment when user can trigger a trap.
+     * @param {number} nPotentialCaught - Number of augers that could have been caught in this scene
      */
-    var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime) {
+    var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime, nPotentialCaught) {
         clearState(oRoom);
         oRoom.setCurUrl    (curUrl)           ;
         oRoom.setNextUrl   (nextUrl)          ;
@@ -1111,6 +1185,7 @@
         oRoom.setCatchTime (catchTime)        ;
         oRoom.setTime      (current.getTime());
         oRoom.setTrapSprung(false)            ;
+        oRoom.setPotentialCaught(nPotentialCaught);
     };
 
 
@@ -1125,6 +1200,7 @@
         oRoom.setCatchTime(0);
         oRoom.setTime(0);
         oRoom.setTrapSprung(false);
+        oRoom.setPotentialCaught(0);
     };
 
 
@@ -1281,7 +1357,7 @@
      * TODO: Need to set video.currentTime(0) on this as well! Otherwise we miss most of the trap vid!
      */
     var trap                  = function trap () {
-        createTrapVidSeries(current.getTrapUrl(), current.getNextUrl());
+        createTrapVidSeries(current.getTrapUrl(), current.getNextUrl(), current.getPotentialCaught());
         toggleTrapListener(false);
     };
 
@@ -1324,14 +1400,15 @@
      * Sets the poster (background) between clips to the room you are currently viewing.
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed.
-     * Mark trap as having been sprung after user selects a room.
-     * @param {string} curVidUrl - Clip with the trap sequence.
-     * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
+     * @param {string} curVidUrl        - Clip with the trap sequence.
+     * @param {string} [nextVid]        - Trap clips are often have a clip that appears next.
+     * @param {number} nPotentialCaught - Number of augers that could have been caught in this scene
      */
-    var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl) {
+    var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl, nPotentialCaught) {
       setTrapAsSprung();
       video.src(sTrapUrl);
       video.play();
+      nTotalCaught.set(nPotentialCaught);
 
       // Video has already played & there is no nextUrl, so use a still
       video.on('ended', function () {
@@ -1364,7 +1441,6 @@
             console.log('can trigger trap');
             toggleTrapListener(true);
         }
-
     };
 
 
