@@ -673,11 +673,37 @@
         }
     };
 
-
     /**
-     * How many augers has the user caught?
+     * How many augers has the user captured?
+     * How many were possible?
      */
-    var nTotalCaught           = {
+    var traps = {
+       nTotalCaptured: {
+          caught: 0,
+          get: function () {
+            return this.caught;
+          },
+          set: function (val) {
+            this.caught        = val;
+          },
+          increment: function () {
+            this.caught += 1;
+          }
+      },
+
+      nTotalPossible: {
+        possible: 0,
+        get: function () {
+          return this.possible;
+        },
+        increment: function (val) {
+          this.possible        += val;
+        }
+      }
+    };
+
+
+    var nTotalCaptured           = {
         caught: 0,
         get: function () {
             return this.caught;
@@ -698,11 +724,8 @@
         get: function () {
             return this.missed;
         },
-        set: function (val) {
-            this.missed        = val;
-        },
-        increment: function () {
-            this.missed += 1;
+        increment: function (val) {
+            this.missed        += val;
         }
     };
 
@@ -1416,7 +1439,7 @@
       setTrapAsSprung();
       video.src(sTrapUrl);
       video.play();
-      nTotalCaught.set(nPotentialCaught);
+      nTotalCaptured.set(nPotentialCaught);
 
       // Video has already played & there is no nextUrl, so use a still
       video.on('ended', function () {
@@ -1545,6 +1568,26 @@
 
           if (oldUrl !== newUrl && current.getCam() === sRoomName) {
             playVideo(newUrl);
+          }
+        }
+      });
+    };
+
+
+    /**
+     * TODO: Test this out
+     * Updates HTML to reflect the current values of possible and captured.
+     */
+    var observeTrapValues = function observeTrapValues () {
+      Object.observe(traps,  function (changes) {
+
+        if (changes[0]!== undefined) {
+          var nCaughtOld = changes[0].oldValue;
+          var nCaughtNew = changes[0].oldValue;
+
+          if (nCaughtOld !== nCaughtNew) {
+            possibleElem.innerHTML = traps.nTotalCaptured.get();
+            capturedElem.innerHTML = traps.nTotalPossible.get();
           }
         }
       });
