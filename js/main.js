@@ -73,10 +73,10 @@
             },
 
             nPotentialCaptured: 0,
-            getPotentialCaught: function () {
+            getPotentialCaptured: function () {
               return this.nPotentialCaptured;
             },
-            setPotentialCaught: function (val) {
+            setPotentialCaptured: function (val) {
               this.nPotentialCaptured = val;
             }
         },
@@ -140,10 +140,10 @@
             },
 
             nPotentialCaptured: 0,
-            getPotentialCaught: function () {
+            getPotentialCaptured: function () {
               return this.nPotentialCaptured;
             },
-            setPotentialCaught: function (val) {
+            setPotentialCaptured: function (val) {
               this.nPotentialCaptured = val;
             }
         },
@@ -207,10 +207,10 @@
             },
 
             nPotentialCaptured: 0,
-            getPotentialCaught: function () {
+            getPotentialCaptured: function () {
               return this.nPotentialCaptured;
             },
-            setPotentialCaught: function (val) {
+            setPotentialCaptured: function (val) {
               this.nPotentialCaptured = val;
             }
         },
@@ -274,10 +274,10 @@
             },
 
             nPotentialCaptured: 0,
-            getPotentialCaught: function () {
+            getPotentialCaptured: function () {
               return this.nPotentialCaptured;
             },
-            setPotentialCaught: function (val) {
+            setPotentialCaptured: function (val) {
               this.nPotentialCaptured = val;
             }
         },
@@ -341,10 +341,10 @@
             },
 
             nPotentialCaptured: 0,
-            getPotentialCaught: function () {
+            getPotentialCaptured: function () {
               return this.nPotentialCaptured;
             },
-            setPotentialCaught: function (val) {
+            setPotentialCaptured: function (val) {
               this.nPotentialCaptured = val;
             }
         },
@@ -408,10 +408,10 @@
           },
 
           nPotentialCaptured: 0,
-          getPotentialCaught: function () {
+          getPotentialCaptured: function () {
             return this.nPotentialCaptured;
           },
-          setPotentialCaught: function (val) {
+          setPotentialCaptured: function (val) {
             this.nPotentialCaptured = val;
           }
         },
@@ -475,10 +475,10 @@
             },
 
             nPotentialCaptured: 0,
-            getPotentialCaught: function () {
+            getPotentialCaptured: function () {
               return this.nPotentialCaptured;
             },
-            setPotentialCaught: function (val) {
+            setPotentialCaptured: function (val) {
               this.nPotentialCaptured = val;
             }
         },
@@ -543,10 +543,10 @@
         },
 
         nPotentialCaptured: 0,
-        getPotentialCaught: function () {
+        getPotentialCaptured: function () {
           return this.nPotentialCaptured;
         },
-        setPotentialCaught: function (val) {
+        setPotentialCaptured: function (val) {
           this.nPotentialCaptured = val;
         }
     };
@@ -665,10 +665,10 @@
         },
 
         nPotentialCaptured: 0,
-        getPotentialCaught: function () {
+        getPotentialCaptured: function () {
           return this.nPotentialCaptured;
         },
-        setPotentialCaught: function (val) {
+        setPotentialCaptured: function (val) {
           this.nPotentialCaptured = val;
         }
     };
@@ -959,7 +959,7 @@
         registerRoomButton();
         initializeAudio();
         initializeVideoStream();
-        MainLoop.setUpdate(update).setDraw(draw).start();
+        MainLoop.setUpdate(update).start();
     };
 
 
@@ -1105,97 +1105,96 @@
           current.setJustSwitched(true);
           switch (this.id) {
             case 'Hall-1':
-                  current.setCam            ('hallOne'                        );
-                  current.setCurUrl         (room.hallOne.getCurUrl         ());
-                  current.setNextUrl        (room.hallOne.getNextUrl        ());
-                  current.setTrapUrl        (room.hallOne.getTrapUrl        ());
-                  current.setCatchTime      (room.hallOne.getCatchTime      ());
-                  current.setCanCatch       (room.hallOne.getCanCatch       ());
-                  current.setUrlChangeTime  (room.hallOne.getTime           ());
-                  current.setStillUrl       (room.hallOne.stillUrl            );
-                  current.setTrapSprung     (room.hallOne.getTrapSprung     ());
-                  current.setPotentialCaught(room.hallOne.getPotentialCaught());
+                  current.setCam             ('hallOne'                           );
+                  current.setCurUrl           (room.hallOne.getCurUrl           ());
+                  current.setNextUrl          (room.hallOne.getNextUrl          ());
+                  current.setTrapUrl          (room.hallOne.getTrapUrl          ());
+                  current.setCatchTime        (room.hallOne.getCatchTime        ());
+                  current.setCanCatch         (room.hallOne.getCanCatch         ());
+                  current.setUrlChangeTime    (room.hallOne.getTime             ());
+                  current.setStillUrl         (room.hallOne.stillUrl              );
+                  current.setTrapSprung       (room.hallOne.getTrapSprung       ());
+                  current.setPotentialCaptured(room.hallOne.getPotentialCaptured());
                   break;
               case 'Kitchen':
-                  current.setCam            ('kitchen'                        );
-                  current.setCurUrl         (room.kitchen.getCurUrl         ());
-                  current.setNextUrl        (room.kitchen.getNextUrl        ());
-                  current.setTrapUrl        (room.kitchen.getTrapUrl        ());
-                  current.setCanCatch       (room.kitchen.getCanCatch       ());
-                  current.setUrlChangeTime  (room.kitchen.getTime           ());
-                  current.setStillUrl       (room.kitchen.stillUrl            );
-                  current.setTrapSprung     (room.kitchen.getTrapSprung     ());
-                  current.setPotentialCaught(room.kitchen.getPotentialCaught());
+                  current.setCam              ('kitchen'                          );
+                  current.setCurUrl           (room.kitchen.getCurUrl           ());
+                  current.setNextUrl          (room.kitchen.getNextUrl          ());
+                  current.setTrapUrl          (room.kitchen.getTrapUrl          ());
+                  current.setCanCatch         (room.kitchen.getCanCatch         ());
+                  current.setUrlChangeTime    (room.kitchen.getTime             ());
+                  current.setStillUrl         (room.kitchen.stillUrl              );
+                  current.setTrapSprung       (room.kitchen.getTrapSprung       ());
+                  current.setPotentialCaptured(room.kitchen.getPotentialCaptured());
                   break;
               case 'Entry-Way':
-                  current.setCam            ('entryway'                        );
-                  current.setCurUrl         (room.entryway.getCurUrl         ());
-                  current.setNextUrl        (room.entryway.getNextUrl        ());
-                  current.setTrapUrl        (room.entryway.getTrapUrl        ());
-                  current.setCanCatch       (room.entryway.getCanCatch       ());
-                  current.setUrlChangeTime  (room.entryway.getTime           ());
-                  current.setStillUrl       (room.entryway.stillUrl            );
-                  current.setTrapSprung     (room.entryway.getTrapSprung     ());
-                  current.setPotentialCaught(room.entryway.getPotentialCaught());
+                  current.setCam              ('entryway'                          );
+                  current.setCurUrl           (room.entryway.getCurUrl           ());
+                  current.setNextUrl          (room.entryway.getNextUrl          ());
+                  current.setTrapUrl          (room.entryway.getTrapUrl          ());
+                  current.setCanCatch         (room.entryway.getCanCatch         ());
+                  current.setUrlChangeTime    (room.entryway.getTime             ());
+                  current.setStillUrl         (room.entryway.stillUrl              );
+                  current.setTrapSprung       (room.entryway.getTrapSprung       ());
+                  current.setPotentialCaptured(room.entryway.getPotentialCaptured());
                   break;
               case 'Living-Room':
-                  current.setCam            ('livingroom'                        );
-                  current.setCurUrl         (room.livingRoom.getCurUrl         ());
-                  current.setNextUrl        (room.livingRoom.getNextUrl        ());
-                  current.setTrapUrl        (room.livingRoom.getTrapUrl        ());
-                  current.setCanCatch       (room.livingRoom.getCanCatch       ());
-                  current.setUrlChangeTime  (room.livingRoom.getTime           ());
-                  current.setStillUrl       (room.livingRoom.stillUrl            );
-                  current.setTrapSprung     (room.livingRoom.getTrapSprung     ());
-                  current.setPotentialCaught(room.livingRoom.getPotentialCaught());
+                  current.setCam              ('livingroom'                          );
+                  current.setCurUrl           (room.livingRoom.getCurUrl           ());
+                  current.setNextUrl          (room.livingRoom.getNextUrl          ());
+                  current.setTrapUrl          (room.livingRoom.getTrapUrl          ());
+                  current.setCanCatch         (room.livingRoom.getCanCatch         ());
+                  current.setUrlChangeTime    (room.livingRoom.getTime               );
+                  current.setStillUrl         (room.livingRoom.stillUrl              );
+                  current.setTrapSprung       (room.livingRoom.getTrapSprung       ());
+                  current.setPotentialCaptured(room.livingRoom.getPotentialCaptured());
                   break;
               case 'Bathroom':
-                  current.setCam            ('bathroom'                        );
-                  current.setCurUrl         (room.bathroom.getCurUrl         ());
-                  current.setNextUrl        (room.bathroom.getNextUrl        ());
-                  current.setTrapUrl        (room.bathroom.getTrapUrl        ());
-                  current.setCanCatch       (room.bathroom.getCanCatch       ());
-                  current.setUrlChangeTime  (room.bathroom.getTime           ());
-                  current.setStillUrl       (room.bathroom.stillUrl            );
-                  current.setTrapSprung     (room.bathroom.getTrapSprung     ());
-                  current.setPotentialCaught(room.bathroom.getPotentialCaught());
+                  current.setCam              ('bathroom'                          );
+                  current.setCurUrl           (room.bathroom.getCurUrl           ());
+                  current.setNextUrl          (room.bathroom.getNextUrl          ());
+                  current.setTrapUrl          (room.bathroom.getTrapUrl          ());
+                  current.setCanCatch         (room.bathroom.getCanCatch         ());
+                  current.setUrlChangeTime    (room.bathroom.getTime             ());
+                  current.setStillUrl         (room.bathroom.stillUrl              );
+                  current.setTrapSprung       (room.bathroom.getTrapSprung       ());
+                  current.setPotentialCaptured(room.bathroom.getPotentialCaptured());
                   break;
               case 'Bedroom':
-                  current.setCam            ('bedroom'                        );
-                  current.setCurUrl         (room.bedroom.getCurUrl         ());
-                  current.setNextUrl        (room.bedroom.getNextUrl        ());
-                  current.setTrapUrl        (room.bedroom.getTrapUrl        ());
-                  current.setCanCatch       (room.bedroom.getCanCatch       ());
-                  current.setUrlChangeTime  (room.bedroom.getTime           ());
-                  current.setStillUrl       (room.bedroom.stillUrl            );
-                  current.setTrapSprung     (room.bedroom.getTrapSprung     ());
-                  current.setPotentialCaught(room.bedroom.getPotentialCaught());
+                  current.setCam              ('bedroom'                          );
+                  current.setCurUrl           (room.bedroom.getCurUrl           ());
+                  current.setNextUrl          (room.bedroom.getNextUrl          ());
+                  current.setTrapUrl          (room.bedroom.getTrapUrl          ());
+                  current.setCanCatch         (room.bedroom.getCanCatch         ());
+                  current.setUrlChangeTime    (room.bedroom.getTime             ());
+                  current.setStillUrl         (room.bedroom.stillUrl              );
+                  current.setTrapSprung       (room.bedroom.getTrapSprung       ());
+                  current.setPotentialCaptured(room.bedroom.getPotentialCaptured());
                   break;
               case 'Hall-2':
-                  current.setCam            ('hallTwo'                        );
-                  current.setCurUrl         (room.hallTwo.getCurUrl         ());
-                  current.setNextUrl        (room.hallTwo.getNextUrl        ());
-                  current.setTrapUrl        (room.hallTwo.getTrapUrl        ());
-                  current.setCanCatch       (room.hallTwo.getCanCatch       ());
-                  current.setUrlChangeTime  (room.hallTwo.getTime           ());
-                  current.setStillUrl       (room.hallTwo.stillUrl            );
-                  current.setTrapSprung     (room.hallTwo.getTrapSprung     ());
-                  current.setPotentialCaught(room.hallTwo.getPotentialCaught());
+                  current.setCam              ('hallTwo'                          );
+                  current.setCurUrl           (room.hallTwo.getCurUrl           ());
+                  current.setNextUrl          (room.hallTwo.getNextUrl          ());
+                  current.setTrapUrl          (room.hallTwo.getTrapUrl          ());
+                  current.setCanCatch         (room.hallTwo.getCanCatch         ());
+                  current.setUrlChangeTime    (room.hallTwo.getTime             ());
+                  current.setStillUrl         (room.hallTwo.stillUrl              );
+                  current.setTrapSprung       (room.hallTwo.getTrapSprung       ());
+                  current.setPotentialCaptured(room.hallTwo.getPotentialCaptured());
                   break;
               case 'Driveway':
-                  current.setCam            ('driveway'                        );
-                  current.setCurUrl         (room.driveway.getCurUrl         ());
-                  current.setNextUrl        (room.driveway.getNextUrl        ());
-                  current.setTrapUrl        (room.driveway.getTrapUrl        ());
-                  current.setCanCatch       (room.driveway.getCanCatch       ());
-                  current.setUrlChangeTime  (room.driveway.getTime           ());
-                  current.setStillUrl       (room.driveway.stillUrl            );
-                  current.setTrapSprung     (room.driveway.getTrapSprung     ());
-                  current.setPotentialCaught(room.driveway.getPotentialCaught());
+                  current.setCam              ('driveway'                          );
+                  current.setCurUrl           (room.driveway.getCurUrl           ());
+                  current.setNextUrl          (room.driveway.getNextUrl          ());
+                  current.setTrapUrl          (room.driveway.getTrapUrl          ());
+                  current.setCanCatch         (room.driveway.getCanCatch         ());
+                  current.setUrlChangeTime    (room.driveway.getTime             ());
+                  current.setStillUrl         (room.driveway.stillUrl              );
+                  current.setTrapSprung       (room.driveway.getTrapSprung       ());
+                  current.setPotentialCaptured(room.driveway.getPotentialCaptured());
                   break;
           }
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
-//      createVideoSeriesNew(current);
     };
 
 
@@ -1213,19 +1212,19 @@
         clearState(oRoom);
 
         if (oRoom === null || undefined) {
-          console.log('Did not set curUlr in buildState');
+          throw new Error ('Did not set curUlr in buildState');
         }
         if (curUrl === null || '') {
-          console.log('Did not set curUrl in buildState for ' + oRoom);
+          throw new Error ('Did not set curUrl in buildState for ' + oRoom);
         }
 
-        oRoom.setCurUrl    (curUrl)               ;
-        oRoom.setNextUrl   (nextUrl)              ;
-        oRoom.setTrapUrl   (trapUrl)              ;
-        oRoom.setCatchTime (catchTime)            ;
-        oRoom.setTime      (current.getTime())    ;
-        oRoom.setTrapSprung(false)                ;
-        oRoom.setPotentialCaught(nPotentialCaught);
+        oRoom.setCurUrl    (curUrl)                 ;
+        oRoom.setNextUrl   (nextUrl)                ;
+        oRoom.setTrapUrl   (trapUrl)                ;
+        oRoom.setCatchTime (catchTime)              ;
+        oRoom.setTime      (current.getTime())      ;
+        oRoom.setTrapSprung(false)                  ;
+        oRoom.setPotentialCaptured(nPotentialCaught);
     };
 
     var buildStatenew = function buildStateNew (oRoom) {
@@ -1240,12 +1239,12 @@
      * during the buildState function.
      * */
     var clearState = function clearState (oRoom) {
-        oRoom.setCurUrl('');
-        oRoom.setNextUrl('');
-        oRoom.setTrapUrl('');
-        oRoom.setCatchTime(0);
-        oRoom.setTime(0);
-        oRoom.setTrapSprung(false);
+        oRoom.setCurUrl('')          ;
+        oRoom.setNextUrl('')         ;
+        oRoom.setTrapUrl('')         ;
+        oRoom.setCatchTime(0)        ;
+        oRoom.setTime(0)             ;
+        oRoom.setTrapSprung(false)   ;
         oRoom.setPotentialCaptured(0);
     };
 
@@ -1254,13 +1253,13 @@
      * Template for passing values into each room
      */
     var objRoom = {
-        curUrl           : ''
-      , nextUrl          : ''
-      , trapUrl          : ''
-      , catchTime        : 0
-      , setTime          : 0
-      , trapSprung       : false
-      , potentialCaptured: 0
+        curUrl            : ''
+      , nextUrl           : ''
+      , trapUrl           : ''
+      , catchTime         : 0
+      , setTime           : 0
+      , trapSprung        : false
+      , potentialCaptured : 0
     };
 
 
@@ -1270,10 +1269,17 @@
      */
     var eventsHallOne         = function eventsHallOne () {
         var hall = room.hallOne;
+        var r    = objRoom;
 
         switch (current.getTime()) {
           case 1:
-              buildState(hall, camHallOne.c21, null, camHallOne.c130422, 3);
+             buildState(hall,
+                 r.curUrl    = camHallOne.c21,
+                 r.nextUrl   = '',
+                 r.trapUrl   = camHallOne.c130422,
+                 r.catchTime = 3
+             );
+//              buildState(hall, camHallOne.c21, null, camHallOne.c130422, 3);
               break;
           case 76:
               buildState(hall, camHallOne.c1152221, null, null, null);
