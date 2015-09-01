@@ -1104,12 +1104,27 @@
      * @param {number} [catchTime] - Moment when user can trigger a trap.
      */
     var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime) {
+        clearState(oRoom);
         oRoom.setCurUrl    (curUrl)           ;
         oRoom.setNextUrl   (nextUrl)          ;
         oRoom.setTrapUrl   (trapUrl)          ;
         oRoom.setCatchTime (catchTime)        ;
         oRoom.setTime      (current.getTime());
         oRoom.setTrapSprung(false)            ;
+    };
+
+
+    /**
+     * Clears all of the values in the room. This makes it easier to debug when I mistakenly put the wrong value in for each room
+     * during the buildState function.
+     * */
+    var clearState = function (oRoom) {
+      oRoom.setCurUrl('');
+      oRoom.setNextUrl('');
+      oRoom.setTrapUrl('');
+      oRoom.setCatchTime(0);
+      oRoom.setTime(0);
+      oRoom.setTrapSprung(false);
     };
 
 
