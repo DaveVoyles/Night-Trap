@@ -1209,6 +1209,9 @@
      * @param {number} nPotentialCaught - Number of augers that could have been captured in this scene
      */
     var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime, nPotentialCaught) {
+       var firstTime = true;
+
+       if (!firstTime) {
         clearState(oRoom);
 
         if (oRoom === null || undefined) {
@@ -1225,13 +1228,36 @@
         oRoom.setTime      (current.getTime())      ;
         oRoom.setTrapSprung(false)                  ;
         oRoom.setPotentialCaptured(nPotentialCaught);
+        firstTime = false;
+      }
     };
 
-    var buildStatenew = function buildStateNew (oRoom) {
+
+  // TODO: Consider doing a for loop over all of these properties
+  var buildStateNew = function buildStateNew (oRoom, rObj) {
+
+    if (oRoom === null || undefined) {
+      throw new Error ('Did not set curUlr in buildState');
+    }
+
+    //TODO: Look into this when you have internet
+    for (var prop in rObj) {
+        if (prop === null || undefined ) {
+            throw new Error ('You have an null or undefined proeprty in rObh');
+        }
+    }
+
+    clearState(oRoom);
+    oRoom.setCurUrl           (rObj.curUrl);
+    oRoom.setNextUrl          (rObj.nextUrl);
+    oRoom.setTrapUrl          (rObj.trapUrl);
+    oRoom.setCatchTime        (rObj.catchTime);
+    oRoom.setTime             (current.getTime());
+    oRoom.setTrapSprung       (rObj.trapSprung);
+    oRoom.setPotentialCaptured(rObj.potentialCaptured);
 
 
-
-    };
+  };
 
 
     /**
@@ -1273,13 +1299,17 @@
 
         switch (current.getTime()) {
           case 1:
-             buildState(hall,
-                 r.curUrl    = camHallOne.c21,
-                 r.nextUrl   = '',
-                 r.trapUrl   = camHallOne.c130422,
-                 r.catchTime = 3
-             );
-//              buildState(hall, camHallOne.c21, null, camHallOne.c130422, 3);
+//             buildState(hall,
+//                 r.curUrl    = camHallOne.c21,
+//                 r.nextUrl   = '',
+//                 r.trapUrl   = camHallOne.c130422,
+//                 r.catchTime = 3
+//             );
+                r.curUrl    = aTempLocal[2];
+                r.nextUrl   = aTempLocal[0];
+                r.trapUrl   = aTempLocal[1];
+                r.catchTime = 3;
+                buildStateNew(hall, r);
               break;
           case 76:
               buildState(hall, camHallOne.c1152221, null, null, null);
