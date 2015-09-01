@@ -1118,13 +1118,13 @@
      * Clears all of the values in the room. This makes it easier to debug when I mistakenly put the wrong value in for each room
      * during the buildState function.
      * */
-    var clearState = function (oRoom) {
-      oRoom.setCurUrl('');
-      oRoom.setNextUrl('');
-      oRoom.setTrapUrl('');
-      oRoom.setCatchTime(0);
-      oRoom.setTime(0);
-      oRoom.setTrapSprung(false);
+    var clearState = function clearState (oRoom) {
+        oRoom.setCurUrl('');
+        oRoom.setNextUrl('');
+        oRoom.setTrapUrl('');
+        oRoom.setCatchTime(0);
+        oRoom.setTime(0);
+        oRoom.setTrapSprung(false);
     };
 
 
@@ -1287,14 +1287,10 @@
 
 
     /**
-     * Sets the poster (background) between clips to the room you are currently viewing
-     * hasPlayed variable prevents the footage from looping.
-     * Second 'ended' event draws poster to screen when 2nd clip has completed.
      * Mark trap as having been sprung after user selects a room.
-     * @param {string} curVidUrl - Clip with the trap sequence.
-     * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
+     * To be used by createTrapVidSeries().
      */
-    var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl) {
+    var setTrapAsSprung = function setTrapAsSprung () {
       switch (current.getCam()){
         case 'hallOne':
           room.hallOne   .setTrapSprung(true);
@@ -1321,7 +1317,19 @@
           room.driveway  .setTrapSprung(true);
           break;
       }
+    };
 
+
+    /**
+     * Sets the poster (background) between clips to the room you are currently viewing.
+     * hasPlayed variable prevents the footage from looping.
+     * Second 'ended' event draws poster to screen when 2nd clip has completed.
+     * Mark trap as having been sprung after user selects a room.
+     * @param {string} curVidUrl - Clip with the trap sequence.
+     * @param {string} [nextVid] - Trap clips are often have a clip that appears next.
+     */
+    var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl) {
+      setTrapAsSprung();
       video.src(sTrapUrl);
       video.play();
 
