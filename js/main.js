@@ -4,7 +4,7 @@
     /**
      * Obj to get / set current values for the each room.
      * @property {string} stillUrl    - Background image when room is empty.
-     * @property {bool}   bCanCatch   - Is there a character who can be caught in the scene?
+     * @property {bool}   bCanCatch   - Is there a character who can be captured in the scene?
      * @property {number} time        - Current time stamp when curUrl is being set.
      * @property {number} catchTime   - When can the user catch an auger?
      * @property {sting}  curUrl      - Url should be set as video.src() right now.
@@ -72,12 +72,12 @@
               this.bTrapSprung = val;
             },
 
-            nPotentialCaught: 0,
+            nPotentialCaptured: 0,
             getPotentialCaught: function () {
-              return this.nPotentialCaught;
+              return this.nPotentialCaptured;
             },
             setPotentialCaught: function (val) {
-              this.nPotentialCaught = val;
+              this.nPotentialCaptured = val;
             }
         },
         kitchen: {
@@ -139,12 +139,12 @@
               this.bTrapSprung = val;
             },
 
-            nPotentialCaught: 0,
+            nPotentialCaptured: 0,
             getPotentialCaught: function () {
-              return this.nPotentialCaught;
+              return this.nPotentialCaptured;
             },
             setPotentialCaught: function (val) {
-              this.nPotentialCaught = val;
+              this.nPotentialCaptured = val;
             }
         },
         entryway: {
@@ -206,12 +206,12 @@
               this.bTrapSprung = val;
             },
 
-            nPotentialCaught: 0,
+            nPotentialCaptured: 0,
             getPotentialCaught: function () {
-              return this.nPotentialCaught;
+              return this.nPotentialCaptured;
             },
             setPotentialCaught: function (val) {
-              this.nPotentialCaught = val;
+              this.nPotentialCaptured = val;
             }
         },
         livingRoom: {
@@ -273,12 +273,12 @@
               this.bTrapSprung = val;
             },
 
-            nPotentialCaught: 0,
+            nPotentialCaptured: 0,
             getPotentialCaught: function () {
-              return this.nPotentialCaught;
+              return this.nPotentialCaptured;
             },
             setPotentialCaught: function (val) {
-              this.nPotentialCaught = val;
+              this.nPotentialCaptured = val;
             }
         },
         bathroom: {
@@ -340,12 +340,12 @@
               this.bTrapSprung = val;
             },
 
-            nPotentialCaught: 0,
+            nPotentialCaptured: 0,
             getPotentialCaught: function () {
-              return this.nPotentialCaught;
+              return this.nPotentialCaptured;
             },
             setPotentialCaught: function (val) {
-              this.nPotentialCaught = val;
+              this.nPotentialCaptured = val;
             }
         },
         bedroom: {
@@ -407,12 +407,12 @@
               this.bTrapSprung = val;
           },
 
-          nPotentialCaught: 0,
+          nPotentialCaptured: 0,
           getPotentialCaught: function () {
-            return this.nPotentialCaught;
+            return this.nPotentialCaptured;
           },
           setPotentialCaught: function (val) {
-            this.nPotentialCaught = val;
+            this.nPotentialCaptured = val;
           }
         },
         hallTwo: {
@@ -474,12 +474,12 @@
               this.bTrapSprung = val;
             },
 
-            nPotentialCaught: 0,
+            nPotentialCaptured: 0,
             getPotentialCaught: function () {
-              return this.nPotentialCaught;
+              return this.nPotentialCaptured;
             },
             setPotentialCaught: function (val) {
-              this.nPotentialCaught = val;
+              this.nPotentialCaptured = val;
             }
         },
         driveway: {
@@ -542,12 +542,12 @@
           }
         },
 
-        nPotentialCaught: 0,
+        nPotentialCaptured: 0,
         getPotentialCaught: function () {
-          return this.nPotentialCaught;
+          return this.nPotentialCaptured;
         },
         setPotentialCaught: function (val) {
-          this.nPotentialCaught = val;
+          this.nPotentialCaptured = val;
         }
     };
 
@@ -555,7 +555,7 @@
      * Obj to get / set current values for the game.
      * @property {string} cam              - Room the user has currently selected
      * @property {string} stillUrl         - Background image when room is empty.
-     * @property {bool}   bCanCatch        - Is there a character who can be caught in the scene?
+     * @property {bool}   bCanCatch        - Is there a character who can be captured in the scene?
      * @property {number} urlChangeTime    - Time into the game should curUrl should be set.
      * @property {number} time             - Current time stamp when curUrl is being set.
      * @property {number} catchTime        - When can the user catch an auger?
@@ -564,7 +564,7 @@
      * @property {string} trapUrl          - If a character can be trapped in the scene, have it trigger this Url.
      * @property {bool}   bTrapSpring      - Has the user set the trap in this current scene yet?
      * @property {bool}   bJustSwitched    - Has the currentUrl switched since the user selected this room?
-     * @property {number} nPotentialCaught - Number of augers that could have been caught in this scene
+     * @property {number} nPotentialCaptured - Number of augers that could have been captured in this scene
      */
     var current = {
         cam: {
@@ -664,12 +664,12 @@
           this.bJustSwitched = val;
         },
 
-        nPotentialCaught: 0,
+        nPotentialCaptured: 0,
         getPotentialCaught: function () {
-          return this.nPotentialCaught;
+          return this.nPotentialCaptured;
         },
         setPotentialCaught: function (val) {
-          this.nPotentialCaught = val;
+          this.nPotentialCaptured = val;
         }
     };
 
@@ -679,15 +679,15 @@
      */
     var traps = {
        nTotalCaptured: {
-          caught: 0,
+          captured: 0,
           get: function () {
-            return this.caught;
+            return this.captured;
           },
           set: function (val) {
-            this.caught        = val;
+            this.captured        = val;
           },
           increment: function () {
-            this.caught += 1;
+            this.captured += 1;
           }
       },
 
@@ -704,15 +704,15 @@
 
 
     var nTotalCaptured           = {
-        caught: 0,
+        captured: 0,
         get: function () {
-            return this.caught;
+            return this.captured;
         },
         set: function (val) {
-            this.caught        = val;
+            this.captured        = val;
         },
         increment: function () {
-            this.caught += 1;
+            this.captured += 1;
         }
     };
 
@@ -857,7 +857,7 @@
     var camHallOne             = {
          // Augers enter through back door, walk to basement
           c21:      'https://nighttrap.blob.core.windows.net/vid/hallone/00000021.mp4'
-        // TRAP: Augers caught in hall
+        // TRAP: Augers captured in hall
         , c130422:  'https://nighttrap.blob.core.windows.net/vid/hallone/00130422.mp4'
         // Tony, Jeff, & Dad enter from basement
         , c1152221: 'https://nighttrap.blob.core.windows.net/vid/hallone/02500221.mp4'           //TODO: These numbers don't match
@@ -867,7 +867,7 @@
     var camKitchen             = {
          // 1 Auger walks in from Entry. Can catch at 4 Sec
           c1200431: 'https://nighttrap.blob.core.windows.net/vid/kitchen/01200431.mp4'
-        // 1 Auger caught in kitchen when trying to access fridge
+        // 1 Auger captured in kitchen when trying to access fridge
         , c1240632: 'https://nighttrap.blob.core.windows.net/vid/kitchen/01240632.mp4'
         // Tony, Jeff, & Dad enter from Hall-1, talk to parents
         , c1481231: 'https://nighttrap.blob.core.windows.net/vid/kitchen/01481231.mp4'
@@ -879,15 +879,15 @@
           c1572241: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01572241.mp4'
          // Augers enter from outside. Marked as 3230241 in the doc. TODO: Look at correcting this
          ,c232241:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00232241.mp4'
-        // TRAP: Augers caught on bookshelf
+        // TRAP: Augers captured on bookshelf
         , c271442:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271442.mp4'
         // Augers Escape  TODO: Listed as 3330841 in excel spreadsheet
         , c271641:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271641.mp4'
-        // TRAP: Auger caught on library 
+        // TRAP: Auger captured on library
         , c554164a: 'https://nighttrap.blob.core.windows.net/vid/livingroom/0554164a.mp4'
         // 2 Augers enter from outside
         , c1001241 :'https://nighttrap.blob.core.windows.net/vid/livingroom/01001241.mp4'
-        // TRAP: Augers caught on right side of living room
+        // TRAP: Augers captured on right side of living room
         , c1071042: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01071042.mp4'
     };
 
@@ -901,9 +901,9 @@
 
     /* 6 - Entryway */
     var camEntryway            = {
-        // 1 Auger walks in from beneath stairs. Looks outside. Can be caught
+        // 1 Auger walks in from beneath stairs. Looks outside. Can be captured
           c1320261: 'https://nighttrap.blob.core.windows.net/vid/entryway/01320261.mp4'
-        // 1 Auger caught in �entryway
+        // 1 Auger captured in �entryway
         , c1391862: 'https://nighttrap.blob.core.windows.net/vid/entryway/01391862.mp4'
         // Sarah enters from closet, parents enter, augers can be trapped on stairs
         , c2122461: 'https://nighttrap.blob.core.windows.net/vid/entryway/02122461.mp4'
@@ -917,7 +917,7 @@
           c310471: 'https://nighttrap.blob.core.windows.net/vid/halltwo/00310471.mp4'
         // Auger walks in from Bathroom.
         , c500271: 'https://nighttrap.blob.core.windows.net/vid/halltwo/00500271.mp4'
-        // Auger caught in hall trap
+        // Auger captured in hall trap
         , c542272: 'https://nighttrap.blob.core.windows.net/vid/halltwo/00542272.mp4'
         // Augers enters from bedroom, goes down stairs
         , c2390671: 'https://nighttrap.blob.core.windows.net/vid/halltwo/02390671.mp4'
@@ -927,9 +927,9 @@
     var camBedroom             = {
         //Sarah staring at mirror, 3 augers enter two go to bathroom one to hall-2
            c81:    'https://nighttrap.blob.core.windows.net/vid/bedroom/00000081.mp4'
-        // TRAP: Augers caught�
+        // TRAP: Augers captured�
         , c130422: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-a05f-f1e52dbb857e/00130422.mp4?sv=2012-02-12&sr=c&si=681815ff-ed6f-4acf-861c-3886316945ee&sig=vUMKUifi5f3Pcj7WlVQqy4R0FYJ6AF9%2BjPQXbdMaONc%3D&st=2015-07-19T02%3A18%3A44Z&se=2115-06-25T02%3A18%3A44Z'
-        // TRAP: 1 Auger is caught, other walks into bathroom
+        // TRAP: 1 Auger is captured, other walks into bathroom
         , c352482: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00352482.mp4'
         // Auger walks in from Bathroom, goes out window
         , c540281: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00540281.mp4'
@@ -941,13 +941,13 @@
           c180291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00180291.mp4'
         // 2 Augers enter bathroom from bedroom, 1 catchable
         , c352291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00352291.mp4'
-        // TRAP: 1 Auger is caught, other walks into mirror
+        // TRAP: 1 Auger is captured, other walks into mirror
         , c430249b: 'https://nighttrap.blob.core.windows.net/vid/bathroom/0430249b.mp4'
-        // TRAP: Auger caught on scale trap
+        // TRAP: Auger captured on scale trap
         , c431292:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00431292.mp4'
         // Auger walks in from Hall-2, walks toward bedroom
         , c480291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00480291.mp4'
-        // TRAP: Auger caught in floor trap
+        // TRAP: Auger captured in floor trap
         , c500291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00500291.mp4'
     };
 
@@ -1195,6 +1195,7 @@
                   break;
           }
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
+//      createVideoSeriesNew(current);
     };
 
 
@@ -1206,17 +1207,31 @@
      * @param {string} [nextUrl]        - Path to video that should play when curUrl is completed.
      * @param {string} [trapUrl]        - Path to video containing the trap scene.
      * @param {number} [catchTime]      - Moment when user can trigger a trap.
-     * @param {number} nPotentialCaught - Number of augers that could have been caught in this scene
+     * @param {number} nPotentialCaught - Number of augers that could have been captured in this scene
      */
     var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime, nPotentialCaught) {
         clearState(oRoom);
-        oRoom.setCurUrl    (curUrl)           ;
-        oRoom.setNextUrl   (nextUrl)          ;
-        oRoom.setTrapUrl   (trapUrl)          ;
-        oRoom.setCatchTime (catchTime)        ;
-        oRoom.setTime      (current.getTime());
-        oRoom.setTrapSprung(false)            ;
+
+        if (oRoom === null || undefined) {
+          console.log('Did not set curUlr in buildState');
+        }
+        if (curUrl === null || '') {
+          console.log('Did not set curUrl in buildState for ' + oRoom);
+        }
+
+        oRoom.setCurUrl    (curUrl)               ;
+        oRoom.setNextUrl   (nextUrl)              ;
+        oRoom.setTrapUrl   (trapUrl)              ;
+        oRoom.setCatchTime (catchTime)            ;
+        oRoom.setTime      (current.getTime())    ;
+        oRoom.setTrapSprung(false)                ;
         oRoom.setPotentialCaught(nPotentialCaught);
+    };
+
+    var buildStatenew = function buildStateNew (oRoom) {
+
+
+
     };
 
 
@@ -1231,7 +1246,21 @@
         oRoom.setCatchTime(0);
         oRoom.setTime(0);
         oRoom.setTrapSprung(false);
-        oRoom.setPotentialCaught(0);
+        oRoom.setPotentialCaptured(0);
+    };
+
+
+    /**
+     * Template for passing values into each room
+     */
+    var objRoom = {
+        curUrl           : ''
+      , nextUrl          : ''
+      , trapUrl          : ''
+      , catchTime        : 0
+      , setTime          : 0
+      , trapSprung       : false
+      , potentialCaptured: 0
     };
 
 
@@ -1241,6 +1270,7 @@
      */
     var eventsHallOne         = function eventsHallOne () {
         var hall = room.hallOne;
+
         switch (current.getTime()) {
           case 1:
               buildState(hall, camHallOne.c21, null, camHallOne.c130422, 3);
@@ -1252,7 +1282,7 @@
     };
 
     var eventsKitchen = function eventsKitchen () {
-        var kitch = room.Kitchen;
+        var kitch = room.kitchen;
         switch (current.getTime()){
           case 81:
             buildState(kitch, camKitchen.c1200431, null, camKitchen.c1240632, 83);
@@ -1278,7 +1308,7 @@
         var living = room.livingRoom;
         switch(current.getTime()) {
           case 60:
-              buildState(living, cam.livingRoom.c1572241, null, null);
+              buildState(living, camLvingRoom.c1572241, null, null);
               break;
           case 117:
               //
@@ -1388,7 +1418,7 @@
      * TODO: Need to set video.currentTime(0) on this as well! Otherwise we miss most of the trap vid!
      */
     var trap                  = function trap () {
-        createTrapVidSeries(current.getTrapUrl(), current.getNextUrl(), current.getPotentialCaught());
+        createTrapVidSeries(current.getTrapUrl(), current.getNextUrl(), current.getPotentialCaptured());
         toggleTrapListener(false);
     };
 
@@ -1433,13 +1463,13 @@
      * Second 'ended' event draws poster to screen when 2nd clip has completed.
      * @param {string} curVidUrl        - Clip with the trap sequence.
      * @param {string} [nextVid]        - Trap clips are often have a clip that appears next.
-     * @param {number} nPotentialCaught - Number of augers that could have been caught in this scene
+     * @param {number} nPotentialCaptured - Number of augers that could have been captured in this scene
      */
-    var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl, nPotentialCaught) {
+    var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl, nPotentialCaptured) {
       setTrapAsSprung();
       video.src(sTrapUrl);
       video.play();
-      nTotalCaptured.set(nPotentialCaught);
+      nTotalCaptured.set(nPotentialCaptured);
 
       // Video has already played & there is no nextUrl, so use a still
       video.on('ended', function () {
