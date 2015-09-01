@@ -683,20 +683,21 @@
         generateRanPass:  function () {
             var result;
             var count = 0;
-            for (var prop in this.passwords)
+          for (var prop in this.passwords)
               if (Math.random() < 1/++count) {
                 result = prop;
-                switch(result){
+                switch(result) {
                   case Purple:
                     playSfx(sfxPath.Purple);
                     break;
-                  case playSfx(sfxPath.Blue);
+                  case Blue:
+                    playSfx(sfxPath.Blue  );
                     break;
                   case Red:
-                    playSfx(sfxPath.Red);
+                    playSfx(sfxPath.Red   );
                     break;
                   case Green:
-                    playSfx(sfxPath.Green);
+                    playSfx(sfxPath.Green );
                     break;
                   case Yellow:
                     playSfx(sfxPath.Yellow);
@@ -924,9 +925,21 @@
 
     /**
      * Displays current password on screen.
+     * TODO: Check spreadsheet to see when this value changes.
+     * TODO: When it does, generate a new password, and check to see if user has matched password.
      */
     var updatePasswordOnScreen = function updatePasswordOnScreen () {
-        passElem.innerHTML = password.sCurUserPass.get() ;
+//      Object.observe(password,  function (changes) {
+//
+//        if (changes[0]!== undefined) {
+//          var oldUrl = changes[0].oldValue;
+//          var newUrl = password.sCurUserPass.get();
+//
+//          if (oldUrl !== newUrl && current.getCam() === sRoomName) {
+//            passElem.innerHTML = password.sCurUserPass.get();
+//          }
+//        }
+//      });
     };
 
 
@@ -937,12 +950,10 @@
     var update                = function update (delta) {
         elapsedTime();
         updateTimeOnScreen();
-        updatePasswordOnScreen();
         calcCatchTime(current.getCatchTime());
-
         eventsHallOne();
 //        eventsKitchen();
-//        eventsEntry();
+        eventsEntry();
 //        eventsLiving();
 //        eventsBathroom();
         eventsBedroom();
@@ -986,15 +997,6 @@
         document.getElementById('video-player').addEventListener('contextmenu', function(e) {
             e.preventDefault();
         }, false);
-    };
-
-
-    /**
-     * Draws the GUI to the screen
-     * @param {float} interpolationPercentage - How much to interpolate between frames.
-     */
-    var draw                  = function draw (interpolatePercentage) {
-        // Do I really need this? 
     };
 
 
@@ -1087,16 +1089,6 @@
                   current.setStillUrl     (room.driveway.stillUrl       );
                   current.setTrapSprung   (room.driveway.getTrapSprung ());
                   break;
-//              default:               //TODO: Not sure if I need this....
-//                  current.setCam          ('hallOne'                    );
-//                  current.setCurUrl       (room.hallOne.getCurUrl     ());
-//                  current.setNextUrl      (room.hallOne.getNextUrl    ());
-//                  current.setTrapUrl      (room.hallOne.getTrapUrl    ());
-//                  current.setCatchTime    (room.hallOne.getCatchTime  ());
-//                  current.setCanCatch     (room.hallOne.getCanCatch   ());
-//                  current.setUrlChangeTime(room.hallOne.getTime       ());
-//                  current.setStillUrl     (room.hallOne.stillUrl        );
-//                  current.setTrapSprung   (room.hallOne.getTrapSprung ());
           }
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
     };
@@ -1131,7 +1123,7 @@
           case 1:
               buildState(hall, camHallOne.c21, null, camHallOne.c130422, 3);
               break;
-          case 8:
+          case 76:
               buildState(hall, camHallOne.c1152221, null, null, null);
               break;
         }
@@ -1411,7 +1403,7 @@
            var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
            video.currentTime(diff);
         }
-        updateVidSource();
+//        updateVidSource();
     };
 
 
