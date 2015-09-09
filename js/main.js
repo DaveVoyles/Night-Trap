@@ -553,17 +553,17 @@
 
     /**
      * Obj to get / set current values for the game.
-     * @property {string} cam              - Room the user has currently selected
-     * @property {string} stillUrl         - Background image when room is empty.
-     * @property {bool}   bCanCatch        - Is there a character who can be captured in the scene?
-     * @property {number} urlChangeTime    - Time into the game should curUrl should be set.
-     * @property {number} time             - Current time stamp when curUrl is being set.
-     * @property {number} catchTime        - When can the user catch an auger?
-     * @property {sting}  curUrl           - Url should be set as video.src() right now.
-     * @property {string} nextUrl          - NextUrl to be set as video.src() when curUrl finishes.
-     * @property {string} trapUrl          - If a character can be trapped in the scene, have it trigger this Url.
-     * @property {bool}   bTrapSpring      - Has the user set the trap in this current scene yet?
-     * @property {bool}   bJustSwitched    - Has the currentUrl switched since the user selected this room?
+     * @property {string} cam                - Room the user has currently selected
+     * @property {string} stillUrl           - Background image when room is empty.
+     * @property {bool}   bCanCatch          - Is there a character who can be captured in the scene?
+     * @property {number} urlChangeTime      - Time into the game should curUrl should be set.
+     * @property {number} time               - Current time stamp when curUrl is being set.
+     * @property {number} catchTime          - When can the user catch an auger?
+     * @property {sting}  curUrl             - Url should be set as video.src() right now.
+     * @property {string} nextUrl            - NextUrl to be set as video.src() when curUrl finishes.
+     * @property {string} trapUrl            - If a character can be trapped in the scene, have it trigger this Url.
+     * @property {bool}   bTrapSpring        - Has the user set the trap in this current scene yet?
+     * @property {bool}   bJustSwitched      - Has the currentUrl switched since the user selected this room?
      * @property {number} nPotentialCaptured - Number of augers that could have been captured in this scene
      */
     var current = {
@@ -860,7 +860,7 @@
         // TRAP: Augers captured in hall
         , c130422:  'https://nighttrap.blob.core.windows.net/vid/hallone/00130422.mp4'
         // Tony, Jeff, & Dad enter from basement
-        , c1152221: 'https://nighttrap.blob.core.windows.net/vid/hallone/02500221.mp4'           //TODO: These numbers don't match
+        , c1152221: 'https://nighttrap.blob.core.windows.net/vid/hallone/02500221.mp4'           //TODO: AZURE: Labeled wrong
     };
 
     /* 3 - Kitchen */
@@ -877,11 +877,11 @@
     var camLivingRoom          = {
         // Mom enters from bookshelf
           c1572241: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01572241.mp4'
-         // Augers enter from outside. Marked as 3230241 in the doc. TODO: Look at correcting this
+         // Augers enter from outside (branches)
          ,c232241:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00232241.mp4'
         // TRAP: Augers captured on bookshelf
         , c271442:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271442.mp4'
-        // Augers Escape  TODO: Listed as 3330841 in excel spreadsheet
+        // Augers Escape  
         , c271641:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271641.mp4'
         // TRAP: Auger captured on library
         , c554164a: 'https://nighttrap.blob.core.windows.net/vid/livingroom/0554164a.mp4'
@@ -903,11 +903,11 @@
     var camEntryway            = {
         // 1 Auger walks in from beneath stairs. Looks outside. Can be captured
           c1320261: 'https://nighttrap.blob.core.windows.net/vid/entryway/01320261.mp4'
-        // 1 Auger captured in �entryway
+        // 1 Auger captured in entryway
         , c1391862: 'https://nighttrap.blob.core.windows.net/vid/entryway/01391862.mp4'
         // Sarah enters from closet, parents enter, augers can be trapped on stairs
         , c2122461: 'https://nighttrap.blob.core.windows.net/vid/entryway/02122461.mp4'
-        // 
+        // Tony & Jeff walk in from kitchen, argue about door, walk outside
         , c2500221: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ba5-f1e52dbb97ae/02500221.mp4?sv=2012-02-12&sr=c&si=f34e6bd8-dbe4-464f-b0f8-2b16c61fcecd&sig=DretusvijWM7WVsXbipYK6W%2FBjEHDn9jXwsxg8%2F3zyE%3D&st=2015-07-19T02%3A18%3A59Z&se=2115-06-25T02%3A18%3A59Z'
     };
 
@@ -927,7 +927,7 @@
     var camBedroom             = {
         //Sarah staring at mirror, 3 augers enter two go to bathroom one to hall-2
            c81:    'https://nighttrap.blob.core.windows.net/vid/bedroom/00000081.mp4'
-        // TRAP: Augers captured�
+        // TRAP: Augers captured
         , c130422: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-a05f-f1e52dbb857e/00130422.mp4?sv=2012-02-12&sr=c&si=681815ff-ed6f-4acf-861c-3886316945ee&sig=vUMKUifi5f3Pcj7WlVQqy4R0FYJ6AF9%2BjPQXbdMaONc%3D&st=2015-07-19T02%3A18%3A44Z&se=2115-06-25T02%3A18%3A44Z'
         // TRAP: 1 Auger is captured, other walks into bathroom
         , c352482: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00352482.mp4'
@@ -1233,37 +1233,42 @@
     };
 
 
-  // TODO: Consider doing a for loop over all of these properties
-  var buildStateNew = function buildStateNew (oRoom, rObj) {
+    /**
+     * Sets the current values for each room, which will then be used the events function to
+     * then set these values if user has current room selected
+     * @param {object} oRoom  - Reference to the room we should be setting values for.
+     * @param (object} rObj   - Object w/ properties for urls, time, & trap within the room.
+     */
+    var buildStateNew = function buildStateNew (oRoom, rObj) {
 
-    if (oRoom === null || undefined) {
-      throw new Error ('Did not set curUlr in buildState');
-    }
+      if (oRoom === null || undefined) {
+        throw new Error ('Did not set curUlr in buildState');
+      }
 
-    //TODO: Look into this when you have internet
-    for (var prop in rObj) {
-        if (prop === null || undefined ) {
-            throw new Error ('You have an null or undefined proeprty in rObh');
-        }
-    }
+      //TODO: Look into this when you have Internet
+      for (var prop in rObj) {
+          if (prop === null || undefined ) {
+              throw new Error ('You have an null or undefined property in rObh');
+          }
+      }
 
-    clearState(oRoom);
-    oRoom.setCurUrl           (rObj.curUrl);
-    oRoom.setNextUrl          (rObj.nextUrl);
-    oRoom.setTrapUrl          (rObj.trapUrl);
-    oRoom.setCatchTime        (rObj.catchTime);
-    oRoom.setTime             (current.getTime());
-    oRoom.setTrapSprung       (rObj.trapSprung);
-    oRoom.setPotentialCaptured(rObj.potentialCaptured);
+      clearState(oRoom);
+      oRoom.setCurUrl           (rObj.curUrl);
+      oRoom.setNextUrl          (rObj.nextUrl);
+      oRoom.setTrapUrl          (rObj.trapUrl);
+      oRoom.setCatchTime        (rObj.catchTime);
+      oRoom.setTime             (current.getTime());
+      oRoom.setTrapSprung       (rObj.trapSprung);
+      oRoom.setPotentialCaptured(rObj.potentialCaptured);
 
 
-  };
+    };
 
 
     /**
      * Clears all of the values in the room. This makes it easier to debug when I mistakenly put the wrong value in for each room
-     * during the buildState function.
-     * */
+     * during the buildState() function.
+     */
     var clearState = function clearState (oRoom) {
         oRoom.setCurUrl('')          ;
         oRoom.setNextUrl('')         ;
@@ -1572,7 +1577,7 @@
      * Result is then used to set the currentTime on video player. 
      * @param   {number} caseTime     - Which event (time) is creating this object?
      * @param   {number} currentTime  - What is the current game time when this function is called?
-     * @returns {number} Result Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
+     * @returns {number} result       - Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
     var nTimeDiff             = function  nTimeDiff(caseTime, currentTime) {
         current.setJustSwitched(false);
