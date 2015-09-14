@@ -758,12 +758,12 @@
             Orange: 'ORANGE'
         },
         sfxPath: {
-          Purple: 'sfx/',
-          Blue:   'sfx/',
-          Red:    'sfx/',
-          Green:  'sfx/',
-          Yellow: 'sfx/',
-          Orange: 'sfx/'
+            Purple: 'sfx/',
+            Blue:   'sfx/',
+            Red:    'sfx/',
+            Green:  'sfx/',
+            Yellow: 'sfx/',
+            Orange: 'sfx/'
         },
         sCurUserPass: {
             pass: 'BLUE',
@@ -856,57 +856,57 @@
     /* 2 - Hall-1 */
     var camHallOne             = {
          // Augers enter through back door, walk to basement
-          c21:      'https://nighttrap.blob.core.windows.net/vid/hallone/00000021.mp4'
+          c21:      'https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00000021.mp4'
         // TRAP: Augers captured in hall
-        , c130422:  'https://nighttrap.blob.core.windows.net/vid/hallone/00130422.mp4'
+        , c130422:  'https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00130422.mp4'
         // Tony, Jeff, & Dad enter from basement
-        , c1152221: 'https://nighttrap.blob.core.windows.net/vid/hallone/02500221.mp4'           //TODO: AZURE: Labeled wrong
+        , c1152221: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/02500221.mp4'           //TODO: AZURE: Labeled wrong
     };
 
     /* 3 - Kitchen */
     var camKitchen             = {
          // 1 Auger walks in from Entry. Can catch at 4 Sec
-          c1200431: 'https://nighttrap.blob.core.windows.net/vid/kitchen/01200431.mp4'
+          c1200431: 'https://nighttrapblob.blob.core.windows.net/ntvids/kitchen/01200431.mp4'
         // 1 Auger captured in kitchen when trying to access fridge
-        , c1240632: 'https://nighttrap.blob.core.windows.net/vid/kitchen/01240632.mp4'
+        , c1240632: 'https://nighttrapblob.blob.core.windows.net/ntvids/kitchen/01240632.mp4'
         // Tony, Jeff, & Dad enter from Hall-1, talk to parents
-        , c1481231: 'https://nighttrap.blob.core.windows.net/vid/kitchen/01481231.mp4'
+        , c1481231: 'https://nighttrapblob.blob.core.windows.net/ntvids/kitchen/01481231.mp4'
     };
 
     /* 4- Living-Room */
     var camLivingRoom          = {
         // Mom enters from bookshelf
-          c1572241: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01572241.mp4'
+          c1572241: 'https://nighttrapblob.blob.core.windows.net/ntvids/livingroom/01572241.mp4'
          // Augers enter from outside (branches)
-         ,c232241:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00232241.mp4'
+         ,c232241:  'https://nighttrapblob.blob.core.windows.net/ntvids/livingroom/00232241.mp4'
         // TRAP: Augers captured on bookshelf
-        , c271442:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271442.mp4'
+        , c271442:  'https://nighttrapblob.blob.core.windows.net/ntvids/livingroom/00271442.mp4'
         // Augers Escape  
-        , c271641:  'https://nighttrap.blob.core.windows.net/vid/livingroom/00271641.mp4'
+        , c271641:  'https://nighttrapblob.blob.core.windows.net/ntvids/livingroom/00271641.mp4'
         // TRAP: Auger captured on library
-        , c554164a: 'https://nighttrap.blob.core.windows.net/vid/livingroom/0554164a.mp4'
+        , c554164a: 'https://nighttrapblob.blob.core.windows.net/ntvids/livingroom/0554164a.mp4'
         // 2 Augers enter from outside
-        , c1001241 :'https://nighttrap.blob.core.windows.net/vid/livingroom/01001241.mp4'
+        , c1001241 :'https://nighttrapblob.blob.core.windows.net/ntvids/livingroom/01001241.mp4'
         // TRAP: Augers captured on right side of living room
-        , c1071042: 'https://nighttrap.blob.core.windows.net/vid/livingroom/01071042.mp4'
+        , c1071042: 'https://nighttrapblob.blob.core.windows.net/ntvids/livingroom/01071042.mp4'
     };
 
     /* 5 - Driveway */
     var camDriveway            = {
         //  Girls enter the driveway, meet eddy, walk in. Can catch at ~6 Sec.
-          c1440451: 'https://nighttrap.blob.core.windows.net/vid/driveway/01440451.mp4'
+          c1440451: 'https://nighttrapblob.blob.core.windows.net/ntvids/driveway/01440451.mp4'
         // TRAP: Launching auger from roof
-        , c1502452: 'https://nighttrap.blob.core.windows.net/vid/driveway/01502452.mp4'
+        , c1502452: 'https://nighttrapblob.blob.core.windows.net/ntvids/driveway/01502452.mp4'
     };
 
     /* 6 - Entryway */
     var camEntryway            = {
         // 1 Auger walks in from beneath stairs. Looks outside. Can be captured
-          c1320261: 'https://nighttrap.blob.core.windows.net/vid/entryway/01320261.mp4'
+          c1320261: 'https://nighttrapblob.blob.core.windows.net/ntvids/driveway/01502452.mp4'
         // 1 Auger captured in entryway
-        , c1391862: 'https://nighttrap.blob.core.windows.net/vid/entryway/01391862.mp4'
+        , c1391862: 'https://nighttrapblob.blob.core.windows.net/ntvids/entryway/01391862.mp4'
         // Sarah enters from closet, parents enter, augers can be trapped on stairs
-        , c2122461: 'https://nighttrap.blob.core.windows.net/vid/entryway/02122461.mp4'
+        , c2122461: 'https://nighttrapblob.blob.core.windows.net/ntvids/entryway/02122461.mp4'
         // Tony & Jeff walk in from kitchen, argue about door, walk outside
         , c2500221: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-3ba5-f1e52dbb97ae/02500221.mp4?sv=2012-02-12&sr=c&si=f34e6bd8-dbe4-464f-b0f8-2b16c61fcecd&sig=DretusvijWM7WVsXbipYK6W%2FBjEHDn9jXwsxg8%2F3zyE%3D&st=2015-07-19T02%3A18%3A59Z&se=2115-06-25T02%3A18%3A59Z'
     };
@@ -914,41 +914,41 @@
     /* 7 - Hall-2 */
     var camHallTwo             = {
         // Auger enters hall 2 from bedroom
-          c310471: 'https://nighttrap.blob.core.windows.net/vid/halltwo/00310471.mp4'
+          c310471: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/00310471.mp4'
         // Auger walks in from Bathroom.
-        , c500271: 'https://nighttrap.blob.core.windows.net/vid/halltwo/00500271.mp4'
+        , c500271: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/00500271.mp4'
         // Auger captured in hall trap
-        , c542272: 'https://nighttrap.blob.core.windows.net/vid/halltwo/00542272.mp4'
+        , c542272: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/00542272.mp4'
         // Augers enters from bedroom, goes down stairs
-        , c2390671: 'https://nighttrap.blob.core.windows.net/vid/halltwo/02390671.mp4'
+        , c2390671: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/02390671.mp4'
     };
 
     /* 8 - Bedroom */
     var camBedroom             = {
         //Sarah staring at mirror, 3 augers enter two go to bathroom one to hall-2
-           c81:    'https://nighttrap.blob.core.windows.net/vid/bedroom/00000081.mp4'
+           c81:    'https://nighttrapblob.blob.core.windows.net/ntvids/bedroom/00000081.mp4'
         // TRAP: Augers captured
         , c130422: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-a05f-f1e52dbb857e/00130422.mp4?sv=2012-02-12&sr=c&si=681815ff-ed6f-4acf-861c-3886316945ee&sig=vUMKUifi5f3Pcj7WlVQqy4R0FYJ6AF9%2BjPQXbdMaONc%3D&st=2015-07-19T02%3A18%3A44Z&se=2115-06-25T02%3A18%3A44Z'
         // TRAP: 1 Auger is captured, other walks into bathroom
-        , c352482: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00352482.mp4'
+        , c352482: 'https://nighttrapblob.blob.core.windows.net/ntvids/bedroom/00352482.mp4'
         // Auger walks in from Bathroom, goes out window
-        , c540281: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00540281.mp4'
+        , c540281: 'https://nighttrapblob.blob.core.windows.net/ntvids/bedroom/00540281.mp4'
     };
 
     /* 9 - Bathroom */
     var camBathroom            = {
         // Sarah enters bathroom from bedroom. Enters mirror
-          c180291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00180291.mp4'
+          c180291:   'https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/00180291.mp4'
         // 2 Augers enter bathroom from bedroom, 1 catchable
-        , c352291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00352291.mp4'
+        , c352291:   'https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/00352291.mp4'
         // TRAP: 1 Auger is captured, other walks into mirror
-        , c430249b: 'https://nighttrap.blob.core.windows.net/vid/bathroom/0430249b.mp4'
+        , c430249b:  'https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/0430249b.mp4'
         // TRAP: Auger captured on scale trap
-        , c431292:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00431292.mp4'
+        , c431292:   'https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/00431292.mp4'
         // Auger walks in from Hall-2, walks toward bedroom
-        , c480291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00480291.mp4'
+        , c480291:   'https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/00480291.mp4'
         // TRAP: Auger captured in floor trap
-        , c500291:   'https://nighttrap.blob.core.windows.net/vid/bathroom/00500291.mp4'
+        , c500291:   'https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/00500291.mp4'
     };
 
     /**
@@ -1049,10 +1049,10 @@
         calcCatchTime(current.getCatchTime());
         eventsHallOne();
 //        eventsKitchen();
-        eventsEntry();
+        //eventsEntry();
 //        eventsLiving();
 //        eventsBathroom();
-        eventsBedroom();
+        //eventsBedroom();
 //        eventshallTwo();
 //        eventsDriveway();
     };
@@ -1197,77 +1197,11 @@
         createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
     };
 
-
+   
     /**
-     * Sets the current values for each room, which will then be used the events function to
-     * then set these values if user has current room selected
-     * @param {object}  oRoom           - Name of the room we should be setting values for
-     * @param {string}  curUrl          - Path to video which should be set at this point in time.
-     * @param {string} [nextUrl]        - Path to video that should play when curUrl is completed.
-     * @param {string} [trapUrl]        - Path to video containing the trap scene.
-     * @param {number} [catchTime]      - Moment when user can trigger a trap.
-     * @param {number} nPotentialCaught - Number of augers that could have been captured in this scene
-     */
-    var buildState = function buildState (oRoom, curUrl, nextUrl, trapUrl, catchTime, nPotentialCaught) {
-       var firstTime = true;
-
-       if (!firstTime) {
-        clearState(oRoom);
-
-        if (oRoom === null || undefined) {
-          throw new Error ('Did not set curUlr in buildState');
-        }
-        if (curUrl === null || '') {
-          throw new Error ('Did not set curUrl in buildState for ' + oRoom);
-        }
-
-        oRoom.setCurUrl    (curUrl)                 ;
-        oRoom.setNextUrl   (nextUrl)                ;
-        oRoom.setTrapUrl   (trapUrl)                ;
-        oRoom.setCatchTime (catchTime)              ;
-        oRoom.setTime      (current.getTime())      ;
-        oRoom.setTrapSprung(false)                  ;
-        oRoom.setPotentialCaptured(nPotentialCaught);
-        firstTime = false;
-      }
-    };
-
-
-    /**
-     * Sets the current values for each room, which will then be used the events function to
-     * then set these values if user has current room selected
-     * @param {object} oRoom  - Reference to the room we should be setting values for.
-     * @param (object} rObj   - Object w/ properties for urls, time, & trap within the room.
-     */
-    var buildStateNew = function buildStateNew (oRoom, rObj) {
-
-      if (oRoom === null || undefined) {
-        throw new Error ('Did not set curUlr in buildState');
-      }
-
-      //TODO: Look into this when you have Internet
-      for (var prop in rObj) {
-          if (prop === null || undefined ) {
-              throw new Error ('You have an null or undefined property in rObh');
-          }
-      }
-
-      clearState(oRoom);
-      oRoom.setCurUrl           (rObj.curUrl);
-      oRoom.setNextUrl          (rObj.nextUrl);
-      oRoom.setTrapUrl          (rObj.trapUrl);
-      oRoom.setCatchTime        (rObj.catchTime);
-      oRoom.setTime             (current.getTime());
-      oRoom.setTrapSprung       (rObj.trapSprung);
-      oRoom.setPotentialCaptured(rObj.potentialCaptured);
-
-
-    };
-
-
-    /**
-     * Clears all of the values in the room. This makes it easier to debug when I mistakenly put the wrong value in for each room
-     * during the buildState() function.
+     * Clears all of the values in the room and sets them to these default values.
+     * Allows me to not have to worry about incorrect values being set when a new event occurs in a room.
+     * Gets called each time buildState() is used.
      */
     var clearState = function clearState (oRoom) {
         oRoom.setCurUrl('')          ;
@@ -1277,6 +1211,25 @@
         oRoom.setTime(0)             ;
         oRoom.setTrapSprung(false)   ;
         oRoom.setPotentialCaptured(0);
+    };
+
+
+    /**
+     * Sets the current values for each room, which will then be used the events function to
+     * then set these values if user has current room selected
+     * @param {object} oRoom  - Reference to the room we should be setting values for.
+     * @param (object} rObj   - Object w/ properties for urls, time, & trap within the room.
+     */
+    var buildState = function buildState (oRoom, rObj) {
+
+      clearState(oRoom);
+      oRoom.setCurUrl           (rObj.curUrl);
+      oRoom.setNextUrl          (rObj.nextUrl);
+      oRoom.setTrapUrl          (rObj.trapUrl);
+      oRoom.setCatchTime        (rObj.catchTime);
+      oRoom.setTime             (current.getTime());
+      oRoom.setTrapSprung       (rObj.trapSprung);
+      oRoom.setPotentialCaptured(rObj.potentialCaptured);
     };
 
 
@@ -1297,6 +1250,7 @@
     /**
      * Sets values of this particular room each time current.getTime() matches the case value.
      * Case is equal to the current number of seconds into the game.
+     * If the value of property is not set here, it will be set to default values of the objRoom.
      */
     var eventsHallOne         = function eventsHallOne () {
         var hall = room.hallOne;
@@ -1312,27 +1266,35 @@
 //             );
                 r.curUrl    = aTempLocal[2];
                 r.nextUrl   = aTempLocal[0];
-                r.trapUrl   = aTempLocal[1];
+                r.trapUrl   = aTempLocal[1];            
                 r.catchTime = 3;
-                buildStateNew(hall, r);
+                buildState(hall, r);
               break;
-          case 76:
-              buildState(hall, camHallOne.c1152221, null, null, null);
+            case 76:
+                r.curUrl = camHallOne.c1152221;
+                buildState(hall, r);
               break;
         }
     };
 
+    Finish converting these to new buildstate
     var eventsKitchen = function eventsKitchen () {
         var kitch = room.kitchen;
+        var r = objRoom;
+
         switch (current.getTime()){
-          case 81:
-            buildState(kitch, camKitchen.c1200431, null, camKitchen.c1240632, 83);
-            break;
-          case 90:
-            buildState(kitch, camKitchen.c1481231);
+            case 81:
+                r.curUrl    = camKitchen.c1200431;
+                r.trapUrl   = camKitchen.c1240632;
+                r.catchTime = 83;
+                buildState(kitch, r);
+                break;
+            case 90:
+                r.curUrl = camKitchen.c1481231;
+                buildState(kitch, r);
             break;
           default:
-            buildState(kitch, null, null);
+                buildState(kitch, r);
         }
     };
 
