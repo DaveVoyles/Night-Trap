@@ -1,6 +1,95 @@
 (function() {
     'use strict';
 
+    var roo = function(sRoom, stillUrl, bCanCatch, time, catchTime, curUrl, nextUrl, trapUrl, bTrapSprung, nPotentialCaptured) {
+        var _sRoom              = sRoom              || ''   ;
+        var _stillurl           = stillUrl           || ''   ;
+        var _bCanCatch          = bCanCatch          || false;
+        var _time               = time               || 0    ;
+        var _catchTime          = catchTime          || 0    ;
+        var _curUrl             = curUrl             || ''   ;
+        var _nextUrl            = nextUrl            || ''   ;
+        var _trapUrl            = trapUrl            || ''   ;
+        var _bTrapSprung        = bTrapSprung        || false;
+        var _nPotentialCaptured = nPotentialCaptured || 0    ;
+
+        var roomPrototype = {
+            getRoomName: function() {
+                return _sRoom;
+            },
+            setRoomName: function(val) {
+                _sRoom = val;
+            },
+
+            getStillUrl: function() {
+                return _stillurl;
+            },
+            setStillUrl: function() {
+                _stillurl = stillUrl;
+            },
+
+            getCanCatch: function() {
+                return _bCanCatch;
+            },
+            setCanCatch: function(val) {
+                _bCanCatch = val;
+            },
+
+            getTime: function() {
+                return _time;
+            },
+            setTime: function(val) {
+                _time = val;
+            },
+
+            getCatchTime: function() {
+                return _catchTime;
+            },
+            setCatchTime: function(val) {
+                _catchTime = val;
+            },
+
+            getCurUrl: function() {
+                return _curUrl;
+            },
+            setCurUrl: function(val) {
+                _curUrl = val;
+            },
+
+            getNextUrl: function() {
+                return _nextUrl;
+            },
+            setNextUrl: function(val) {
+                _nextUrl = val;
+            },
+
+            getTrapUrl: function() {
+                return _trapUrl;
+            },
+            setTrapUrl: function(val) {
+                _trapUrl = val;
+            },
+
+            getTrapSprung: function() {
+                return _bTrapSprung;
+            },
+            setTrapSprung: function(val) {
+                bTrapSprung = val;
+            },
+
+            getPotentialCaptured: function() {
+                return _nPotentialCaptured;
+            },
+            setPotentialCaptured: function(val) {
+                _nPotentialCaptured = val;
+            }
+        };
+        return roomPrototype;
+    };
+
+    var hallO = roo('hallOne', 'img/stills/HALL-ONE_1.JPG');
+    console.log('room: ' + hallO.getRoomName());
+
     /**
      * Obj to get / set current values for the each room.
      * @property {string} stillUrl    - Background image when room is empty.
@@ -1231,6 +1320,9 @@
         oRoom.setPotentialCaptured(rObj.potentialCaptured);
     };
 
+    /**
+     * Template used by events functions to store current values for each room. This is where the video player gets the url from.
+     */
     var objRoom =  {
         curUrl            : ''
       , nextUrl           : ''
@@ -1240,6 +1332,7 @@
       , trapSprung        : false
       , potentialCaptured : 0
     };
+
 
     /**
      * Sets values of this particular room each time current.getTime() matches the case value.
@@ -1278,7 +1371,7 @@
 
         switch (current.getTime()){
          
-            case 81:
+            case 4:
                 //r.curUrl    = camKitchen.c1200431;
                 //r.trapUrl   = camKitchen.c1240632;
                 //r.catchTime = 83;
@@ -1292,9 +1385,7 @@
                 buildState(kitch, r);
             break;
             default:
-                //video.poster(room.kitchen.still);
-                //displayStill();
-                buildState(kitch, r); // DOES NOT WORK
+                buildState(kitch, r); 
         }
     };
 
@@ -1397,26 +1488,25 @@
      * @param {string} [sTrapUrl]    - Path to URL w/ trap video.
      * @param {string}  sStillUrl    - Path to URL w/ poster image.
      */
-    //var createVideoSeries = function createVideoSeries(sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
-        var createVideoSeries = function createVideoSeries(currentObj) {
+     var createVideoSeries = function createVideoSeries() {
     
        /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
         * and returns to that same room before a new clip is set to begin */
-       if (currentObj.getCurUrl() === null || currentObj.getCurUrl() === '' || currentObj.getTrapSprung() === true) {  
-          video.poster(currentObj.getStillUrl());
+       if (current.getCurUrl() === null || current.getCurUrl() === '' || current.getTrapSprung() === true) {  
+          video.poster(current.getStillUrl());
           displayStill();
           return;
         }
 
         var hasPlayed = false;
-        video.poster(currentObj.getStillUrl());
-        playVideo(currentObj.getCurUrl());
+        video.poster(current.getStillUrl());
+        playVideo(current.getCurUrl());
 
         // Did not catch / no chance to catch....so play next video
         video.on('ended', function() {
             if (hasPlayed === false) {
-                if (currentObj.getNextUrl()) {
-                    playVideo(currentObj.getNextUrl());
+                if (current.getNextUrl()) {
+                    playVideo(current.getNextUrl());
                 } else {
                     displayStill();
                 }
@@ -1582,7 +1672,7 @@
            var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
            video.currentTime(diff);
         }
-//        updateVidSource();
+        updateVidSource();
     };
 
 
