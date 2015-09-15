@@ -1,7 +1,21 @@
 (function() {
     'use strict';
 
-    var roo = function(sRoom, stillUrl, bCanCatch, time, catchTime, curUrl, nextUrl, trapUrl, bTrapSprung, nPotentialCaptured) {
+    /**
+     * Constructor obj to get / set current values for the each room.
+     * @returns                           - roomPrototype
+     * @param {string} sRoom              - Name of the room.
+     * @param {string} stillUrl           - Background image when room is empty.
+     * @param {bool}   bCanCatch          - Is there a character who can be captured in the scene?
+     * @param {number} time               - Current time stamp when curUrl is being set.
+     * @param {number} catchTime          - When can the user catch an auger?
+     * @param {sting}  curUrl             - Url should be set as video.src() right now.
+     * @param {string} nextUrl            - NextUrl to be set as video.src() when curUrl finishes.
+     * @param {string} trapUrl            - If a character can be trapped in the scene, have it trigger this Url.
+     * @param {bool}   bTrapSprung        - Has the user set the trap in this current scene yet?
+     * @param {number} nPotentialCaptured - How many augers can be caught in the current scene?
+     */
+    var room = function(sRoom, stillUrl, bCanCatch, time, catchTime, curUrl, nextUrl, trapUrl, bTrapSprung, nPotentialCaptured) {
         var _sRoom              = sRoom              || ''   ;
         var _stillurl           = stillUrl           || ''   ;
         var _bCanCatch          = bCanCatch          || false;
@@ -87,558 +101,15 @@
         return roomPrototype;
     };
 
-    var hallO = roo('hallOne', 'img/stills/HALL-ONE_1.JPG');
-    console.log('room: ' + hallO.getRoomName());
+    var hallOne    = room('hallOne'   , 'img/stills/HALL-ONE_1.JPG' );
+    var kitchen    = room('kitchen'   , 'img/stills/KITCHEN_1.JPG'  );
+    var entryway   = room('entryway'  , 'img/stills/ENTRY-WAY_1.jpg');
+    var livingroom = room('livingroom', 'img/stills/LIVING-ROOM_1'  );
+    var bathroom   = room('bathroom'  , 'img/stills/BATHROOM_1'     );
+    var bedroom    = room('bedroom'   , 'img/stills/BATHROOM_1'     );
+    var hallTwo    = room('hallTwo'   , 'img/stills/HALL-TWO_1'     );
+    var driveway   = room('driveway'  , 'img/stills/DRIVEWAY_1.jpg' );
 
-    /**
-     * Obj to get / set current values for the each room.
-     * @property {string} stillUrl    - Background image when room is empty.
-     * @property {bool}   bCanCatch   - Is there a character who can be captured in the scene?
-     * @property {number} time        - Current time stamp when curUrl is being set.
-     * @property {number} catchTime   - When can the user catch an auger?
-     * @property {sting}  curUrl      - Url should be set as video.src() right now.
-     * @property {string} nextUrl     - NextUrl to be set as video.src() when curUrl finishes.
-     * @property {string} trapUrl     - If a character can be trapped in the scene, have it trigger this Url.
-     * @property {bool}   bTrapSpring - Has the user set the trap in this current scene yet?
-     */
-    var room = {
-        hallOne: {
-            stillUrl: 'img/stills/HALL-ONE_1.JPG',
-
-            bCanCatch: true,
-            getCanCatch: function () {
-                return this.bCanCatch;
-            },
-            setCanCatch: function (val) {
-                this.bCanCatch = val;
-            },
-
-            time: 0,
-            getTime: function() {
-                return this.time;
-            },
-            setTime: function(val) {
-                this.time      = val;
-            },
-
-            catchTime: 0,
-            getCatchTime: function () {
-                return this.catchTime;
-            },
-            setCatchTime: function (val) {
-                this.catchTime = val;
-            },
-
-            curUrl: '',
-            getCurUrl: function () {
-                return this.curUrl;
-            },
-            setCurUrl: function (val) {
-                this.curUrl    = val;
-            },
-
-            nextUrl: '',
-            getNextUrl: function () {
-                return this.nextUrl;
-            },
-            setNextUrl: function (val) {
-                this.nextUrl   = val;
-            },
-
-            trapUrl: '',
-            getTrapUrl: function () {
-                return this.trapUrl;
-            },
-            setTrapUrl: function (val) {
-                this.trapUrl   = val;
-            },
-
-            bTrapSprung: false,
-            getTrapSprung: function () {
-              return this.bTrapSprung;
-            },
-            setTrapSprung: function (val){
-              this.bTrapSprung = val;
-            },
-
-            nPotentialCaptured: 0,
-            getPotentialCaptured: function () {
-              return this.nPotentialCaptured;
-            },
-            setPotentialCaptured: function (val) {
-              this.nPotentialCaptured = val;
-            }
-        },
-        kitchen: {
-            stillUrl: 'img/stills/KITCHEN_1.JPG',
-
-            bCanCatch: true,
-            getCanCatch: function () {
-              return this.bCanCatch;
-            },
-            setCanCatch: function (val) {
-              this.bCanCatch = val;
-            },
-
-            time: 0,
-            getTime: function() {
-              return this.time;
-            },
-            setTime: function(val) {
-              this.time      = val;
-            },
-
-            catchTime: 0,
-            getCatchTime: function () {
-              return this.catchTime;
-            },
-            setCatchTime: function (val) {
-              this.catchTime = val;
-            },
-
-            curUrl: '',
-            getCurUrl: function () {
-              return this.curUrl;
-            },
-            setCurUrl: function (val) {
-              this.curUrl    = val;
-            },
-
-            nextUrl: '',
-            getNextUrl: function () {
-              return this.nextUrl;
-            },
-            setNextUrl: function (val) {
-              this.nextUrl   = val;
-            },
-
-            trapUrl: '',
-            getTrapUrl: function () {
-              return this.trapUrl;
-            },
-            setTrapUrl: function (val) {
-              this.trapUrl   = val;
-            },
-
-            bTrapSprung: false,
-            getTrapSprung: function () {
-              return this.bTrapSprung;
-            },
-            setTrapSprung: function (val){
-              this.bTrapSprung = val;
-            },
-
-            nPotentialCaptured: 0,
-            getPotentialCaptured: function () {
-              return this.nPotentialCaptured;
-            },
-            setPotentialCaptured: function (val) {
-              this.nPotentialCaptured = val;
-            }
-        },
-        entryway: {
-            stillUrl: 'img/stills/Entry-Way_1.JPG',
-
-            bCanCatch: true,
-            getCanCatch: function () {
-              return this.bCanCatch;
-            },
-            setCanCatch: function (val) {
-              this.bCanCatch = val;
-            },
-
-            time: 0,
-            getTime: function() {
-              return this.time;
-            },
-            setTime: function(val) {
-              this.time      = val;
-            },
-
-            catchTime: 0,
-            getCatchTime: function () {
-              return this.catchTime;
-            },
-            setCatchTime: function (val) {
-              this.catchTime = val;
-            },
-
-            curUrl: '',
-            getCurUrl: function () {
-              return this.curUrl;
-            },
-            setCurUrl: function (val) {
-              this.curUrl    = val;
-            },
-
-            nextUrl: '',
-            getNextUrl: function () {
-              return this.nextUrl;
-            },
-            setNextUrl: function (val) {
-              this.nextUrl   = val;
-            },
-
-            trapUrl: '',
-            getTrapUrl: function () {
-              return this.trapUrl;
-            },
-            setTrapUrl: function (val) {
-              this.trapUrl   = val;
-            },
-
-            bTrapSprung: false,
-            getTrapSprung: function () {
-              return this.bTrapSprung;
-            },
-            setTrapSprung: function (val){
-              this.bTrapSprung = val;
-            },
-
-            nPotentialCaptured: 0,
-            getPotentialCaptured: function () {
-              return this.nPotentialCaptured;
-            },
-            setPotentialCaptured: function (val) {
-              this.nPotentialCaptured = val;
-            }
-        },
-        livingRoom: {
-            stillUrl: 'img/stills/Living-Room_1.JPG',
-
-            bCanCatch: true,
-            getCanCatch: function () {
-              return this.bCanCatch;
-            },
-            setCanCatch: function (val) {
-              this.bCanCatch = val;
-            },
-
-            time: 0,
-            getTime: function() {
-              return this.time;
-            },
-            setTime: function(val) {
-              this.time      = val;
-            },
-
-            catchTime: 0,
-            getCatchTime: function () {
-              return this.catchTime;
-            },
-            setCatchTime: function (val) {
-              this.catchTime = val;
-            },
-
-            curUrl: '',
-            getCurUrl: function () {
-              return this.curUrl;
-            },
-            setCurUrl: function (val) {
-              this.curUrl    = val;
-            },
-
-            nextUrl: '',
-            getNextUrl: function () {
-              return this.nextUrl;
-            },
-            setNextUrl: function (val) {
-              this.nextUrl   = val;
-            },
-
-            trapUrl: '',
-            getTrapUrl: function () {
-              return this.trapUrl;
-            },
-            setTrapUrl: function (val) {
-              this.trapUrl   = val;
-            },
-
-            bTrapSprung: false,
-            getTrapSprung: function () {
-              return this.bTrapSprung;
-            },
-            setTrapSprung: function (val){
-              this.bTrapSprung = val;
-            },
-
-            nPotentialCaptured: 0,
-            getPotentialCaptured: function () {
-              return this.nPotentialCaptured;
-            },
-            setPotentialCaptured: function (val) {
-              this.nPotentialCaptured = val;
-            }
-        },
-        bathroom: {
-            stillUrl: 'img/stills/BATHROOM_1.JPG',
-
-            bCanCatch: true,
-            getCanCatch: function () {
-              return this.bCanCatch;
-            },
-            setCanCatch: function (val) {
-              this.bCanCatch = val;
-            },
-
-            time: 0,
-            getTime: function() {
-              return this.time;
-            },
-            setTime: function(val) {
-              this.time      = val;
-            },
-
-            catchTime: 0,
-            getCatchTime: function () {
-              return this.catchTime;
-            },
-            setCatchTime: function (val) {
-              this.catchTime = val;
-            },
-
-            curUrl: '',
-            getCurUrl: function () {
-              return this.curUrl;
-            },
-            setCurUrl: function (val) {
-              this.curUrl    = val;
-            },
-
-            nextUrl: '',
-            getNextUrl: function () {
-              return this.nextUrl;
-            },
-            setNextUrl: function (val) {
-              this.nextUrl   = val;
-            },
-
-            trapUrl: '',
-            getTrapUrl: function () {
-              return this.trapUrl;
-            },
-            setTrapUrl: function (val) {
-              this.trapUrl   = val;
-            },
-
-            bTrapSprung: false,
-            getTrapSprung: function () {
-              return this.bTrapSprung;
-            },
-            setTrapSprung: function (val){
-              this.bTrapSprung = val;
-            },
-
-            nPotentialCaptured: 0,
-            getPotentialCaptured: function () {
-              return this.nPotentialCaptured;
-            },
-            setPotentialCaptured: function (val) {
-              this.nPotentialCaptured = val;
-            }
-        },
-        bedroom: {
-            stillUrl: 'img/stills/BEDROOM_1.JPG',
-
-            bCanCatch: true,
-            getCanCatch: function () {
-              return this.bCanCatch;
-            },
-            setCanCatch: function (val) {
-              this.bCanCatch = val;
-            },
-
-            time: 0,
-            getTime: function() {
-              return this.time;
-            },
-            setTime: function(val) {
-              this.time      = val;
-            },
-
-            catchTime: 0,
-            getCatchTime: function () {
-              return this.catchTime;
-            },
-            setCatchTime: function (val) {
-              this.catchTime = val;
-            },
-
-            curUrl: '',
-            getCurUrl: function () {
-              return this.curUrl;
-            },
-            setCurUrl: function (val) {
-              this.curUrl    = val;
-            },
-
-            nextUrl: '',
-            getNextUrl: function () {
-              return this.nextUrl;
-            },
-            setNextUrl: function (val) {
-              this.nextUrl   = val;
-            },
-
-            trapUrl: '',
-            getTrapUrl: function () {
-              return this.trapUrl;
-            },
-            setTrapUrl: function (val) {
-              this.trapUrl   = val;
-            },
-
-            bTrapSprung: false,
-            getTrapSprung: function () {
-              return this.bTrapSprung;
-            },
-            setTrapSprung: function (val){
-              this.bTrapSprung = val;
-          },
-
-          nPotentialCaptured: 0,
-          getPotentialCaptured: function () {
-            return this.nPotentialCaptured;
-          },
-          setPotentialCaptured: function (val) {
-            this.nPotentialCaptured = val;
-          }
-        },
-        hallTwo: {
-            stillUrl: 'img/stills/HALL-TWO_1.JPG',
-
-            bCanCatch: true,
-            getCanCatch: function () {
-              return this.bCanCatch;
-            },
-            setCanCatch: function (val) {
-              this.bCanCatch = val;
-            },
-
-            time: 0,
-            getTime: function() {
-              return this.time;
-            },
-            setTime: function(val) {
-              this.time      = val;
-            },
-
-            catchTime: 0,
-            getCatchTime: function () {
-              return this.catchTime;
-            },
-            setCatchTime: function (val) {
-              this.catchTime = val;
-            },
-
-            curUrl: '',
-            getCurUrl: function () {
-              return this.curUrl;
-            },
-            setCurUrl: function (val) {
-              this.curUrl    = val;
-            },
-
-            nextUrl: '',
-            getNextUrl: function () {
-              return this.nextUrl;
-            },
-            setNextUrl: function (val) {
-              this.nextUrl   = val;
-            },
-
-            trapUrl: '',
-            getTrapUrl: function () {
-              return this.trapUrl;
-            },
-            setTrapUrl: function (val) {
-              this.trapUrl   = val;
-            },
-
-            bTrapSprung: false,
-            getTrapSprung: function () {
-              return this.bTrapSprung;
-            },
-            setTrapSprung: function (val){
-              this.bTrapSprung = val;
-            },
-
-            nPotentialCaptured: 0,
-            getPotentialCaptured: function () {
-              return this.nPotentialCaptured;
-            },
-            setPotentialCaptured: function (val) {
-              this.nPotentialCaptured = val;
-            }
-        },
-        driveway: {
-            stillUrl: 'img/stills/Driveway_1.JPG',
-
-          bCanCatch: true,
-          getCanCatch: function () {
-            return this.bCanCatch;
-          },
-          setCanCatch: function (val) {
-            this.bCanCatch = val;
-          },
-
-          time: 0,
-          getTime: function() {
-            return this.time;
-          },
-          setTime: function(val) {
-            this.time      = val;
-          },
-
-          catchTime: 0,
-          getCatchTime: function () {
-            return this.catchTime;
-          },
-          setCatchTime: function (val) {
-            this.catchTime = val;
-          },
-
-          curUrl: '',
-          getCurUrl: function () {
-            return this.curUrl;
-          },
-          setCurUrl: function (val) {
-            this.curUrl    = val;
-          },
-
-          nextUrl: '',
-          getNextUrl: function () {
-            return this.nextUrl;
-          },
-          setNextUrl: function (val) {
-            this.nextUrl   = val;
-          },
-
-          trapUrl: '',
-          getTrapUrl: function () {
-            return this.trapUrl;
-          },
-          setTrapUrl: function (val) {
-            this.trapUrl   = val;
-          },
-
-          bTrapSprung: false,
-          getTrapSprung: function () {
-            return this.bTrapSprung;
-          },
-          setTrapSprung: function (val){
-            this.bTrapSprung = val;
-          }
-        },
-
-        nPotentialCaptured: 0,
-        getPotentialCaptured: function () {
-          return this.nPotentialCaptured;
-        },
-        setPotentialCaptured: function (val) {
-          this.nPotentialCaptured = val;
-        }
-    };
 
     /**
      * Obj to get / set current values for the game.
@@ -1194,93 +665,93 @@
           current.setJustSwitched(true);
           switch (this.id) {
             case 'Hall-1':
-                  current.setCam             ('hallOne'                           );
-                  current.setCurUrl           (room.hallOne.getCurUrl           ());
-                  current.setNextUrl          (room.hallOne.getNextUrl          ());
-                  current.setTrapUrl          (room.hallOne.getTrapUrl          ());
-                  current.setCatchTime        (room.hallOne.getCatchTime        ());
-                  current.setCanCatch         (room.hallOne.getCanCatch         ());
-                  current.setUrlChangeTime    (room.hallOne.getTime             ());
-                  current.setStillUrl         (room.hallOne.stillUrl              );
-                  current.setTrapSprung       (room.hallOne.getTrapSprung       ());
-                  current.setPotentialCaptured(room.hallOne.getPotentialCaptured());
-                  break;
+                  current.setCam              ('hallOne'                     )      ;
+                  current.setCurUrl           (hallOne.getCurUrl           ())      ;
+                  current.setNextUrl          (hallOne.getNextUrl          ())      ;
+                  current.setTrapUrl          (hallOne.getTrapUrl          ())      ;
+                  current.setCatchTime        (hallOne.getCatchTime        ())      ;
+                  current.setCanCatch         (hallOne.getCanCatch         ())      ;
+                  current.setUrlChangeTime    (hallOne.getTime             ())      ;
+                  current.setStillUrl         (hallOne.stillUrl              )      ;
+                  current.setTrapSprung       (hallOne.getTrapSprung       ())      ;
+                  current.setPotentialCaptured(hallOne.getPotentialCaptured())      ;
+                  break                                                             ;
               case 'Kitchen':
-                  current.setCam              ('kitchen'                          );
-                  current.setCurUrl           (room.kitchen.getCurUrl           ());
-                  current.setNextUrl          (room.kitchen.getNextUrl          ());
-                  current.setTrapUrl          (room.kitchen.getTrapUrl          ());
-                  current.setCanCatch         (room.kitchen.getCanCatch         ());
-                  current.setUrlChangeTime    (room.kitchen.getTime             ());
-                  current.setStillUrl         (room.kitchen.stillUrl              );
-                  current.setTrapSprung       (room.kitchen.getTrapSprung       ());
-                  current.setPotentialCaptured(room.kitchen.getPotentialCaptured());
-                  break;
+                  current.setCam              ('kitchen'                     )      ;
+                  current.setCurUrl           (kitchen.getCurUrl           ())      ;
+                  current.setNextUrl          (kitchen.getNextUrl          ())      ;
+                  current.setTrapUrl          (kitchen.getTrapUrl          ())      ;
+                  current.setCanCatch         (kitchen.getCanCatch         ())      ;
+                  current.setUrlChangeTime    (kitchen.getTime             ())      ;
+                  current.setStillUrl         (kitchen.stillUrl              )      ;
+                  current.setTrapSprung       (kitchen.getTrapSprung       ())      ;
+                  current.setPotentialCaptured(kitchen.getPotentialCaptured())      ;
+                  break                                                             ;
               case 'Entry-Way':
-                  current.setCam              ('entryway'                          );
-                  current.setCurUrl           (room.entryway.getCurUrl           ());
-                  current.setNextUrl          (room.entryway.getNextUrl          ());
-                  current.setTrapUrl          (room.entryway.getTrapUrl          ());
-                  current.setCanCatch         (room.entryway.getCanCatch         ());
-                  current.setUrlChangeTime    (room.entryway.getTime             ());
-                  current.setStillUrl         (room.entryway.stillUrl              );
-                  current.setTrapSprung       (room.entryway.getTrapSprung       ());
-                  current.setPotentialCaptured(room.entryway.getPotentialCaptured());
-                  break;
+                  current.setCam              ('entryway'                     )     ;
+                  current.setCurUrl           (entryway.getCurUrl           ())     ;
+                  current.setNextUrl          (entryway.getNextUrl          ())     ;
+                  current.setTrapUrl          (entryway.getTrapUrl          ())     ;
+                  current.setCanCatch         (entryway.getCanCatch         ())     ;
+                  current.setUrlChangeTime    (entryway.getTime             ())     ;
+                  current.setStillUrl         (entryway.stillUrl              )     ;
+                  current.setTrapSprung       (entryway.getTrapSprung       ())     ;
+                  current.setPotentialCaptured(entryway.getPotentialCaptured())     ;
+                  break                                                             ;
               case 'Living-Room':
-                  current.setCam              ('livingroom'                          );
-                  current.setCurUrl           (room.livingRoom.getCurUrl           ());
-                  current.setNextUrl          (room.livingRoom.getNextUrl          ());
-                  current.setTrapUrl          (room.livingRoom.getTrapUrl          ());
-                  current.setCanCatch         (room.livingRoom.getCanCatch         ());
-                  current.setUrlChangeTime    (room.livingRoom.getTime               );
-                  current.setStillUrl         (room.livingRoom.stillUrl              );
-                  current.setTrapSprung       (room.livingRoom.getTrapSprung       ());
-                  current.setPotentialCaptured(room.livingRoom.getPotentialCaptured());
-                  break;
+                  current.setCam              ('livingroom'                     )   ;
+                  current.setCurUrl           (livingRoom.getCurUrl           ())   ;
+                  current.setNextUrl          (livingRoom.getNextUrl          ())   ;
+                  current.setTrapUrl          (livingRoom.getTrapUrl          ())   ;
+                  current.setCanCatch         (livingRoom.getCanCatch         ())   ;
+                  current.setUrlChangeTime    (livingRoom.getTime               )   ;
+                  current.setStillUrl         (livingRoom.stillUrl              )   ;
+                  current.setTrapSprung       (livingRoom.getTrapSprung       ())   ;
+                  current.setPotentialCaptured(livingRoom.getPotentialCaptured())   ;
+                  break                                                             ;
               case 'Bathroom':
-                  current.setCam              ('bathroom'                          );
-                  current.setCurUrl           (room.bathroom.getCurUrl           ());
-                  current.setNextUrl          (room.bathroom.getNextUrl          ());
-                  current.setTrapUrl          (room.bathroom.getTrapUrl          ());
-                  current.setCanCatch         (room.bathroom.getCanCatch         ());
-                  current.setUrlChangeTime    (room.bathroom.getTime             ());
-                  current.setStillUrl         (room.bathroom.stillUrl              );
-                  current.setTrapSprung       (room.bathroom.getTrapSprung       ());
-                  current.setPotentialCaptured(room.bathroom.getPotentialCaptured());
-                  break;
+                  current.setCam              ('bathroom'                     )     ;
+                  current.setCurUrl           (bathroom.getCurUrl           ())     ;
+                  current.setNextUrl          (bathroom.getNextUrl          ())     ;
+                  current.setTrapUrl          (bathroom.getTrapUrl          ())     ;
+                  current.setCanCatch         (bathroom.getCanCatch         ())     ;
+                  current.setUrlChangeTime    (bathroom.getTime             ())     ;
+                  current.setStillUrl         (bathroom.stillUrl              )     ;
+                  current.setTrapSprung       (bathroom.getTrapSprung       ())     ;
+                  current.setPotentialCaptured(bathroom.getPotentialCaptured())     ;
+                  break                                                             ;
               case 'Bedroom':
-                  current.setCam              ('bedroom'                          );
-                  current.setCurUrl           (room.bedroom.getCurUrl           ());
-                  current.setNextUrl          (room.bedroom.getNextUrl          ());
-                  current.setTrapUrl          (room.bedroom.getTrapUrl          ());
-                  current.setCanCatch         (room.bedroom.getCanCatch         ());
-                  current.setUrlChangeTime    (room.bedroom.getTime             ());
-                  current.setStillUrl         (room.bedroom.stillUrl              );
-                  current.setTrapSprung       (room.bedroom.getTrapSprung       ());
-                  current.setPotentialCaptured(room.bedroom.getPotentialCaptured());
-                  break;
+                  current.setCam              ('bedroom'                     )      ;
+                  current.setCurUrl           (bedroom.getCurUrl           ())      ;
+                  current.setNextUrl          (bedroom.getNextUrl          ())      ;
+                  current.setTrapUrl          (bedroom.getTrapUrl          ())      ;
+                  current.setCanCatch         (bedroom.getCanCatch         ())      ;
+                  current.setUrlChangeTime    (bedroom.getTime             ())      ;
+                  current.setStillUrl         (bedroom.stillUrl              )      ;
+                  current.setTrapSprung       (bedroom.getTrapSprung       ())      ;
+                  current.setPotentialCaptured(bedroom.getPotentialCaptured())      ;
+                  break                                                             ;
               case 'Hall-2':
-                  current.setCam              ('hallTwo'                          );
-                  current.setCurUrl           (room.hallTwo.getCurUrl           ());
-                  current.setNextUrl          (room.hallTwo.getNextUrl          ());
-                  current.setTrapUrl          (room.hallTwo.getTrapUrl          ());
-                  current.setCanCatch         (room.hallTwo.getCanCatch         ());
-                  current.setUrlChangeTime    (room.hallTwo.getTime             ());
-                  current.setStillUrl         (room.hallTwo.stillUrl              );
-                  current.setTrapSprung       (room.hallTwo.getTrapSprung       ());
-                  current.setPotentialCaptured(room.hallTwo.getPotentialCaptured());
-                  break;
+                  current.setCam              ('hallTwo'                     )      ;
+                  current.setCurUrl           (hallTwo.getCurUrl           ())      ;
+                  current.setNextUrl          (hallTwo.getNextUrl          ())      ;
+                  current.setTrapUrl          (hallTwo.getTrapUrl          ())      ;
+                  current.setCanCatch         (hallTwo.getCanCatch         ())      ;
+                  current.setUrlChangeTime    (hallTwo.getTime             ())      ;
+                  current.setStillUrl         (hallTwo.stillUrl              )      ;
+                  current.setTrapSprung       (hallTwo.getTrapSprung       ())      ;
+                  current.setPotentialCaptured(hallTwo.getPotentialCaptured())      ;
+                  break                                                             ;
               case 'Driveway':
-                  current.setCam              ('driveway'                          );
-                  current.setCurUrl           (room.driveway.getCurUrl           ());
-                  current.setNextUrl          (room.driveway.getNextUrl          ());
-                  current.setTrapUrl          (room.driveway.getTrapUrl          ());
-                  current.setCanCatch         (room.driveway.getCanCatch         ());
-                  current.setUrlChangeTime    (room.driveway.getTime             ());
-                  current.setStillUrl         (room.driveway.stillUrl              );
-                  current.setTrapSprung       (room.driveway.getTrapSprung       ());
-                  current.setPotentialCaptured(room.driveway.getPotentialCaptured());
+                  current.setCam              ('driveway'                     )     ;
+                  current.setCurUrl           (driveway.getCurUrl           ())     ;
+                  current.setNextUrl          (driveway.getNextUrl          ())     ;
+                  current.setTrapUrl          (driveway.getTrapUrl          ())     ;
+                  current.setCanCatch         (driveway.getCanCatch         ())     ;
+                  current.setUrlChangeTime    (driveway.getTime             ())     ;
+                  current.setStillUrl         (driveway.stillUrl              )     ;
+                  current.setTrapSprung       (driveway.getTrapSprung       ())     ;
+                  current.setPotentialCaptured(driveway.getPotentialCaptured())     ;
                   break;
           }
         createVideoSeries(current);
@@ -1340,7 +811,6 @@
      * If the value of property is not set here, it will be set to default values of the objRoom.
      */
     var eventsHallOne         = function eventsHallOne () {
-        var hall = room.hallOne;
         var r    = Object.create(objRoom);
 
         switch (current.getTime()) {
@@ -1355,37 +825,36 @@
                 r.nextUrl   = aTempLocal[0];
                 r.trapUrl   = aTempLocal[1];            
                 r.catchTime = 3;
-                buildState(hall, r);
+                buildState(hallOne, r);
               break;
             case 76:
                 r.curUrl = camHallOne.c1152221;
-                buildState(hall, r);
+                buildState(hallOne, r);
               break;
         }
     };
 
 
     var eventsKitchen = function eventsKitchen () {
-        var kitch = room.kitchen;
-        var r     = Object.create(objRoom);
+        var r = Object.create(objRoom);
 
         switch (current.getTime()){
          
-            case 4:
+            case 1:
                 //r.curUrl    = camKitchen.c1200431;
                 //r.trapUrl   = camKitchen.c1240632;
                 //r.catchTime = 83;
-                r.curUrl    = aTempLocal[0];
+                r.curUrl    = aTempLocal[1];
                 r.nextUrl   = aTempLocal[2];
-                r.trapUrl   = aTempLocal[1];
-                buildState(kitch, r);
+                r.trapUrl   = aTempLocal[2];
+                buildState(kitchen, r);
                 break;
             case 90:
                 r.curUrl = camKitchen.c1481231;
-                buildState(kitch, r);
+                buildState(kitchen, r);
             break;
             default:
-                buildState(kitch, r); 
+                buildState(kitchen, r); 
         }
     };
 
@@ -1539,28 +1008,28 @@
     var setTrapAsSprung = function setTrapAsSprung () {
       switch (current.getCam()){
         case 'hallOne':
-          room.hallOne   .setTrapSprung(true);
+          hallOne   .setTrapSprung(true);
           break;
         case 'kitchen':
-          room.kitchen   .setTrapSprung(true);
+          kitchen   .setTrapSprung(true);
           break;
         case 'entryway':
-          room.entryway  .setTrapSprung(true);
+          entryway  .setTrapSprung(true);
           break;
         case 'livingroom':
-          room.livingRoom.setTrapSprung(true);
+          livingRoom.setTrapSprung(true);
           break;
         case 'bathroom':
-          room.bathroom  .setTrapSprung(true);
+          bathroom  .setTrapSprung(true);
           break;
         case 'bedroom':
-          room.bedroom   .setTrapSprung(true);
+          bedroom   .setTrapSprung(true);
           break;
         case 'hallTwo':
-          room.hallTwo   .setTrapSprung(true);
+          hallTwo   .setTrapSprung(true);
           break;
         case 'driveway':
-          room.driveway  .setTrapSprung(true);
+          driveway  .setTrapSprung(true);
           break;
       }
     };
@@ -1680,14 +1149,14 @@
      * Sets Object.observe for each room in the game.
      */
     var updateVidSource = function updateVidSource () {
-      observeRoom(room.hallOne,    'hallOne'   );
-      observeRoom(room.kitchen,    'kitchen'   );
-      observeRoom(room.entryway,   'entryway'  );
-      observeRoom(room.livingRoom, 'livingroom');
-      observeRoom(room.bathroom,   'bathroom'  );
-      observeRoom(room.bedroom,    'bedroom'   );
-      observeRoom(room.hallTwo,    'hallTwo'   );
-      observeRoom(room.driveway,   'driveway'  );
+      observeRoom(hallOne,    'hallOne'   );
+      observeRoom(kitchen,    'kitchen'   );
+      observeRoom(entryway,   'entryway'  );
+      observeRoom(livingroom, 'livingroom');
+      observeRoom(bathroom,   'bathroom'  );
+      observeRoom(bedroom,    'bedroom'   );
+      observeRoom(hallTwo,    'hallTwo'   );
+      observeRoom(driveway,   'driveway'  );
     };
 
 
