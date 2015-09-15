@@ -148,7 +148,7 @@
             }
         },
         entryway: {
-            stillUrl: 'img/stills/Entry-Way-1.JPG',
+            stillUrl: 'img/stills/Entry-Way_1.JPG',
 
             bCanCatch: true,
             getCanCatch: function () {
@@ -1048,7 +1048,7 @@
         updateTimeOnScreen();
         calcCatchTime(current.getCatchTime());
         eventsHallOne();
-//        eventsKitchen();
+        eventsKitchen();
         //eventsEntry();
 //        eventsLiving();
 //        eventsBathroom();
@@ -1194,7 +1194,7 @@
                   current.setPotentialCaptured(room.driveway.getPotentialCaptured());
                   break;
           }
-        createVideoSeries(current.getCurUrl(), current.getNextUrl(), current.getTrapUrl(), current.getStillUrl());
+        createVideoSeries(current);
     };
 
    
@@ -1221,22 +1221,17 @@
      * @param (object} rObj   - Object w/ properties for urls, time, & trap within the room.
      */
     var buildState = function buildState (oRoom, rObj) {
-
-      clearState(oRoom);
-      oRoom.setCurUrl           (rObj.curUrl);
-      oRoom.setNextUrl          (rObj.nextUrl);
-      oRoom.setTrapUrl          (rObj.trapUrl);
-      oRoom.setCatchTime        (rObj.catchTime);
-      oRoom.setTime             (current.getTime());
-      oRoom.setTrapSprung       (rObj.trapSprung);
-      oRoom.setPotentialCaptured(rObj.potentialCaptured);
+        clearState(oRoom);
+        oRoom.setCurUrl           (rObj.curUrl);
+        oRoom.setNextUrl          (rObj.nextUrl);
+        oRoom.setTrapUrl          (rObj.trapUrl);
+        oRoom.setCatchTime        (rObj.catchTime);
+        oRoom.setTime             (current.getTime());
+        oRoom.setTrapSprung       (rObj.trapSprung);
+        oRoom.setPotentialCaptured(rObj.potentialCaptured);
     };
 
-
-    /**
-     * Template for passing values into each room
-     */
-    var objRoom = {
+    var objRoom =  {
         curUrl            : ''
       , nextUrl           : ''
       , trapUrl           : ''
@@ -1246,7 +1241,6 @@
       , potentialCaptured : 0
     };
 
-
     /**
      * Sets values of this particular room each time current.getTime() matches the case value.
      * Case is equal to the current number of seconds into the game.
@@ -1254,16 +1248,16 @@
      */
     var eventsHallOne         = function eventsHallOne () {
         var hall = room.hallOne;
-        var r    = objRoom;
+        var r    = Object.create(objRoom);
 
         switch (current.getTime()) {
           case 1:
-//             buildState(hall,
-//                 r.curUrl    = camHallOne.c21,
-//                 r.nextUrl   = '',
-//                 r.trapUrl   = camHallOne.c130422,
-//                 r.catchTime = 3
-//             );
+                //r.curUrl    = camHallOne.c21    ;
+                //r.trapUrl   = camHallOne.c130422;
+                //r.catchTime = 3                 ;
+                //console.log(r)                  ;
+         
+              // ONLY USE THESE WHEN TESTING OFFLINE
                 r.curUrl    = aTempLocal[2];
                 r.nextUrl   = aTempLocal[0];
                 r.trapUrl   = aTempLocal[1];            
@@ -1277,98 +1271,121 @@
         }
     };
 
-    Finish converting these to new buildstate
+
     var eventsKitchen = function eventsKitchen () {
         var kitch = room.kitchen;
-        var r = objRoom;
+        var r     = Object.create(objRoom);
 
         switch (current.getTime()){
+         
             case 81:
-                r.curUrl    = camKitchen.c1200431;
-                r.trapUrl   = camKitchen.c1240632;
-                r.catchTime = 83;
+                //r.curUrl    = camKitchen.c1200431;
+                //r.trapUrl   = camKitchen.c1240632;
+                //r.catchTime = 83;
+                r.curUrl    = aTempLocal[0];
+                r.nextUrl   = aTempLocal[2];
+                r.trapUrl   = aTempLocal[1];
                 buildState(kitch, r);
                 break;
             case 90:
                 r.curUrl = camKitchen.c1481231;
                 buildState(kitch, r);
             break;
-          default:
-                buildState(kitch, r);
+            default:
+                //video.poster(room.kitchen.still);
+                //displayStill();
+                buildState(kitch, r); // DOES NOT WORK
         }
     };
 
-    // TODO: Need timestamps
-    var eventsEntry = function eventsEntry () {
-        var entry = room.entryway;
-        switch (current.getTime()){
-          default:
-              buildState(entry, null);
-        }
-    };
+    //// TODO: Need timestamps
+    //var eventsEntry = function eventsEntry () {
+    //    var entry = room.entryway;
+    //    switch (current.getTime()){
+    //      default:
+    //          buildState(entry, null);
+    //    }
+    //};
 
-    var eventsLiving = function eventsLiving () {
-        var living = room.livingRoom;
-        switch(current.getTime()) {
-          case 60:
-              buildState(living, camLvingRoom.c1572241, null, null);
-              break;
-          case 117:
-              //
-            break;
-          default:
-            buildState(living, null);
-        }
-    };
+    //var eventsLiving = function eventsLiving () {
+    //    var living = room.livingRoom;
+    //    //var r      = new objRoom();
+    //    switch(current.getTime()) {
+    //        case 60:
+    //            r.curUrl = camLivingRoom.c1572241;
+    //            buildState(living, r);
+    //          break;
+    //      case 117:
+    //          //
+    //        break;
+    //      default:
+    //        buildState(living, r);
+    //    }
+    //};
 
-    var eventsBathroom       = function eventsBathroom () {
-        var bath = room.bathroom;
-        switch (current.getTime()) {
-            case 18:
-              buildState(bath, camBathroom.c180291, null, null, null);
-              break;
-            case 37:
-              buildState(bath, camBathroom.c352291, null,  camBathroom.c431292, 43);
-              break;
-            case 48:
-              buildState(bath, camBathroom.c500291, null, camBathroom.c430249b, 49);
-              break;
-          default:  // Only needed if the room does not have an event occurring as soon as the game starts
-              buildState(bath, null);
-        }
-    };
+    //var eventsBathroom       = function eventsBathroom () {
+    //    var bath = room.bathroom;
+    //    //var r    = new objRoom();
+    //    switch (current.getTime()) {
+    //        case 18:
+    //            r.curUrl = camBathroom.c180291;
+    //            buildState(bath, r);
+    //          break;
+    //        case 37:
+    //            r.curUrl    = camBathroom.c352291;
+    //            r.trapUrl   = camBathroom.c431292;
+    //            r.catchTime = 43;
+    //            buildState(bath, r);
+    //          break;
+    //        case 48:
+    //            r.curUrl    = camBathroom.c500291;
+    //            r.trapUrl   = camBathroom.c430249b;
+    //            r.catchTime = 49;
+    //            buildState(bath, r);
+    //          break;
+    //      default:  // Only needed if the room does not have an event occurring as soon as the game starts. Used to be (bath, null);
+    //          buildState(bath, r);
+    //    }
+    //};
 
-    var eventsBedroom         = function eventsBedroom () {
-        var br = room.bedroom;
-        switch (current.getTime()) {
-          case 1:
-            buildState(br, camBedroom.c81,    null, camBedroom.c352482, 34);
-            break;
-          case 54:
-            buildState(br, camBedroom.c540281, null, null, null);
-            break;
-          case 72: // This time is a guess. See the spreadsheet
-            buildState(br, /* Missing video clip */ null, null, null);
-            break;
-        }
-    };
+    //var eventsBedroom         = function eventsBedroom () {
+    //    var br = room.bedroom;
+    //    //var r  = new objRoom();
+    //    switch (current.getTime()) {
+    //        case 1:
+    //            r.curUrl    = camBedroom.c81;
+    //            r.trapUrl   = camBedroom.c352482;
+    //            r.catchTime = 34;
+    //            buildState(br, r);
+    //        break;
+    //        case 54:
+    //            r.curUrl = camBedroom.c540281;
+    //            buildState(br, r);
+    //        break;
+    //      case 72: // This time is a guess. See the spreadsheet
+    //        buildState(br, /* Missing video clip */ null, null, null);
+    //        break;
+    //    }
+    //};
 
-    var eventshallTwo = function eventsHallTwo () {
-        var hall = room.hallTwo;
-        switch (current.getTime()) {
+    //var eventshallTwo = function eventsHallTwo () {
+    //    var hall = room.hallTwo;
+    //    //var r    = new objRoom();
+    //    switch (current.getTime()) {
 
-          default:
-            buildState(hall, null);
-        }
-    };
+    //      default:
+    //        buildState(hall, r);
+    //    }
+    //};
 
-    var eventsDriveway = function eventsDriveway () {
-        var drive = room.driveway;
-        switch(current.getTime()) {
-          default:
-            buildState(drive, null);
-        }
-    };
+    //var eventsDriveway = function eventsDriveway () {
+    //    var drive = room.driveway;
+    //    //var r     = new objRoom();
+    //    switch(current.getTime()) {
+    //      default:
+    //        buildState(drive, r);
+    //    }
+    //};
 
 
     /**
@@ -1380,34 +1397,33 @@
      * @param {string} [sTrapUrl]    - Path to URL w/ trap video.
      * @param {string}  sStillUrl    - Path to URL w/ poster image.
      */
-    var createVideoSeries = function createVideoSeries (sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
-
-        /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
-         * and returns to that same room before a new clip is set to begin */
-        //TODO: This may have to be set to check if it is '' as well
-         if (sCurVidUrl ===  null || current.getTrapSprung() === true) {
-          video.poster(sStillUrl);
+    //var createVideoSeries = function createVideoSeries(sCurVidUrl, sNextVidUrl, sTrapUrl, sStillUrl) {
+        var createVideoSeries = function createVideoSeries(currentObj) {
+    
+       /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
+        * and returns to that same room before a new clip is set to begin */
+       if (currentObj.getCurUrl() === null || currentObj.getCurUrl() === '' || currentObj.getTrapSprung() === true) {  
+          video.poster(currentObj.getStillUrl());
           displayStill();
           return;
         }
 
         var hasPlayed = false;
-        video.poster(sStillUrl);
-        playVideo(sCurVidUrl);
+        video.poster(currentObj.getStillUrl());
+        playVideo(currentObj.getCurUrl());
 
-         // Did not catch / no chance to catch....so play next video
+        // Did not catch / no chance to catch....so play next video
         video.on('ended', function() {
             if (hasPlayed === false) {
-                if (sNextVidUrl) {
-                    playVideo(sNextVidUrl);
-
+                if (currentObj.getNextUrl()) {
+                    playVideo(currentObj.getNextUrl());
                 } else {
                     displayStill();
                 }
             }
 
             // Video has already played, so use a still
-            hasPlayed           = true;
+            hasPlayed = true;
             video.on('ended', function () {
                 displayStill();
             });
