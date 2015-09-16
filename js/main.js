@@ -700,14 +700,14 @@
                   break                                                             ;
               case 'Living-Room':
                   current.setCam              ('livingroom'                     )   ;
-                  current.setCurUrl           (livingRoom.getCurUrl           ())   ;
-                  current.setNextUrl          (livingRoom.getNextUrl          ())   ;
-                  current.setTrapUrl          (livingRoom.getTrapUrl          ())   ;
-                  current.setCanCatch         (livingRoom.getCanCatch         ())   ;
-                  current.setUrlChangeTime    (livingRoom.getTime               )   ;
-                  current.setStillUrl         (livingRoom.stillUrl              )   ;
-                  current.setTrapSprung       (livingRoom.getTrapSprung       ())   ;
-                  current.setPotentialCaptured(livingRoom.getPotentialCaptured())   ;
+                  current.setCurUrl           (livingroom.getCurUrl           ())   ;
+                  current.setNextUrl          (livingroom.getNextUrl          ())   ;
+                  current.setTrapUrl          (livingroom.getTrapUrl          ())   ;
+                  current.setCanCatch         (livingroom.getCanCatch         ())   ;
+                  current.setUrlChangeTime    (livingroom.getTime               )   ;
+                  current.setStillUrl         (livingroom.stillUrl              )   ;
+                  current.setTrapSprung       (livingroom.getTrapSprung       ())   ;
+                  current.setPotentialCaptured(livingroom.getPotentialCaptured())   ;
                   break                                                             ;
               case 'Bathroom':
                   current.setCam              ('bathroom'                     )     ;
@@ -782,12 +782,13 @@
      */
     var buildState = function buildState (oRoom, rObj) {
         clearState(oRoom);
-        oRoom.setCurUrl           (rObj.curUrl);
-        oRoom.setNextUrl          (rObj.nextUrl);
-        oRoom.setTrapUrl          (rObj.trapUrl);
-        oRoom.setCatchTime        (rObj.catchTime);
-        oRoom.setTime             (current.getTime());
-        oRoom.setTrapSprung       (rObj.trapSprung);
+
+        oRoom.setCurUrl           (rObj.curUrl           );
+        oRoom.setNextUrl          (rObj.nextUrl          );
+        oRoom.setTrapUrl          (rObj.trapUrl          );
+        oRoom.setCatchTime        (rObj.catchTime        );
+        oRoom.setTime             (current.getTime()     );
+        oRoom.setTrapSprung       (rObj.trapSprung       );
         oRoom.setPotentialCaptured(rObj.potentialCaptured);
     };
 
@@ -820,11 +821,12 @@
                 //r.catchTime = 3                 ;
                 //console.log(r)                  ;
          
-              // ONLY USE THESE WHEN TESTING OFFLINE
+                // ONLY USE THESE WHEN TESTING OFFLINE
                 r.curUrl    = aTempLocal[2];
                 r.nextUrl   = aTempLocal[0];
                 r.trapUrl   = aTempLocal[1];            
-                r.catchTime = 3;
+                r.catchTime = 3            ;
+
                 buildState(hallOne, r);
               break;
             case 76:
@@ -960,7 +962,7 @@
      var createVideoSeries = function createVideoSeries() {
     
        /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
-        * and returns to that same room before a new clip is set to begin */
+        * and returns to that same room before a new clip is set to begin.                       */
        if (current.getCurUrl() === null || current.getCurUrl() === '' || current.getTrapSprung() === true) {  
           video.poster(current.getStillUrl());
           displayStill();
