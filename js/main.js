@@ -1124,30 +1124,40 @@
     var setTrapAsSprung = function setTrapAsSprung () {
       switch (current.getCam()){
         case 'hallOne':
-          hallOne   .setTrapSprung(true);
-          break;
+            hallOne   .setTrapSprung(true);
+            break;
         case 'kitchen':
-          kitchen   .setTrapSprung(true);
-          break;
+            kitchen   .setTrapSprung(true);
+            break;                          
         case 'entryway':
-          entryway  .setTrapSprung(true);
-          break;
+            entryway  .setTrapSprung(true);
+            break;
         case 'livingroom':
-          livingRoom.setTrapSprung(true);
-          break;
+            livingroom.setTrapSprung(true);
+            break;
         case 'bathroom':
-          bathroom  .setTrapSprung(true);
-          break;
+            bathroom  .setTrapSprung(true);
+            break;
         case 'bedroom':
-          bedroom   .setTrapSprung(true);
-          break;
+            bedroom   .setTrapSprung(true);
+            break;
         case 'hallTwo':
-          hallTwo   .setTrapSprung(true);
-          break;
+            hallTwo   .setTrapSprung(true);
+        break;                          
         case 'driveway':
-          driveway  .setTrapSprung(true);
-          break;
+            driveway  .setTrapSprung(true);
+            break;
       }
+    };
+
+    /**
+     * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
+     * TODO: Need to make this audio loop
+     */
+    var displayStill          = function displayStill () {
+        video.src(video.src);
+        audioElem.src = aAudioClips.crickets;
+        audioElem.play();
     };
 
 
@@ -1182,24 +1192,7 @@
       });
     };
 
-
-    /**
-     * Have a buffer 1 second before / after catchTime to allow users to try to catch a character.
-     * If current.getTime() is between this buffer, then allow user to set the trap.
-     * @param {number} nCatchTime - When can the user trigger the trap?
-     */
-    var calcCatchTime         = function calcCatchTime (nCatchTime) {
-        var before = nCatchTime - 1;
-        var after  = nCatchTime + 1;
-  
-        if (current.getTime() > before && current.getTime() < after) {
-            console.log('can trigger trap');
-            toggleTrapListener(true);
-        }
-    };
-
-
-    /**
+        /**
      * Toggles event listener for the trap button on / off
      * @param {bool} bShouldListen - If true, adds listener. If false, removes listener
      */
@@ -1214,13 +1207,18 @@
 
 
     /**
-     * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
-     * TODO: Need to make this audio loop
+     * Have a buffer 1 second before / after catchTime to allow users to try to catch a character.
+     * If current.getTime() is between this buffer, then allow user to set the trap.
+     * @param {number} nCatchTime - When can the user trigger the trap?
      */
-    var displayStill          = function displayStill () {
-        video.src(video.src);
-        audioElem.src = aAudioClips.crickets;
-        audioElem.play();
+    var calcCatchTime         = function calcCatchTime (nCatchTime) {
+        var before = nCatchTime - 1;
+        var after  = nCatchTime + 1;
+  
+        if (current.getTime() > before && current.getTime() < after) {
+            console.log('can trigger trap');
+            toggleTrapListener(true);
+        }
     };
 
 
@@ -1261,7 +1259,7 @@
     };
 
 
-        /**
+    /**
      * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
      * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
      * then that new URL is passed into the video player & played.
