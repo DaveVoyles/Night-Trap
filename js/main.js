@@ -16,7 +16,7 @@
      * @param {number} nPotentialCaptured - How many augers can be caught in the current scene?
      */
     var room = function(sRoom, stillUrl, bCanCatch, time, catchTime, curUrl, nextUrl, trapUrl, bTrapSprung, nPotentialCaptured) {
-        var _sRoom              = sRoom              || ''   ;
+        var _sRoomName          = sRoom              || ''   ;
         var _stillurl           = stillUrl           || ''   ;
         var _bCanCatch          = bCanCatch          || false;
         var _time               = time               || 0    ;
@@ -29,10 +29,10 @@
 
         var roomPrototype = {
             getRoomName: function() {
-                return _sRoom;
+                return _sRoomName;
             },
             setRoomName: function(val) {
-                _sRoom = val;
+                _sRoomName = val;
             },
 
             getStillUrl: function() {
@@ -130,11 +130,10 @@
         trapUrl           : ''  ,
         bTrapSprung       : true,
         nPotentialCaptured: 0   ,
-        bJustSwitched     : false
+        bJustSwitched     : false,
     };
 
 
-    //TODO: Change this name to 'current'
     // http://eclipsesource.com/blogs/2013/07/05/private-members-in-javascript/
     current = {
         getCam: function() {
@@ -867,13 +866,13 @@
      * Gets called each time buildState() is used.
      */
     var clearState = function clearState (oRoom) {
-        oRoom.setCurUrl('')          ;
-        oRoom.setNextUrl('')         ;
-        oRoom.setTrapUrl('')         ;
-        oRoom.setCatchTime(0)        ;
-        oRoom.setTime(0)             ;
-        oRoom.setTrapSprung(false)   ;
-        oRoom.setPotentialCaptured(0);
+        oRoom.setCurUrl           ('')   ;
+        oRoom.setNextUrl          ('')   ;
+        oRoom.setTrapUrl          ('')   ;
+        oRoom.setCatchTime        (0)    ;
+        oRoom.setTime             (0)    ;
+        oRoom.setTrapSprung       (false);
+        oRoom.setPotentialCaptured(0)    ;
     };
 
 
@@ -883,24 +882,25 @@
      * @param {object} oRoom  - Reference to the room we should be setting values for.
      * @param (object} rObj   - Object w/ properties for urls, time, & trap within the room.
      */
-    var buildState = function buildState (oRoom, rObj) {
+    var buildState = function buildState (oRoom, roomTemp) {
         clearState(oRoom);
 
-        oRoom.setCurUrl           (rObj.curUrl           );
-        oRoom.setNextUrl          (rObj.nextUrl          );
-        oRoom.setTrapUrl          (rObj.trapUrl          );
-        oRoom.setCatchTime        (rObj.catchTime        );
-        oRoom.setTime             (current.getTime()     );
-        oRoom.setTrapSprung       (rObj.trapSprung       );
-        oRoom.setPotentialCaptured(rObj.potentialCaptured);
+        oRoom.setCurUrl           (roomTemp.curUrl           );
+        oRoom.setNextUrl          (roomTemp.nextUrl          );
+        oRoom.setTrapUrl          (roomTemp.trapUrl          );
+        oRoom.setCatchTime        (roomTemp.catchTime        );
+        oRoom.setTime             (current.getTime()         );
+        oRoom.setTrapSprung       (roomTemp.trapSprung       );
+        oRoom.setPotentialCaptured(roomTemp.potentialCaptured);
     };
+
 
     /**
      * Template used by events functions to store current values for each room. This is where the video player gets the url from.
      * A new instance is created for each room, with: Object.create(objRoom);
      * Object.observe uses this to detect value changes, then changes video.src() on the fly
      */
-    var objRoom =  {
+    var roomTemplate =  {
         curUrl            : ''
       , nextUrl           : ''
       , trapUrl           : ''
@@ -908,16 +908,17 @@
       , setTime           : 0
       , trapSprung        : false
       , potentialCaptured : 0
+      , sRoomName         : ''
     };
 
-    var hallOneObj = Object.create(objRoom);
-    var kitchenObj = Object.create(objRoom);
-    var entryObj   = Object.create(objRoom);
-    var livingObj  = Object.create(objRoom);
-    var bathObj    = Object.create(objRoom);
-    var bedObj     = Object.create(objRoom);
-    var hallTwoObj = Object.create(objRoom);
-    var driveObj   = Object.create(objRoom);
+    var hallOneTemplate = Object.create(roomTemplate);
+    var kitchenTemplate = Object.create(roomTemplate);
+    var entryTemplate   = Object.create(roomTemplate);
+    var livingTemplate  = Object.create(roomTemplate);
+    var bathTemplate    = Object.create(roomTemplate);
+    var bedTemplate     = Object.create(roomTemplate);
+    var hallTwoTemplate = Object.create(roomTemplate);
+    var driveTemplate   = Object.create(roomTemplate);
 
 
     /**
@@ -935,44 +936,44 @@
                 //console.log(r)                  ;
          
                 // ONLY USE THESE WHEN TESTING OFFLINE
-                hallOneObj.curUrl    = aTempLocal[2];
-                hallOneObj.nextUrl   = aTempLocal[0];
-                hallOneObj.trapUrl   = aTempLocal[1];            
-                hallOneObj.catchTime = 3            ;
+                hallOneTemplate.curUrl    = aTempLocal[0];
+                hallOneTemplate.nextUrl   = aTempLocal[1];
+                hallOneTemplate.trapUrl   = aTempLocal[2];            
+                hallOneTemplate.catchTime = 3            ;
               break;
             case 4:
-                hallOneObj.curUrl    = aTempLocal[1];
-                hallOneObj.nextUrl   = aTempLocal[2];
-                hallOneObj.trapUrl   = aTempLocal[0];
+                hallOneTemplate.curUrl    = aTempLocal[1];
+                hallOneTemplate.nextUrl   = aTempLocal[2];
+                hallOneTemplate.trapUrl   = aTempLocal[0];
 
               break;
         }
-        buildState(hallOne, hallOneObj);
+        hallOneTemplate.sRoomName = 'hallOne';
+        buildState(hallOne, hallOneTemplate);
     };
 
 
     var eventsKitchen = function eventsKitchen () {
-        var r = Object.create(objRoom);
-
-        switch (current.getTime()){
-         
+        switch (current.getTime()){     
             case 3:
                 //r.curUrl    = camKitchen.c1200431;
                 //r.trapUrl   = camKitchen.c1240632;
                 //r.catchTime = 83;
-                r.curUrl    = aTempLocal[1];
-                r.nextUrl   = aTempLocal[2];
-                r.trapUrl   = aTempLocal[2];
-                buildState(kitchen, r);
+                kitchenTemplate.curUrl    = aTempLocal[1];
+                kitchenTemplate.nextUrl   = aTempLocal[2];
+                kitchenTemplate.trapUrl   = aTempLocal[2];
+
                 break;
             case 90:
-                r.curUrl = camKitchen.c1481231;
-                buildState(kitchen, r);
-            break;
+                kitchen.curUrl = camKitchen.c1481231;
+                break;
             default:
-                //buildState(kitchen, r);  //TODO: This breaks something. Need to find a new default.
+                //buildState(kitchen, kitchenObj);//TODO: This breaks something. Need to find a new default.
         }
+        kitchenTemplate.sRoomName = 'kitchen';
+        buildState(kitchen, kitchenTemplate);
     };
+
 
     //// TODO: Need timestamps
     //var eventsEntry = function eventsEntry () {
@@ -1065,6 +1066,17 @@
 
 
     /**
+     * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
+     * TODO: Need to make this audio loop
+     */
+    var displayStill          = function displayStill () {
+        video.src(video.src);
+        audioElem.src = aAudioClips.crickets;
+        audioElem.play();
+    };
+
+
+    /**
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
@@ -1150,16 +1162,6 @@
       }
     };
 
-    /**
-     * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
-     * TODO: Need to make this audio loop
-     */
-    var displayStill          = function displayStill () {
-        video.src(video.src);
-        audioElem.src = aAudioClips.crickets;
-        audioElem.play();
-    };
-
 
     /**
      * Sets the poster (background) between clips to the room you are currently viewing.
@@ -1192,7 +1194,7 @@
       });
     };
 
-        /**
+    /**
      * Toggles event listener for the trap button on / off
      * @param {bool} bShouldListen - If true, adds listener. If false, removes listener
      */
@@ -1266,13 +1268,16 @@
      * @param {object} - Room we are operating on.
      * @param {string} - Name of the room.
      */
-    var observeRoom = function observeRoom(oRoom, sRoomName) {
-        Object.observe(oRoom, function (changes) {
+    var observeRoom = function observeRoom(roomTemp) {
+        Object.observe(roomTemp, function (changes) {
             if (changes[0] !== undefined) {
-                var oldUrl = changes[0].oldValue;
-                var newUrl = changes[0].object.curUrl;
-                if (oldUrl !== newUrl && current.getCam() === sRoomName) {
-                    playVideo(newUrl);
+                var oldUrl              = changes[0].oldValue;
+                var curUrl              = changes[0].object.curUrl;
+                var watchingCurrentRoom = current.getCam() === roomTemp.sRoomName;
+                var curUrlHasChanged    = curUrl !== oldUrl;
+
+                if (curUrlHasChanged && watchingCurrentRoom) {
+                    playVideo(curUrl);
                 }
             }
         });
@@ -1283,14 +1288,14 @@
      * Sets Object.observe for each room in the game.
      */
     var updateVidSource = function updateVidSource() {
-      observeRoom(hallOneObj, 'hallOne'   );
-      observeRoom(kitchen,    'kitchen'   );
-      observeRoom(entryway,   'entryway'  );
-      observeRoom(livingroom, 'livingroom');
-      observeRoom(bathroom,   'bathroom'  );
-      observeRoom(bedroom,    'bedroom'   );
-      observeRoom(hallTwo,    'hallTwo'   );
-      observeRoom(driveway,   'driveway'  );
+        var observeHallOne = new observeRoom(hallOneTemplate  );
+        var observeKitchen = new observeRoom(kitchenTemplate  );
+        var observeEntry   = new observeRoom(entryTemplate    );
+        var observeLiving  = new observeRoom(livingTemplate   );
+        var observeBath    = new observeRoom(bathTemplate     );
+        var observeBed     = new observeRoom(bedTemplate      );
+        var observeHallTwo = new observeRoom(hallTwoTemplate  );
+        var observeDrive   = new observeRoom(driveTemplate    );
     };
 
 
