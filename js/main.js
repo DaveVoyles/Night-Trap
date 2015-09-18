@@ -111,7 +111,7 @@
     var driveway   = room('driveway'  , 'img/stills/DRIVEWAY_1.jpg' );
 
 
-    var cur = {
+    var current = {
         cam: {
            camHallOne   : 'hallOne'
           ,camKitchen   : 'kitchen'
@@ -137,7 +137,7 @@
 
     //TODO: Change this name to 'current'
     // http://eclipsesource.com/blogs/2013/07/05/private-members-in-javascript/
-    cur.prototype = {
+    current = {
         getCam: function() {
             return this.cam;
         },
@@ -179,6 +179,12 @@
         },
         setNextUrl: function (val) {
             this.nextUrl = val;
+        },
+        getStillUrl: function() {
+            return this.stillUrl;
+        },
+        setStillUrl: function(val) {
+            this.stillUrl = val;
         },
         getTrapUrl: function () {
             return this.trapUrl;
@@ -222,112 +228,112 @@
      * @property {bool}   bJustSwitched      - Has the currentUrl switched since the user selected this room?
      * @property {number} nPotentialCaptured - Number of augers that could have been captured in this scene
      */
-    var current = {
-        cam: {
-           camHallOne   : 'hallOne'
-          ,camKitchen   : 'kitchen'
-          ,camEntryway  : 'entryway'
-          ,camLivingRoom: 'livingroom'
-          ,camBathroom  : 'bathroom'
-          ,camBedroom   : 'bedroom'
-          ,camHallTwo   : 'hallTwo'
-          ,camDriveway  : 'driveway'
-        },
-        getCam: function () {
-          return this.cam;
-        },
-        setCam: function (val){
-          this.cam = val;
-        },
+    //var current = {
+    //    cam: {
+    //       camHallOne   : 'hallOne'
+    //      ,camKitchen   : 'kitchen'
+    //      ,camEntryway  : 'entryway'
+    //      ,camLivingRoom: 'livingroom'
+    //      ,camBathroom  : 'bathroom'
+    //      ,camBedroom   : 'bedroom'
+    //      ,camHallTwo   : 'hallTwo'
+    //      ,camDriveway  : 'driveway'
+    //    },
+    //    getCam: function () {
+    //      return this.cam;
+    //    },
+    //    setCam: function (val){
+    //      this.cam = val;
+    //    },
 
-        stillUrl: '',
-        getStillUrl: function () {
-            return this.stillUrl;
-        },
-        setStillUrl: function (val) {
-            this.stillUrl = val;
-        },
+    //    stillUrl: '',
+    //    getStillUrl: function () {
+    //        return this.stillUrl;
+    //    },
+    //    setStillUrl: function (val) {
+    //        this.stillUrl = val;
+    //    },
 
-        bCanCatch: true,
-        getCanCatch: function () {
-            return this.bCanCatch;
-        },
-        setCanCatch: function (val) {
-            this.bCanCatch = val;
-        },
+    //    bCanCatch: true,
+    //    getCanCatch: function () {
+    //        return this.bCanCatch;
+    //    },
+    //    setCanCatch: function (val) {
+    //        this.bCanCatch = val;
+    //    },
 
-        time: 0,
-        getTime: function () {
-            return this.time;
-        },
-        setTime: function (val) {
-            this.time = val;
-        },
+    //    time: 0,
+    //    getTime: function () {
+    //        return this.time;
+    //    },
+    //    setTime: function (val) {
+    //        this.time = val;
+    //    },
 
-        urlChangeTime: 0,
-        getUrlChangeTime: function () {
-            return this.urlChangeTime;
-        },
-        setUrlChangeTime: function(val) {
-            this.urlChangeTime = val;
-        },
+    //    urlChangeTime: 0,
+    //    getUrlChangeTime: function () {
+    //        return this.urlChangeTime;
+    //    },
+    //    setUrlChangeTime: function(val) {
+    //        this.urlChangeTime = val;
+    //    },
 
-        catchTime: 0,
-        getCatchTime: function () {
-            return this.catchTime;
-        },
-        setCatchTime: function (val) {
-            this.catchTime = val;
-        },
+    //    catchTime: 0,
+    //    getCatchTime: function () {
+    //        return this.catchTime;
+    //    },
+    //    setCatchTime: function (val) {
+    //        this.catchTime = val;
+    //    },
 
-        curUrl: '',
-        getCurUrl: function () {
-            return this.curUrl;
-        },
-        setCurUrl: function (val) {
-            this.curUrl = val;
-        },
+    //    curUrl: '',
+    //    getCurUrl: function () {
+    //        return this.curUrl;
+    //    },
+    //    setCurUrl: function (val) {
+    //        this.curUrl = val;
+    //    },
 
-        nextUrl: '',
-        getNextUrl: function () {
-            return this.nextUrl;
-        },
-        setNextUrl: function (val) {
-            this.nextUrl = val;
-        },
+    //    nextUrl: '',
+    //    getNextUrl: function () {
+    //        return this.nextUrl;
+    //    },
+    //    setNextUrl: function (val) {
+    //        this.nextUrl = val;
+    //    },
 
-        trapUrl: '',
-        getTrapUrl: function () {
-            return this.trapUrl;
-        },
-        setTrapUrl: function (val) {
-            this.trapUrl = val;
-        },
+    //    trapUrl: '',
+    //    getTrapUrl: function () {
+    //        return this.trapUrl;
+    //    },
+    //    setTrapUrl: function (val) {
+    //        this.trapUrl = val;
+    //    },
 
-        bTrapSprung: true,
-            getTrapSprung: function () {
-          return this.bTrapSprung;
-        },
-        setTrapSprung: function (val){
-          this.bTrapSprung = val;
-        },
+    //    bTrapSprung: true,
+    //        getTrapSprung: function () {
+    //      return this.bTrapSprung;
+    //    },
+    //    setTrapSprung: function (val){
+    //      this.bTrapSprung = val;
+    //    },
 
-        bJustSwitched: false,
-        getJustSwitched: function () {
-          return this.bJustSwitched;
-        },
-        setJustSwitched: function (val){
-          this.bJustSwitched = val;
-        },
+    //    bJustSwitched: false,
+    //    getJustSwitched: function () {
+    //      return this.bJustSwitched;
+    //    },
+    //    setJustSwitched: function (val){
+    //      this.bJustSwitched = val;
+    //    },
 
-        nPotentialCaptured: 0,
-        getPotentialCaptured: function () {
-          return this.nPotentialCaptured;
-        },
-        setPotentialCaptured: function (val) {
-          this.nPotentialCaptured = val;
-        }
-    };
+    //    nPotentialCaptured: 0,
+    //    getPotentialCaptured: function () {
+    //      return this.nPotentialCaptured;
+    //    },
+    //    setPotentialCaptured: function (val) {
+    //      this.nPotentialCaptured = val;
+    //    }
+    //};
 
     /**
      * How many augers has the user captured?
@@ -662,7 +668,7 @@
         var elapsedMS         = end.getTime() - nTimeStart.getTime();
         var seconds           = Math.round(elapsedMS / 1000);
         var minutes           = Math.round(seconds   /   60);
-
+       
         current.setTime(seconds);
     };
 
@@ -768,7 +774,7 @@
                   current.setCatchTime        (hallOne.getCatchTime        ())      ;
                   current.setCanCatch         (hallOne.getCanCatch         ())      ;
                   current.setUrlChangeTime    (hallOne.getTime             ())      ;
-                  current.setStillUrl         (hallOne.stillUrl              )      ;
+                  current.setStillUrl         (hallOne.getStillUrl         ())      ;
                   current.setTrapSprung       (hallOne.getTrapSprung       ())      ;
                   current.setPotentialCaptured(hallOne.getPotentialCaptured())      ;
                   break                                                             ;
@@ -779,7 +785,7 @@
                   current.setTrapUrl          (kitchen.getTrapUrl          ())      ;
                   current.setCanCatch         (kitchen.getCanCatch         ())      ;
                   current.setUrlChangeTime    (kitchen.getTime             ())      ;
-                  current.setStillUrl         (kitchen.stillUrl              )      ;
+                  current.setStillUrl         (kitchen.getStillUrl         ())      ;
                   current.setTrapSprung       (kitchen.getTrapSprung       ())      ;
                   current.setPotentialCaptured(kitchen.getPotentialCaptured())      ;
                   break                                                             ;
@@ -790,7 +796,7 @@
                   current.setTrapUrl          (entryway.getTrapUrl          ())     ;
                   current.setCanCatch         (entryway.getCanCatch         ())     ;
                   current.setUrlChangeTime    (entryway.getTime             ())     ;
-                  current.setStillUrl         (entryway.stillUrl              )     ;
+                  current.setStillUrl         (entryway.getStillUrl         ())     ;
                   current.setTrapSprung       (entryway.getTrapSprung       ())     ;
                   current.setPotentialCaptured(entryway.getPotentialCaptured())     ;
                   break                                                             ;
@@ -800,8 +806,8 @@
                   current.setNextUrl          (livingroom.getNextUrl          ())   ;
                   current.setTrapUrl          (livingroom.getTrapUrl          ())   ;
                   current.setCanCatch         (livingroom.getCanCatch         ())   ;
-                  current.setUrlChangeTime    (livingroom.getTime               )   ;
-                  current.setStillUrl         (livingroom.stillUrl              )   ;
+                  current.setUrlChangeTime    (livingroom.getTime             ())   ;
+                  current.setStillUrl         (livingroom.getStillUrl         ())   ;
                   current.setTrapSprung       (livingroom.getTrapSprung       ())   ;
                   current.setPotentialCaptured(livingroom.getPotentialCaptured())   ;
                   break                                                             ;
@@ -812,7 +818,7 @@
                   current.setTrapUrl          (bathroom.getTrapUrl          ())     ;
                   current.setCanCatch         (bathroom.getCanCatch         ())     ;
                   current.setUrlChangeTime    (bathroom.getTime             ())     ;
-                  current.setStillUrl         (bathroom.stillUrl              )     ;
+                  current.setStillUrl         (bathroom.getStillUrl         ())     ;
                   current.setTrapSprung       (bathroom.getTrapSprung       ())     ;
                   current.setPotentialCaptured(bathroom.getPotentialCaptured())     ;
                   break                                                             ;
@@ -823,7 +829,7 @@
                   current.setTrapUrl          (bedroom.getTrapUrl          ())      ;
                   current.setCanCatch         (bedroom.getCanCatch         ())      ;
                   current.setUrlChangeTime    (bedroom.getTime             ())      ;
-                  current.setStillUrl         (bedroom.stillUrl              )      ;
+                  current.setStillUrl         (bedroom.getStillUrl         ())      ;
                   current.setTrapSprung       (bedroom.getTrapSprung       ())      ;
                   current.setPotentialCaptured(bedroom.getPotentialCaptured())      ;
                   break                                                             ;
@@ -834,7 +840,7 @@
                   current.setTrapUrl          (hallTwo.getTrapUrl          ())      ;
                   current.setCanCatch         (hallTwo.getCanCatch         ())      ;
                   current.setUrlChangeTime    (hallTwo.getTime             ())      ;
-                  current.setStillUrl         (hallTwo.stillUrl              )      ;
+                  current.setStillUrl         (hallTwo.getStillUrl         ())      ;
                   current.setTrapSprung       (hallTwo.getTrapSprung       ())      ;
                   current.setPotentialCaptured(hallTwo.getPotentialCaptured())      ;
                   break                                                             ;
@@ -845,7 +851,7 @@
                   current.setTrapUrl          (driveway.getTrapUrl          ())     ;
                   current.setCanCatch         (driveway.getCanCatch         ())     ;
                   current.setUrlChangeTime    (driveway.getTime             ())     ;
-                  current.setStillUrl         (driveway.stillUrl              )     ;
+                  current.setStillUrl         (driveway.getStillUrl         ())     ;
                   current.setTrapSprung       (driveway.getTrapSprung       ())     ;
                   current.setPotentialCaptured(driveway.getPotentialCaptured())     ;
                   break;
@@ -890,6 +896,7 @@
 
     /**
      * Template used by events functions to store current values for each room. This is where the video player gets the url from.
+     * A new instance is created for each room, with: Object.create(objRoom);
      */
     var objRoom =  {
         curUrl            : ''
@@ -938,7 +945,7 @@
 
         switch (current.getTime()){
          
-            case 1:
+            case 3:
                 //r.curUrl    = camKitchen.c1200431;
                 //r.trapUrl   = camKitchen.c1240632;
                 //r.catchTime = 83;
@@ -952,7 +959,7 @@
                 buildState(kitchen, r);
             break;
             default:
-                buildState(kitchen, r); 
+                //buildState(kitchen, r);  //TODO: This breaks something. Need to find a new default.
         }
     };
 
@@ -1051,7 +1058,7 @@
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed
      * @param {string}  sCurVidUrl   - Clip with the trap sequence.
-     * @param {string} [sNextVidUrl] - Trap clips are often have a clip that appears next.
+     * @param {string} [sNextVidUrl] - Trap clips often have a clip that appears next.
      * @param {string} [sTrapUrl]    - Path to URL w/ trap video.
      * @param {string}  sStillUrl    - Path to URL w/ poster image.
      */
@@ -1197,7 +1204,7 @@
 
     /**
      * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
-     * TODO: Needed to make this audio repeatable again
+     * TODO: Needed to make this audio loop
      */
     var displayStill          = function displayStill () {
         video.src(video.src);
@@ -1239,7 +1246,7 @@
            var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
            video.currentTime(diff);
         }
-        updateVidSource();
+        updateVidSource(); // BUG: This isn't getting called consistently.
     };
 
 
@@ -1262,18 +1269,19 @@
      * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
      * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
      * then that new URL is passed into the video player & played.
-     * @param {object} - Name of the room
+     * @param {object} - Room we are operating on
      * @param {string} - Name of the room
      */
     var observeRoom = function observeRoom (oRoom, sRoomName) {
       Object.observe(oRoom,  function (changes) {
-
+          console.log('Observing changes');
         if (changes[0]!== undefined) {
           var oldUrl = changes[0].oldValue;
           var newUrl = oRoom.getCurUrl();
-
+       
           if (oldUrl !== newUrl && current.getCam() === sRoomName) {
-            playVideo(newUrl);
+             
+              playVideo(newUrl);
           }
         }
       });
