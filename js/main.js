@@ -69,7 +69,6 @@
             setCurUrl: function(val) {
                 _curUrl = val;
             },
-
             getNextUrl: function() {
                 return _nextUrl;
             },
@@ -101,14 +100,14 @@
         return roomPrototype;
     };
 
-    var hallOne    = room('hallOne'   , 'img/stills/HALL-ONE_1.JPG' );
-    var kitchen    = room('kitchen'   , 'img/stills/KITCHEN_1.JPG'  );
-    var entryway   = room('entryway'  , 'img/stills/ENTRY-WAY_1.jpg');
-    var livingroom = room('livingroom', 'img/stills/LIVING-ROOM_1'  );
-    var bathroom   = room('bathroom'  , 'img/stills/BATHROOM_1'     );
-    var bedroom    = room('bedroom'   , 'img/stills/BATHROOM_1'     );
-    var hallTwo    = room('hallTwo'   , 'img/stills/HALL-TWO_1'     );
-    var driveway   = room('driveway'  , 'img/stills/DRIVEWAY_1.jpg' );
+    var hallOne    = room('hallOne'   , 'img/stills/HALL-ONE_1.JPG'   );
+    var kitchen    = room('kitchen'   , 'img/stills/KITCHEN_1.JPG'    );
+    var entryway   = room('entryway'  , 'img/stills/ENTRY-WAY_1.jpg'  );
+    var livingroom = room('livingroom', 'img/stills/LIVING-ROOM_1.jpg');
+    var bathroom   = room('bathroom'  , 'img/stills/BATHROOM_1.jpg'   );
+    var bedroom    = room('bedroom'   , 'img/stills/BEDROOM_1.jpg'    );
+    var hallTwo    = room('hallTwo'   , 'img/stills/HALL-TWO_1.jpg'   );
+    var driveway   = room('driveway'  , 'img/stills/DRIVEWAY_1.jpg'   );
 
 
     var current = {
@@ -616,12 +615,14 @@
     /**
      * Wires up event handlers for buttons.
      * Sets src property for video player and sets reference to audio tag
+     * Inits update loop.
      */
     var init                   = function init () {
         registerRoomButton();
         initializeAudio();
         initializeVideoStream();
         MainLoop.setUpdate(update).start();
+        updateVidSource(); // TODO: May be able to move this out of here
     };
 
 
@@ -877,8 +878,8 @@
 
 
     /**
-     * Sets the current values for each room, which will then be used the events function to
-     * then set these values if user has current room selected
+     * Sets the current values for each room, which will then be used by events() to
+     * set these values if user has current room selected. Wipes values from previous state, first.
      * @param {object} oRoom  - Reference to the room we should be setting values for.
      * @param (object} rObj   - Object w/ properties for urls, time, & trap within the room.
      */
@@ -897,6 +898,7 @@
     /**
      * Template used by events functions to store current values for each room. This is where the video player gets the url from.
      * A new instance is created for each room, with: Object.create(objRoom);
+     * Object.observe uses this to detect value changes, then changes video.src() on the fly
      */
     var objRoom =  {
         curUrl            : ''
@@ -908,14 +910,22 @@
       , potentialCaptured : 0
     };
 
+    var hallOneObj = Object.create(objRoom);
+    var kitchenObj = Object.create(objRoom);
+    var entryObj   = Object.create(objRoom);
+    var livingObj  = Object.create(objRoom);
+    var bathObj    = Object.create(objRoom);
+    var bedObj     = Object.create(objRoom);
+    var hallTwoObj = Object.create(objRoom);
+    var driveObj   = Object.create(objRoom);
+
 
     /**
-     * Sets values of this particular room each time current.getTime() matches the case value.
+     * Creates an object & sets values of this particular room each time current.getTime() matches the case value.
      * Case is equal to the current number of seconds into the game.
      * If the value of property is not set here, it will be set to default values of the objRoom.
      */
-    var eventsHallOne         = function eventsHallOne () {
-        var r    = Object.create(objRoom);
+    var eventsHallOne         = function eventsHallOne () { 
 
         switch (current.getTime()) {
           case 1:
@@ -925,18 +935,19 @@
                 //console.log(r)                  ;
          
                 // ONLY USE THESE WHEN TESTING OFFLINE
-                r.curUrl    = aTempLocal[2];
-                r.nextUrl   = aTempLocal[0];
-                r.trapUrl   = aTempLocal[1];            
-                r.catchTime = 3            ;
-
-                buildState(hallOne, r);
+                hallOneObj.curUrl    = aTempLocal[2];
+                hallOneObj.nextUrl   = aTempLocal[0];
+                hallOneObj.trapUrl   = aTempLocal[1];            
+                hallOneObj.catchTime = 3            ;
               break;
-            case 76:
-                r.curUrl = camHallOne.c1152221;
-                buildState(hallOne, r);
+            case 4:
+                hallOneObj.curUrl    = aTempLocal[1];
+                hallOneObj.nextUrl   = aTempLocal[2];
+                hallOneObj.trapUrl   = aTempLocal[0];
+
               break;
         }
+        buildState(hallOne, hallOneObj);
     };
 
 
@@ -1204,7 +1215,7 @@
 
     /**
      * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
-     * TODO: Needed to make this audio loop
+     * TODO: Need to make this audio loop
      */
     var displayStill          = function displayStill () {
         video.src(video.src);
@@ -1250,11 +1261,31 @@
     };
 
 
+        /**
+     * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
+     * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
+     * then that new URL is passed into the video player & played.
+     * @param {object} - Room we are operating on.
+     * @param {string} - Name of the room.
+     */
+    var observeRoom = function observeRoom(oRoom, sRoomName) {
+        Object.observe(oRoom, function (changes) {
+            if (changes[0] !== undefined) {
+                var oldUrl = changes[0].oldValue;
+                var newUrl = changes[0].object.curUrl;
+                if (oldUrl !== newUrl && current.getCam() === sRoomName) {
+                    playVideo(newUrl);
+                }
+            }
+        });
+    };
+
+
     /**
      * Sets Object.observe for each room in the game.
      */
-    var updateVidSource = function updateVidSource () {
-      observeRoom(hallOne,    'hallOne'   );
+    var updateVidSource = function updateVidSource() {
+      observeRoom(hallOneObj, 'hallOne'   );
       observeRoom(kitchen,    'kitchen'   );
       observeRoom(entryway,   'entryway'  );
       observeRoom(livingroom, 'livingroom');
@@ -1262,29 +1293,6 @@
       observeRoom(bedroom,    'bedroom'   );
       observeRoom(hallTwo,    'hallTwo'   );
       observeRoom(driveway,   'driveway'  );
-    };
-
-
-    /**
-     * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
-     * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
-     * then that new URL is passed into the video player & played.
-     * @param {object} - Room we are operating on
-     * @param {string} - Name of the room
-     */
-    var observeRoom = function observeRoom (oRoom, sRoomName) {
-      Object.observe(oRoom,  function (changes) {
-          console.log('Observing changes');
-        if (changes[0]!== undefined) {
-          var oldUrl = changes[0].oldValue;
-          var newUrl = oRoom.getCurUrl();
-       
-          if (oldUrl !== newUrl && current.getCam() === sRoomName) {
-             
-              playVideo(newUrl);
-          }
-        }
-      });
     };
 
 
