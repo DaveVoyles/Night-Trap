@@ -111,6 +111,102 @@
     var driveway   = room('driveway'  , 'img/stills/DRIVEWAY_1.jpg' );
 
 
+    var cur = {
+        cam: {
+           camHallOne   : 'hallOne'
+          ,camKitchen   : 'kitchen'
+          ,camEntryway  : 'entryway'
+          ,camLivingRoom: 'livingroom'
+          ,camBathroom  : 'bathroom'
+          ,camBedroom   : 'bedroom'
+          ,camHallTwo   : 'hallTwo'
+          ,camDriveway  : 'driveway'
+        },
+        stillUrl          : ''  ,
+        bCanCatch         : true,
+        urlChangeTime     : 0   ,
+        catchTime         : 0   ,
+        curUrl            : ''  ,
+        nextUrl           : ''  ,
+        trapUrl           : ''  ,
+        bTrapSprung       : true,
+        nPotentialCaptured: 0   ,
+        bJustSwitched     : false
+    };
+
+
+    //TODO: Change this name to 'current'
+    // http://eclipsesource.com/blogs/2013/07/05/private-members-in-javascript/
+    cur.prototype = {
+        getCam: function() {
+            return this.cam;
+        },
+        setCam: function(val) {
+            this.cam = val;
+        },
+        getCanCatch: function () {
+            return this.bCanCatch;
+        },
+        setCanCatch: function (val) {
+            this.bCanCatch = val;
+        },
+        getUrlChangeTime: function () {
+            return this.urlChangeTime;
+        },
+        setUrlChangeTime: function(val) {
+            this.urlChangeTime = val;
+        },
+        getCatchTime: function () {
+            return this.catchTime;
+        },
+        setCatchTime: function (val) {
+            this.catchTime = val;
+        },
+        getTime: function () {
+            return this.time;
+        },
+        setTime: function (val) {
+            this.time = val;
+        },
+        getCurUrl: function () {
+            return this.curUrl;
+        },
+        setCurUrl: function (val) {
+            this.curUrl = val;
+        },
+        getNextUrl: function () {
+            return this.nextUrl;
+        },
+        setNextUrl: function (val) {
+            this.nextUrl = val;
+        },
+        getTrapUrl: function () {
+            return this.trapUrl;
+        },
+        setTrapUrl: function (val) {
+            this.trapUrl = val;
+        },
+        getTrapSprung: function () {
+          return this.bTrapSprung;
+        },
+        setTrapSprung: function (val){
+          this.bTrapSprung = val;
+        },
+        getJustSwitched: function () {
+          return this.bJustSwitched;
+        },
+        setJustSwitched: function (val){
+          this.bJustSwitched = val;
+        },
+        getPotentialCaptured: function () {
+          return this.nPotentialCaptured;
+        },
+        setPotentialCaptured: function (val) {
+          this.nPotentialCaptured = val;
+        }
+    };
+
+
     /**
      * Obj to get / set current values for the game.
      * @property {string} cam                - Room the user has currently selected
