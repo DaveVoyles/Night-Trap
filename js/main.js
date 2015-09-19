@@ -3,7 +3,6 @@
 
     /**
      * Constructor obj to get / set current values for the each room.
-     * @returns                           - roomPrototype
      * @param {string} sRoom              - Name of the room.
      * @param {string} stillUrl           - Background image when room is empty.
      * @param {bool}   bCanCatch          - Is there a character who can be captured in the scene?
@@ -14,6 +13,7 @@
      * @param {string} trapUrl            - If a character can be trapped in the scene, have it trigger this Url.
      * @param {bool}   bTrapSprung        - Has the user set the trap in this current scene yet?
      * @param {number} nPotentialCaptured - How many augers can be caught in the current scene?
+     * @returns                           - roomPrototype
      */
     var room = function(sRoom, stillUrl, bCanCatch, time, catchTime, curUrl, nextUrl, trapUrl, bTrapSprung, nPotentialCaptured) {
         var _sRoomName          = sRoom              || ''   ;
@@ -110,6 +110,21 @@
     var driveway   = room('driveway'  , 'img/stills/DRIVEWAY_1.jpg'   );
 
 
+    /**
+     * Obj to get / set current values for the game.
+     * @property {string} cam                - Room the user has currently selected
+     * @property {string} stillUrl           - Background image when room is empty.
+     * @property {bool}   bCanCatch          - Is there a character who can be captured in the scene?
+     * @property {number} urlChangeTime      - Time into the game should curUrl should be set.
+     * @property {number} time               - Current time stamp when curUrl is being set.
+     * @property {number} catchTime          - When can the user catch an auger?
+     * @property {sting}  curUrl             - Url should be set as video.src() right now.
+     * @property {string} nextUrl            - NextUrl to be set as video.src() when curUrl finishes.
+     * @property {string} trapUrl            - If a character can be trapped in the scene, have it trigger this Url.
+     * @property {bool}   bTrapSpring        - Has the user set the trap in this current scene yet?
+     * @property {bool}   bJustSwitched      - Has the currentUrl switched since the user selected this room?
+     * @property {number} nPotentialCaptured - Number of augers that could have been captured in this scene
+     */
     var current = {
         cam: {
            camHallOne   : 'hallOne'
@@ -130,79 +145,79 @@
         trapUrl           : ''  ,
         bTrapSprung       : true,
         nPotentialCaptured: 0   ,
-        bJustSwitched     : false,
+        bJustSwitched     : false
     };
 
 
     // http://eclipsesource.com/blogs/2013/07/05/private-members-in-javascript/
     current = {
-        getCam: function() {
+        getCam              : function ()    {
             return this.cam;
         },
-        setCam: function(val) {
-            this.cam = val;
+        setCam              : function (val) {
+            this.cam              = val;
         },
-        getCanCatch: function () {
+        getCanCatch         : function ()    {
             return this.bCanCatch;
         },
-        setCanCatch: function (val) {
-            this.bCanCatch = val;
+        setCanCatch         : function (val) {
+            this.bCanCatch        = val;
         },
-        getUrlChangeTime: function () {
+        getUrlChangeTime    : function ()    {
             return this.urlChangeTime;
         },
-        setUrlChangeTime: function(val) {
-            this.urlChangeTime = val;
+        setUrlChangeTime    : function (val) {
+            this.urlChangeTime    = val;
         },
-        getCatchTime: function () {
+        getCatchTime        : function ()    {
             return this.catchTime;
         },
-        setCatchTime: function (val) {
-            this.catchTime = val;
+        setCatchTime        : function (val) {
+            this.catchTime        = val;
         },
-        getTime: function () {
+        getTime             : function ()    {
             return this.time;
         },
-        setTime: function (val) {
-            this.time = val;
+        setTime             : function (val) {
+            this.time             = val;
         },
-        getCurUrl: function () {
+        getCurUrl           : function ()    {
             return this.curUrl;
         },
-        setCurUrl: function (val) {
-            this.curUrl = val;
+        setCurUrl           : function (val) {
+            this.curUrl           = val;
         },
-        getNextUrl: function () {
+        getNextUrl          : function ()    {
             return this.nextUrl;
         },
-        setNextUrl: function (val) {
-            this.nextUrl = val;
+        setNextUrl          : function (val) {
+            this.nextUrl          = val;
         },
-        getStillUrl: function() {
+        getStillUrl         : function ()    {
             return this.stillUrl;
         },
-        setStillUrl: function(val) {
-            this.stillUrl = val;
+        setStillUrl         : function (val) {
+            this.stillUrl         = val;
         },
-        getTrapUrl: function () {
+        getTrapUrl          : function ()    {
             return this.trapUrl;
         },
-        setTrapUrl: function (val) {
-            this.trapUrl = val;
+        setTrapUrl          : function (val) {
+            this.trapUrl          = val;
         },
-        getTrapSprung: function () {
+        getTrapSprung       : function ()    {
           return this.bTrapSprung;
         },
-        setTrapSprung: function (val){
-          this.bTrapSprung = val;
+        setTrapSprung       : function (val) {
+          this.bTrapSprung        = val;
         },
-        getJustSwitched: function () {
+        getJustSwitched     : function ()    {
           return this.bJustSwitched;
         },
-        setJustSwitched: function (val){
-          this.bJustSwitched = val;
+        setJustSwitched     : function (val) {
+          this.bJustSwitched      = val;
         },
-        getPotentialCaptured: function () {
+        getPotentialCaptured: function ()    {
           return this.nPotentialCaptured;
         },
         setPotentialCaptured: function (val) {
@@ -210,128 +225,6 @@
         }
     };
 
-
-    /**
-     * Obj to get / set current values for the game.
-     * @property {string} cam                - Room the user has currently selected
-     * @property {string} stillUrl           - Background image when room is empty.
-     * @property {bool}   bCanCatch          - Is there a character who can be captured in the scene?
-     * @property {number} urlChangeTime      - Time into the game should curUrl should be set.
-     * @property {number} time               - Current time stamp when curUrl is being set.
-     * @property {number} catchTime          - When can the user catch an auger?
-     * @property {sting}  curUrl             - Url should be set as video.src() right now.
-     * @property {string} nextUrl            - NextUrl to be set as video.src() when curUrl finishes.
-     * @property {string} trapUrl            - If a character can be trapped in the scene, have it trigger this Url.
-     * @property {bool}   bTrapSpring        - Has the user set the trap in this current scene yet?
-     * @property {bool}   bJustSwitched      - Has the currentUrl switched since the user selected this room?
-     * @property {number} nPotentialCaptured - Number of augers that could have been captured in this scene
-     */
-    //var current = {
-    //    cam: {
-    //       camHallOne   : 'hallOne'
-    //      ,camKitchen   : 'kitchen'
-    //      ,camEntryway  : 'entryway'
-    //      ,camLivingRoom: 'livingroom'
-    //      ,camBathroom  : 'bathroom'
-    //      ,camBedroom   : 'bedroom'
-    //      ,camHallTwo   : 'hallTwo'
-    //      ,camDriveway  : 'driveway'
-    //    },
-    //    getCam: function () {
-    //      return this.cam;
-    //    },
-    //    setCam: function (val){
-    //      this.cam = val;
-    //    },
-
-    //    stillUrl: '',
-    //    getStillUrl: function () {
-    //        return this.stillUrl;
-    //    },
-    //    setStillUrl: function (val) {
-    //        this.stillUrl = val;
-    //    },
-
-    //    bCanCatch: true,
-    //    getCanCatch: function () {
-    //        return this.bCanCatch;
-    //    },
-    //    setCanCatch: function (val) {
-    //        this.bCanCatch = val;
-    //    },
-
-    //    time: 0,
-    //    getTime: function () {
-    //        return this.time;
-    //    },
-    //    setTime: function (val) {
-    //        this.time = val;
-    //    },
-
-    //    urlChangeTime: 0,
-    //    getUrlChangeTime: function () {
-    //        return this.urlChangeTime;
-    //    },
-    //    setUrlChangeTime: function(val) {
-    //        this.urlChangeTime = val;
-    //    },
-
-    //    catchTime: 0,
-    //    getCatchTime: function () {
-    //        return this.catchTime;
-    //    },
-    //    setCatchTime: function (val) {
-    //        this.catchTime = val;
-    //    },
-
-    //    curUrl: '',
-    //    getCurUrl: function () {
-    //        return this.curUrl;
-    //    },
-    //    setCurUrl: function (val) {
-    //        this.curUrl = val;
-    //    },
-
-    //    nextUrl: '',
-    //    getNextUrl: function () {
-    //        return this.nextUrl;
-    //    },
-    //    setNextUrl: function (val) {
-    //        this.nextUrl = val;
-    //    },
-
-    //    trapUrl: '',
-    //    getTrapUrl: function () {
-    //        return this.trapUrl;
-    //    },
-    //    setTrapUrl: function (val) {
-    //        this.trapUrl = val;
-    //    },
-
-    //    bTrapSprung: true,
-    //        getTrapSprung: function () {
-    //      return this.bTrapSprung;
-    //    },
-    //    setTrapSprung: function (val){
-    //      this.bTrapSprung = val;
-    //    },
-
-    //    bJustSwitched: false,
-    //    getJustSwitched: function () {
-    //      return this.bJustSwitched;
-    //    },
-    //    setJustSwitched: function (val){
-    //      this.bJustSwitched = val;
-    //    },
-
-    //    nPotentialCaptured: 0,
-    //    getPotentialCaptured: function () {
-    //      return this.nPotentialCaptured;
-    //    },
-    //    setPotentialCaptured: function (val) {
-    //      this.nPotentialCaptured = val;
-    //    }
-    //};
 
     /**
      * How many augers has the user captured?
@@ -621,7 +514,7 @@
         initializeAudio();
         initializeVideoStream();
         MainLoop.setUpdate(update).start();
-        updateVidSource(); // TODO: May be able to move this out of here
+        observeAllRooms(); // TODO: May be able to move this out of here
     };
 
 
@@ -927,7 +820,7 @@
      * If the value of property is not set here, it will be set to default values of the objRoom.
      */
     var eventsHallOne         = function eventsHallOne () { 
-
+        var h = hallOneTemplate;
         switch (current.getTime()) {
           case 1:
                 //r.curUrl    = camHallOne.c21    ;
@@ -936,57 +829,55 @@
                 //console.log(r)                  ;
          
                 // ONLY USE THESE WHEN TESTING OFFLINE
-                hallOneTemplate.curUrl    = aTempLocal[0];
-                hallOneTemplate.nextUrl   = aTempLocal[1];
-                hallOneTemplate.trapUrl   = aTempLocal[2];            
-                hallOneTemplate.catchTime = 3            ;
-              break;
-            case 4:
-                hallOneTemplate.curUrl    = aTempLocal[1];
-                hallOneTemplate.nextUrl   = aTempLocal[2];
-                hallOneTemplate.trapUrl   = aTempLocal[0];
-
-              break;
+                h.curUrl    = aTempLocal[0];
+                h.nextUrl   = aTempLocal[1];
+                h.trapUrl   = aTempLocal[2];            
+                h.catchTime = 3;
+                buildState(hallOne, h);
+                break;
+            case 5:
+                h.curUrl    = aTempLocal[0];
+                h.nextUrl   = aTempLocal[2];
+                h.trapUrl   = aTempLocal[0];
+                buildState(hallOne, h);
+                break;
         }
-        hallOneTemplate.sRoomName = 'hallOne';
-        buildState(hallOne, hallOneTemplate);
+        h.sRoomName = 'hallOne';
     };
 
 
-    var eventsKitchen = function eventsKitchen () {
+    var eventsKitchen = function eventsKitchen() {
+        var k = kitchenTemplate;
         switch (current.getTime()){     
             case 3:
                 //r.curUrl    = camKitchen.c1200431;
                 //r.trapUrl   = camKitchen.c1240632;
                 //r.catchTime = 83;
-                kitchenTemplate.curUrl    = aTempLocal[1];
-                kitchenTemplate.nextUrl   = aTempLocal[2];
-                kitchenTemplate.trapUrl   = aTempLocal[2];
-
+                k.curUrl    = aTempLocal[1];
+                k.nextUrl   = aTempLocal[2];
+                k.trapUrl   = aTempLocal[2];
+                buildState(kitchen, k);
                 break;
             case 90:
-                kitchen.curUrl = camKitchen.c1481231;
+                k.currentUrl = camKitchen.c1481231;
                 break;
             default:
-                //buildState(kitchen, kitchenObj);//TODO: This breaks something. Need to find a new default.
         }
-        kitchenTemplate.sRoomName = 'kitchen';
-        buildState(kitchen, kitchenTemplate);
+        k.sRoomName = 'kitchen';
     };
 
 
     //// TODO: Need timestamps
     //var eventsEntry = function eventsEntry () {
-    //    var entry = room.entryway;
     //    switch (current.getTime()){
     //      default:
-    //          buildState(entry, null);
+    //          buildState(entryway, entryTemplate);
     //    }
+    //    entryTemplate.sRoomName = 'entryway';
+    //    buildState(entryway, entryTemplate);
     //};
 
     //var eventsLiving = function eventsLiving () {
-    //    var living = room.livingRoom;
-    //    //var r      = new objRoom();
     //    switch(current.getTime()) {
     //        case 60:
     //            r.curUrl = camLivingRoom.c1572241;
@@ -996,8 +887,9 @@
     //          //
     //        break;
     //      default:
-    //        buildState(living, r);
     //    }
+    //    livingTemplate.sRoomName = 'livingRoom';
+    //    buildState(entryway, entryTemplate);
     //};
 
     //var eventsBathroom       = function eventsBathroom () {
@@ -1253,11 +1145,13 @@
         video.src(urlClip);
         video.load();
         video.play();
-        if (current.getJustSwitched() === true){
-           var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+        //if (current.getJustSwitched() === true){
+        var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+        console.log(current.getUrlChangeTime());
+        console.log(current.getTime());
+        console.log(current);
            video.currentTime(diff);
-        }
-        updateVidSource(); // BUG: This isn't getting called consistently.
+        //}
     };
 
 
@@ -1265,8 +1159,7 @@
      * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
      * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
      * then that new URL is passed into the video player & played.
-     * @param {object} - Room we are operating on.
-     * @param {string} - Name of the room.
+     * @param {object} roomTemp - Room we are operating on.
      */
     var observeRoom = function observeRoom(roomTemp) {
         Object.observe(roomTemp, function (changes) {
@@ -1287,7 +1180,7 @@
     /**
      * Sets Object.observe for each room in the game.
      */
-    var updateVidSource = function updateVidSource() {
+    var observeAllRooms = function observeAllRooms() {
         var observeHallOne = new observeRoom(hallOneTemplate  );
         var observeKitchen = new observeRoom(kitchenTemplate  );
         var observeEntry   = new observeRoom(entryTemplate    );
