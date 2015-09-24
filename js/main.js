@@ -578,6 +578,20 @@ var mainJS = (function() {
 
 
     /**
+     * Used in the switch statements for room events.
+     * @param   {number} - minutes 
+     * @param   {number} - seconds 
+     * @returns {number} - conversion from min:sec to a number.  
+     */
+    var minSecToNum = function minSecToNum(minutes, seconds) {
+        var min = minutes || 0;
+        var sec = seconds || 0;
+
+        return min * 60 + sec;
+    };
+
+
+    /**
      * Place in update() to get total time since user has started game.
      */
     var elapsedTime           = function elapsedTime () {
@@ -859,26 +873,27 @@ var mainJS = (function() {
                 buildState(hallOne, h);
                 break;
             case 5:
-                h.curUrl    = aTempLocal[1];
-                h.nextUrl   = aTempLocal[2];
-                h.trapUrl   = aTempLocal[0];
-                buildState(hallOne, h);
+                //h.curUrl    = aTempLocal[1];
+                //h.nextUrl   = aTempLocal[2];
+                //h.trapUrl   = aTempLocal[0];
+                //buildState(hallOne, h);
                 break;
         }
         h.sRoomName = 'hallOne';
     };
 
+   
 
     var eventsKitchen = function eventsKitchen() {
         var k = kitchenTemplate;
         switch (current.getTime()){     
             case 3:
-                //r.curUrl    = camKitchen.c1200431;
-                //r.trapUrl   = camKitchen.c1240632;
-                //r.catchTime = 83;
-                k.curUrl    = aTempLocal[1];
-                k.nextUrl   = aTempLocal[2];
-                k.trapUrl   = aTempLocal[2];
+                k.curUrl    = camKitchen.c1200431;
+                k.trapUrl   = camKitchen.c1240632;
+                k.catchTime = 83;
+                //k.curUrl    = aTempLocal[1];
+                //k.nextUrl   = aTempLocal[2];
+                //k.trapUrl   = aTempLocal[2];
                 buildState(kitchen, k);
                 break;
             case 90:
