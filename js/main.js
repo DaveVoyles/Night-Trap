@@ -1,4 +1,4 @@
-(function() {
+var mainJS = (function() {
     'use strict';
 
     /**
@@ -125,105 +125,129 @@
      * @property {bool}   bJustSwitched      - Has the currentUrl switched since the user selected this room?
      * @property {number} nPotentialCaptured - Number of augers that could have been captured in this scene
      */
-    var current = {
+    // current = {
+    //    cam: {
+    //       camHallOne   : 'hallOne'
+    //      ,camKitchen   : 'kitchen'
+    //      ,camEntryway  : 'entryway'
+    //      ,camLivingRoom: 'livingroom'
+    //      ,camBathroom  : 'bathroom'
+    //      ,camBedroom   : 'bedroom'
+    //      ,camHallTwo   : 'hallTwo'
+    //      ,camDriveway  : 'driveway'
+    //    },
+    //    stillUrl          : ''  ,
+    //    bCanCatch         : true,
+    //    urlChangeTime     : 0   ,
+    //    catchTime         : 0   ,
+    //    curUrl            : ''  ,
+    //    nextUrl           : ''  ,
+    //    trapUrl           : ''  ,
+    //    bTrapSprung       : true,
+    //    nPotentialCaptured: 0   ,
+    //    bJustSwitched     : false
+    //};
+
+  
+   var Current = function Current() {
+
         cam: {
-           camHallOne   : 'hallOne'
-          ,camKitchen   : 'kitchen'
-          ,camEntryway  : 'entryway'
-          ,camLivingRoom: 'livingroom'
-          ,camBathroom  : 'bathroom'
-          ,camBedroom   : 'bedroom'
-          ,camHallTwo   : 'hallTwo'
-          ,camDriveway  : 'driveway'
-        },
-        stillUrl          : ''  ,
-        bCanCatch         : true,
-        urlChangeTime     : 0   ,
-        catchTime         : 0   ,
-        curUrl            : ''  ,
-        nextUrl           : ''  ,
-        trapUrl           : ''  ,
-        bTrapSprung       : true,
-        nPotentialCaptured: 0   ,
-        bJustSwitched     : false
-    };
+            var camHallOne    = 'hallOne'   ;
+            var camKitchen    = 'kitchen'   ;
+            var camEntryway   = 'entryway'  ;
+            var camLivingRoom = 'livingroom';
+            var camBathroom   = 'bathroom'  ;
+            var camBedroom    = 'bedroom'   ;
+            var camHallTwo    = 'hallTwo'   ;
+            var camDriveway   = 'driveway'  ;
+        };
+        var stillUrl           = ''  ;
+        var bCanCatch          = true;
+        var urlChangeTime      = 0   ;
+        var catchTime          = 0   ;
+        var curUrl             = ''  ;
+        var nextUrl            = ''  ;
+        var trapUrl            = ''  ;
+        var bTrapSprung        = true;
+        var nPotentialCaptured = 0   ;
+  };
 
-
-    // http://eclipsesource.com/blogs/2013/07/05/private-members-in-javascript/
-    current = {
-        getCam              : function ()    {
+    Current.prototype = {
+        getCam: function() {
             return this.cam;
         },
-        setCam              : function (val) {
-            this.cam              = val;
+        setCam: function(val) {
+            this.cam = val;
         },
-        getCanCatch         : function ()    {
+        getCanCatch: function() {
             return this.bCanCatch;
         },
-        setCanCatch         : function (val) {
-            this.bCanCatch        = val;
+        setCanCatch: function(val) {
+            this.bCanCatch = val;
         },
-        getUrlChangeTime    : function ()    {
+        getUrlChangeTime: function() {
             return this.urlChangeTime;
         },
-        setUrlChangeTime    : function (val) {
-            this.urlChangeTime    = val;
+        setUrlChangeTime: function(val) {
+            this.urlChangeTime = val;
         },
-        getCatchTime        : function ()    {
+        getCatchTime: function() {
             return this.catchTime;
         },
-        setCatchTime        : function (val) {
-            this.catchTime        = val;
+        setCatchTime: function(val) {
+            this.catchTime = val;
         },
-        getTime             : function ()    {
+        getTime: function() {
             return this.time;
         },
-        setTime             : function (val) {
-            this.time             = val;
+        setTime: function(val) {
+            this.time = val;
         },
-        getCurUrl           : function ()    {
+        getCurUrl: function() {
             return this.curUrl;
         },
-        setCurUrl           : function (val) {
-            this.curUrl           = val;
+        setCurUrl: function(val) {
+            this.curUrl = val;
         },
-        getNextUrl          : function ()    {
+        getNextUrl: function() {
             return this.nextUrl;
         },
-        setNextUrl          : function (val) {
-            this.nextUrl          = val;
+        setNextUrl: function(val) {
+            this.nextUrl = val;
         },
-        getStillUrl         : function ()    {
+        getStillUrl: function() {
             return this.stillUrl;
         },
-        setStillUrl         : function (val) {
-            this.stillUrl         = val;
+        setStillUrl: function(val) {
+            this.stillUrl = val;
         },
-        getTrapUrl          : function ()    {
+        getTrapUrl: function() {
             return this.trapUrl;
         },
-        setTrapUrl          : function (val) {
-            this.trapUrl          = val;
+        setTrapUrl: function(val) {
+            this.trapUrl = val;
         },
-        getTrapSprung       : function ()    {
-          return this.bTrapSprung;
+        getTrapSprung: function() {
+            return this.bTrapSprung;
         },
-        setTrapSprung       : function (val) {
-          this.bTrapSprung        = val;
+        setTrapSprung: function(val) {
+            this.bTrapSprung = val;
         },
-        getJustSwitched     : function ()    {
-          return this.bJustSwitched;
+        getJustSwitched: function() {
+            return this.bJustSwitched;
         },
-        setJustSwitched     : function (val) {
-          this.bJustSwitched      = val;
+        setJustSwitched: function(val) {
+            this.bJustSwitched = val;
         },
-        getPotentialCaptured: function ()    {
-          return this.nPotentialCaptured;
+        getPotentialCaptured: function() {
+            return this.nPotentialCaptured;
         },
-        setPotentialCaptured: function (val) {
-          this.nPotentialCaptured = val;
+        setPotentialCaptured: function(val) {
+            this.nPotentialCaptured = val;
         }
     };
+    var current = new Current();
+
 
 
     /**
@@ -823,20 +847,19 @@
         var h = hallOneTemplate;
         switch (current.getTime()) {
           case 1:
-                //r.curUrl    = camHallOne.c21    ;
-                //r.trapUrl   = camHallOne.c130422;
-                //r.catchTime = 3                 ;
-                //console.log(r)                  ;
+                h.curUrl    = camHallOne.c21    ;
+                h.trapUrl   = camHallOne.c130422;
+                h.catchTime = 3                 ;
          
                 // ONLY USE THESE WHEN TESTING OFFLINE
-                h.curUrl    = aTempLocal[0];
-                h.nextUrl   = aTempLocal[1];
-                h.trapUrl   = aTempLocal[2];            
-                h.catchTime = 3;
+                //h.curUrl    = aTempLocal[0];
+                //h.nextUrl   = aTempLocal[1];
+                //h.trapUrl   = aTempLocal[2];            
+                //h.catchTime = 3;
                 buildState(hallOne, h);
                 break;
             case 5:
-                h.curUrl    = aTempLocal[0];
+                h.curUrl    = aTempLocal[1];
                 h.nextUrl   = aTempLocal[2];
                 h.trapUrl   = aTempLocal[0];
                 buildState(hallOne, h);
@@ -1145,7 +1168,7 @@
         video.src(urlClip);
         video.load();
         video.play();
-        //if (current.getJustSwitched() === true){
+        //if (current.getJustSwitched() === true){ //TODO: not sure if I need this?
         var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
         console.log(current.getUrlChangeTime());
         console.log(current.getTime());
