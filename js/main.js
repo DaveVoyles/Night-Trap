@@ -455,9 +455,9 @@ var mainJS = (function() {
 
     /**
      * Used in the switch statements for room events.
-     * @param   {number} - minutes 
-     * @param   {number} - seconds 
-     * @returns {number} - conversion from min:sec to a number.  
+     * @param   {number} minutes 
+     * @param   {number} seconds 
+     * @returns {number} conversion from min:sec to a number.  
      */
     var minSecToNum = function minSecToNum(minutes, seconds) {
         var min = minutes || 0;
@@ -518,7 +518,7 @@ var mainJS = (function() {
         calcCatchTime(current.getCatchTime());
         eventsHallOne();
         eventsKitchen();
-        //eventsEntry();
+        eventsEntry();
 //        eventsLiving();
 //        eventsBathroom();
         //eventsBedroom();
@@ -550,7 +550,8 @@ var mainJS = (function() {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-            video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
+            // video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
+            video.src([{ type: 'video/mp4', src: camMisc.c11}]);
             video.load();
             video.play();
         } else {
@@ -734,7 +735,9 @@ var mainJS = (function() {
      * If the value of property is not set here, it will be set to default values of the objRoom.
      */
     var eventsHallOne         = function eventsHallOne () { 
-        var h = hallOneTemplate;
+        var h           = hallOneTemplate;
+            h.sRoomName = 'hallOne';
+            
         switch (current.getTime()) {
           case minSecToNum(0,1):
                 h.curUrl    = camHallOne.c21    ;
@@ -750,50 +753,54 @@ var mainJS = (function() {
                 break;
             case minSecToNum(1,16):
                 h.curUrl = camHallOne.c1152221;
-                buildState(hallOne, h);
+                buildState(hallOne, h)        ;
                 break;
             case minSecToNum(3, 13):
                 // Do not have uploaded to Azure, as of 9/26
         }
-        h.sRoomName = 'hallOne';
     };
 
    
 
     var eventsKitchen = function eventsKitchen() {
-        var k = kitchenTemplate;
+        var k           = kitchenTemplate;
+            k.sRoomName = 'kitchen';
+            
         switch (current.getTime()){     
             case minSecToNum(1,21):
                 k.curUrl    = camKitchen.c1200431;
                 k.trapUrl   = camKitchen.c1240632;
-                k.catchTime = minSecToNum(1, 24);
-                buildState(kitchen, k);
+                k.catchTime = minSecToNum(1, 24) ;
+                buildState(kitchen, k)           ;
                 break;
             case minSecToNum(1,30):
                 k.currentUrl = camKitchen.c1481231;
-                   buildState(kitchen, k);
+                buildState(kitchen, k)            ;
                 break;
             default:
                 buildState(kitchen, k);
         }
-        k.sRoomName = 'kitchen';
     };
 
 
     var eventsEntry = function eventsEntry() {
-        var e = entryTemplate;
+        var e           = entryTemplate;
+            e.sRoomName = 'entryway';
+            
         switch (current.getTime()) {
             case minSecToNum(1, 33):
                 e.curUrl    = camEntryway.c1320261;
                 e.trapUrl   = camEntryway.c1391862;
                 e.catchTime = minSecToNum(1, 39)  ;
-                buildState(entryway, e);
+                buildState(entryway, e)           ;
             case minSecToNum(2, 13):
-                
+                e.curUrl    = camEntryway.c2122461;
+                e.trapUrl   = camEntryway.c2590262;
+                e.catchTime = minSecToNum(2,58)   ;
+                buildState(entryway, e)           ;
               default:
                   buildState(entryway, e);
         }
-        e.sRoomName = 'entryway';
     };
 
     //var eventsLiving = function eventsLiving () {
