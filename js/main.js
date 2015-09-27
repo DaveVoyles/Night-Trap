@@ -771,8 +771,10 @@ var mainJS = (function() {
                 break;
             case minSecToNum(1,30):
                 k.currentUrl = camKitchen.c1481231;
+                   buildState(kitchen, k);
                 break;
             default:
+                buildState(kitchen, k);
         }
         k.sRoomName = 'kitchen';
     };
@@ -791,7 +793,7 @@ var mainJS = (function() {
               default:
                   buildState(entryway, e);
         }
-        entryTemplate.sRoomName = 'entryway';
+        e.sRoomName = 'entryway';
     };
 
     //var eventsLiving = function eventsLiving () {
@@ -1078,7 +1080,7 @@ var mainJS = (function() {
      * then that new URL is passed into the video player & played.
      * @param {object} roomTemp - Room we are operating on.
      */
-    var observeRoom = function observeRoom(roomTemp) {
+    var ObserveRoom = function observeRoom(roomTemp) {
         Object.observe(roomTemp, function (changes) {
             if (changes[0] !== undefined) {
                 var oldUrl              = changes[0].oldValue;
@@ -1098,14 +1100,14 @@ var mainJS = (function() {
      * Sets Object.observe for each room in the game.
      */
     var observeAllRooms = function observeAllRooms() {
-        var observeHallOne = new observeRoom(hallOneTemplate  );
-        var observeKitchen = new observeRoom(kitchenTemplate  );
-        var observeEntry   = new observeRoom(entryTemplate    );
-        var observeLiving  = new observeRoom(livingTemplate   );
-        var observeBath    = new observeRoom(bathTemplate     );
-        var observeBed     = new observeRoom(bedTemplate      );
-        var observeHallTwo = new observeRoom(hallTwoTemplate  );
-        var observeDrive   = new observeRoom(driveTemplate    );
+        var observeHallOne = new ObserveRoom(hallOneTemplate  );
+        var observeKitchen = new ObserveRoom(kitchenTemplate  );
+        var observeEntry   = new ObserveRoom(entryTemplate    );
+        var observeLiving  = new ObserveRoom(livingTemplate   );
+        var observeBath    = new ObserveRoom(bathTemplate     );
+        var observeBed     = new ObserveRoom(bedTemplate      );
+        var observeHallTwo = new ObserveRoom(hallTwoTemplate  );
+        var observeDrive   = new ObserveRoom(driveTemplate    );
     };
 
 
