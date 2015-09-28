@@ -454,7 +454,8 @@ var mainJS = (function() {
 
 
     /**
-     * Used in the switch statements for room events.
+     * Formats the timestamp from the excel spreadsheet into a format the switch statement understands. 
+     * USAGE: 1:15 from excel is entered as minSecToMin(1, 15) and returns 75.
      * @param   {number} minutes 
      * @param   {number} seconds 
      * @returns {number} conversion from min:sec to a number.  
@@ -513,16 +514,17 @@ var mainJS = (function() {
      * @param {number} delta - The amount of time since the last update, in seconds
      */
     var update                = function update (delta) {
-        elapsedTime();
-        updateTimeOnScreen();
+        elapsedTime                        ();
+        updateTimeOnScreen                 ();
         calcCatchTime(current.getCatchTime());
-        eventsHallOne();
-        eventsKitchen();
-        eventsEntry();
-//        eventsLiving();
-//        eventsBathroom();
-        //eventsBedroom();
-//        eventshallTwo();
+        
+        eventsHallOne ();
+        eventsKitchen ();
+        eventsEntry   ();
+        eventsLiving  ();
+        eventsBathroom();
+        eventsBedroom ();
+        eventsHallTwo ();
 //        eventsDriveway();
     };
 
@@ -706,7 +708,8 @@ var mainJS = (function() {
     /**
      * Template used by events functions to store current values for each room. This is where the video player gets the url from.
      * A new instance is created for each room, with: Object.create(objRoom);
-     * Object.observe uses this to detect value changes, then changes video.src() on the fly
+     * Object.observe uses this to detect value changes, then changes video.src() on the fly, so it must 
+     * remain an object and cannot be turned into a function.
      */
     var roomTemplate =  {
         curUrl            : ''
@@ -736,7 +739,7 @@ var mainJS = (function() {
      */
     var eventsHallOne         = function eventsHallOne () { 
         var h           = hallOneTemplate;
-            h.sRoomName = 'hallOne';
+            h.sRoomName = 'hallOne'      ;
             
         switch (current.getTime()) {
           case minSecToNum(0,1):
@@ -760,11 +763,9 @@ var mainJS = (function() {
         }
     };
 
-   
-
     var eventsKitchen = function eventsKitchen() {
         var k           = kitchenTemplate;
-            k.sRoomName = 'kitchen';
+            k.sRoomName = 'kitchen'      ;
             
         switch (current.getTime()){     
             case minSecToNum(1,21):
@@ -782,10 +783,9 @@ var mainJS = (function() {
         }
     };
 
-
     var eventsEntry = function eventsEntry() {
         var e           = entryTemplate;
-            e.sRoomName = 'entryway';
+            e.sRoomName = 'entryway'   ;
             
         switch (current.getTime()) {
             case minSecToNum(1, 33):
@@ -793,94 +793,131 @@ var mainJS = (function() {
                 e.trapUrl   = camEntryway.c1391862;
                 e.catchTime = minSecToNum(1, 39)  ;
                 buildState(entryway, e)           ;
+                break;
             case minSecToNum(2, 13):
                 e.curUrl    = camEntryway.c2122461;
                 e.trapUrl   = camEntryway.c2590262;
                 e.catchTime = minSecToNum(2,58)   ;
                 buildState(entryway, e)           ;
+                break;
               default:
                   buildState(entryway, e);
         }
     };
 
-    //var eventsLiving = function eventsLiving () {
+    var eventsLiving = function eventsLiving () {
+        var l           = livingTemplate;
+            l.sRoomName = 'livingRoom'  ;
+            
+       switch(current.getTime()) {
+           case minSecToNum(1, 0):
+               l.curUrl    = camLivingRoom.c1001241; 
+               l.trapUrl   = camLivingRoom.c1071042;
+               l.catchTime = minSecToNum(1, 6)     ;
+               buildState(livingroom, l)           ;
+               break;
+         case minSecToNum(1, 57):
+              l.curUrl = camLivingRoom.c1572241;
+              buildState(livingroom, l)        ;
+              break;
+        case minSecToNum(0, 43):
+              l.curUrl    = camLivingRoom.c232241;
+              l.trapUrl   = camLivingRoom.c271442;
+              l.catchTime = minSecToNum(0, 47)   ;
+              buildState(livingroom, l)          ;
+              break;
+         default:
+            buildState(livingroom, l);
+       }        
+    };
+
+    var eventsBathroom       = function eventsBathroom () {
+       var b           = bathTemplate;
+           b.sRoomName = 'bathroom'  ;
+           
+       switch (current.getTime()) {
+           case minSecToNum(0, 18):
+               b.curUrl = camBathroom.c180291;
+               buildState(bathroom, b)       ;
+               break;
+             break;
+           case minSecToNum(0, 37):
+               b.curUrl    = camBathroom.c352291;
+               b.trapUrl   = camBathroom.c431292;
+               b.catchTime = minSecToNum(0, 43) ;                 
+               buildState(bathroom, b)          ;
+               break;
+           case 48:
+               b.curUrl    = camBathroom.c500291 ;
+               b.trapUrl   = camBathroom.c430249b;
+               b.catchTime = minSecToNum(0, 49)  ;
+               buildState(bathroom, b)           ;
+               break;
+         default: 
+             buildState(bathroom, b);
+       }
+    };
+
+    var eventsBedroom         = function eventsBedroom () {
+       var b           = bedTemplate;
+           b.sRoomName = 'bedrom'   ;
+           
+       switch (current.getTime()) {
+           case minSecToNum(0, 1):
+               b.curUrl    = camBedroom.c81    ;
+               b.trapUrl   = camBedroom.c352482;
+               b.catchTime = minSecToNum(0, 34);
+               buildState(bedroom, b)          ;
+               break;
+           case minSecToNum(0, 48):
+               b.curUrl    = camBedroom.c3060281 ;
+               b.trapUrl   = camBedroom.c0430249b;
+               b.catchTime = minSecToNum(0, 49)  ;
+               buildState(bedroom, b)            ;              
+               break;
+           case minSecToNum(0, 54):
+               b.curUrl = camBedroom.c540281;
+               buildState(bedroom, b)       ;
+               break;
+         case minSecToNum(1, 12): // This time is a guess. See the spreadsheet
+              // buildState(br, /* Missing video clip */ null, null, null);
+              break;
+        default:
+              buildState(bedroom, b);
+       }
+    };
+
+    var eventsHallTwo = function eventsHallTwo () {
+       var h           = hallTwoTemplate;
+           h.sRoomName = 'hallTwo';
+
+       switch (current.getTime()) {
+           case minSecToNum(0, 31):
+                h.curUrl = camHallTwo.c310471;
+                buildState(hallTwo, h)       ;
+                break;
+            case minSecToNum(0, 51):
+                h.curUrl    = camHallTwo.c500271;
+                h.trapUrl   = camHallTwo.c542272;
+                h.catchTime = minSecToNum(0, 54);
+                buildState(hallTwo, h)          ;
+                break;
+         default:
+           buildState(hallTwo, h);
+       }
+    };
+
+    // var eventsDriveway = function eventsDriveway () {
+    //    var d           = driveTemplate;
+    //        d.sRoomName = 'driveway';
+ 
     //    switch(current.getTime()) {
-    //        case 60:
-    //            r.curUrl = camLivingRoom.c1572241;
-    //            buildState(living, r);
-    //          break;
-    //      case 117:
-    //          //
-    //        break;
+    //        case minSecToNum()
+           
     //      default:
+    //        buildState(driveway, d);
     //    }
-    //    livingTemplate.sRoomName = 'livingRoom';
-    //    buildState(entryway, entryTemplate);
-    //};
-
-    //var eventsBathroom       = function eventsBathroom () {
-    //    var bath = room.bathroom;
-    //    //var r    = new objRoom();
-    //    switch (current.getTime()) {
-    //        case 18:
-    //            r.curUrl = camBathroom.c180291;
-    //            buildState(bath, r);
-    //          break;
-    //        case 37:
-    //            r.curUrl    = camBathroom.c352291;
-    //            r.trapUrl   = camBathroom.c431292;
-    //            r.catchTime = 43;
-    //            buildState(bath, r);
-    //          break;
-    //        case 48:
-    //            r.curUrl    = camBathroom.c500291;
-    //            r.trapUrl   = camBathroom.c430249b;
-    //            r.catchTime = 49;
-    //            buildState(bath, r);
-    //          break;
-    //      default:  // Only needed if the room does not have an event occurring as soon as the game starts. Used to be (bath, null);
-    //          buildState(bath, r);
-    //    }
-    //};
-
-    //var eventsBedroom         = function eventsBedroom () {
-    //    var br = room.bedroom;
-    //    //var r  = new objRoom();
-    //    switch (current.getTime()) {
-    //        case 1:
-    //            r.curUrl    = camBedroom.c81;
-    //            r.trapUrl   = camBedroom.c352482;
-    //            r.catchTime = 34;
-    //            buildState(br, r);
-    //        break;
-    //        case 54:
-    //            r.curUrl = camBedroom.c540281;
-    //            buildState(br, r);
-    //        break;
-    //      case 72: // This time is a guess. See the spreadsheet
-    //        buildState(br, /* Missing video clip */ null, null, null);
-    //        break;
-    //    }
-    //};
-
-    //var eventshallTwo = function eventsHallTwo () {
-    //    var hall = room.hallTwo;
-    //    //var r    = new objRoom();
-    //    switch (current.getTime()) {
-
-    //      default:
-    //        buildState(hall, r);
-    //    }
-    //};
-
-    //var eventsDriveway = function eventsDriveway () {
-    //    var drive = room.driveway;
-    //    //var r     = new objRoom();
-    //    switch(current.getTime()) {
-    //      default:
-    //        buildState(drive, r);
-    //    }
-    //};
+    // };
 
 
     /**
