@@ -20,6 +20,8 @@ The video is streaming from [Azure Media Services](http://www.davevoyles.com/?s=
 
 There's obviously still a lot of work to go. Special thanks to Phil Cobley in the [Night Trap](https://www.facebook.com/groups/NightTrap/) Facebook group for chopping up the footage!
 
+[This YouTube video](https://www.youtube.com/watch?v=Invzbp5QQVs) has all of the clips playing simultaneously, so that you can get a better idea of what the process if like for piecing this game together. Paul Jenson, the creator of the SCAT tool I used to rip the video from the disc, put this together.
+
 ----------
 ### To do:
 
