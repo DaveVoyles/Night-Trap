@@ -100,6 +100,12 @@
         , c542272:  'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/00542272.mp4'
         // Augers enters from bedroom, goes down stairs
         , c2390671: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/02390671.mp4'
+        //4 Augers enter from beneath cam, 2 enter bath, 1 goes right
+        , c4000471: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/04000471.mp4'
+        // TRAP: Last auger caught in floor trap
+        , c4120872: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/04120872.mp4'
+        // Auger quickly enters from bedroom, walks toward cam
+        , c4451671: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallTwo/04451671.mp4'
     };
 
     /* 8 - Bedroom */

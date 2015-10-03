@@ -642,22 +642,21 @@ var mainJS = (function() {
            
        switch (current.getTime()) {
            case minSecToNum(0, 18):
-               b.curUrl = camBathroom.c180291;
-               buildState(bathroom, b)       ;
-               break;
-             break;
+               b.curUrl = camBathroom.c180291    ;
+               buildState(bathroom, b)           ;
+               break                             ;
            case minSecToNum(0, 37):
-               b.curUrl    = camBathroom.c352291;
-               b.trapUrl   = camBathroom.c431292;
-               b.catchTime = minSecToNum(0, 43) ;                 
-               buildState(bathroom, b)          ;
-               break;
-           case 48:
+               b.curUrl    = camBathroom.c352291 ;
+               b.trapUrl   = camBathroom.c431292 ;
+               b.catchTime = minSecToNum(0, 43)  ;                 
+               buildState(bathroom, b)           ;
+               break                             ;
+           case minSecToNum(0, 48):
                b.curUrl    = camBathroom.c500291 ;
                b.trapUrl   = camBathroom.c430249b;
                b.catchTime = minSecToNum(0, 49)  ;
                buildState(bathroom, b)           ;
-               break;
+               break                             ;
          default: 
              buildState(bathroom, b);
        }
@@ -669,24 +668,27 @@ var mainJS = (function() {
            
        switch (current.getTime()) {
            case minSecToNum(0, 1):
-               b.curUrl    = camBedroom.c81    ;
-               b.trapUrl   = camBedroom.c352482;
-               b.catchTime = minSecToNum(0, 34);
-               buildState(bedroom, b)          ;
-               break;
-           case minSecToNum(0, 48):
-               b.curUrl    = camBedroom.c3060281 ;
-               b.trapUrl   = camBedroom.c0430249b;
-               b.catchTime = minSecToNum(0, 49)  ;
-               buildState(bedroom, b)            ;              
-               break;
+               b.curUrl    = camBedroom.c81      ;
+               b.trapUrl   = camBedroom.c352482  ;
+               b.catchTime = minSecToNum(0, 34)  ;
+               buildState(bedroom, b)            ;
+               break                             ;
            case minSecToNum(0, 54):
-               b.curUrl = camBedroom.c540281;
-               buildState(bedroom, b)       ;
-               break;
-         case minSecToNum(1, 12): // This time is a guess. See the spreadsheet
-              // buildState(br, /* Missing video clip */ null, null, null);
-              break;
+               b.curUrl = camBedroom.c540281     ;
+               buildState(bedroom, b)            ;
+               break                             ;
+           case minSecToNum(3, 7): // May need to start with 07? But strict mode does not allow
+               b.curUrl    = camBedroom.c3060281 ;
+               b.trapUrl   = camBedroom.c3262482 ;
+               b.catchTime = minSecToNum(3, 25)  ;
+               buildState(bedroom, b)            ;              
+               break                             ;
+           case minSecToNum(4, 35):
+               b.curUrl    = camBedroom.c4390482 ;
+               b.trapUrl   = camBedroom.c4390482 ;
+               b.catchTime = minSecToNum(4, 38)  ;
+               buildState(bedroom, b)            ;
+               break                             ;
         default:
               buildState(bedroom, b);
        }
@@ -698,15 +700,26 @@ var mainJS = (function() {
 
        switch (current.getTime()) {
            case minSecToNum(0, 31):
-                h.curUrl = camHallTwo.c310471;
-                buildState(hallTwo, h)       ;
-                break;
+                h.curUrl = camHallTwo.c310471   ;
+                buildState(hallTwo, h)          ;
+                break                           ;
             case minSecToNum(0, 51):
                 h.curUrl    = camHallTwo.c500271;
                 h.trapUrl   = camHallTwo.c542272;
                 h.catchTime = minSecToNum(0, 54);
                 buildState(hallTwo, h)          ;
-                break;
+                break                           ;
+
+           case minSecToNum(2, 39):
+               h.curUrl = camHallTwo.c2390671   ;
+               buildState(hallTwo, h)           ;
+               break                            ;
+           case minSecToNum(4, 2):
+               h.curUrl    = camHallTwo.c4000471; 
+               h.trapUrl   = camHallTwo.c4120872;
+               h.catchTime = minSecToNum(4, 11) ;
+               buildState(hallTwo, h)           ;
+               break;
          default:
            buildState(hallTwo, h);
        }
@@ -718,8 +731,11 @@ var mainJS = (function() {
  
        switch(current.getTime()) {
            case minSecToNum(1, 56):
-           d.curUrl
-           
+               d.curUrl    = camDriveway.c1440451;
+               d.trapUrl   = camDriveway.c3481052;
+               d.catchTime = minSecToNum(2, 45)  ;
+               buildState(driveway, d)           ;
+               break;        
          default:
            buildState(driveway, d);
        }
