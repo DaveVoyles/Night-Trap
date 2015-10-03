@@ -12,6 +12,8 @@
         // TRAP: Augers captured in hall
         , c130422:  'https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00130422.mp4'
         // Tony, Jeff, & Dad enter from basement
+        , c1152221: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/01152221.mp4'
+        // Tony and Jeff enter from Kitchen, exit back door. Auger enters, can be caught
         , c2500221: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/02500221.mp4'           
         // TRAP: Auger caught in hall trap
         , c3150422: 'https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/03150422.mp4'
@@ -31,8 +33,8 @@
         , c1240632: 'https://nighttrapblob.blob.core.windows.net/ntvids/kitchen/01240632.mp4'
         // Tony, Jeff, & Dad enter from Hall-1, talk to parents
         , c1481231: 'https://nighttrapblob.blob.core.windows.net/ntvids/kitchen/01481231.mp4'
-        //
-
+        // Everyone enters from entryway. Girls go to hall-1, parents go to entryway
+        , c3540631: 'https://nighttrapblob.blob.core.windows.net/ntvids/kitchen/03540631.mp4'
     };
 
     /* 4- Living-Room */

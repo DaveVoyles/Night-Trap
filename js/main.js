@@ -296,9 +296,9 @@ var mainJS = (function() {
         eventsKitchen ();
         eventsEntry   ();
         eventsLiving  ();
-        eventsBathroom();
-        eventsBedroom ();
-        eventsHallTwo ();
+        //eventsBathroom();
+        //eventsBedroom ();
+        //eventsHallTwo ();
 //        eventsDriveway();
     };
 
@@ -516,24 +516,37 @@ var mainJS = (function() {
             h.sRoomName = 'hallOne'      ;
             
         switch (current.getTime()) {
-          case minSecToNum(0,1):
-                h.curUrl    = camHallOne.c21    ;
-                h.trapUrl   = camHallOne.c130422;
-                h.catchTime = 3                 ;
-         
+            case minSecToNum(0, 1):
                 // ONLY USE THESE WHEN TESTING OFFLINE
                 //h.curUrl    = aTempLocal[0];
                 //h.nextUrl   = aTempLocal[1];
                 //h.trapUrl   = aTempLocal[2];            
                 //h.catchTime = 3;
-                buildState(hallOne, h);
+                h.curUrl     = camHallOne.c21    ;
+                h.trapUrl    = camHallOne.c130422;
+                h.catchTime  = minSecToNum(0, 13);                
+                buildState(hallOne, h)           ;
                 break;
-            case minSecToNum(1,16):
-                h.curUrl = camHallOne.c1152221;
-                buildState(hallOne, h)        ;
+            case minSecToNum(1, 16):
+                h.curUrl    = camHallOne.c1152221;
+                buildState(hallOne, h)           ;
                 break;
-            case minSecToNum(3, 13):
-                // Do not have uploaded to Azure, as of 9/26
+            case minSecToNum(2, 50):
+                h.curUrl    = camHallOne.c2500221;
+                h.trapUrl   = camHallOne.c3150422;
+                h.catchTime = minSecToNum(3, 14) ;
+                buildState(hallOne, h)           ;
+                break;
+            case minSecToNum(3, 34):
+                h.curUrl    = camHallOne.c3332421;
+                h.trapUrl   = camHallOne.c3422422;
+                h.catchTime = minSecToNum(3, 42) ;
+                buildState(hallOne, h)           ;
+                break;
+            case minSecToNum(4, 45):
+                h.curUrl    = camHallOne.c4442421;
+                buildState(hallOne, h)           ;
+                break;
         }
     };
 
@@ -542,16 +555,20 @@ var mainJS = (function() {
             k.sRoomName = 'kitchen'      ;
             
         switch (current.getTime()){     
-            case minSecToNum(1,21):
-                k.curUrl    = camKitchen.c1200431;
-                k.trapUrl   = camKitchen.c1240632;
-                k.catchTime = minSecToNum(1, 24) ;
-                buildState(kitchen, k)           ;
-                break;
-            case minSecToNum(1,30):
+            case minSecToNum(1, 21):
+                k.curUrl     = camKitchen.c1200431;
+                k.trapUrl    = camKitchen.c1240632;
+                k.catchTime  = minSecToNum(1, 23) ;
+                buildState(kitchen, k)            ;
+                break                             ;
+            case minSecToNum(1, 48):
                 k.currentUrl = camKitchen.c1481231;
                 buildState(kitchen, k)            ;
-                break;
+                break                             ;
+            case minSecToNum(3, 54):
+                k.curUrl     = camKitchen.c3540631;
+                buildState(kitchen, k)            ;
+                break                             ;
             default:
                 buildState(kitchen, k);
         }
@@ -584,21 +601,35 @@ var mainJS = (function() {
             l.sRoomName = 'livingRoom'  ;
             
        switch(current.getTime()) {
+           case minSecToNum(0, 25):
+               l.curUrl    = camLivingRoom.c232241 ;
+               l.trapUrl   = camLivingRoom.c271442 ;
+               l.catchTime = minSecToNum(0, 27)    ;
+               l.nextUrl   = camLivingRoom.c271641 ;
+               buildState(livingroom, l)           ;
+               break                               ;
            case minSecToNum(1, 0):
                l.curUrl    = camLivingRoom.c1001241; 
                l.trapUrl   = camLivingRoom.c1071042;
                l.catchTime = minSecToNum(1, 6)     ;
                buildState(livingroom, l)           ;
-               break;
+               break                               ;
          case minSecToNum(1, 57):
-              l.curUrl = camLivingRoom.c1572241;
-              buildState(livingroom, l)        ;
-              break;
-        case minSecToNum(0, 43):
-              l.curUrl    = camLivingRoom.c232241;
-              l.trapUrl   = camLivingRoom.c271442;
-              l.catchTime = minSecToNum(0, 47)   ;
-              buildState(livingroom, l)          ;
+              l.curUrl = camLivingRoom.c1572241    ;
+              buildState(livingroom, l)            ;
+              break                                ;
+        case minSecToNum(3, 24):
+              l.curUrl    = camLivingRoom.c3230241 ;
+              l.trapUrl   = camLivingRoom.c3330842 ;
+              l.catchTime = minSecToNum(3, 32)     ;
+              l.nextUrl   = camLivingRoom.c3330841 ;
+              buildState(camLivingRoom, l)         ;
+            break                                  ;
+        case minSecToNum(4, 43):
+              l.curUrl    = camLivingRoom.c4511041 ;
+              l.trapUrl   = camLivingRoom.c3330842 ;
+              l.catchTime = minSecToNum(4, 56)     ;
+              buildState(livingroom, l)            ;
               break;
          default:
             buildState(livingroom, l);
