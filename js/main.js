@@ -184,11 +184,10 @@ var mainJS = (function () {
      * Inits update loop.
      */
     var init                   = function init () {
-        registerRoomButton();
-        initializeAudio();
+        registerRoomButton   ();
+        initializeAudio      ();
         initializeVideoStream();
-        //MainLoop.setUpdate(update).start();
-        observeAllRooms(); // TODO: May be able to move this out of here
+        observeAllRooms      (); 
     };
 
 
