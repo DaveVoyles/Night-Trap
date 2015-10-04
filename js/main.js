@@ -1,4 +1,4 @@
-var mainJS = (function() {
+var mainJS = (function () {
     'use strict';
 
     /**
@@ -187,7 +187,7 @@ var mainJS = (function() {
         registerRoomButton();
         initializeAudio();
         initializeVideoStream();
-        MainLoop.setUpdate(update).start();
+        //MainLoop.setUpdate(update).start();
         observeAllRooms(); // TODO: May be able to move this out of here
     };
 
@@ -287,19 +287,20 @@ var mainJS = (function() {
      * Update loop for checking when to change video scenes 
      * @param {number} delta - The amount of time since the last update, in seconds
      */
-    var update                = function update (delta) {
-        elapsedTime                        ();
-        updateTimeOnScreen                 ();
+
+    var update = function update(delta) {
+        elapsedTime();
+        updateTimeOnScreen();
         calcCatchTime(current.getCatchTime());
-        
-        eventsHallOne ();
-        eventsKitchen ();
-        eventsEntry   ();
-        eventsLiving  ();
-        //eventsBathroom();
-        //eventsBedroom ();
+
+        eventsHallOne();
+        eventsKitchen();
+        //eventsEntry   ();
+        //eventsLiving  ();
+        eventsBathroom();
+        eventsBedroom();
         //eventsHallTwo ();
-//        eventsDriveway();
+        //eventsDriveway();
     };
 
 
@@ -319,15 +320,15 @@ var mainJS = (function() {
      * Loads video as soon as page loads for Video.js player.
      * Disable right-click controls for video player. Cannot reference videoJs directly, event listener
      * does not work.
+     * Update (handles the timer) waits for the video to be loaded before init. 
      */
-    var initializeVideoStream = function initializeVideoStream () {
-        video                 = videojs('video-player');
+    var initializeVideoStream = function initializeVideoStream() {
+        video = videojs('video-player');
         if (!Modernizr.video) {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-            // video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
-            video.src([{ type: 'video/mp4', src: camMisc.c11}]);
+            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
             video.load();
             video.play();
         } else {
@@ -337,9 +338,14 @@ var mainJS = (function() {
         }
 
         document.getElementById('video-player').addEventListener('contextmenu', function(e) {
-            e.preventDefault();
+            e.defaultPrevented();
         }, false);
-    };
+
+        video.on('loadeddata',
+            MainLoop.setUpdate(update).start()
+          , false
+        );
+    }
 
 
     /**
@@ -360,7 +366,10 @@ var mainJS = (function() {
                   current.setUrlChangeTime    (hallOne.getTime             ())      ;
                   current.setStillUrl         (hallOne.getStillUrl         ())      ;
                   current.setTrapSprung       (hallOne.getTrapSprung       ())      ;
-                  current.setPotentialCaptured(hallOne.getPotentialCaptured())      ;
+                  current.setPotentialCaptured(hallOne.getPotentialCaptured());
+
+                  console.log('H: ' + hallOne.getCurUrl());
+                  console.log('C: ' + current.getCurUrl());
                   break                                                             ;
               case 'Kitchen':
                   current.setCam              ('kitchen'                     )      ;
@@ -526,47 +535,49 @@ var mainJS = (function() {
                 h.trapUrl    = camHallOne.c130422;
                 h.catchTime  = minSecToNum(0, 13);                
                 buildState(hallOne, h)           ;
-                break;
+                break                            ;
             case minSecToNum(1, 16):
                 h.curUrl    = camHallOne.c1152221;
                 buildState(hallOne, h)           ;
-                break;
+                break                            ;
             case minSecToNum(2, 50):
                 h.curUrl    = camHallOne.c2500221;
                 h.trapUrl   = camHallOne.c3150422;
                 h.catchTime = minSecToNum(3, 14) ;
                 buildState(hallOne, h)           ;
-                break;
+                break                            ;
             case minSecToNum(3, 34):
                 h.curUrl    = camHallOne.c3332421;
                 h.trapUrl   = camHallOne.c3422422;
                 h.catchTime = minSecToNum(3, 42) ;
                 buildState(hallOne, h)           ;
-                break;
+                break                            ;
             case minSecToNum(4, 45):
                 h.curUrl    = camHallOne.c4442421;
                 buildState(hallOne, h)           ;
-                break;
+                break                            ;
+            default:
+                //buildState(hallOne, h);
         }
     };
 
-    var eventsKitchen = function eventsKitchen() {
-        var k           = kitchenTemplate;
-            k.sRoomName = 'kitchen'      ;
+    var eventsKitchen         = function eventsKitchen() {
+        var k                 = kitchenTemplate;
+            k.sRoomName       = 'kitchen'      ;
             
         switch (current.getTime()){     
             case minSecToNum(1, 21):
-                k.curUrl     = camKitchen.c1200431;
-                k.trapUrl    = camKitchen.c1240632;
-                k.catchTime  = minSecToNum(1, 23) ;
+                k.curUrl      = camKitchen.c1200431;
+                k.trapUrl     = camKitchen.c1240632;
+                k.catchTime   = minSecToNum(1, 23) ;
                 buildState(kitchen, k)            ;
                 break                             ;
             case minSecToNum(1, 48):
-                k.currentUrl = camKitchen.c1481231;
+                k.currentUrl  = camKitchen.c1481231;
                 buildState(kitchen, k)            ;
                 break                             ;
             case minSecToNum(3, 54):
-                k.curUrl     = camKitchen.c3540631;
+                k.curUrl      = camKitchen.c3540631;
                 buildState(kitchen, k)            ;
                 break                             ;
             default:
@@ -574,21 +585,21 @@ var mainJS = (function() {
         }
     };
 
-    var eventsEntry = function eventsEntry() {
-        var e           = entryTemplate;
-            e.sRoomName = 'entryway'   ;
+    var eventsEntry           = function eventsEntry() {
+        var e                 = entryTemplate;
+            e.sRoomName       = 'entryway'   ;
             
         switch (current.getTime()) {
             case minSecToNum(1, 33):
-                e.curUrl    = camEntryway.c1320261;
-                e.trapUrl   = camEntryway.c1391862;
-                e.catchTime = minSecToNum(1, 39)  ;
+                e.curUrl      = camEntryway.c1320261;
+                e.trapUrl     = camEntryway.c1391862;
+                e.catchTime   = minSecToNum(1, 39)  ;
                 buildState(entryway, e)           ;
                 break;
             case minSecToNum(2, 13):
-                e.curUrl    = camEntryway.c2122461;
-                e.trapUrl   = camEntryway.c2590262;
-                e.catchTime = minSecToNum(2,58)   ;
+                e.curUrl      = camEntryway.c2122461;
+                e.trapUrl     = camEntryway.c2590262;
+                e.catchTime   = minSecToNum(2,58)   ;
                 buildState(entryway, e)           ;
                 break;
               default:
@@ -596,39 +607,39 @@ var mainJS = (function() {
         }
     };
 
-    var eventsLiving = function eventsLiving () {
-        var l           = livingTemplate;
-            l.sRoomName = 'livingRoom'  ;
+    var eventsLiving          = function eventsLiving () {
+        var l                 = livingTemplate;
+            l.sRoomName       = 'livingRoom'  ;
             
        switch(current.getTime()) {
            case minSecToNum(0, 25):
-               l.curUrl    = camLivingRoom.c232241 ;
-               l.trapUrl   = camLivingRoom.c271442 ;
-               l.catchTime = minSecToNum(0, 27)    ;
-               l.nextUrl   = camLivingRoom.c271641 ;
+               l.curUrl       = camLivingRoom.c232241 ;
+               l.trapUrl      = camLivingRoom.c271442 ;
+               l.catchTime    = minSecToNum(0, 27)    ;
+               l.nextUrl      = camLivingRoom.c271641 ;
                buildState(livingroom, l)           ;
                break                               ;
            case minSecToNum(1, 0):
-               l.curUrl    = camLivingRoom.c1001241; 
-               l.trapUrl   = camLivingRoom.c1071042;
-               l.catchTime = minSecToNum(1, 6)     ;
+               l.curUrl       = camLivingRoom.c1001241; 
+               l.trapUrl      = camLivingRoom.c1071042;
+               l.catchTime    = minSecToNum(1, 6)     ;
                buildState(livingroom, l)           ;
                break                               ;
          case minSecToNum(1, 57):
-              l.curUrl = camLivingRoom.c1572241    ;
+              l.curUrl        = camLivingRoom.c1572241    ;
               buildState(livingroom, l)            ;
               break                                ;
         case minSecToNum(3, 24):
-              l.curUrl    = camLivingRoom.c3230241 ;
-              l.trapUrl   = camLivingRoom.c3330842 ;
-              l.catchTime = minSecToNum(3, 32)     ;
-              l.nextUrl   = camLivingRoom.c3330841 ;
+              l.curUrl        = camLivingRoom.c3230241 ;
+              l.trapUrl       = camLivingRoom.c3330842 ;
+              l.catchTime     = minSecToNum(3, 32)     ;
+              l.nextUrl       = camLivingRoom.c3330841 ;
               buildState(camLivingRoom, l)         ;
             break                                  ;
         case minSecToNum(4, 43):
-              l.curUrl    = camLivingRoom.c4511041 ;
-              l.trapUrl   = camLivingRoom.c3330842 ;
-              l.catchTime = minSecToNum(4, 56)     ;
+              l.curUrl        = camLivingRoom.c4511041 ;
+              l.trapUrl       = camLivingRoom.c3330842 ;
+              l.catchTime     = minSecToNum(4, 56)     ;
               buildState(livingroom, l)            ;
               break;
          default:
@@ -636,92 +647,92 @@ var mainJS = (function() {
        }        
     };
 
-    var eventsBathroom       = function eventsBathroom () {
-       var b           = bathTemplate;
-           b.sRoomName = 'bathroom'  ;
+    var eventsBathroom        = function eventsBathroom () {
+       var b                  = bathTemplate;
+           b.sRoomName        = 'bathroom'  ;
            
        switch (current.getTime()) {
            case minSecToNum(0, 18):
-               b.curUrl = camBathroom.c180291    ;
-               buildState(bathroom, b)           ;
-               break                             ;
+               b.curUrl       = camBathroom.c180291    ;
+               buildState(bathroom, b)                 ;
+               break                                   ;
            case minSecToNum(0, 37):
-               b.curUrl    = camBathroom.c352291 ;
-               b.trapUrl   = camBathroom.c431292 ;
-               b.catchTime = minSecToNum(0, 43)  ;                 
-               buildState(bathroom, b)           ;
-               break                             ;
+               b.curUrl       = camBathroom.c352291    ;
+               b.trapUrl      = camBathroom.c431292    ;
+               b.catchTime    = minSecToNum(0, 43)     ;                 
+               buildState(bathroom, b)                 ;
+               break                                   ;
            case minSecToNum(0, 48):
-               b.curUrl    = camBathroom.c500291 ;
-               b.trapUrl   = camBathroom.c430249b;
-               b.catchTime = minSecToNum(0, 49)  ;
-               buildState(bathroom, b)           ;
-               break                             ;
+               b.curUrl       = camBathroom.c500291    ;
+               b.trapUrl      = camBathroom.c430249b   ;
+               b.catchTime    = minSecToNum(0, 49)     ;
+               buildState(bathroom, b)                 ;
+               break                                   ;
          default: 
              buildState(bathroom, b);
        }
     };
 
     var eventsBedroom         = function eventsBedroom () {
-       var b           = bedTemplate;
-           b.sRoomName = 'bedrom'   ;
+       var bed           = bedTemplate;
+           bed.sRoomName = 'bedrom'   ;
            
        switch (current.getTime()) {
            case minSecToNum(0, 1):
-               b.curUrl    = camBedroom.c81      ;
-               b.trapUrl   = camBedroom.c352482  ;
-               b.catchTime = minSecToNum(0, 34)  ;
-               buildState(bedroom, b)            ;
+               bed.curUrl    = camBedroom.c81      ;
+               bed.trapUrl   = camBedroom.c352482  ;
+               bed.catchTime = minSecToNum(0, 34)  ;
+               buildState(bedroom, bed)            ;
                break                             ;
            case minSecToNum(0, 54):
-               b.curUrl = camBedroom.c540281     ;
-               buildState(bedroom, b)            ;
+               bed.curUrl = camBedroom.c540281     ;
+               buildState(bedroom, bed)            ;
                break                             ;
            case minSecToNum(3, 7): // May need to start with 07? But strict mode does not allow
-               b.curUrl    = camBedroom.c3060281 ;
-               b.trapUrl   = camBedroom.c3262482 ;
-               b.catchTime = minSecToNum(3, 25)  ;
-               buildState(bedroom, b)            ;              
+               bed.curUrl    = camBedroom.c3060281 ;
+               bed.trapUrl   = camBedroom.c3262482 ;
+               bed.catchTime = minSecToNum(3, 25)  ;
+               buildState(bedroom, bed)            ;              
                break                             ;
            case minSecToNum(4, 35):
-               b.curUrl    = camBedroom.c4390482 ;
-               b.trapUrl   = camBedroom.c4390482 ;
-               b.catchTime = minSecToNum(4, 38)  ;
-               buildState(bedroom, b)            ;
+               bed.curUrl    = camBedroom.c4390482 ;
+               bed.trapUrl   = camBedroom.c4390482 ;
+               bed.catchTime = minSecToNum(4, 38)  ;
+               buildState(bedroom, bed)            ;
                break                             ;
         default:
-              buildState(bedroom, b);
+              buildState(bedroom, bed);
        }
     };
 
     var eventsHallTwo = function eventsHallTwo () {
-       var h           = hallTwoTemplate;
-           h.sRoomName = 'hallTwo';
+       var hall           = hallTwoTemplate;
+           hall.sRoomName = 'hallTwo';
 
        switch (current.getTime()) {
            case minSecToNum(0, 31):
-                h.curUrl = camHallTwo.c310471   ;
-                buildState(hallTwo, h)          ;
+                hall.curUrl = camHallTwo.c310471   ;
+                buildState(hallTwo, hall)          ;
                 break                           ;
             case minSecToNum(0, 51):
-                h.curUrl    = camHallTwo.c500271;
-                h.trapUrl   = camHallTwo.c542272;
-                h.catchTime = minSecToNum(0, 54);
-                buildState(hallTwo, h)          ;
+                hall.curUrl    = camHallTwo.c500271;
+                hall.trapUrl   = camHallTwo.c542272;
+                hall.catchTime = minSecToNum(0, 54);
+                buildState(hallTwo, hall)          ;
                 break                           ;
 
            case minSecToNum(2, 39):
-               h.curUrl = camHallTwo.c2390671   ;
-               buildState(hallTwo, h)           ;
+               hall.curUrl = camHallTwo.c2390671   ;
+               buildState(hallTwo, hall)           ;
                break                            ;
            case minSecToNum(4, 2):
-               h.curUrl    = camHallTwo.c4000471; 
-               h.trapUrl   = camHallTwo.c4120872;
-               h.catchTime = minSecToNum(4, 11) ;
-               buildState(hallTwo, h)           ;
+               hall.curUrl    = camHallTwo.c4000471; 
+               hall.trapUrl   = camHallTwo.c4120872;
+               hall.catchTime = minSecToNum(4, 11) ;
+               buildState(hallTwo, hall)           ;
                break;
          default:
-           buildState(hallTwo, h);
+           buildState(hallTwo, hall);
        }
     };
 
@@ -766,8 +777,9 @@ var mainJS = (function() {
     
        /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
         * and returns to that same room before a new clip is set to begin.                       */
-       if (current.getCurUrl() === null || current.getCurUrl() === '' || current.getTrapSprung() === true) {  
-          video.poster(current.getStillUrl());
+       if (current.getCurUrl() === null || current.getCurUrl() === '' || current.getTrapSprung() === true) {
+           console.log(current.getStillUrl());
+           video.poster(current.getStillUrl());
           displayStill();
           return;
         }
@@ -793,6 +805,7 @@ var mainJS = (function() {
             });
         });
     }; 
+
 
 
     /**
@@ -927,16 +940,20 @@ var mainJS = (function() {
      */
     var playVideo             = function playVideo (urlClip) {
         audioElem.pause();
+        video.pause(); //TODO: Not sure if this is needed.
         video.src(urlClip);
         video.load();
         video.play();
-        //if (current.getJustSwitched() === true){ //TODO: not sure if I need this?
-        var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
-        console.log(current.getUrlChangeTime());
-        console.log(current.getTime());
-        console.log(current);
-           video.currentTime(diff);
-        //}
+        if (current.getJustSwitched() === true) { //TODO: not sure if I need this?
+            var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+            //console.log('URL change Time: ' +current.getUrlChangeTime());
+            //console.log('get time:' + current.getTime());
+            //console.log('clip: ' + urlClip);
+            //console.log(current);
+            console.log('diff: ' + diff);
+            video.currentTime(diff);
+        }
+        console.log('currentTime: ' + video.currentTime());
     };
 
 
@@ -955,7 +972,6 @@ var mainJS = (function() {
                 var curUrlHasChanged    = curUrl !== oldUrl;
 
                 if (curUrlHasChanged && watchingCurrentRoom) {
-                    playVideo(curUrl);
                 }
             }
         });

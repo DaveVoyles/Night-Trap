@@ -1,4 +1,6 @@
-﻿    /**
+﻿'use strict';
+
+/**
      * Constructor obj to get / set current values for the each room.
      * @param {string} sRoom              - Name of the room.
      * @param {string} stillUrl           - Background image when room is empty.
@@ -13,88 +15,88 @@
      * @returns                           - roomPrototype
      */
     var Room = function(sRoom, stillUrl, bCanCatch, time, catchTime, curUrl, nextUrl, trapUrl, bTrapSprung, nPotentialCaptured) {
-        this._sRoomName          = sRoom              || ''   ;
-        this._stillurl           = stillUrl           || ''   ;
-        this._bCanCatch          = bCanCatch          || false;
-        this._time               = time               || 0    ;
-        this._catchTime          = catchTime          || 0    ;
-        this._curUrl             = curUrl             || ''   ;
-        this._nextUrl            = nextUrl            || ''   ;
-        this._trapUrl            = trapUrl            || ''   ;
-        this._bTrapSprung        = bTrapSprung        || false;
-        this._nPotentialCaptured = nPotentialCaptured || 0    ;
+        var _sRoomName          = sRoom              || ''   ;
+        var _stillurl           = stillUrl           || ''   ;
+        var _bCanCatch          = bCanCatch          || false;
+        var _time               = time               || 0    ;
+        var _catchTime          = catchTime          || 0    ;
+        var _curUrl             = curUrl             || ''   ;
+        var _nextUrl            = nextUrl            || ''   ;
+        var _trapUrl            = trapUrl            || ''   ;
+        var _bTrapSprung        = bTrapSprung        || false;
+        var _nPotentialCaptured = nPotentialCaptured || 0    ;
 
-        this.roomPrototype = {
+        var roomPrototype = {
             getRoomName: function() {
-                return this._sRoomName;
+                return _sRoomName;
             },
             setRoomName: function(val) {
-                this._sRoomName = val;
+                _sRoomName = val;
             },
 
             getStillUrl: function() {
-                return this._stillurl;
+                return _stillurl;
             },
             setStillUrl: function() {
-                this._stillurl = stillUrl;
+                _stillurl = stillUrl;
             },
 
             getCanCatch: function() {
-                return this._bCanCatch;
+                return _bCanCatch;
             },
             setCanCatch: function(val) {
-                this._bCanCatch = val;
+                _bCanCatch = val;
             },
 
             getTime: function() {
-                return this._time;
+                return _time;
             },
             setTime: function(val) {
-                this._time = val;
+                _time = val;
             },
 
             getCatchTime: function() {
-                return this._catchTime;
+                return _catchTime;
             },
             setCatchTime: function(val) {
-               this._catchTime = val;
+                _catchTime = val;
             },
 
             getCurUrl: function() {
-                return this._curUrl;
+                return _curUrl;
             },
             setCurUrl: function(val) {
-                this._curUrl = val;
+                _curUrl = val;
             },
             getNextUrl: function() {
-                return this._nextUrl;
+                return _nextUrl;
             },
             setNextUrl: function(val) {
-                this._nextUrl = val;
+                _nextUrl = val;
             },
 
             getTrapUrl: function() {
-                return this._trapUrl;
+                return _trapUrl;
             },
             setTrapUrl: function(val) {
-                this._trapUrl = val;
+                _trapUrl = val;
             },
 
             getTrapSprung: function() {
-                return this._bTrapSprung;
+                return _bTrapSprung;
             },
             setTrapSprung: function(val) {
-               this.bTrapSprung = val;
+                bTrapSprung = val;
             },
 
             getPotentialCaptured: function() {
-                return this._nPotentialCaptured;
+                return _nPotentialCaptured;
             },
             setPotentialCaptured: function(val) {
-                this._nPotentialCaptured = val;
+                _nPotentialCaptured = val;
             }
         };
-        return this.roomPrototype;
+        return roomPrototype;
     };
 
     var hallOne    = new Room('hallOne'   , 'img/stills/HALL-ONE_1.JPG'   );
@@ -106,7 +108,7 @@
     var hallTwo    = new Room('hallTwo'   , 'img/stills/HALL-TWO_1.jpg'   );
     var driveway   = new Room('driveway'  , 'img/stills/DRIVEWAY_1.jpg'   );
 
-  
+
     /**
     * Obj to get / set current values for the game.
     * @property {string} cam                - Room the user has currently selected
@@ -121,28 +123,30 @@
     * @property {bool}   bTrapSpring        - Has the user set the trap in this current scene yet?
     * @property {bool}   bJustSwitched      - Has the currentUrl switched since the user selected this room?
     * @property {number} nPotentialCaptured - Number of augers that could have been captured in this scene
-    */  
-   var Current = function Current() {
+    */
+    var Current = function Current() {
 
-        this.cam = {
-            camHallOne    : 'hallOne'   ,
-            camKitchen    : 'kitchen'   ,
-            camEntryway   : 'entryway'  ,
-            camLivingRoom : 'livingroom',
-            camBathroom   : 'bathroom'  ,
-            camBedroom    : 'bedroom'   ,
-            camHallTwo    : 'hallTwo'   ,
-            camDriveway   : 'driveway'  ,
+        var cam = {
+            camHallOne   : 'hallOne'   ,
+            camKitchen   : 'kitchen'   ,
+            camEntryway  : 'entryway'  ,
+            camLivingRoom: 'livingroom',
+            camBathroom  : 'bathroom'  ,
+            camBedroom   : 'bedroom'   ,
+            camHallTwo   : 'hallTwo'   ,
+            camDriveway  : 'driveway'
         };
-        this.stillUrl           = ''  ;
-        this.bCanCatch          = true;
-        this.urlChangeTime      = 0   ;
-        this.catchTime          = 0   ;
-        this.curUrl             = ''  ;
-        this.nextUrl            = ''  ;
-        this.trapUrl            = ''  ;
-        this.bTrapSprung        = true;
-        this.nPotentialCaptured = 0   ;
+         var stillUrl           = ''   ;
+         var bCanCatch          = true ;
+         var urlChangeTime      = 0    ;
+         var catchTime          = 0    ;
+         var time               = 0    ;
+         var curUrl             = ''   ;
+         var nextUrl            = ''   ;
+         var trapUrl            = ''   ;
+         var bTrapSprung        = true ;
+         var bJustSwitched      = false;
+         var nPotentialCaptured = 0    ;
 
         var currentPrototype = {
             getCam: function() {
@@ -220,5 +224,6 @@
         }
         return currentPrototype;
     };
-    
-    var current = new Current();
+
+var current = new Current();
+
