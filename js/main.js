@@ -940,24 +940,19 @@ var mainJS = (function () {
     var ObserveRoom = function observeRoom(room) {
         Object.observe(room, function (changes) {
             c(changes[0]);
-            c(current.getCamAsString);
-            //c(current.getCam()); // Returns undefined
                 if (changes[0] !== undefined) {
                     c(room);
-                    var oldUrl = changes[0].oldValue;
-                    var curUrl = changes[0].object.curUrl;
-                    //var watchingCurrentRoom = current.getCam() === room.sRoomName;
-                    //var watchingCurrentRoom = current.getCam().sRoomName === room.sRoomName;
+                    var oldUrl              = changes[0].oldValue                        ;
+                    var curUrl              = changes[0].object.curUrl                   ;
                     var watchingCurrentRoom = current.getCamAsString() === room.sRoomName;
-                    var curUrlHasChanged = curUrl !== oldUrl;
-                    var typeIsUpdate = {};
+                    var curUrlHasChanged    = curUrl !== oldUrl                          ;
+                    var typeIsUpdate        = {}                                         ;
 
                     if (changes[0].type === update) {
                         typeIsUpdate = changes[0].type;
                     }
 
                     if (curUrlHasChanged && watchingCurrentRoom && typeIsUpdate) {
-                        c('changing stream from OR');
                         changeVideoStream();
                     }
                 }

@@ -302,7 +302,6 @@
                     case driveway:
                         this.camAsString = 'driveway';
                 }
-                this.camAsString = 'hallOne'; // Default?
             }
         }
         return currentPrototype;
