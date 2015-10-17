@@ -405,6 +405,7 @@ var mainJS = (function () {
                   current.setStillUrl         (kitchen.stillUrl             );
                   current.setTrapSprung       (kitchen.bTrapSprung          );
                   current.setPotentialCaptured(kitchen.nPotentialCaptured   );
+                  current.setHasPlayed        (kitchen.hasPlayed            );
                   break                                                      ;
             case 'entryway':
                   current.setCamAsString      (entryway                     );
@@ -418,6 +419,7 @@ var mainJS = (function () {
                   current.setStillUrl         (entryway.stillUrl            );
                   current.setTrapSprung       (entryway.bTrapSprung         );
                   current.setPotentialCaptured(entryway.nPotentialCaptured  );
+                  current.setHasPlayed        (entryway.hasPlayed           );
                   break                                                      ;
             case 'livingroom':
                   current.setCamAsString      (livingroom                   );
@@ -431,6 +433,7 @@ var mainJS = (function () {
                   current.setStillUrl         (livingroom.stillUrl          );
                   current.setTrapSprung       (livingroom.bTrapSprung       );
                   current.setPotentialCaptured(livingroom.nPotentialCaptured);
+                  current.setHasPlayed        (livingroom.hasPlayed         );
                   break                                                      ;
             case 'bathroom':
                   current.setCamAsString      (bathroom                     );
@@ -443,8 +446,8 @@ var mainJS = (function () {
                   current.setUrlChangeTime    (bathroom.urlChangeTime       );
                   current.setStillUrl         (bathroom.stillUrl            );
                   current.setTrapSprung       (bathroom.bTrapSprung         );
-                  current.setPotentialCaptured(bathroom.nPotentialCaptured);
-                  current.setHasPlayed(bathroom.hasPlayed);
+                  current.setPotentialCaptured(bathroom.nPotentialCaptured  );
+                  current.setHasPlayed        (bathroom.hasPlayed           );
                   break                                                      ;
             case 'bedroom':
                   current.setCamAsString      (bedroom                      );
@@ -472,6 +475,7 @@ var mainJS = (function () {
                   current.setStillUrl         (hallTwo.stillUrl             );
                   current.setTrapSprung       (hallTwo.bTrapSprung          );
                   current.setPotentialCaptured(hallTwo.nPotentialCaptured   );
+                  current.setHasPlayed        (hallTwo.hasPlayed            );
                   break                                                      ;
             case 'driveway':
                   current.setCamAsString      (driveway                     );
@@ -485,6 +489,7 @@ var mainJS = (function () {
                   current.setStillUrl         (driveway.stillUrl            );
                   current.setTrapSprung       (driveway.bTrapSprung         );
                   current.setPotentialCaptured(driveway.nPotentialCaptured  );
+                  current.setHasPlayed        (driveway.hasPlayed           );
                   break                                                      ;
         }
          createVideoSeries(current);
@@ -803,8 +808,7 @@ var mainJS = (function () {
                     c('difference is greater! Displaying still');
                     displayStill();
                 }
-
-                
+               
                 if (difference < duration) {
                     // Seek to current time stamp
                     if (current.getUrlChangeTime() !== current.getTime()) {
