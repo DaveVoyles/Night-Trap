@@ -2,6 +2,11 @@ var mainJS = (function () {
     'use strict';
 
     /**
+     * Allows you to replace console.log(message) in your code with c(message)
+     */
+    var c = console.log.bind(console); 
+
+    /**
      * How many augers has the user captured?
      * How many were possible?
      */
@@ -71,7 +76,7 @@ var mainJS = (function () {
     var passElem               = document.getElementById('pass'    );
     var possibleElem           = document.getElementById('possible');
     var capturedElem           = document.getElementById('captured');
-    var video                  = null;   
+    var video                  = videojs('video-player');
 
     /**
      * @property {string}   passwords       - List of potential passwords.
@@ -163,7 +168,7 @@ var mainJS = (function () {
       }
     };
 
- // Path to SFX
+    // Path to SFX
     var aAudioClips            = {
           change   : 'sfx/CHANGE.mp3'
         , crickets : 'sfx/CRICK2.mp3'
@@ -195,14 +200,14 @@ var mainJS = (function () {
      * Room buttons now changeVideoStream() when clicked.
      */
     var registerRoomButton      = function registerRoomButton () {
-            document.getElementById('Hall-1'     ).addEventListener(   'click', changeVideoStream, false);
-            document.getElementById('Kitchen'    ).addEventListener(   'click', changeVideoStream, false);
-            document.getElementById('Entry-Way'  ).addEventListener(   'click', changeVideoStream, false);
-            document.getElementById('Living-Room').addEventListener(   'click', changeVideoStream, false);
-            document.getElementById('Bathroom'   ).addEventListener(   'click', changeVideoStream, false);
-            document.getElementById('Bedroom'    ).addEventListener(   'click', changeVideoStream, false);
-            document.getElementById('Hall-2'     ).addEventListener(   'click', changeVideoStream, false);
-            document.getElementById('Driveway'   ).addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('hallOne'   ).addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('kitchen'   ).addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('entryway'  ).addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('livingroom').addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('bathroom'  ).addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('bedroom'   ).addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('hallTwo'   ).addEventListener(   'click', changeVideoStream, false);
+        document.getElementById('driveway'  ).addEventListener(   'click', changeVideoStream, false);
     };
 
 
@@ -212,7 +217,7 @@ var mainJS = (function () {
      */
     var secondsToTimeString   = function secondsToTimeString (seconds) {
 
-        var s                 = Math.floor(seconds % 60);
+        var s                 = Math.floor( seconds % 60);
         var m                 = Math.floor((seconds * 1000 / (1000 * 60)) % 60);
         var strFormat         = 'MM:SS';
 
@@ -292,14 +297,14 @@ var mainJS = (function () {
         updateTimeOnScreen();
         calcCatchTime(current.getCatchTime());
 
-        eventsHallOne();
-        eventsKitchen();
-        //eventsEntry   ();
-        //eventsLiving  ();
+        eventsHallOne ();
+        eventsKitchen ();
+        eventsEntry   ();
+        eventsLiving  ();
         eventsBathroom();
-        eventsBedroom();
-        //eventsHallTwo ();
-        //eventsDriveway();
+        eventsBedroom ();
+        eventsHallTwo ();
+        eventsDriveway();
     };
 
 
@@ -322,12 +327,12 @@ var mainJS = (function () {
      * Update (handles the timer) waits for the video to be loaded before init. 
      */
     var initializeVideoStream = function initializeVideoStream() {
-        video = videojs('video-player');
         if (!Modernizr.video) {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+            //video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+            video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);
             video.load();
             video.play();
         } else {
@@ -340,178 +345,150 @@ var mainJS = (function () {
             e.defaultPrevented();
         }, false);
 
-        video.on('loadeddata',
-            MainLoop.setUpdate(update).start()
-          , false
-        );
-    }
+        video.on('loadeddata', function() {
+            MainLoop.setUpdate(update).start();
+        });
+    };
 
 
     /**
      * When user selects a room, this takes the current values from the room and applies them to the current object.
      * createVideoSeries is called after properties have been set.
-     * Considered refactoring this, but it actually made it more difficult to read.
+     * Need to check if user has selected a room, then set that room. Check for 'undefined' is necessary to
+     * b/c if obserRoom calls changeVideoStream instead, idType comes back as undefined. 
      */
-    var changeVideoStream     = function changeVideoStream () {
-          current.setJustSwitched(true);
-          switch (this.id) {
-            case 'Hall-1':
-                  current.setCam              ('hallOne'                     )      ;
-                  current.setCurUrl           (hallOne.getCurUrl           ())      ;
-                  current.setNextUrl          (hallOne.getNextUrl          ())      ;
-                  current.setTrapUrl          (hallOne.getTrapUrl          ())      ;
-                  current.setCatchTime        (hallOne.getCatchTime        ())      ;
-                  current.setCanCatch         (hallOne.getCanCatch         ())      ;
-                  current.setUrlChangeTime    (hallOne.getTime             ())      ;
-                  current.setStillUrl         (hallOne.getStillUrl         ())      ;
-                  current.setTrapSprung       (hallOne.getTrapSprung       ())      ;
-                  current.setPotentialCaptured(hallOne.getPotentialCaptured());
+    var changeVideoStream = function changeVideoStream() {
+        current.setJustSwitched(true);
+        c('switching');
+        var idType  = {}  ;
+        var curRoom = ''  ;
+        var that    = this;
 
-                  console.log('H: ' + hallOne.getCurUrl());
-                  console.log('C: ' + current.getCurUrl());
-                  break                                                             ;
-              case 'Kitchen':
-                  current.setCam              ('kitchen'                     )      ;
-                  current.setCurUrl           (kitchen.getCurUrl           ())      ;
-                  current.setNextUrl          (kitchen.getNextUrl          ())      ;
-                  current.setTrapUrl          (kitchen.getTrapUrl          ())      ;
-                  current.setCanCatch         (kitchen.getCanCatch         ())      ;
-                  current.setUrlChangeTime    (kitchen.getTime             ())      ;
-                  current.setStillUrl         (kitchen.getStillUrl         ())      ;
-                  current.setTrapSprung       (kitchen.getTrapSprung       ())      ;
-                  current.setPotentialCaptured(kitchen.getPotentialCaptured())      ;
-                  break                                                             ;
-              case 'Entry-Way':
-                  current.setCam              ('entryway'                     )     ;
-                  current.setCurUrl           (entryway.getCurUrl           ())     ;
-                  current.setNextUrl          (entryway.getNextUrl          ())     ;
-                  current.setTrapUrl          (entryway.getTrapUrl          ())     ;
-                  current.setCanCatch         (entryway.getCanCatch         ())     ;
-                  current.setUrlChangeTime    (entryway.getTime             ())     ;
-                  current.setStillUrl         (entryway.getStillUrl         ())     ;
-                  current.setTrapSprung       (entryway.getTrapSprung       ())     ;
-                  current.setPotentialCaptured(entryway.getPotentialCaptured())     ;
-                  break                                                             ;
-              case 'Living-Room':
-                  current.setCam              ('livingroom'                     )   ;
-                  current.setCurUrl           (livingroom.getCurUrl           ())   ;
-                  current.setNextUrl          (livingroom.getNextUrl          ())   ;
-                  current.setTrapUrl          (livingroom.getTrapUrl          ())   ;
-                  current.setCanCatch         (livingroom.getCanCatch         ())   ;
-                  current.setUrlChangeTime    (livingroom.getTime             ())   ;
-                  current.setStillUrl         (livingroom.getStillUrl         ())   ;
-                  current.setTrapSprung       (livingroom.getTrapSprung       ())   ;
-                  current.setPotentialCaptured(livingroom.getPotentialCaptured())   ;
-                  break                                                             ;
-              case 'Bathroom':
-                  current.setCam              ('bathroom'                     )     ;
-                  current.setCurUrl           (bathroom.getCurUrl           ())     ;
-                  current.setNextUrl          (bathroom.getNextUrl          ())     ;
-                  current.setTrapUrl          (bathroom.getTrapUrl          ())     ;
-                  current.setCanCatch         (bathroom.getCanCatch         ())     ;
-                  current.setUrlChangeTime    (bathroom.getTime             ())     ;
-                  current.setStillUrl         (bathroom.getStillUrl         ())     ;
-                  current.setTrapSprung       (bathroom.getTrapSprung       ())     ;
-                  current.setPotentialCaptured(bathroom.getPotentialCaptured())     ;
-                  break                                                             ;
-              case 'Bedroom':
-                  current.setCam              ('bedroom'                     )      ;
-                  current.setCurUrl           (bedroom.getCurUrl           ())      ;
-                  current.setNextUrl          (bedroom.getNextUrl          ())      ;
-                  current.setTrapUrl          (bedroom.getTrapUrl          ())      ;
-                  current.setCanCatch         (bedroom.getCanCatch         ())      ;
-                  current.setUrlChangeTime    (bedroom.getTime             ())      ;
-                  current.setStillUrl         (bedroom.getStillUrl         ())      ;
-                  current.setTrapSprung       (bedroom.getTrapSprung       ())      ;
-                  current.setPotentialCaptured(bedroom.getPotentialCaptured())      ;
-                  break                                                             ;
-              case 'Hall-2':
-                  current.setCam              ('hallTwo'                     )      ;
-                  current.setCurUrl           (hallTwo.getCurUrl           ())      ;
-                  current.setNextUrl          (hallTwo.getNextUrl          ())      ;
-                  current.setTrapUrl          (hallTwo.getTrapUrl          ())      ;
-                  current.setCanCatch         (hallTwo.getCanCatch         ())      ;
-                  current.setUrlChangeTime    (hallTwo.getTime             ())      ;
-                  current.setStillUrl         (hallTwo.getStillUrl         ())      ;
-                  current.setTrapSprung       (hallTwo.getTrapSprung       ())      ;
-                  current.setPotentialCaptured(hallTwo.getPotentialCaptured())      ;
-                  break                                                             ;
-              case 'Driveway':
-                  current.setCam              ('driveway'                     )     ;
-                  current.setCurUrl           (driveway.getCurUrl           ())     ;
-                  current.setNextUrl          (driveway.getNextUrl          ())     ;
-                  current.setTrapUrl          (driveway.getTrapUrl          ())     ;
-                  current.setCanCatch         (driveway.getCanCatch         ())     ;
-                  current.setUrlChangeTime    (driveway.getTime             ())     ;
-                  current.setStillUrl         (driveway.getStillUrl         ())     ;
-                  current.setTrapSprung       (driveway.getTrapSprung       ())     ;
-                  current.setPotentialCaptured(driveway.getPotentialCaptured())     ;
-                  break;
-          }
-        createVideoSeries(current);
+        if (that !== undefined) { idType = document.getElementById(this.id).type; }
+
+        if (idType === 'image') {
+            curRoom = this.id;
+            c('image');
+        } else {
+            //curRoom = current.getCam();
+            // Prob need this to be turned to a string
+            //curRoom = '' + current.getCam();
+            //curRoom = current.getCam().sRoomName;
+            curRoom = current.getCamAsString();
+            c('curRoom: ' + curRoom);
+        }
+
+        switch (curRoom) {
+            case 'hallOne':
+                  current.setCamAsString      (hallOne                      );
+                  current.setCam              (hallOne                      );
+                  current.setCurUrl           (hallOne.curUrl               );
+                  current.setNextUrl          (hallOne.nextUrl              );
+                  current.setTrapUrl          (hallOne.trapUrl              );
+                  current.setCanCatch         (hallOne.bCanCatch            );
+                  current.setCatchTime        (hallOne.catchTime            );
+                  current.setUrlChangeTime    (hallOne.urlChangeTime        );
+                  current.setStillUrl         (hallOne.stillUrl             );
+                  current.setTrapSprung       (hallOne.bTrapSprung          );
+                  current.setPotentialCaptured(hallOne.nPotentialCaptured   );
+                  current.setHasPlayed        (hallOne.hasPlayed            );
+                  break                                                      ;
+            case 'kitchen':
+                  current.setCamAsString      (kitchen                      );
+                  current.setCam              (kitchen                      );
+                  current.setCurUrl           (kitchen.curUrl               );
+                  current.setNextUrl          (kitchen.nextUrl              );
+                  current.setTrapUrl          (kitchen.trapUrl              );
+                  current.setCanCatch         (kitchen.bCanCatch            );
+                  current.setCatchTime        (kitchen.catchTime            );
+                  current.setUrlChangeTime    (kitchen.urlChangeTime        );
+                  current.setStillUrl         (kitchen.stillUrl             );
+                  current.setTrapSprung       (kitchen.bTrapSprung          );
+                  current.setPotentialCaptured(kitchen.nPotentialCaptured   );
+                  break                                                      ;
+            case 'entryway':
+                  current.setCamAsString      (entryway                     );
+                  current.setCam              (entryway                     );
+                  current.setCurUrl           (entryway.curUrl              );
+                  current.setNextUrl          (entryway.nextUrl             );
+                  current.setTrapUrl          (entryway.trapUrl             );
+                  current.setCanCatch         (entryway.bCanCatch           );
+                  current.setCatchTime        (entryway.catchTime           );
+                  current.setUrlChangeTime    (entryway.urlChangeTime       );
+                  current.setStillUrl         (entryway.stillUrl            );
+                  current.setTrapSprung       (entryway.bTrapSprung         );
+                  current.setPotentialCaptured(entryway.nPotentialCaptured  );
+                  break                                                      ;
+            case 'livingroom':
+                  current.setCamAsString      (livingroom                   );
+                  current.setCam              (livingroom                   );
+                  current.setCurUrl           (livingroom.curUrl            );
+                  current.setNextUrl          (livingroom.nextUrl           );
+                  current.setTrapUrl          (livingroom.trapUrl           );
+                  current.setCanCatch         (livingroom.bCanCatch         );
+                  current.setCatchTime        (livingroom.catchTime         );
+                  current.setUrlChangeTime    (livingroom.urlChangeTime     );
+                  current.setStillUrl         (livingroom.stillUrl          );
+                  current.setTrapSprung       (livingroom.bTrapSprung       );
+                  current.setPotentialCaptured(livingroom.nPotentialCaptured);
+                  break                                                      ;
+            case 'bathroom':
+                  current.setCamAsString      (bathroom                     );
+                  current.setCam              (bathroom                     );
+                  current.setCurUrl           (bathroom.curUrl              );
+                  current.setNextUrl          (bathroom.nextUrl             );
+                  current.setTrapUrl          (bathroom.trapUrl             );
+                  current.setCanCatch         (bathroom.bCanCatch           );
+                  current.setCatchTime        (bathroom.catchTime           );
+                  current.setUrlChangeTime    (bathroom.urlChangeTime       );
+                  current.setStillUrl         (bathroom.stillUrl            );
+                  current.setTrapSprung       (bathroom.bTrapSprung         );
+                  current.setPotentialCaptured(bathroom.nPotentialCaptured);
+                  current.setHasPlayed(bathroom.hasPlayed);
+                  break                                                      ;
+            case 'bedroom':
+                  current.setCamAsString      (bedroom                      );
+                  current.setCam              (bedroom                      );
+                  current.setCurUrl           (bedroom.curUrl               );
+                  current.setNextUrl          (bedroom.nextUrl              );
+                  current.setTrapUrl          (bedroom.trapUrl              );
+                  current.setCanCatch         (bedroom.bCanCatch            );
+                  current.setCatchTime        (bedroom.catchTime            );
+                  current.setUrlChangeTime    (bedroom.urlChangeTime        );
+                  current.setStillUrl         (bedroom.stillUrl             );
+                  current.setTrapSprung       (bedroom.bTrapSprung          );
+                  current.setPotentialCaptured(bedroom.nPotentialCaptured   );
+                  current.setHasPlayed        (bedroom.hasPlayed            );
+                  break                                                      ;
+            case 'hallTwo':
+                  current.setCamAsString      (hallTwo                      );
+                  current.setCam              (hallTwo                      );
+                  current.setCurUrl           (hallTwo.curUrl               );
+                  current.setNextUrl          (hallTwo.nextUrl              );
+                  current.setTrapUrl          (hallTwo.trapUrl              );
+                  current.setCanCatch         (hallTwo.bCanCatch            );
+                  current.setCatchTime        (hallTwo.catchTime            );
+                  current.setUrlChangeTime    (hallTwo.urlChangeTime        );
+                  current.setStillUrl         (hallTwo.stillUrl             );
+                  current.setTrapSprung       (hallTwo.bTrapSprung          );
+                  current.setPotentialCaptured(hallTwo.nPotentialCaptured   );
+                  break                                                      ;
+            case 'driveway':
+                  current.setCamAsString      (driveway                     );
+                  current.setCam              (driveway                     );
+                  current.setCurUrl           (driveway.curUrl              );
+                  current.setNextUrl          (driveway.nextUrl             );
+                  current.setTrapUrl          (driveway.trapUrl             );
+                  current.setCanCatch         (driveway.bCanCatch           );
+                  current.setCatchTime        (driveway.catchTime           );
+                  current.setUrlChangeTime    (driveway.urlChangeTime       );
+                  current.setStillUrl         (driveway.stillUrl            );
+                  current.setTrapSprung       (driveway.bTrapSprung         );
+                  current.setPotentialCaptured(driveway.nPotentialCaptured  );
+                  break                                                      ;
+        }
+         createVideoSeries(current);
     };
-
-   
-    /**
-     * Clears all of the values in the room and sets them to these default values.
-     * Allows me to not have to worry about incorrect values being set when a new event occurs in a room.
-     * Gets called each time buildState() is used.
-     */
-    var clearState = function clearState (oRoom) {
-        oRoom.setCurUrl           ('')   ;
-        oRoom.setNextUrl          ('')   ;
-        oRoom.setTrapUrl          ('')   ;
-        oRoom.setCatchTime        (0)    ;
-        oRoom.setTime             (0)    ;
-        oRoom.setTrapSprung       (false);
-        oRoom.setPotentialCaptured(0)    ;
-    };
-
-
-    /**
-     * Sets the current values for each room, which will then be used by events() to
-     * set these values if user has current room selected. Wipes values from previous state, first.
-     * @param {object} oRoom  - Reference to the room we should be setting values for.
-     * @param (object} rObj   - Object w/ properties for urls, time, & trap within the room.
-     */
-    var buildState = function buildState (oRoom, roomTemp) {
-        clearState(oRoom);
-
-        oRoom.setCurUrl           (roomTemp.curUrl           );
-        oRoom.setNextUrl          (roomTemp.nextUrl          );
-        oRoom.setTrapUrl          (roomTemp.trapUrl          );
-        oRoom.setCatchTime        (roomTemp.catchTime        );
-        oRoom.setTime             (current.getTime()         );
-        oRoom.setTrapSprung       (roomTemp.trapSprung       );
-        oRoom.setPotentialCaptured(roomTemp.potentialCaptured);
-    };
-
-
-    /**
-     * Template used by events functions to store current values for each room. This is where the video player gets the url from.
-     * A new instance is created for each room, with: Object.create(objRoom);
-     * Object.observe uses this to detect value changes, then changes video.src() on the fly, so it must 
-     * remain an object and cannot be turned into a function.
-     */
-    var roomTemplate =  {
-        curUrl            : ''
-      , nextUrl           : ''
-      , trapUrl           : ''
-      , catchTime         : 0
-      , setTime           : 0
-      , trapSprung        : false
-      , potentialCaptured : 0
-      , sRoomName         : ''
-    };
-
-    var hallOneTemplate = Object.create(roomTemplate);
-    var kitchenTemplate = Object.create(roomTemplate);
-    var entryTemplate   = Object.create(roomTemplate);
-    var livingTemplate  = Object.create(roomTemplate);
-    var bathTemplate    = Object.create(roomTemplate);
-    var bedTemplate     = Object.create(roomTemplate);
-    var hallTwoTemplate = Object.create(roomTemplate);
-    var driveTemplate   = Object.create(roomTemplate);
 
 
     /**
@@ -519,235 +496,207 @@ var mainJS = (function () {
      * Case is equal to the current number of seconds into the game.
      * If the value of property is not set here, it will be set to default values of the objRoom.
      */
-    var eventsHallOne         = function eventsHallOne () { 
-        var h           = hallOneTemplate;
-            h.sRoomName = 'hallOne'      ;
+    var eventsHallOne  = function eventsHallOne () { 
             
-        switch (current.getTime()) {
+        switch (current.getTime()) {    
             case minSecToNum(0, 1):
-                // ONLY USE THESE WHEN TESTING OFFLINE
-                //h.curUrl    = aTempLocal[0];
-                //h.nextUrl   = aTempLocal[1];
-                //h.trapUrl   = aTempLocal[2];            
-                //h.catchTime = 3;
-                h.curUrl     = camHallOne.c21    ;
-                h.trapUrl    = camHallOne.c130422;
-                h.catchTime  = minSecToNum(0, 13);                
-                buildState(hallOne, h)           ;
-                break                            ;
-            case minSecToNum(1, 16):
-                h.curUrl    = camHallOne.c1152221;
-                buildState(hallOne, h)           ;
-                break                            ;
-            case minSecToNum(2, 50):
-                h.curUrl    = camHallOne.c2500221;
-                h.trapUrl   = camHallOne.c3150422;
-                h.catchTime = minSecToNum(3, 14) ;
-                buildState(hallOne, h)           ;
-                break                            ;
-            case minSecToNum(3, 34):
-                h.curUrl    = camHallOne.c3332421;
-                h.trapUrl   = camHallOne.c3422422;
-                h.catchTime = minSecToNum(3, 42) ;
-                buildState(hallOne, h)           ;
-                break                            ;
-            case minSecToNum(4, 45):
-                h.curUrl    = camHallOne.c4442421;
-                buildState(hallOne, h)           ;
-                break                            ;
-            default:
-                //buildState(hallOne, h);
-        }
-    };
+                 hallOne.urlChangeTime = minSecToNum(0, 1)  ;
+                //hallOne.curUrl        = camHallOne.c21     ;
+                hallOne.curUrl = camHallOne.c130422;
+                 hallOne.trapUrl       = camHallOne.c130422 ;
+                 hallOne.catchTime     = minSecToNum(0, 13) ;   
+                 break                                      ;
+            //case minSecToNum(1, 20):
+            //     hallOne.urlChangeTime = minSecToNum(1, 20) ;
+            //     hallOne.curUrl        = camHallOne.c1152221;
+                //     break                                      ;
 
-    var eventsKitchen         = function eventsKitchen() {
-        var k                 = kitchenTemplate;
-            k.sRoomName       = 'kitchen'      ;
+                //case minSecToNum(0, 27):
+             case minSecToNum(0, 12):
+                 //hallOne.urlChangeTime = minSecToNum(0, 27) ;
+                   hallOne.urlChangeTime = minSecToNum(0, 12) ;
+                 hallOne.curUrl = camHallOne.c1152221;
+                 hallOne.hasPlayed = false;
+                 break                                      ;
+            case minSecToNum(2, 50):
+                 hallOne.urlChangeTime = minSecToNum(2, 50) ;
+                 hallOne.curUrl        = camHallOne.c2500221;
+                 hallOne.trapUrl       = camHallOne.c3150422;
+                 hallOne.catchTime     = minSecToNum(3, 14) ;
+                 break                                      ;
+            case minSecToNum(3, 34):
+                 hallOne.urlChangeTime = minSecToNum(3, 34) ;
+                 hallOne.curUrl        = camHallOne.c3332421;
+                 hallOne.trapUrl       = camHallOne.c3422422;
+                 hallOne.catchTime     = minSecToNum(3, 42) ;
+                 break                                      ;
+            case minSecToNum(4, 45):
+                 hallOne.urlChangeTime = minSecToNum(4, 45) ;
+                 hallOne.curUrl        = camHallOne.c4442421;
+                 break                                      ;
+        }};
+
+    var eventsKitchen  = function eventsKitchen () {
             
         switch (current.getTime()){     
             case minSecToNum(1, 21):
-                k.curUrl      = camKitchen.c1200431;
-                k.trapUrl     = camKitchen.c1240632;
-                k.catchTime   = minSecToNum(1, 23) ;
-                buildState(kitchen, k)            ;
-                break                             ;
+                 kitchen.urlChangeTime = minSecToNum(1, 23) ;
+                 kitchen.curUrl        = camKitchen.c1200431;
+                 kitchen.trapUrl       = camKitchen.c1240632;
+                 kitchen.catchTime     = minSecToNum(1, 23) ;
+                 break                                      ;
             case minSecToNum(1, 48):
-                k.currentUrl  = camKitchen.c1481231;
-                buildState(kitchen, k)            ;
-                break                             ;
+                 kitchen.urlChangeTime = minSecToNum(1, 48) ;
+                 kitchen.currentUrl    = camKitchen.c1481231;
+                 break                                      ;
             case minSecToNum(3, 54):
-                k.curUrl      = camKitchen.c3540631;
-                buildState(kitchen, k)            ;
-                break                             ;
-            default:
-                buildState(kitchen, k);
+                 kitchen.urlChangeTime = minSecToNum(3, 54) ;
+                 kitchen.curUrl        = camKitchen.c3540631;
+                 break                                      ;
         }
     };
 
-    var eventsEntry           = function eventsEntry() {
-        var e                 = entryTemplate;
-            e.sRoomName       = 'entryway'   ;
+    var eventsEntry    = function eventsEntry () {
             
         switch (current.getTime()) {
             case minSecToNum(1, 33):
-                e.curUrl      = camEntryway.c1320261;
-                e.trapUrl     = camEntryway.c1391862;
-                e.catchTime   = minSecToNum(1, 39)  ;
-                buildState(entryway, e)           ;
-                break;
+                 entryway.urlChangeTime = minSecToNum(1, 33)  ;
+                 entryway.curUrl        = camEntryway.c1320261;
+                 entryway.trapUrl       = camEntryway.c1391862;
+                 entryway.catchTime     = minSecToNum(1, 39)  ;
+                 break                                        ;
             case minSecToNum(2, 13):
-                e.curUrl      = camEntryway.c2122461;
-                e.trapUrl     = camEntryway.c2590262;
-                e.catchTime   = minSecToNum(2,58)   ;
-                buildState(entryway, e)           ;
-                break;
-              default:
-                  buildState(entryway, e);
+                 entryway.urlChangeTime = minSecToNum(2, 13)  ;
+                 entryway.curUrl        = camEntryway.c2122461;
+                 entryway.trapUrl       = camEntryway.c2590262;
+                 entryway.catchTime     = minSecToNum(2,58)   ;
+                 break                                        ;
         }
     };
 
-    var eventsLiving          = function eventsLiving () {
-        var l                 = livingTemplate;
-            l.sRoomName       = 'livingRoom'  ;
+    var eventsLiving   = function eventsLiving () {
             
        switch(current.getTime()) {
            case minSecToNum(0, 25):
-               l.curUrl       = camLivingRoom.c232241 ;
-               l.trapUrl      = camLivingRoom.c271442 ;
-               l.catchTime    = minSecToNum(0, 27)    ;
-               l.nextUrl      = camLivingRoom.c271641 ;
-               buildState(livingroom, l)           ;
-               break                               ;
+                livingroom.urlChangeTime = minSecToNum(0, 25)    ;
+                livingroom.curUrl        = camLivingRoom.c232241 ;
+                livingroom.trapUrl       = camLivingRoom.c271442 ;
+                livingroom.catchTime     = minSecToNum(0, 27)    ;
+                livingroom.nextUrl       = camLivingRoom.c271641 ;
+                break                                            ;
            case minSecToNum(1, 0):
-               l.curUrl       = camLivingRoom.c1001241; 
-               l.trapUrl      = camLivingRoom.c1071042;
-               l.catchTime    = minSecToNum(1, 6)     ;
-               buildState(livingroom, l)           ;
-               break                               ;
-         case minSecToNum(1, 57):
-              l.curUrl        = camLivingRoom.c1572241    ;
-              buildState(livingroom, l)            ;
-              break                                ;
-        case minSecToNum(3, 24):
-              l.curUrl        = camLivingRoom.c3230241 ;
-              l.trapUrl       = camLivingRoom.c3330842 ;
-              l.catchTime     = minSecToNum(3, 32)     ;
-              l.nextUrl       = camLivingRoom.c3330841 ;
-              buildState(camLivingRoom, l)         ;
-            break                                  ;
-        case minSecToNum(4, 43):
-              l.curUrl        = camLivingRoom.c4511041 ;
-              l.trapUrl       = camLivingRoom.c3330842 ;
-              l.catchTime     = minSecToNum(4, 56)     ;
-              buildState(livingroom, l)            ;
-              break;
-         default:
-            buildState(livingroom, l);
+                livingroom.urlChangeTime = minSecToNum(1, 0)     ;
+                livingroom.curUrl        = camLivingRoom.c1001241; 
+                livingroom.trapUrl       = camLivingRoom.c1071042;
+                livingroom.catchTime     = minSecToNum(1, 6)     ;
+                break                                            ;
+           case minSecToNum(1, 57):
+                livingroom.urlChangeTime = minSecToNum(1, 57)    ;
+                livingroom.curUrl        = camLivingRoom.c1572241;
+                break                                            ;
+           case minSecToNum(3, 24):
+                livingroom.urlChangeTime = minSecToNum(3, 24)    ;
+                livingroom.curUrl        = camLivingRoom.c3230241;
+                livingroom.trapUrl       = camLivingRoom.c3330842;
+                livingroom.catchTime     = minSecToNum(3, 32)    ;
+                livingroom.nextUrl       = camLivingRoom.c3330841;
+               break                                             ;
+           case minSecToNum(4, 43):
+                livingroom.urlChangeTime = minSecToNum(4, 43)    ;
+                livingroom.curUrl        = camLivingRoom.c4511041;
+                livingroom.trapUrl       = camLivingRoom.c3330842;
+                livingroom.catchTime     = minSecToNum(4, 56)    ;
+                break                                            ;
        }        
     };
 
-    var eventsBathroom        = function eventsBathroom () {
-       var b                  = bathTemplate;
-           b.sRoomName        = 'bathroom'  ;
+    var eventsBathroom = function eventsBathroom () {
            
        switch (current.getTime()) {
            case minSecToNum(0, 18):
-               b.curUrl       = camBathroom.c180291    ;
-               buildState(bathroom, b)                 ;
-               break                                   ;
+               bathroom.urlChangeTime = minSecToNum(0, 18)  ;
+               bathroom.curUrl        = camBathroom.c180291 ;
+               break                                        ;
            case minSecToNum(0, 37):
-               b.curUrl       = camBathroom.c352291    ;
-               b.trapUrl      = camBathroom.c431292    ;
-               b.catchTime    = minSecToNum(0, 43)     ;                 
-               buildState(bathroom, b)                 ;
-               break                                   ;
+               bathroom.hasPlayed = false;
+               bathroom.urlChangeTime = minSecToNum(0, 37)  ;
+               bathroom.curUrl        = camBathroom.c352291 ;
+               bathroom.trapUrl       = camBathroom.c431292 ;
+               bathroom.catchTime     = minSecToNum(0, 43)  ;                 
+               break                                        ;
            case minSecToNum(0, 48):
-               b.curUrl       = camBathroom.c500291    ;
-               b.trapUrl      = camBathroom.c430249b   ;
-               b.catchTime    = minSecToNum(0, 49)     ;
-               buildState(bathroom, b)                 ;
-               break                                   ;
-         default: 
-             buildState(bathroom, b);
+               bathroom.urlChangeTime = minSecToNum(0, 48)  ;
+               bathroom.curUrl        = camBathroom.c500291 ;
+               bathroom.trapUrl       = camBathroom.c430249b;
+               bathroom.catchTime     = minSecToNum(0, 49)  ;
+               break                                        ;
        }
     };
+   
+    var eventsBedroom  = function eventsBedroom () {
 
-    var eventsBedroom         = function eventsBedroom () {
-       var bed           = bedTemplate;
-           bed.sRoomName = 'bedrom'   ;
-           
        switch (current.getTime()) {
            case minSecToNum(0, 1):
-               bed.curUrl    = camBedroom.c81      ;
-               bed.trapUrl   = camBedroom.c352482  ;
-               bed.catchTime = minSecToNum(0, 34)  ;
-               buildState(bedroom, bed)            ;
-               break                             ;
+               bedroom.urlChangeTime = minSecToNum(0, 1)  ;
+               bedroom.curUrl        = camBedroom.c81     ;
+               bedroom.trapUrl       = camBedroom.c352482 ;
+               bedroom.catchTime     = minSecToNum(0, 34) ;
+               break                                      ;
            case minSecToNum(0, 54):
-               bed.curUrl = camBedroom.c540281     ;
-               buildState(bedroom, bed)            ;
-               break                             ;
+               bedroom.hasPlayed = false;
+               bedroom.urlChangeTime = minSecToNum(0, 54) ;
+               bedroom.curUrl        = camBedroom.c540281 ;
+               break                                      ;
            case minSecToNum(3, 7): // May need to start with 07? But strict mode does not allow
-               bed.curUrl    = camBedroom.c3060281 ;
-               bed.trapUrl   = camBedroom.c3262482 ;
-               bed.catchTime = minSecToNum(3, 25)  ;
-               buildState(bedroom, bed)            ;              
-               break                             ;
+               bedroom.urlChangeTime = minSecToNum(3, 7)  ;
+               bedroom.curUrl        = camBedroom.c3060281;
+               bedroom.trapUrl       = camBedroom.c3262482;
+               bedroom.catchTime     = minSecToNum(3, 25) ;           
+               break                                      ;
            case minSecToNum(4, 35):
-               bed.curUrl    = camBedroom.c4390482 ;
-               bed.trapUrl   = camBedroom.c4390482 ;
-               bed.catchTime = minSecToNum(4, 38)  ;
-               buildState(bedroom, bed)            ;
-               break                             ;
-        default:
-              buildState(bedroom, bed);
+               bedroom.urlChangeTime = minSecToNum(4, 35) ;
+               bedroom.curUrl        = camBedroom.c4390482;
+               bedroom.trapUrl       = camBedroom.c4390482;
+               bedroom.catchTime     = minSecToNum(4, 38) ;
+               break                                      ;
        }
     };
 
-    var eventsHallTwo = function eventsHallTwo () {
-       var hall           = hallTwoTemplate;
-           hall.sRoomName = 'hallTwo';
+    var eventsHallTwo  = function eventsHallTwo () {
 
        switch (current.getTime()) {
            case minSecToNum(0, 31):
-                hall.curUrl = camHallTwo.c310471   ;
-                buildState(hallTwo, hall)          ;
-                break                           ;
-            case minSecToNum(0, 51):
-                hall.curUrl    = camHallTwo.c500271;
-                hall.trapUrl   = camHallTwo.c542272;
-                hall.catchTime = minSecToNum(0, 54);
-                buildState(hallTwo, hall)          ;
-                break                           ;
-
+                hallTwo.urlChangeTime = minSecToNum(0, 31);
+                hallTwo.curUrl        = camHallTwo.c310471;
+                break                                     ;
+           case minSecToNum(0, 51):
+               hallTwo.urlChangeTime  = minSecToNum(0, 51) ;
+                hallTwo.curUrl        = camHallTwo.c500271 ;
+                hallTwo.trapUrl       = camHallTwo.c542272 ;
+                hallTwo.catchTime     = minSecToNum(0, 54) ;
+                break                                      ;
            case minSecToNum(2, 39):
-               hall.curUrl = camHallTwo.c2390671   ;
-               buildState(hallTwo, hall)           ;
-               break                            ;
+               hallTwo.urlChangeTime  = minSecToNum(2, 39) ;
+               hallTwo.curUrl         = camHallTwo.c2390671;
+               break                                      ;
            case minSecToNum(4, 2):
-               hall.curUrl    = camHallTwo.c4000471; 
-               hall.trapUrl   = camHallTwo.c4120872;
-               hall.catchTime = minSecToNum(4, 11) ;
-               buildState(hallTwo, hall)           ;
-               break;
-         default:
-           buildState(hallTwo, hall);
+               hallTwo.urlChangeTime  = minSecToNum(4, 2)  ;
+               hallTwo.curUrl         = camHallTwo.c4000471; 
+               hallTwo.trapUrl        = camHallTwo.c4120872;
+               hallTwo.catchTime      = minSecToNum(4, 11) ;
+               break                                       ;
        }
     };
 
     var eventsDriveway = function eventsDriveway () {
-       var d           = driveTemplate;
-           d.sRoomName = 'driveway';
  
        switch(current.getTime()) {
            case minSecToNum(1, 56):
-               d.curUrl    = camDriveway.c1440451;
-               d.trapUrl   = camDriveway.c3481052;
-               d.catchTime = minSecToNum(2, 45)  ;
-               buildState(driveway, d)           ;
+               driveway.urlChangeTime = minSecToNum(1, 56)  ;
+               driveway.curUrl        = camDriveway.c1440451;
+               driveway.trapUrl       = camDriveway.c3481052;
+               driveway.catchTime     = minSecToNum(2, 45)  ;
                break;        
-         default:
-           buildState(driveway, d);
        }
     };
 
@@ -756,7 +705,7 @@ var mainJS = (function () {
      * Still to play when no action occurs. Sets video.src to src so that the still image can be displayed as a poster
      * TODO: Need to make this audio loop
      */
-    var displayStill          = function displayStill () {
+    var displayStill = function displayStill() {
         video.src(video.src);
         audioElem.src = aAudioClips.crickets;
         audioElem.play();
@@ -766,53 +715,99 @@ var mainJS = (function () {
     /**
      * Sets the poster (background) between clips to the room you are currently viewing
      * hasPlayed variable prevents the footage from looping.
-     * Second 'ended' event draws poster to screen when 2nd clip has completed
-     * @param {string}  sCurVidUrl   - Clip with the trap sequence.
-     * @param {string} [sNextVidUrl] - Trap clips often have a clip that appears next.
-     * @param {string} [sTrapUrl]    - Path to URL w/ trap video.
-     * @param {string}  sStillUrl    - Path to URL w/ poster image.
+     * Second 'ended' event draws poster to screen when 2nd clip has completed;
      */
-     var createVideoSeries = function createVideoSeries() {
-    
+    var createVideoSeries = function createVideoSeries() {
        /* At beginning of game, user clicks on a room w/ out a video OR user has already set a trap
         * and returns to that same room before a new clip is set to begin.                       */
-       if (current.getCurUrl() === null || current.getCurUrl() === '' || current.getTrapSprung() === true) {
-           console.log(current.getStillUrl());
-           video.poster(current.getStillUrl());
-          displayStill();
-          return;
+        if (current.getCurUrl() === null || current.getCurUrl() === '' || current.getTrapSprung() === true || current.getCam().hasPlayed) {
+            c('null: displaying poster');
+            video.poster(current.getStillUrl());
+            displayStill();
+            return;
         }
 
-        var hasPlayed = false;
         video.poster(current.getStillUrl());
         playVideo(current.getCurUrl());
 
-        // Did not catch / no chance to catch....so play next video
+        var hasPlayed = false;
+        
+        // Current vid ended. Did not catch || no chance to catch....so play next video 
         video.on('ended', function() {
             if (hasPlayed === false) {
+                current.getCam().hasPlayed = true;
+   
                 if (current.getNextUrl()) {
+                    c('r: playing nextUrl time');
                     playVideo(current.getNextUrl());
                 } else {
+                    c('r: no 2nd url, so using still');
                     displayStill();
                 }
             }
 
-            // Video has already played, so use a still
+            // 2nd video has already played, so use a still (poster).
             hasPlayed = true;
             video.on('ended', function () {
+                c('r: 2nd video has already played, so use a still (poster).');
                 displayStill();
             });
         });
     }; 
 
 
+    /**
+     * Pauses audio played during stills, sets new video source, & begins to play.
+     * Only use diff if the user has selected a room after a video has started playing.
+     * Using readState() to prevent setting currentTime before video player is ready.
+     * @param {string} clipUrl - Address of clip to play.
+     */
+    var playVideo = function playVideo(urlClip , bIsTrap) {
+        audioElem.pause();
+        var _bIsTrap = bIsTrap || false; //TODO: Not sure if this is still neded...
+        var diff     = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+
+        video.src(urlClip);
+        video.load();
+        video.play();
+        c('pv sRoomName: ' + current.getCam().sRoomName);
+                           
+        //if (_bIsTrap === false) {
+            video.on('loadedmetadata', function() {
+                var duration   = Math.round(video.duration());
+                var difference = current.getTime() - current.getUrlChangeTime();
+                c('change: ' + current.getUrlChangeTime() +  '   difference: ' + difference + '    duration: ' + duration);
+
+                if (difference >= duration) {
+                    c('difference is greater! Displaying still');
+                    displayStill();
+                }
+
+                
+                if (difference < duration) {
+
+                    // Seek to current time stamp
+                    if (current.getUrlChangeTime() !== current.getTime()) {
+                        c('Playing vid w/ time diff');
+                        video.currentTime(diff);
+                    } else {
+
+                        // Play video from the beginning
+                        c('returning - Play video from the beginning');
+                        return;
+                    }
+                }
+            });
+
+        //}
+    };
 
     /**
      * Change clips when user hits 'Trap' button
      * Make it unusable again right after you trigger the video
      * TODO: Need to set video.currentTime(0) on this as well! Otherwise we miss most of the trap vid!
      */
-    var trap                  = function trap () {
+    var trap = function trap() {
         createTrapVidSeries(current.getTrapUrl(), current.getNextUrl(), current.getPotentialCaptured());
         toggleTrapListener(false);
     };
@@ -822,33 +817,33 @@ var mainJS = (function () {
      * Mark trap as having been sprung after user selects a room.
      * To be used by createTrapVidSeries().
      */
-    var setTrapAsSprung = function setTrapAsSprung () {
-      switch (current.getCam()){
-        case 'hallOne':
-            hallOne   .setTrapSprung(true);
+    var setTrapAsSprung = function setTrapAsSprung() {
+        switch (current.getCam()) {
+            case hallOne:
+            hallOne   .bTrapSprung = true;
             break;
-        case 'kitchen':
-            kitchen   .setTrapSprung(true);
+        case kitchen:
+            kitchen   .bTrapSprung = true;
             break;                          
-        case 'entryway':
-            entryway  .setTrapSprung(true);
+        case entryway:
+            entryway  .bTrapSprung = true;
             break;
-        case 'livingroom':
-            livingroom.setTrapSprung(true);
+        case livingroom:
+            livingroom.bTrapSprung = true;
             break;
-        case 'bathroom':
-            bathroom  .setTrapSprung(true);
+        case bathroom:
+            bathroom  .bTrapSprung = true;
             break;
-        case 'bedroom':
-            bedroom   .setTrapSprung(true);
+        case bedroom:
+            bedroom   .bTrapSprung = true;
             break;
-        case 'hallTwo':
-            hallTwo   .setTrapSprung(true);
-        break;                          
-        case 'driveway':
-            driveway  .setTrapSprung(true);
+        case hallTwo:
+            hallTwo   .bTrapSprung = true;
+            break;                          
+        case driveway:
+            driveway  .bTrapSprung = true;
             break;
-      }
+        }
     };
 
 
@@ -856,32 +851,36 @@ var mainJS = (function () {
      * Sets the poster (background) between clips to the room you are currently viewing.
      * hasPlayed variable prevents the footage from looping.
      * Second 'ended' event draws poster to screen when 2nd clip has completed.
-     * @param {string} curVidUrl        - Clip with the trap sequence.
-     * @param {string} [nextVid]        - Trap clips are often have a clip that appears next.
+     * @param {string} curVidUrl          - Clip with the trap sequence.
+     * @param {string} [nextVid]          - Trap clips are often have a clip that appears next.
      * @param {number} nPotentialCaptured - Number of augers that could have been captured in this scene
      */
     var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl, nPotentialCaptured) {
-      setTrapAsSprung();
-      video.src(sTrapUrl);
-      video.play();
-      nTotalCaptured.set(nPotentialCaptured);
+        c('t: playing first time');
+        setTrapAsSprung();
+        playVideo(sTrapUrl, true);
+        nTotalCaptured.set(nPotentialCaptured);
 
       // Video has already played & there is no nextUrl, so use a still
       video.on('ended', function () {
-        if (sNextUrl === null) {
-          displayStill();
+          if (sNextUrl === "" || null) {
+              c('t: Video has already played & there is no nextUrl, so use a still');
+              displayStill();
         } else {
-          // Play next video here  & when it ends, set a still
-          video.src(sNextUrl);
-          video.play();
+            // Play next video here  & when it ends, set a still
+            c('t: Play next video here  & when it ends, set a still');
+            playVideo(sNextUrl);   
 
-          // When second video has finished, use a still
-          video.on('ended', function () {
-            displayStill();
-          });
+            // Second video has finished, use a still
+            video.on('ended', function () {
+                c('t: Second video has finished, use a still');
+                displayStill();
+            });
         }
+
       });
     };
+
 
     /**
      * Toggles event listener for the trap button on / off
@@ -890,7 +889,7 @@ var mainJS = (function () {
     var toggleTrapListener    = function toggleTrapListener (bShouldListen) {
         bShouldListen = typeof 'undefined' ? bShouldListen : false;
         if (bShouldListen       === true) {
-            document.getElementById('Trap').addEventListener   ('click', trap);
+            document.getElementById('Trap').addEventListener('click', trap);
         } else {
             document.getElementById('Trap').removeEventListener('click', trap);
         }
@@ -907,7 +906,7 @@ var mainJS = (function () {
         var after  = nCatchTime + 1;
   
         if (current.getTime() > before && current.getTime() < after) {
-            console.log('can trigger trap');
+            c('can trigger trap');
             toggleTrapListener(true);
         }
     };
@@ -917,7 +916,7 @@ var mainJS = (function () {
      * Useful when viewer enters a room after a video was supposed to have started.
      * Need to apply Math.floor, otherwise Blink throws an error regarding non-finite numbers.
      * Result is then used to set the currentTime on video player. 
-     * @param   {number} caseTime     - Which event (time) is creating this object?
+     * @param   {number} caseTime     - Which event (time) is creating this object
      * @param   {number} currentTime  - What is the current game time when this function is called?
      * @returns {number} result       - Diff b/t nCaseTime, which is set in the Update() method of each room, & nCurrentTime.get().
      */
@@ -932,63 +931,53 @@ var mainJS = (function () {
 
 
     /**
-     * Pauses audio played during stills, sets new video source, & begins to play.
-     * Only use diff if the user has selected a room after a video has started playing.
-     * @param {string} clipUrl - Address of clip to play.
-     * TODO: Do not need diff if it is not a trap. Move this to the trap
-     */
-    var playVideo             = function playVideo (urlClip) {
-        audioElem.pause();
-        video.pause(); //TODO: Not sure if this is needed.
-        video.src(urlClip);
-        video.load();
-        video.play();
-        if (current.getJustSwitched() === true) { //TODO: not sure if I need this?
-            var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
-            //console.log('URL change Time: ' +current.getUrlChangeTime());
-            //console.log('get time:' + current.getTime());
-            //console.log('clip: ' + urlClip);
-            //console.log(current);
-            console.log('diff: ' + diff);
-            video.currentTime(diff);
-        }
-        console.log('currentTime: ' + video.currentTime());
-    };
-
-
-    /**
      * This occurs automatically, as Object.observe is constantly polling to check if values have changed.
      * If player is watching a room & the currentUrl of a video changes at any point (this is done in the events[RoomName] function),
      * then that new URL is passed into the video player & played.
-     * @param {object} roomTemp - Room we are operating on.
+     * We only want to listen for updates to the url, not add / remove, so we check for that.
+     * @param {object} room - Room we are operating on.
      */
-    var ObserveRoom = function observeRoom(roomTemp) {
-        Object.observe(roomTemp, function (changes) {
-            if (changes[0] !== undefined) {
-                var oldUrl              = changes[0].oldValue;
-                var curUrl              = changes[0].object.curUrl;
-                var watchingCurrentRoom = current.getCam() === roomTemp.sRoomName;
-                var curUrlHasChanged    = curUrl !== oldUrl;
+    var ObserveRoom = function observeRoom(room) {
+        Object.observe(room, function (changes) {
+            c(changes[0]);
+            c(current.getCamAsString);
+            //c(current.getCam()); // Returns undefined
+                if (changes[0] !== undefined) {
+                    c(room);
+                    var oldUrl = changes[0].oldValue;
+                    var curUrl = changes[0].object.curUrl;
+                    //var watchingCurrentRoom = current.getCam() === room.sRoomName;
+                    //var watchingCurrentRoom = current.getCam().sRoomName === room.sRoomName;
+                    var watchingCurrentRoom = current.getCamAsString() === room.sRoomName;
+                    var curUrlHasChanged = curUrl !== oldUrl;
+                    var typeIsUpdate = {};
 
-                if (curUrlHasChanged && watchingCurrentRoom) {
+                    if (changes[0].type === update) {
+                        typeIsUpdate = changes[0].type;
+                    }
+
+                    if (curUrlHasChanged && watchingCurrentRoom && typeIsUpdate) {
+                        c('changing stream from OR');
+                        changeVideoStream();
+                    }
                 }
-            }
         });
     };
 
 
     /**
      * Sets Object.observe for each room in the game.
+     * Read about the polyfill I am using, here: https://github.com/MaxArt2501/object-observe
      */
     var observeAllRooms = function observeAllRooms() {
-        var observeHallOne = new ObserveRoom(hallOneTemplate  );
-        var observeKitchen = new ObserveRoom(kitchenTemplate  );
-        var observeEntry   = new ObserveRoom(entryTemplate    );
-        var observeLiving  = new ObserveRoom(livingTemplate   );
-        var observeBath    = new ObserveRoom(bathTemplate     );
-        var observeBed     = new ObserveRoom(bedTemplate      );
-        var observeHallTwo = new ObserveRoom(hallTwoTemplate  );
-        var observeDrive   = new ObserveRoom(driveTemplate    );
+        var observeHallOne = new ObserveRoom(hallOne   );
+        var observeKitchen = new ObserveRoom(kitchen   );
+        var observeEntry   = new ObserveRoom(entryway  );
+        var observeLiving  = new ObserveRoom(livingroom);
+        var observeBath    = new ObserveRoom(bathroom  );
+        var observeBed     = new ObserveRoom(bedroom   );
+        var observeHallTwo = new ObserveRoom(hallTwo   );
+        var observeDrive   = new ObserveRoom(driveway  );
     };
 
 
