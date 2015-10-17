@@ -512,25 +512,28 @@ var mainJS = (function () {
                 //     break                                      ;
 
                 //case minSecToNum(0, 27):
-             case minSecToNum(0, 12):
-                 //hallOne.urlChangeTime = minSecToNum(0, 27) ;
-                   hallOne.urlChangeTime = minSecToNum(0, 12) ;
-                 hallOne.curUrl = camHallOne.c1152221;
+            case minSecToNum(0, 12):
                  hallOne.hasPlayed = false;
+                 //hallOne.urlChangeTime = minSecToNum(0, 27) ;
+                 hallOne.urlChangeTime = minSecToNum(0, 12) ;
+                 hallOne.curUrl = camHallOne.c1152221;
                  break                                      ;
             case minSecToNum(2, 50):
+                 hallOne.hasPlayed     = false              ;
                  hallOne.urlChangeTime = minSecToNum(2, 50) ;
                  hallOne.curUrl        = camHallOne.c2500221;
                  hallOne.trapUrl       = camHallOne.c3150422;
                  hallOne.catchTime     = minSecToNum(3, 14) ;
                  break                                      ;
             case minSecToNum(3, 34):
+                 hallOne.hasPlayed     = false              ;
                  hallOne.urlChangeTime = minSecToNum(3, 34) ;
                  hallOne.curUrl        = camHallOne.c3332421;
                  hallOne.trapUrl       = camHallOne.c3422422;
                  hallOne.catchTime     = minSecToNum(3, 42) ;
                  break                                      ;
             case minSecToNum(4, 45):
+                 hallOne.hasPlayed     = false              ;
                  hallOne.urlChangeTime = minSecToNum(4, 45) ;
                  hallOne.curUrl        = camHallOne.c4442421;
                  break                                      ;
@@ -540,16 +543,19 @@ var mainJS = (function () {
             
         switch (current.getTime()){     
             case minSecToNum(1, 21):
+                 kitchen.hasPlayed     = false              ;
                  kitchen.urlChangeTime = minSecToNum(1, 23) ;
                  kitchen.curUrl        = camKitchen.c1200431;
                  kitchen.trapUrl       = camKitchen.c1240632;
                  kitchen.catchTime     = minSecToNum(1, 23) ;
                  break                                      ;
             case minSecToNum(1, 48):
+                 kitchen.hasPlayed     = false              ;
                  kitchen.urlChangeTime = minSecToNum(1, 48) ;
                  kitchen.currentUrl    = camKitchen.c1481231;
                  break                                      ;
             case minSecToNum(3, 54):
+                 kitchen.hasPlayed     = false              ;
                  kitchen.urlChangeTime = minSecToNum(3, 54) ;
                  kitchen.curUrl        = camKitchen.c3540631;
                  break                                      ;
@@ -560,12 +566,14 @@ var mainJS = (function () {
             
         switch (current.getTime()) {
             case minSecToNum(1, 33):
+                 entryway.hasPlayed     = false               ;
                  entryway.urlChangeTime = minSecToNum(1, 33)  ;
                  entryway.curUrl        = camEntryway.c1320261;
                  entryway.trapUrl       = camEntryway.c1391862;
                  entryway.catchTime     = minSecToNum(1, 39)  ;
                  break                                        ;
             case minSecToNum(2, 13):
+                 entryway.hasPlayed     = false               ;
                  entryway.urlChangeTime = minSecToNum(2, 13)  ;
                  entryway.curUrl        = camEntryway.c2122461;
                  entryway.trapUrl       = camEntryway.c2590262;
@@ -578,6 +586,7 @@ var mainJS = (function () {
             
        switch(current.getTime()) {
            case minSecToNum(0, 25):
+                livingroom.hasPlayed     = false                 ;
                 livingroom.urlChangeTime = minSecToNum(0, 25)    ;
                 livingroom.curUrl        = camLivingRoom.c232241 ;
                 livingroom.trapUrl       = camLivingRoom.c271442 ;
@@ -585,16 +594,19 @@ var mainJS = (function () {
                 livingroom.nextUrl       = camLivingRoom.c271641 ;
                 break                                            ;
            case minSecToNum(1, 0):
+                livingroom.hasPlayed     = false                 ;
                 livingroom.urlChangeTime = minSecToNum(1, 0)     ;
                 livingroom.curUrl        = camLivingRoom.c1001241; 
                 livingroom.trapUrl       = camLivingRoom.c1071042;
                 livingroom.catchTime     = minSecToNum(1, 6)     ;
                 break                                            ;
            case minSecToNum(1, 57):
+                livingroom.hasPlayed     = false                 ;
                 livingroom.urlChangeTime = minSecToNum(1, 57)    ;
                 livingroom.curUrl        = camLivingRoom.c1572241;
                 break                                            ;
            case minSecToNum(3, 24):
+                livingroom.hasPlayed     = false                 ;
                 livingroom.urlChangeTime = minSecToNum(3, 24)    ;
                 livingroom.curUrl        = camLivingRoom.c3230241;
                 livingroom.trapUrl       = camLivingRoom.c3330842;
@@ -602,6 +614,7 @@ var mainJS = (function () {
                 livingroom.nextUrl       = camLivingRoom.c3330841;
                break                                             ;
            case minSecToNum(4, 43):
+                livingroom.hasPlayed     = false                 ;
                 livingroom.urlChangeTime = minSecToNum(4, 43)    ;
                 livingroom.curUrl        = camLivingRoom.c4511041;
                 livingroom.trapUrl       = camLivingRoom.c3330842;
@@ -637,23 +650,26 @@ var mainJS = (function () {
 
        switch (current.getTime()) {
            case minSecToNum(0, 1):
+               bedroom.hasPlayed     = false              ;
                bedroom.urlChangeTime = minSecToNum(0, 1)  ;
                bedroom.curUrl        = camBedroom.c81     ;
                bedroom.trapUrl       = camBedroom.c352482 ;
                bedroom.catchTime     = minSecToNum(0, 34) ;
                break                                      ;
            case minSecToNum(0, 54):
-               bedroom.hasPlayed = false;
+               bedroom.hasPlayed     = false              ;
                bedroom.urlChangeTime = minSecToNum(0, 54) ;
                bedroom.curUrl        = camBedroom.c540281 ;
                break                                      ;
            case minSecToNum(3, 7): // May need to start with 07? But strict mode does not allow
+               bedroom.hasPlayed     = false              ;
                bedroom.urlChangeTime = minSecToNum(3, 7)  ;
                bedroom.curUrl        = camBedroom.c3060281;
                bedroom.trapUrl       = camBedroom.c3262482;
                bedroom.catchTime     = minSecToNum(3, 25) ;           
                break                                      ;
            case minSecToNum(4, 35):
+               bedroom.hasPlayed     = false              ;
                bedroom.urlChangeTime = minSecToNum(4, 35) ;
                bedroom.curUrl        = camBedroom.c4390482;
                bedroom.trapUrl       = camBedroom.c4390482;
@@ -666,20 +682,24 @@ var mainJS = (function () {
 
        switch (current.getTime()) {
            case minSecToNum(0, 31):
+                hallTwo.hasPlayed     = false             ;
                 hallTwo.urlChangeTime = minSecToNum(0, 31);
                 hallTwo.curUrl        = camHallTwo.c310471;
                 break                                     ;
            case minSecToNum(0, 51):
-               hallTwo.urlChangeTime  = minSecToNum(0, 51) ;
+                hallTwo.hasPlayed     = false              ;
+                hallTwo.urlChangeTime = minSecToNum(0, 51) ;
                 hallTwo.curUrl        = camHallTwo.c500271 ;
                 hallTwo.trapUrl       = camHallTwo.c542272 ;
                 hallTwo.catchTime     = minSecToNum(0, 54) ;
                 break                                      ;
            case minSecToNum(2, 39):
+               hallTwo.hasPlayed      = false              ;
                hallTwo.urlChangeTime  = minSecToNum(2, 39) ;
                hallTwo.curUrl         = camHallTwo.c2390671;
-               break                                      ;
+               break                                       ;
            case minSecToNum(4, 2):
+               hallTwo.hasPlayed      = false              ;
                hallTwo.urlChangeTime  = minSecToNum(4, 2)  ;
                hallTwo.curUrl         = camHallTwo.c4000471; 
                hallTwo.trapUrl        = camHallTwo.c4120872;
@@ -692,6 +712,7 @@ var mainJS = (function () {
  
        switch(current.getTime()) {
            case minSecToNum(1, 56):
+               driveway.hasPlayed     = false               ;
                driveway.urlChangeTime = minSecToNum(1, 56)  ;
                driveway.curUrl        = camDriveway.c1440451;
                driveway.trapUrl       = camDriveway.c3481052;
@@ -785,13 +806,11 @@ var mainJS = (function () {
 
                 
                 if (difference < duration) {
-
                     // Seek to current time stamp
                     if (current.getUrlChangeTime() !== current.getTime()) {
                         c('Playing vid w/ time diff');
                         video.currentTime(diff);
                     } else {
-
                         // Play video from the beginning
                         c('returning - Play video from the beginning');
                         return;

@@ -279,28 +279,26 @@
                 this.hasPlayed = val;
             },
             getCamAsString: function () {
-                 console.log(this.camAsString);
-                return this.camAsString;
-               
+                return this.camAsString;               
             },
             setCamAsString: function (val) {
                 switch (val) {
                     case hallOne:
-                        this.camAsString = 'hallOne';
+                        this.camAsString = 'hallOne'   ;
                     case kitchen:
-                        this.camAsString = 'kitchen';
+                        this.camAsString = 'kitchen'   ;
                     case entryway:
-                        this.camAsString = 'entryway';
+                        this.camAsString = 'entryway'  ;
                     case livingroom:
                         this.camAsString = 'livingroom';
                     case bathroom:
-                        this.camAsString = 'bathroom';
+                        this.camAsString = 'bathroom'  ;
                     case bedroom:
-                        this.camAsString = 'bathroom';
+                        this.camAsString = 'bathroom'  ;
                     case hallTwo:
-                        this.camAsString = 'hallTwo';
+                        this.camAsString = 'hallTwo'   ;
                     case driveway:
-                        this.camAsString = 'driveway';
+                        this.camAsString = 'driveway'  ;
                 }
             }
         }
