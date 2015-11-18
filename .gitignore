@@ -193,3 +193,4 @@ ModelManifest.xml
 # Night-Trap specific content
 video/
 *.wav
+.idea

@@ -115,32 +115,34 @@ var mainJS = (function () {
         curPass: 'BLUE',
         generateRanPass:  function () {
             var result;
-            var count = 0;
-            for (var prop in this.passwords)
-                if (Math.random() < 1/++count) {
-                    result = prop;
-                    switch(result) {
-                    case Purple:
-                        playSfx(sfxPath.Purple);
-                        break;
-                    case Blue:
-                        playSfx(sfxPath.Blue  );
-                        break;
-                    case Red:
-                        playSfx(sfxPath.Red   );
-                        break;
-                    case Green:
-                        playSfx(sfxPath.Green );
-                        break;
-                    case Yellow:
-                        playSfx(sfxPath.Yellow);
-                        break;
-                    case Orange:
-                        playSfx(sfxPath.Orange);
-                        break;
+            var count     = 0;
+            var passwords = this.passwords;
+            for (var prop in passwords)
+                if (passwords.hasOwnProperty(prop))
+                    if (Math.random() < 1 / ++count) {
+                        result = prop;
+                        switch (result) {
+                        case Purple:
+                            playSfx(sfxPath.Purple);
+                            break;
+                        case Blue:
+                            playSfx(sfxPath.Blue);
+                            break;
+                        case Red:
+                            playSfx(sfxPath.Red);
+                            break;
+                        case Green:
+                            playSfx(sfxPath.Green);
+                            break;
+                        case Yellow:
+                            playSfx(sfxPath.Yellow);
+                            break;
+                        case Orange:
+                            playSfx(sfxPath.Orange);
+                            break;
+                        }
                     }
-                }
-                return result;
+            return result;
         },
         setStyleColor: function () {
           switch(this.pass){
@@ -506,12 +508,12 @@ var mainJS = (function () {
         switch (current.getTime()) {    
             case minSecToNum(0, 1):
                  hallOne.urlChangeTime = minSecToNum(0, 1)  ;
-                //hallOne.curUrl        = camHallOne.c21     ;
-                hallOne.curUrl = camHallOne.c130422;
-                 hallOne.trapUrl       = camHallOne.c130422 ;
+                //hallOne.curUrl        = camHallOne.c21     ;        // Actual
+                hallOne.curUrl = camHallOne.c130422;                  // Debug
+                 hallOne.trapUrl       = camHallOne.c130422 ; 
                  hallOne.catchTime     = minSecToNum(0, 13) ;   
                  break                                      ;
-            //case minSecToNum(1, 20):
+            //case minSecToNum(1, 20):                               // Actual
             //     hallOne.urlChangeTime = minSecToNum(1, 20) ;
             //     hallOne.curUrl        = camHallOne.c1152221;
                 //     break                                      ;
