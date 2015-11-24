@@ -4,7 +4,8 @@ var mainJS = (function () {
     /**
      * Allows you to replace console.log(message) in your code with c(message)
      */
-    var c = console.log.bind(console); 
+    var c = console.log.bind(console);
+
 
     /**
      * How many augers has the user captured?

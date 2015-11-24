@@ -1,0 +1,41 @@
+﻿CACHE MANIFEST
+# Init 11-24-15
+index.html
+
+### Images
+img/Night-Trap-32x-Front.jpg
+/img/icons/Bathroom.jpg
+/img/icons/Bedroom.jpg
+/img/icons/Driveway.jpg
+/img/icons/Entry-Way.jpg
+/img/icons/Hall-1.jpg
+/img/icons/Hall-2.jpg
+/img/icons/Kitchen.jpg
+/img/icons/Living-Room.jpg
+/img/icons/trap-icon.gif
+
+img//stills/BATHROOM_1.jpg
+img//stills/BEDROOM_1.jpg
+img/stills/DRIVEWAY_1.jpg
+img/stills/ENTRY-WAY_1.jpg
+img/stills/HALL-ONE_1.jpg
+img/stills/HALL-TWO_1.jpg
+img/stills/KITCHEN_1.jpg
+img/stills/LIVING-ROOM_1.jpg
+
+### JS
+js/vendor/bootstrap.min.js
+bower_components/video.js/dist/video.js
+js/vendor/mainloop/mainloop.js
+bower_components/object.observe/dist/object-observe-lite.min.js
+js/appCacheValidation.js
+
+
+ https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00000021.mp4
+ https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00130422.mp4
+ https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/01152221.mp4
+ https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/02500221.mp4           
+ https://nighttrapblob.blob.core.windows.net/ntvids/bedroom/00000081.mp4
+
+NETWORK:
+*
