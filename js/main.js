@@ -511,9 +511,11 @@ var mainJS = (function () {
             // Actual #1 
             case minSecToNum(0, 1):
                  hallOne.urlChangeTime = minSecToNum(0, 1)  ;
-                hallOne.curUrl         = camHallOne.c21     ;       
-                 hallOne.trapUrl       = camHallOne.c130422 ; 
-                 hallOne.catchTime     = minSecToNum(0, 13) ;   
+                 hallOne.curUrl        = camHallOne.c21     ;       
+                 hallOne.trapUrl = camHallOne.c130422;
+                 hallOne.catchTime = minSecToNum(0, 4);    // If I start this at 4 secs, it shows very end of clip...
+                // If I start it at 10 seconds, it says that it has passed already....
+                 //hallOne.catchTime     = minSecToNum(0, 13) ;   
                  break;
          // Debug # 1
          //case minSecToNum(0, 1):
@@ -807,13 +809,13 @@ var mainJS = (function () {
         video.src(urlClip);
         video.load();
         video.play();
-        c('pv sRoomName: ' + current.getCam().sRoomName);
+        c('playVideo sRoomName: ' + current.getCam().sRoomName);
                            
         //if (_bIsTrap === false) {
             video.on('loadedmetadata', function() {
                 var duration   = Math.round(video.duration());
                 var difference = current.getTime() - current.getUrlChangeTime();
-                c('change: ' + current.getUrlChangeTime() +  '   difference: ' + difference + '    duration: ' + duration);
+                c('loaded Metadata. change: ' + current.getUrlChangeTime() +  '   difference: ' + difference + '    duration: ' + duration);
 
                 if (difference >= duration) {
                     c('difference is greater! Displaying still');
