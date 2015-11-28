@@ -242,8 +242,8 @@ var mainJS = (function () {
      * @returns {number} conversion from min:sec to a number.  
      */
     var minSecToNum = function minSecToNum(minutes, seconds) {
-        var min = minutes || 0;
-        var sec = seconds || 0;
+        var min = minutes  || 0;
+        var sec = seconds  || 0;
 
         return min * 60 + sec;
     };
@@ -334,8 +334,8 @@ var mainJS = (function () {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-            //video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
-            video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);
+            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+            //video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);  // Local video
             video.load();
             video.play();
         } else {
@@ -506,26 +506,34 @@ var mainJS = (function () {
      */
     var eventsHallOne  = function eventsHallOne () { 
             
-        switch (current.getTime()) {    
+        switch (current.getTime()) {
+
+            // Actual #1 
             case minSecToNum(0, 1):
                  hallOne.urlChangeTime = minSecToNum(0, 1)  ;
-                //hallOne.curUrl        = camHallOne.c21     ;        // Actual
-                hallOne.curUrl = camHallOne.c130422;                  // Debug
+                hallOne.curUrl         = camHallOne.c21     ;       
                  hallOne.trapUrl       = camHallOne.c130422 ; 
                  hallOne.catchTime     = minSecToNum(0, 13) ;   
-                 break                                      ;
-            //case minSecToNum(1, 20):                               // Actual
-            //     hallOne.urlChangeTime = minSecToNum(1, 20) ;
-            //     hallOne.curUrl        = camHallOne.c1152221;
-                //     break                                      ;
-
-                //case minSecToNum(0, 27):
-            case minSecToNum(0, 12):
-                 hallOne.hasPlayed = false;
-                 //hallOne.urlChangeTime = minSecToNum(0, 27) ;
-                 hallOne.urlChangeTime = minSecToNum(0, 12) ;
-                 hallOne.curUrl = camHallOne.c1152221;
-                 break                                      ;
+                 break;
+         // Debug # 1
+         //case minSecToNum(0, 1):
+         //       hallOne.urlChangeTime = minSecToNum(0, 1);
+         //       hallOne.curUrl = camHallOne.c130422;                 
+         //       hallOne.trapUrl = camHallOne.c130422;
+         //       hallOne.catchTime = minSecToNum(0, 13);
+         //       break;
+            // Debug # 2
+            // Actual # 2 
+            case minSecToNum(1, 20):                               
+                 hallOne.urlChangeTime = minSecToNum(1, 20) ;
+                 hallOne.curUrl        = camHallOne.c1152221;
+                 break;
+                // Debug # 2
+            //case minSecToNum(0, 12):
+            //    hallOne.hasPlayed = false;
+            //    hallOne.urlChangeTime = minSecToNum(0, 12);
+            //    hallOne.curUrl = camHallOne.c1152221;
+            //    break;
             case minSecToNum(2, 50):
                  hallOne.hasPlayed     = false              ;
                  hallOne.urlChangeTime = minSecToNum(2, 50) ;

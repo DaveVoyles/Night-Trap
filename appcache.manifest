@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-# Init 11-24-15
+# Init 11-25-15
 index.html
 
 ### Images
@@ -30,12 +30,16 @@ js/vendor/mainloop/mainloop.js
 bower_components/object.observe/dist/object-observe-lite.min.js
 js/appCacheValidation.js
 
+### Remote
+https://nighttrap.blob.core.windows.net/vid/intro/00000011-Intro.mp4'                 
+https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/00180291.mp4        
+https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00000021.mp4		   
+https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00130422.mp4
+https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/01152221.mp4
+https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/02500221.mp4           
+https://nighttrapblob.blob.core.windows.net/ntvids/bedroom/00000081.mp4
 
- https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00000021.mp4
- https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/00130422.mp4
- https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/01152221.mp4
- https://nighttrapblob.blob.core.windows.net/ntvids/hallOne/02500221.mp4           
- https://nighttrapblob.blob.core.windows.net/ntvids/bedroom/00000081.mp4
 
+### These resources require online connection and will never be cached
 NETWORK:
-*
+*   

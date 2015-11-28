@@ -13,7 +13,7 @@
     appCache.addEventListener('error', function(event) {
         if (navigator.onLine === true) { //If the user is connected to the internet.
             //alert("Error - Please contact the website administrator if this problem consists.");
-            console.log("Error - Please contact the website administrator if this problem consists.");
+            console.log("Error - Please contact the website administrator if this problem consists. " + event.type);
         } else {
             //alert("You aren't connected to the internet. Some things might not be available.");
             console.log("You aren't connected to the internet. Some things might not be available.");
