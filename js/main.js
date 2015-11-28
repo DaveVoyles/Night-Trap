@@ -800,6 +800,7 @@ var mainJS = (function () {
      * Only use diff if the user has selected a room after a video has started playing.
      * Using readState() to prevent setting currentTime before video player is ready.
      * @param {string} clipUrl - Address of clip to play.
+     * @Param {bool}   bIsTrap - Will determine how the video should be loaded 
      */
     var playVideo = function playVideo(urlClip , bIsTrap) {
         audioElem.pause();
@@ -808,15 +809,16 @@ var mainJS = (function () {
 
         video.src(urlClip);
         video.load();
-        video.play();
         c('playVideo sRoomName: ' + current.getCam().sRoomName);
                            
+        // When enough data has loaded.....
         //if (_bIsTrap === false) {
             video.on('loadedmetadata', function() {
                 var duration   = Math.round(video.duration());
                 var difference = current.getTime() - current.getUrlChangeTime();
                 c('loaded Metadata. change: ' + current.getUrlChangeTime() +  '   difference: ' + difference + '    duration: ' + duration);
 
+                // The opportunity to play the clip has passed
                 if (difference >= duration) {
                     c('difference is greater! Displaying still');
                     displayStill();
@@ -827,9 +829,11 @@ var mainJS = (function () {
                     if (current.getUrlChangeTime() !== current.getTime()) {
                         c('Playing vid w/ time diff');
                         video.currentTime(diff);
+                        video.play(); 
                     } else {
                         // Play video from the beginning
                         c('returning - Play video from the beginning');
+                        video.play();
                         return;
                     }
                 }
