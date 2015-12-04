@@ -334,8 +334,8 @@ var mainJS = (function () {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
-            //video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);  // Local video
+           // video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+            video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);  // Local video
             video.load();
             video.play();
         } else {
@@ -512,8 +512,8 @@ var mainJS = (function () {
             case minSecToNum(0, 1):
                  hallOne.urlChangeTime = minSecToNum(0, 1)  ;
                  hallOne.curUrl        = camHallOne.c21     ;       
-                 hallOne.trapUrl = camHallOne.c130422;
-                 hallOne.catchTime = minSecToNum(0, 4);    // If I start this at 4 secs, it shows very end of clip...
+                 hallOne.trapUrl       = camHallOne.c130422 ;
+                 hallOne.catchTime     = minSecToNum(0, 4)  ;    // If I start this at 4 secs, it shows very end of clip...
                 // If I start it at 10 seconds, it says that it has passed already....
                  //hallOne.catchTime     = minSecToNum(0, 13) ;   
                  break;
@@ -811,8 +811,11 @@ var mainJS = (function () {
         video.load();
         c('playVideo sRoomName: ' + current.getCam().sRoomName);
                            
+        //CONTINUE WORKING HERE: 11 - 30 - 15
+        //Decide if  you need to uncomment -bIsTrap
+        //I think it should be uncommented, otherwise when you go to spring a trap, you only get the END of it 
         // When enough data has loaded.....
-        //if (_bIsTrap === false) {
+        if (_bIsTrap === false) {
             video.on('loadedmetadata', function() {
                 var duration   = Math.round(video.duration());
                 var difference = current.getTime() - current.getUrlChangeTime();
@@ -837,9 +840,9 @@ var mainJS = (function () {
                         return;
                     }
                 }
-            });
 
-        //}
+            });
+        }
     };
 
     /**
