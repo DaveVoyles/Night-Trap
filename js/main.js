@@ -68,7 +68,8 @@ var mainJS = (function () {
     };
 
     // Timer to keep track of user's time spent in-game
-    var nTimeStart             = new Date();
+    //var nTimeStart             = new Date();
+    var nTimeStart = 0;
     // Audio element for SFX, passwords, and noises during stills
     var audioElem              = null;
     // Are we in Debug mode?
@@ -348,8 +349,9 @@ var mainJS = (function () {
             e.defaultPrevented();
         }, false);
 
-        video.on('loadeddata', function() {
+        video.on('canplay', function() {
             MainLoop.setUpdate(update).start();
+            nTimeStart  = new Date();
         });
     };
 
@@ -820,7 +822,6 @@ var mainJS = (function () {
             if (_bIsTrap) {
                 c('Playing trap video');
                 video.play();
-
             } else if (!_bIsTrap) {
 
                 // The opportunity to play the clip has passed
@@ -830,7 +831,7 @@ var mainJS = (function () {
                 }
 
                 if (difference < duration) {
-                    // Seek to current time stamp
+                    // Seek to current time stamp then play
                     if (current.getUrlChangeTime() !== current.getTime()) {
                         c('Playing vid w/ time diff');
                         video.currentTime(diff);
