@@ -30,6 +30,12 @@ js/vendor/mainloop/mainloop.js
 bower_components/object.observe/dist/object-observe-lite.min.js
 js/appCacheValidation.js
 
+### Local videos
+video/00180291.mp4
+video/00431292.mp4
+video/00480291.mp4
+video/00500293.mp4
+
 ### Remote
  https://nighttrap.blob.core.windows.net/vid/intro/00000011-Intro.mp4                
  https://nighttrapblob.blob.core.windows.net/ntvids/bathroom/00180291.mp4        
