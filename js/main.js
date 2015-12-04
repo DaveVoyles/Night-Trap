@@ -279,7 +279,7 @@ var mainJS = (function () {
 //      Object.observe(password,  function (changes) {
 //
 //        if (changes[0]!== undefined) {
-//          var oldUrl = changes[0].oldValue;
+//          var oldUrl = changes[0].oldValue;   
 //          var newUrl = password.sCurUserPass.get();
 //
 //          if (oldUrl !== newUrl && current.getCam() === sRoomName) {
@@ -802,37 +802,39 @@ var mainJS = (function () {
      * @param {string} clipUrl - Address of clip to play.
      * @Param {bool}   bIsTrap - Will determine how the video should be loaded 
      */
-    var playVideo = function playVideo(urlClip , bIsTrap) {
+    var playVideo = function playVideo(urlClip, bIsTrap) {
         audioElem.pause();
-        var _bIsTrap = bIsTrap || false; //TODO: Not sure if this is still neded...
+        var _bIsTrap = bIsTrap || false;
         var diff     = nTimeDiff(current.getUrlChangeTime(), current.getTime());
 
         video.src(urlClip);
         video.load();
         c('playVideo sRoomName: ' + current.getCam().sRoomName);
-                           
-        //CONTINUE WORKING HERE: 11 - 30 - 15
-        //Decide if  you need to uncomment -bIsTrap
-        //I think it should be uncommented, otherwise when you go to spring a trap, you only get the END of it 
-        // When enough data has loaded.....
-        if (_bIsTrap === false) {
-            video.on('loadedmetadata', function() {
-                var duration   = Math.round(video.duration());
-                var difference = current.getTime() - current.getUrlChangeTime();
-                c('loaded Metadata. change: ' + current.getUrlChangeTime() +  '   difference: ' + difference + '    duration: ' + duration);
+
+        video.on('loadedmetadata', function() {
+            var duration = Math.round(video.duration());
+            var difference = current.getTime() - current.getUrlChangeTime();
+            c('loaded Metadata. change: ' + current.getUrlChangeTime() + '   difference: ' + difference + '    duration: ' + duration);
+
+            // If user triggers a trap, play the trap footage, and ignore all time stamps
+            if (_bIsTrap) {
+                c('Playing trap video');
+                video.play();
+
+            } else if (!_bIsTrap) {
 
                 // The opportunity to play the clip has passed
                 if (difference >= duration) {
                     c('difference is greater! Displaying still');
                     displayStill();
                 }
-               
+
                 if (difference < duration) {
                     // Seek to current time stamp
                     if (current.getUrlChangeTime() !== current.getTime()) {
                         c('Playing vid w/ time diff');
                         video.currentTime(diff);
-                        video.play(); 
+                        video.play();
                     } else {
                         // Play video from the beginning
                         c('returning - Play video from the beginning');
@@ -840,9 +842,8 @@ var mainJS = (function () {
                         return;
                     }
                 }
-
-            });
-        }
+            }
+        });
     };
 
     /**
