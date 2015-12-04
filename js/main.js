@@ -334,8 +334,8 @@ var mainJS = (function () {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
         if (bDebug) {
-           // video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
-            video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);  // Local video
+            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+            //video.src([{ type: 'video/mp4', src: aTempLocal[0] }]);  // Local video
             video.load();
             video.play();
         } else {
