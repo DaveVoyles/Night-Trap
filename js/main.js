@@ -322,6 +322,12 @@ var mainJS = (function () {
         }
     };
 
+    Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+    get: function(){
+        return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+    }
+})
+
 
     /**
      * Check if browser supports audio -- if not, tell user to update
@@ -349,10 +355,15 @@ var mainJS = (function () {
             e.defaultPrevented();
         }, false);
 
-        video.on('canplay', function() {
-            MainLoop.setUpdate(update).start();
-            nTimeStart  = new Date();
-        });
+        if (video.playing) {
+            c('vid not paused');
+        }
+
+        // Start the global timer when the intro video is played. Prevents timer from starting before video has loaded
+        if (video.src() === 'https://nighttrap.blob.core.windows.net/vid/intro/00000011-Intro.mp4') {
+                MainLoop.setUpdate(update).start();
+                nTimeStart  = new Date();
+        }      
     };
 
 
@@ -646,10 +657,14 @@ var mainJS = (function () {
     var eventsBathroom = function eventsBathroom () {
            
        switch (current.getTime()) {
-           case minSecToNum(0, 18):
-               bathroom.urlChangeTime = minSecToNum(0, 18)  ;
+           //case minSecToNum(0, 18):
+           //    bathroom.urlChangeTime = minSecToNum(0, 18)  ;
+           //    bathroom.curUrl        = camBathroom.c180291 ;
+           //    break;      
+               case minSecToNum(0, 5):  // DEBUG
+               bathroom.urlChangeTime = minSecToNum(0, 5)  ;
                bathroom.curUrl        = camBathroom.c180291 ;
-               break                                        ;
+               break      ;
            case minSecToNum(0, 37):
                bathroom.hasPlayed = false;
                bathroom.urlChangeTime = minSecToNum(0, 37)  ;
