@@ -67,12 +67,14 @@ var mainJS = (function () {
         return nTotalMissedPrototype;
     };
 
-    // Timer to keep track of user's time spent in-game
-    //var nTimeStart             = new Date();
+    /**
+     *  Timer to keep track of user's time spent in-game
+     */
     var nTimeStart = 0;
-    // Audio element for SFX, passwords, and noises during stills
+    /**
+     * Audio element for SFX, passwords, and noises during stills
+     */
     var audioElem              = null;
-    // Are we in Debug mode?
     var bDebug                 = true;
     var timerElem              = document.getElementById('timer'   );
     var passElem               = document.getElementById('pass'    );
@@ -172,9 +174,15 @@ var mainJS = (function () {
       }
     };
 
+    /**
+     * Without this, the clips will ONLY work with a trap OR update the room when the user is viewing a camera but not doing anything.
+     * A check for this bool is done each time we observe the room.
+     */
     var bUserSetTrap = false;
 
-    // Path to SFX
+    /**
+     * Path to SFX
+     */ 
     var aAudioClips            = {
           change   : 'sfx/CHANGE.mp3'
         , crickets : 'sfx/CRICK2.mp3'
@@ -182,7 +190,9 @@ var mainJS = (function () {
         , denied   : 'sfx/DENIED.mp3'
     };
 
-    /* Temp videos for testing playback */
+    /**
+     *  Temp videos for testing playback 
+     */
     var aTempLocal             = [
         'video/00180291.mp4',
         'video/00352291.mp4',
@@ -388,10 +398,6 @@ var mainJS = (function () {
             curRoom = this.id;
             c('changeVideoStream() image: ' + curRoom);
         } else {
-            //curRoom = current.getCam();
-            // Prob need this to be turned to a string
-            //curRoom = '' + current.getCam();
-            //curRoom = current.getCam().sRoomName;
             curRoom = current.getCamAsString();
             c('changeVideoStream() curRoom: ' + curRoom);
         }
@@ -924,7 +930,6 @@ var mainJS = (function () {
      */
     var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl, nPotentialCaptured) {
         c('t: playing first time');
-        //setTrapAsSprung();
         playVideo(sTrapUrl, true);
         setTrapAsSprung();
         nTotalCaptured.set(nPotentialCaptured);
@@ -1008,16 +1013,16 @@ var mainJS = (function () {
         Object.observe(room, function (changes) {
             c(changes[0]);
             if (changes[0] !== undefined) {
-                var oldUrl = changes[0].oldValue;
-                var curUrl = changes[0].object.curUrl;
+                var oldUrl               = changes[0].oldValue;
+                var curUrl               = changes[0].object.curUrl;
                 var bWatchingCurrentRoom = current.getCamAsString() === room.sRoomName;
-                var bCurUrlHasChanged = curUrl !== oldUrl;
-                var bTypeIsUpdate = false;
-                var bTypeIsAdd = false;
+                var bCurUrlHasChanged    = curUrl !== oldUrl;
+                var bTypeIsUpdate        = false;
+                var bTypeIsAdd           = false;
 
                 if (changes[0].type === 'update') {
                     bTypeIsUpdate = true;
-                    bTypeIsAdd = false;
+                    bTypeIsAdd    = false;
                 }
 
                 if (changes[0].type === 'add') {
@@ -1025,20 +1030,18 @@ var mainJS = (function () {
                         return
                     }
                     bTypeIsUpdate = false;
-                    bTypeIsAdd = true;
+                    bTypeIsAdd    = true;
                 }
 
 
-                // TODO: If user springs a trap, ignore this
                 // Are we watching this room?
                 if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsAdd) { // TODO: May also need bTypeIsUpdate here....
-                        //if (bCurUrlHasChanged && bWatchingCurrentRoom && ) { 
-                        c('ObserveRoom: changeVideoStream()');
-                        if (bUserSetTrap === true) {
-                            bUserSetTrap = false; // Reset this value
-                            return;
-                        }
-                        changeVideoStream(); //TODO: Something about this is preventing the traps from triggering
+                    c('ObserveRoom: changeVideoStream()');
+                    if (bUserSetTrap === true) {
+                        bUserSetTrap = false; // Reset this value
+                        return;
+                    }
+                    changeVideoStream(); 
                 }
             }
         });
