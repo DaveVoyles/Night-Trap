@@ -373,9 +373,8 @@ var mainJS = (function () {
      * Need to check if user has selected a room, then set that room. Check for 'undefined' is necessary to
      * b/c if obserRoom calls changeVideoStream instead, idType comes back as undefined. 
      */
-    var changeVideoStream = function changeVideoStream(bIsTrap) {
+    var changeVideoStream = function changeVideoStream() {
         current.setJustSwitched(true);
-        var _bIsTrap = bIsTrap || false;
         c('changeVideoStream() switching');
         var idType  = {}  ;
         var curRoom = ''  ;
@@ -509,7 +508,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (driveway.hasPlayed           );
                   break                                                      ;
         }
-         createVideoSeries(current, _bIsTrap);
+         createVideoSeries(current);
     };
 
 
@@ -842,7 +841,6 @@ var mainJS = (function () {
             }
 
             else if (!_bIsTrap) {
-
                 // The opportunity to play the clip has passed
                 if (difference >= duration) {
                     //c('difference is greater! Displaying still');
@@ -1014,21 +1012,21 @@ var mainJS = (function () {
                     var bTypeIsUpdate        = false                                      ;
                     var bTypeIsAdd           = false                                      ;
 
-                      if (changes[0].type === 'update') {
-                          bTypeIsUpdate = true;
-                          bTypeIsAdd    = false;
-                      }
+                    if (changes[0].type === 'update') {
+                        bTypeIsUpdate = true;
+                        bTypeIsAdd    = false;
+                    }
 
-                    // TODO: Considering checking if name === '_urlChangeTime' as well,
-                    // TODO: so that it isn't updated when '_hasPlayed' is changed too. 
-                      if (changes[0].type === 'add') {
-                          bTypeIsUpdate = false; 
-                          bTypeIsAdd    = true;
+                    if (changes[0].type === 'add') {
+                        if (changes[0].name === '_hasPlayed') {return }
+                        bTypeIsUpdate = false; 
+                        bTypeIsAdd    = true;
                     }
 
                     if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsAdd) {
-                    //if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsUpdate) {
-                        changeVideoStream(true);
+                        //if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsUpdate) {
+                        c('ObserveRoom: changeVideoStream()');
+                        changeVideoStream();   //TODO: Something about this is preventing the traps from triggering
                     }
                 }
         });
