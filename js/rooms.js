@@ -153,7 +153,7 @@
     * @property {string} cam                - Room the user has currently selected
     * @property {string} stillUrl           - Background image when room is empty.
     * @property {bool}   bCanCatch          - Is there a character who can be captured in the scene?
-    * @property {number} _urlChangeTime      - Time into the game should curUrl should be set.
+    * @property {number} urlChangeTime      - Time into the game should curUrl should be set.
     * @property {number} time               - Current time stamp when curUrl is being set.
     * @property {number} catchTime          - When can the user catch an auger?
     * @property {sting}  curUrl             - Url should be set as video.src() right now.
@@ -213,10 +213,10 @@
                 this.bCanCatch = val;
             },
             getUrlChangeTime: function() {
-                return this._urlChangeTime;
+                return this.urlChangeTime;
             },
             setUrlChangeTime: function(val) {
-                this._urlChangeTime = val;
+                this.urlChangeTime = val;
             },
             getCatchTime: function() {
                 return this.catchTime;
@@ -279,25 +279,25 @@
                 this.hasPlayed = val;
             },
             getCamAsString: function () {
-                return this.camAsString;               
+                return this.camAsString;    
             },
             setCamAsString: function (val) {
                 switch (val) {
-                    case hallOne:
+                    case 'hallOne':
                         this.camAsString = 'hallOne'   ;
-                    case kitchen:
+                    case 'kitchen':
                         this.camAsString = 'kitchen'   ;
-                    case entryway:
+                    case 'entryway':
                         this.camAsString = 'entryway'  ;
-                    case livingroom:
+                    case 'livingroom':
                         this.camAsString = 'livingroom';
-                    case bathroom:
+                    case 'bathroom':
                         this.camAsString = 'bathroom'  ;
-                    case bedroom:
+                    case 'bedroom':
                         this.camAsString = 'bathroom'  ;
-                    case hallTwo:
+                    case 'hallTwo':
                         this.camAsString = 'hallTwo'   ;
-                    case driveway:
+                    case 'driveway':
                         this.camAsString = 'driveway'  ;
                 }
             }

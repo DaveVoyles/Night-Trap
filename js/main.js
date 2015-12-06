@@ -309,6 +309,7 @@ var mainJS = (function () {
         eventsBedroom ();
         eventsHallTwo ();
         eventsDriveway();
+        c(current.getCamAsString());
     };
 
 
@@ -396,7 +397,7 @@ var mainJS = (function () {
 
         switch (curRoom) {
             case 'hallOne':
-                  current.setCamAsString      (hallOne                      );
+                  current.camAsString       = 'hallOne'                      ;
                   current.setCam              (hallOne                      );
                   current.setCurUrl           (hallOne.curUrl               );
                   current.setNextUrl          (hallOne.nextUrl              );
@@ -410,7 +411,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (hallOne.hasPlayed            );
                   break                                                      ;
             case 'kitchen':
-                  current.setCamAsString      (kitchen                      );
+                  current.camAsString       = 'kitchen'                      ;
                   current.setCam              (kitchen                      );
                   current.setCurUrl           (kitchen.curUrl               );
                   current.setNextUrl          (kitchen.nextUrl              );
@@ -424,7 +425,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (kitchen.hasPlayed            );
                   break                                                      ;
             case 'entryway':
-                  current.setCamAsString      (entryway                     );
+                  current.camAsString       = 'entryway'                     ;
                   current.setCam              (entryway                     );
                   current.setCurUrl           (entryway.curUrl              );
                   current.setNextUrl          (entryway.nextUrl             );
@@ -438,7 +439,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (entryway.hasPlayed           );
                   break                                                      ;
             case 'livingroom':
-                  current.setCamAsString      (livingroom                   );
+                  current.camAsString       = 'livingroom'                   ;
                   current.setCam              (livingroom                   );
                   current.setCurUrl           (livingroom.curUrl            );
                   current.setNextUrl          (livingroom.nextUrl           );
@@ -452,7 +453,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (livingroom.hasPlayed         );
                   break                                                      ;
             case 'bathroom':
-                  current.setCamAsString      (bathroom                     );
+                  current.camAsString       = 'bathroom'                     ;
                   current.setCam              (bathroom                     );
                   current.setCurUrl           (bathroom.curUrl              );
                   current.setNextUrl          (bathroom.nextUrl             );
@@ -466,7 +467,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (bathroom.hasPlayed           );
                   break                                                      ;
             case 'bedroom':
-                  current.setCamAsString      (bedroom                      );
+                  current.camAsString       = 'bedroom'                      ;
                   current.setCam              (bedroom                      );
                   current.setCurUrl           (bedroom.curUrl               );
                   current.setNextUrl          (bedroom.nextUrl              );
@@ -480,7 +481,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (bedroom.hasPlayed            );
                   break                                                      ;
             case 'hallTwo':
-                  current.setCamAsString      (hallTwo                      );
+                  current.camAsString       = 'hallTwo'                      ;
                   current.setCam              (hallTwo                      );
                   current.setCurUrl           (hallTwo.curUrl               );
                   current.setNextUrl          (hallTwo.nextUrl              );
@@ -494,7 +495,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (hallTwo.hasPlayed            );
                   break                                                      ;
             case 'driveway':
-                  current.setCamAsString      (driveway                     );
+                  current.camAsString       = 'driveway'                     ;
                   current.setCam              (driveway                     );
                   current.setCurUrl           (driveway.curUrl              );
                   current.setNextUrl          (driveway.nextUrl             );
@@ -744,7 +745,7 @@ var mainJS = (function () {
     };
 
     var eventsDriveway = function eventsDriveway () {
- 
+ //Why does this SVGSwitchElement to here at 1,56?
        switch(current.getTime()) {
            case minSecToNum(1, 56):
                driveway.hasPlayed     = false               ;
@@ -822,43 +823,49 @@ var mainJS = (function () {
     var playVideo = function playVideo(urlClip, bIsTrap) {
         audioElem.pause();
         var _bIsTrap = bIsTrap || false;
-        var diff     = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+        var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+
+        c('currentRoom: ' + current.getCam());
 
         video.src(urlClip);
         video.load();
         c('playVideo sRoomName: ' + current.getCam().sRoomName);
 
         video.on('loadedmetadata', function() {
-            var duration = Math.round(video.duration());
+            var duration   = Math.round(video.duration());
             var difference = current.getTime() - current.getUrlChangeTime();
-            c('loaded Metadata. change: ' + current.getUrlChangeTime() + '   difference: ' + difference + '    duration: ' + duration);
+            //c('loaded Metadata. change: ' + current.getUrlChangeTime() + '   difference: ' + difference + '    duration: ' + duration);
 
             // If user triggers a trap, play the trap footage, and ignore all time stamps
             if (_bIsTrap) {
                 c('Playing trap video');
                 video.play();
-            } else if (!_bIsTrap) {
+            }
+
+            else if (!_bIsTrap) {
 
                 // The opportunity to play the clip has passed
                 if (difference >= duration) {
-                    c('difference is greater! Displaying still');
+                    //c('difference is greater! Displaying still');
                     displayStill();
                 }
 
                 if (difference < duration) {
                     // Seek to current time stamp then play
                     if (current.getUrlChangeTime() !== current.getTime()) {
-                        c('Playing vid w/ time diff');
+                        //c('Playing vid w/ time diff');
                         video.currentTime(diff);
                         video.play();
                     } else {
                         // Play video from the beginning
-                        c('returning - Play video from the beginning');
+                        //c('returning - Play video from the beginning');
                         video.play();
                         return;
                     }
                 }
+
             }
+
         });
     };
 
@@ -1000,8 +1007,7 @@ var mainJS = (function () {
     var ObserveRoom = function observeRoom(room) {
         Object.observe(room, function (changes) {
             c(changes[0]);
-                if (changes[0] !== undefined) {
-                    c(room);
+            if (changes[0] !== undefined) {
                     var oldUrl              = changes[0].oldValue                        ;
                     var curUrl              = changes[0].object.curUrl                   ;
                     var watchingCurrentRoom = current.getCamAsString() === room.sRoomName;
