@@ -172,6 +172,8 @@ var mainJS = (function () {
       }
     };
 
+    var bUserSetTrap = false;
+
     // Path to SFX
     var aAudioClips            = {
           change   : 'sfx/CHANGE.mp3'
@@ -872,6 +874,7 @@ var mainJS = (function () {
      * TODO: Need to set video.currentTime(0) on this as well! Otherwise we miss most of the trap vid!
      */
     var trap = function trap() {
+        bUserSetTrap = true;
         createTrapVidSeries(current.getTrapUrl(), current.getNextUrl(), current.getPotentialCaptured());
         toggleTrapListener(false);
     };
@@ -921,8 +924,9 @@ var mainJS = (function () {
      */
     var createTrapVidSeries = function createTrapVidSeries (sTrapUrl, sNextUrl, nPotentialCaptured) {
         c('t: playing first time');
-        setTrapAsSprung();
+        //setTrapAsSprung();
         playVideo(sTrapUrl, true);
+        setTrapAsSprung();
         nTotalCaptured.set(nPotentialCaptured);
 
       // Video has already played & there is no nextUrl, so use a still
@@ -952,13 +956,12 @@ var mainJS = (function () {
      */
     var toggleTrapListener    = function toggleTrapListener (bShouldListen) {
         bShouldListen = typeof 'undefined' ? bShouldListen : false;
-        if (bShouldListen       === true) {
-            document.getElementById('Trap').addEventListener('click', trap);
+        if (bShouldListen === true) {
+            document.getElementById('Trap').addEventListener   ('click', trap);
         } else {
             document.getElementById('Trap').removeEventListener('click', trap);
         }
     };
-
 
     /**
      * Have a buffer 1 second before / after catchTime to allow users to try to catch a character.
@@ -1005,30 +1008,39 @@ var mainJS = (function () {
         Object.observe(room, function (changes) {
             c(changes[0]);
             if (changes[0] !== undefined) {
-                    var oldUrl               = changes[0].oldValue                        ;
-                    var curUrl               = changes[0].object.curUrl                   ;
-                    var bWatchingCurrentRoom = current.getCamAsString() === room.sRoomName;        
-                    var bCurUrlHasChanged    = curUrl !== oldUrl                          ;
-                    var bTypeIsUpdate        = false                                      ;
-                    var bTypeIsAdd           = false                                      ;
+                var oldUrl = changes[0].oldValue;
+                var curUrl = changes[0].object.curUrl;
+                var bWatchingCurrentRoom = current.getCamAsString() === room.sRoomName;
+                var bCurUrlHasChanged = curUrl !== oldUrl;
+                var bTypeIsUpdate = false;
+                var bTypeIsAdd = false;
 
-                    if (changes[0].type === 'update') {
-                        bTypeIsUpdate = true;
-                        bTypeIsAdd    = false;
-                    }
-
-                    if (changes[0].type === 'add') {
-                        if (changes[0].name === '_hasPlayed') {return }
-                        bTypeIsUpdate = false; 
-                        bTypeIsAdd    = true;
-                    }
-
-                    if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsAdd) {
-                        //if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsUpdate) {
-                        c('ObserveRoom: changeVideoStream()');
-                        changeVideoStream();   //TODO: Something about this is preventing the traps from triggering
-                    }
+                if (changes[0].type === 'update') {
+                    bTypeIsUpdate = true;
+                    bTypeIsAdd = false;
                 }
+
+                if (changes[0].type === 'add') {
+                    if (changes[0].name === '_hasPlayed') {
+                        return
+                    }
+                    bTypeIsUpdate = false;
+                    bTypeIsAdd = true;
+                }
+
+
+                // TODO: If user springs a trap, ignore this
+                // Are we watching this room?
+                if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsAdd) { // TODO: May also need bTypeIsUpdate here....
+                        //if (bCurUrlHasChanged && bWatchingCurrentRoom && ) { 
+                        c('ObserveRoom: changeVideoStream()');
+                        if (bUserSetTrap === true) {
+                            bUserSetTrap = false; // Reset this value
+                            return;
+                        }
+                        changeVideoStream(); //TODO: Something about this is preventing the traps from triggering
+                }
+            }
         });
     };
 

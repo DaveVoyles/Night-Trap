@@ -194,7 +194,7 @@
          var curUrl             = ''   ;
          var nextUrl            = ''   ;
          var trapUrl            = ''   ;
-         var bTrapSprung        = true ;
+         var bTrapSprung        = false;
          var bJustSwitched      = false;
          var nPotentialCaptured = 0    ;
          var hasPlayed          = false;
