@@ -309,7 +309,6 @@ var mainJS = (function () {
         eventsBedroom ();
         eventsHallTwo ();
         eventsDriveway();
-        c(current.getCamAsString());
     };
 
 
@@ -370,13 +369,14 @@ var mainJS = (function () {
 
     /**
      * When user selects a room, this takes the current values from the room and applies them to the current object.
-     * createVideoSeries is called after properties have been set.
+     * createVideoSeries() is called after properties have been set.
      * Need to check if user has selected a room, then set that room. Check for 'undefined' is necessary to
      * b/c if obserRoom calls changeVideoStream instead, idType comes back as undefined. 
      */
-    var changeVideoStream = function changeVideoStream() {
+    var changeVideoStream = function changeVideoStream(bIsTrap) {
         current.setJustSwitched(true);
-        c('switching');
+        var _bIsTrap = bIsTrap || false;
+        c('changeVideoStream() switching');
         var idType  = {}  ;
         var curRoom = ''  ;
         var that    = this;
@@ -385,14 +385,14 @@ var mainJS = (function () {
 
         if (idType === 'image') {
             curRoom = this.id;
-            c('image');
+            c('changeVideoStream() image: ' + curRoom);
         } else {
             //curRoom = current.getCam();
             // Prob need this to be turned to a string
             //curRoom = '' + current.getCam();
             //curRoom = current.getCam().sRoomName;
             curRoom = current.getCamAsString();
-            c('curRoom: ' + curRoom);
+            c('changeVideoStream() curRoom: ' + curRoom);
         }
 
         switch (curRoom) {
@@ -509,7 +509,7 @@ var mainJS = (function () {
                   current.setHasPlayed        (driveway.hasPlayed           );
                   break                                                      ;
         }
-         createVideoSeries(current);
+         createVideoSeries(current, _bIsTrap);
     };
 
 
@@ -745,7 +745,6 @@ var mainJS = (function () {
     };
 
     var eventsDriveway = function eventsDriveway () {
- //Why does this SVGSwitchElement to here at 1,56?
        switch(current.getTime()) {
            case minSecToNum(1, 56):
                driveway.hasPlayed     = false               ;
@@ -823,7 +822,7 @@ var mainJS = (function () {
     var playVideo = function playVideo(urlClip, bIsTrap) {
         audioElem.pause();
         var _bIsTrap = bIsTrap || false;
-        var diff = nTimeDiff(current.getUrlChangeTime(), current.getTime());
+        var diff     = nTimeDiff(current.getUrlChangeTime(), current.getTime());
 
         c('currentRoom: ' + current.getCam());
 
@@ -1008,18 +1007,28 @@ var mainJS = (function () {
         Object.observe(room, function (changes) {
             c(changes[0]);
             if (changes[0] !== undefined) {
-                    var oldUrl              = changes[0].oldValue                        ;
-                    var curUrl              = changes[0].object.curUrl                   ;
-                    var watchingCurrentRoom = current.getCamAsString() === room.sRoomName;
-                    var curUrlHasChanged    = curUrl !== oldUrl                          ;
-                    var typeIsUpdate        = {}                                         ;
+                    var oldUrl               = changes[0].oldValue                        ;
+                    var curUrl               = changes[0].object.curUrl                   ;
+                    var bWatchingCurrentRoom = current.getCamAsString() === room.sRoomName;        
+                    var bCurUrlHasChanged    = curUrl !== oldUrl                          ;
+                    var bTypeIsUpdate        = false                                      ;
+                    var bTypeIsAdd           = false                                      ;
 
-                    if (changes[0].type === update) {
-                        typeIsUpdate = changes[0].type;
+                      if (changes[0].type === 'update') {
+                          bTypeIsUpdate = true;
+                          bTypeIsAdd    = false;
+                      }
+
+                    // TODO: Considering checking if name === '_urlChangeTime' as well,
+                    // TODO: so that it isn't updated when '_hasPlayed' is changed too. 
+                      if (changes[0].type === 'add') {
+                          bTypeIsUpdate = false; 
+                          bTypeIsAdd    = true;
                     }
 
-                    if (curUrlHasChanged && watchingCurrentRoom && typeIsUpdate) {
-                        changeVideoStream();
+                    if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsAdd) {
+                    //if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsUpdate) {
+                        changeVideoStream(true);
                     }
                 }
         });
