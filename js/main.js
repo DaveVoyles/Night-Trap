@@ -534,9 +534,7 @@ var mainJS = (function () {
                  hallOne.urlChangeTime = minSecToNum(0, 1)  ;
                  hallOne.curUrl        = camHallOne.c21     ;       
                  hallOne.trapUrl       = camHallOne.c130422 ;
-                 hallOne.catchTime     = minSecToNum(0, 4)  ;    // If I start this at 4 secs, it shows very end of clip...
-                // If I start it at 10 seconds, it says that it has passed already....
-                 //hallOne.catchTime     = minSecToNum(0, 13) ;   
+                 hallOne.catchTime     = minSecToNum(0, 9)  ; //TODO: Should be 13   
                  break;
          // Debug # 1
          //case minSecToNum(0, 1):
@@ -545,18 +543,17 @@ var mainJS = (function () {
          //       hallOne.trapUrl = camHallOne.c130422;
          //       hallOne.catchTime = minSecToNum(0, 13);
          //       break;
-            // Debug # 2
             // Actual # 2 
             case minSecToNum(1, 20):                               
                  hallOne.urlChangeTime = minSecToNum(1, 20) ;
                  hallOne.curUrl        = camHallOne.c1152221;
                  break;
-                // Debug # 2
-            //case minSecToNum(0, 12):
-            //    hallOne.hasPlayed = false;
-            //    hallOne.urlChangeTime = minSecToNum(0, 12);
-            //    hallOne.curUrl = camHallOne.c1152221;
-            //    break;
+         // Debug # 2
+        //case minSecToNum(0, 12):
+        //    hallOne.hasPlayed = false;
+        //    hallOne.urlChangeTime = minSecToNum(0, 12);
+        //    hallOne.curUrl = camHallOne.c1152221;
+        //    break;
             case minSecToNum(2, 50):
                  hallOne.hasPlayed     = false              ;
                  hallOne.urlChangeTime = minSecToNum(2, 50) ;
@@ -664,22 +661,30 @@ var mainJS = (function () {
 
     var eventsBathroom = function eventsBathroom () {
            
-       switch (current.getTime()) {
-           //case minSecToNum(0, 18):
-           //    bathroom.urlChangeTime = minSecToNum(0, 18)  ;
-           //    bathroom.curUrl        = camBathroom.c180291 ;
-           //    break;      
-               case minSecToNum(0, 5):  // DEBUG
-               bathroom.urlChangeTime = minSecToNum(0, 5)  ;
+        switch (current.getTime()) {
+            case minSecToNum(0, 3):
+                bathroom.hasPlayed = false;
+                bathroom.urlChangeTime = minSecToNum(0, 3);
+                bathroom.curUrl = camBathroom.c352291;
+                bathroom.trapUrl = camBathroom.c431292;
+                bathroom.catchTime = minSecToNum(0, 6);
+                break;
+
+           case minSecToNum(0, 18):
+               bathroom.urlChangeTime = minSecToNum(0, 18)  ;
                bathroom.curUrl        = camBathroom.c180291 ;
-               break      ;
-           case minSecToNum(0, 37):
-               bathroom.hasPlayed = false;
-               bathroom.urlChangeTime = minSecToNum(0, 37)  ;
-               bathroom.curUrl        = camBathroom.c352291 ;
-               bathroom.trapUrl       = camBathroom.c431292 ;
-               bathroom.catchTime     = minSecToNum(0, 43)  ;                 
-               break                                        ;
+               break;      
+               //case minSecToNum(0, 5):  // DEBUG
+               //bathroom.urlChangeTime = minSecToNum(0, 5)  ;
+               //bathroom.curUrl        = camBathroom.c180291 ;
+               //break      ;
+           //case minSecToNum(0, 37):
+           //    bathroom.hasPlayed = false;
+           //    bathroom.urlChangeTime = minSecToNum(0, 37)  ;
+           //    bathroom.curUrl        = camBathroom.c352291 ;
+           //    bathroom.trapUrl       = camBathroom.c431292 ;
+           //    bathroom.catchTime     = minSecToNum(0, 43)  ;                 
+               //    break                                        ;
            case minSecToNum(0, 48):
                bathroom.urlChangeTime = minSecToNum(0, 48)  ;
                bathroom.curUrl        = camBathroom.c500291 ;
@@ -843,12 +848,12 @@ var mainJS = (function () {
             //c('loaded Metadata. change: ' + current.getUrlChangeTime() + '   difference: ' + difference + '    duration: ' + duration);
 
             // If user triggers a trap, play the trap footage, and ignore all time stamps
-            if (_bIsTrap) {
+            if (_bIsTrap === true) {
                 c('Playing trap video');
                 video.play();
             }
 
-            else if (!_bIsTrap) {
+            else if (_bIsTrap === false) {
                 // The opportunity to play the clip has passed
                 if (difference >= duration) {
                     //c('difference is greater! Displaying still');
@@ -1027,7 +1032,7 @@ var mainJS = (function () {
 
                 if (changes[0].type === 'add') {
                     if (changes[0].name === '_hasPlayed') {
-                        return
+                        return;
                     }
                     bTypeIsUpdate = false;
                     bTypeIsAdd    = true;
@@ -1038,7 +1043,7 @@ var mainJS = (function () {
                 if (bCurUrlHasChanged && bWatchingCurrentRoom && bTypeIsAdd) { // TODO: May also need bTypeIsUpdate here....
                     c('ObserveRoom: changeVideoStream()');
                     if (bUserSetTrap === true) {
-                        bUserSetTrap = false; // Reset this value
+                        bUserSetTrap = false; 
                         return;
                     }
                     changeVideoStream(); 
