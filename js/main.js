@@ -836,20 +836,24 @@ var mainJS = (function () {
         var _bIsTrap = bIsTrap || false;
         var diff     = nTimeDiff(current.getUrlChangeTime(), current.getTime());
 
-        c('currentRoom: ' + current.getCam());
-
+        //c('currentRoom: ' + current.getCam());
         video.src(urlClip);
         video.load();
-        c('playVideo sRoomName: ' + current.getCam().sRoomName);
+        //c('playVideo sRoomName: ' + current.getCam().sRoomName);
 
-        video.on('loadedmetadata', function() {
+        video.on('loadedmetadata', function () {
+
             var duration   = Math.round(video.duration());
             var difference = current.getTime() - current.getUrlChangeTime();
             //c('loaded Metadata. change: ' + current.getUrlChangeTime() + '   difference: ' + difference + '    duration: ' + duration);
 
+
             // If user triggers a trap, play the trap footage, and ignore all time stamps
             if (_bIsTrap === true) {
-                c('Playing trap video');
+                c(video.readyState());
+                video.src(urlClip);
+                video.load();
+                c('did it load?');
                 video.play();
             }
 
