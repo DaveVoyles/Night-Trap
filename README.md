@@ -7,6 +7,7 @@ A browser port of the Sega CD classic from Digital Pictures
 ### About
 
 ## [You can play / view the Alpha here. May not always work.](http://nighttrapalpha.azurewebsites.net/)
+NOTE: Click on Hall One (bottom left icon) or the Bedroom to start the game. The first few scenes happen in Hall One, Bedroom, and Bathroom. 
 
 [Join the discussion on Reddit](https://www.reddit.com/r/gamedev/comments/3d9m9x/i_ported_night_trap_to_the_browser_today/)
 
