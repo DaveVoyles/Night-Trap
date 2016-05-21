@@ -1,4 +1,4 @@
-﻿(function (undefined) {
+﻿//(function (undefined) {
 
     /**
      * Countdown timer.
@@ -49,4 +49,39 @@
         window.setTimeout(instance, speed);
     }
 
-})();
+
+    /**
+     * Converts seconds to "MM:SS"
+     * @param {number} seconds - Takes seconds and returns it in string format of MM:SS for on screen timer
+     */
+    var secondsToTimeString = function secondsToTimeString(seconds) {
+
+        var s = Math.floor(seconds % 60);
+        var m = Math.floor((seconds * 1000 / (1000 * 60)) % 60);
+        var strFormat = 'MM:SS';
+
+        if (s < 10) s = '0' + s;
+        if (m < 10) m = '0' + m;
+
+        strFormat = strFormat.replace(/MM/, m);
+        strFormat = strFormat.replace(/SS/, s);
+
+        return strFormat;
+    };
+
+
+    /**
+     * Formats the timestamp from the excel spreadsheet into a format the switch statement understands. 
+     * USAGE: 1:15 from excel is entered as minSecToMin(1, 15) and returns 75.
+     * @param   {number} minutes 
+     * @param   {number} seconds 
+     * @returns {number} conversion from min:sec to a number.  
+     */
+    var minSecToNum = function minSecToNum(minutes, seconds) {
+        var min = minutes || 0;
+        var sec = seconds || 0;
+
+        return min * 60 + sec;
+    };
+
+//})();
