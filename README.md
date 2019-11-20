@@ -11,7 +11,7 @@ A browser port of the Sega CD classic from Digital Pictures
 
 [Join the discussion on Reddit](https://www.reddit.com/r/gamedev/comments/3d9m9x/i_ported_night_trap_to_the_browser_today/)
 
-[Follow along with the development diary](http://www.davevoyles.com/deconstructing-night-trap/)
+[Follow along with the development diary](http://www.davevoyles.com/2015/07/16/deconstructing-night-trap/)
 
 ![Night_trap_img](http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg)
 
