@@ -30,8 +30,8 @@ There's obviously still a lot of work to go. Special thanks to Phil Cobley in th
 
 ----------
 
-##Change Log
-###v1.0.0
+## Change Log
+### v1.0.0
 Initial build of the app
 
 
