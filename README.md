@@ -11,7 +11,7 @@ A browser port of the Sega CD classic from Digital Pictures
 
 [Join the discussion on Reddit](https://www.reddit.com/r/gamedev/comments/3d9m9x/i_ported_night_trap_to_the_browser_today/)
 
-![Night_trap_img](http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg)
+<img src="http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg" width="500" height="650">
 
 I spent about 45 minutes bringing this over to the browser today. The code is all done in JavaScript, and I'm using the open source [Video.JS player](http://www.videojs.com/) to display the video on most devices (mobile included). 
 
