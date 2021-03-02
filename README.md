@@ -13,7 +13,7 @@ A browser port of the Sega CD classic from Digital Pictures
 
 <img src="http://s.emuparadise.org/Sega%20CD/Box%20Scans/Night%20Trap%20(32X)%20(U)%20(Front).jpg" width="500" height="650">
 
-I ported this fromm 68k Assembly to JavaScript and built a prototype which ran in the browser. The code is all done in JavaScript, and I'm using the open source [Video.JS player](http://www.videojs.com/) to display the video on most devices (mobile included). 
+I ported this from 68k Assembly to JavaScript and built a prototype which ran in the browser. The code is all done in JavaScript, and I'm using the open source [Video.JS player](http://www.videojs.com/) to display the video on most devices (mobile included). 
 
 The video is streaming from [Azure Media Services](http://www.davevoyles.com/?s=azure+media+services). I'd suggest giving it a minute to load before advancing the screen. 
 
