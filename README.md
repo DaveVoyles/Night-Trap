@@ -20,18 +20,18 @@ The video is streaming from [Azure Media Services](http://www.davevoyles.com/?s=
 Special thanks to Phil Cobley in the [Night Trap](https://www.facebook.com/groups/NightTrap/) Facebook group for his SCAT tool which allowed me to rip the video footage from the Sega CD disc. 
 
 ----------
-### To do:
+#### To do:
 
 - Add the color coordinated password system
 - Pause Screen
 - Get multiple video feeds to buffer as soon as the page loads. Allows for quicker camera changes.
 
-### Current state:
+#### Current state:
 - Not working. Videos are no longer hosted in Azure.
 ----------
 
-##Change Log
-###v1.0.0
+### Change Log
+#### v1.0.0
 Initial build of the app
 
 
