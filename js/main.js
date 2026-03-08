@@ -102,10 +102,10 @@
     var bCanCatch = {
         bool: true,
         get () {
-            return this.bCanCatch;
+            return this.bool;
         },
         set (val) {
-            this.bCanCatch= val;
+            this.bool = val;
         }
     };
 
@@ -113,8 +113,6 @@
     var nTimeStart      = new Date();
     // Audio element for SFX, passwords, and noises during stills
     var audioElem       = null;
-    // Are we in Debug mode?
-    var bDebug          = true;
     // elapsedTime() sets this value
     var nCurrentTime = {
         time: 0,
@@ -141,9 +139,9 @@
     // List of passwords that the game can select
     var aPasswords      = {
         Purple : 'Purple'
-      , Blue   : 'Blue  '
-      , Red    : 'Red   '
-      , Green  : 'Green '
+      , Blue   : 'Blue'
+      , Red    : 'Red'
+      , Green  : 'Green'
       , Yellow : 'Yellow'
       , Orange : 'Orange'
     };
@@ -154,20 +152,20 @@
     var aAudioClips = {
           change   : 'sfx/CHANGE.mp3'
         , crickets : 'sfx/CRICK2.mp3'
-        , frogs    : 'sfx/FROG2.mp3 '
+        , frogs    : 'sfx/FROG2.mp3'
         , denied   : 'sfx/DENIED.mp3'
     };
 
     // Posters, which are set as the camera feed when room is empty
     var aStills = {
-          HallOne    : 'img/stills/BATHROOM_1.JPG   '
-        , Kitchen    : 'img/stills/KITCHEN_1.JPG    '
-        , Entryway   : 'img/stills/ENTRY-WAY_1.JPG  '
-        , Livingroom : 'img/stills/Living-ROom_1.JPG'
-        , Bathroom   : 'img/stills/Bathroom_1.JPG   '
-        , Bedroom    : 'img/stills/Bedroom_1.JPG    '
-        , HallTwo    : 'img/stils/Hall-Two_1.JPG    '
-        , Driveway   : 'img/stills/Driveway_1.JPG   '
+          HallOne    : 'img/stills/HALL-ONE_1.jpg'
+        , Kitchen    : 'img/stills/KITCHEN_1.jpg'
+        , Entryway   : 'img/stills/ENTRY-WAY_1.jpg'
+        , Livingroom : 'img/stills/LIVING-ROOM_1.jpg'
+        , Bathroom   : 'img/stills/BATHROOM_1.jpg'
+        , Bedroom    : 'img/stills/BEDROOM_1.jpg'
+        , HallTwo    : 'img/stills/HALL-TWO_1.jpg'
+        , Driveway   : 'img/stills/DRIVEWAY_1.jpg'
     };
 
     /**
@@ -187,32 +185,9 @@
     // Camera (room) player currently has selected
     var nCurrentCam = aCurrentCam.HallOne;
 
-    /** Which url should this room be on at this moment? 
-     * @example: aCurrentRoomUrl.HallOne = camHallOne.c21;
-     */
-    var aCurrentRoomUrl = {
-          HallOne    : 0
-        , Kitchen    : 1
-        , Entryway   : 2
-        , LivingRoom : 3
-        , Bathroom   : 4
-        , Bedroom    : 5
-        , HallTwo    : 6
-        , Driveway   : 7
-    };
-    var sCurrentRoomUrl = '';
-
-
-    /* Temp videos for testing playback */
-    var aTempLocal = [
-        'video/00180291.mp4',
-        'video/00352291.mp4',
-        'video/00431292.mp4'
-    ];
 
     /* 0 | 1 Opening & General */
     var camMisc = {
-        DPWORLDD: '',
         // Intro briefing
         c11: 'https://nighttrap.blob.core.windows.net/vid/intro/00000011-Intro.mp4'
     };
@@ -267,7 +242,7 @@
     var camEntryway = {
         // 1 Auger walks in from beneath stairs. Looks outside. Can be caught
           c1320261: 'https://nighttrap.blob.core.windows.net/vid/entryway/01320261.mp4'
-        // 1 Auger caught in  entryway
+        // 1 Auger caught in ï¿½entryway
         , c1391862: 'https://nighttrap.blob.core.windows.net/vid/entryway/01391862.mp4'
         // Sarah enters from closet, parents enter, augers can be trapped on stairs
         , c2122461: 'https://nighttrap.blob.core.windows.net/vid/entryway/02122461.mp4'
@@ -291,7 +266,7 @@
     var camBedroom = {
         //Sarah staring at mirror, 3 augers enter two go to bathroom one to hall-2
            c81:    'https://nighttrap.blob.core.windows.net/vid/bedroom/00000081.mp4'
-        // TRAP: Augers caught 
+        // TRAP: Augers caughtï¿½
         , c130422: 'https://medianighttrap.blob.core.windows.net/asset-e41e435d-1500-80c4-a05f-f1e52dbb857e/00130422.mp4?sv=2012-02-12&sr=c&si=681815ff-ed6f-4acf-861c-3886316945ee&sig=vUMKUifi5f3Pcj7WlVQqy4R0FYJ6AF9%2BjPQXbdMaONc%3D&st=2015-07-19T02%3A18%3A44Z&se=2115-06-25T02%3A18%3A44Z'
         // TRAP: 1 Auger is caught, other walks into bathroom
         , c352482: 'https://nighttrap.blob.core.windows.net/vid/bedroom/00352482.mp4'
@@ -321,7 +296,6 @@
      * Sets src property for video player and sets reference to audio tag
      */
     var init = function () {
-        //wireButtonsToEvent(true);
         toggleRoomButton();
         initializeAudio();
         initializeVideoStream();
@@ -384,7 +358,6 @@
         var end       = new Date();
         var elapsedMS = end.getTime() - nTimeStart.getTime();
         var seconds   = Math.round(elapsedMS / 1000);
-        var minutes   = Math.round(seconds   /   60);
 
         nCurrentTime.set(seconds);
     };
@@ -394,7 +367,7 @@
      * Draws current time on screen at 'timer' element.
      */
     var updateTimeOnScreen = function () {
-        timerElem.innerHTML = secondsToTimeString(nCurrentTime.get());
+        timerElem.textContent = secondsToTimeString(nCurrentTime.get());
     };
 
 
@@ -407,12 +380,7 @@
         elapsedTime();
         updateTimeOnScreen();
         eventsHallOne();
-        //eventsBedroom();
-
-        if (bDebug) {
-            //console.log(secondsToTimeString(nCurrentTime));
-            //console.log(nCurrentTime);
-        }
+        eventsBedroom();
     };
 
 
@@ -428,7 +396,7 @@
 
 
     /**
-     * Check if browser supports audio -- if not, tell user to update
+     * Check if browser supports video -- if not, tell user to update
      * Loads video as soon as page loads for Video.js player
      */
     var initializeVideoStream = function () {
@@ -436,16 +404,9 @@
         if (!Modernizr.video) {
             window.open('http://outdatedbrowser.com/en', '_blank');
         }
-        if (bDebug) {
-            //video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
-            video.src([{ type: 'video/mp4', src: aTempLocal[0]}]);
-            video.load();
-            video.play();
-        } else {
-            video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
-            video.load();
-            video.play();
-        }
+        video.src([{ type: 'video/mp4', src: camMisc.c11 }]);
+        video.load();
+        video.play();
     };
 
      
@@ -454,8 +415,7 @@
      * @param {float} interpolationPercentage
      *   How much to interpolate between frames.
      */
-    var draw = function (interpolatePercentage) {
-        // Do I really need this? 
+    var draw = function (interpolationPercentage) {
     };
 
 
@@ -463,10 +423,10 @@
      * Sets aCurrentCam to the room user is viewing. 
      * Sets currentStill to match that room, so that poster can be set between videos.
      * createVideoSeries is called after properties have been set.
-     * @example: nCurremtCam = aCurrentCam.HallOne;
+     * @example: nCurrentCam = aCurrentCam.HallOne;
      */
     var changeVideoStream = function () {
-            bCanListen.set(false); //TODO: May need to set this to true somewhere else...
+            bCanListen.set(false);
             toggleRoomButton();
 
             switch (this.id) {
@@ -479,7 +439,7 @@
                     sCurStill.set(aStills.Kitchen);
                     break;
                 case 'Entry-Way':
-                    nCurrentCam = aCurrentCam.Kitchen;
+                    nCurrentCam = aCurrentCam.Entryway;
                     sCurStill.set(aStills.Entryway);
                     break;
                 case 'Living-Room':
@@ -500,10 +460,10 @@
                     break;
                 case 'Driveway':
                     nCurrentCam = aCurrentCam.Driveway;
-                    sCurStill(aStills.Driveway);
+                    sCurStill.set(aStills.Driveway);
                     break;
             }
-           createVideoSeries(sCurUrl.get(), sNextUrl.get(), bCanCatch.get());
+           createVideoSeries(sCurUrl.get(), sNextUrl.get());
     };
 
 
@@ -514,22 +474,17 @@
     */
     var eventsHallOne = function () {
         if (nCurrentCam === aCurrentCam.HallOne) {
-            console.log('events Hall 1');
-            var nCaseTime = 0;
-
             switch (nCurrentTime.get()) {
                 case 1:
-                    sCurUrl  .set(aTempLocal[1]);    // 2 augs
-                    sNextUrl.set(aTempLocal[0]);     // Sarah 
-                    sCurTrapUrl.set(aTempLocal[2]);  // Caught
+                    sCurUrl.set(camHallOne.c21);
+                    sNextUrl.set(camHallOne.c21);
+                    sCurTrapUrl.set(camHallOne.c130422);
                     bCanCatch.set(true);
-                    nCaseTime = 0;
                     break;
                 case 30:
-                    sCurUrl  .set(aTempLocal[1]);
-                    sNextUrl .set(aTempLocal[2]);
+                    sCurUrl.set(camHallOne.c1152221);
+                    sNextUrl.set(camHallOne.c1152221);
                     bCanCatch.set(false);
-                    nCaseTime = 30;
                     break;
                 default:
             }
@@ -544,20 +499,15 @@
      */
     var eventsBedroom = function () {
         if (nCurrentCam === aCurrentCam.Bedroom) {
-            console.log('eventsBedroom');
-            var nCaseTime = 0;
-
             switch (nCurrentTime.get()) {
                 case 1: 
-                    sCurUrl.set(aTempLocal[1]);
+                    sCurUrl.set(camBedroom.c81);
                     sNextUrl.set(null);
                     bCanCatch.set(true);
-                    nCaseTime = 0;
                     break;
                 case 54:
-                    aCurrentRoomUrl.Bedroom = camBedroom.c540281;
-                    sNextUrl = aStills.Bedroom;
-                    nCaseTime = 54;
+                    sCurUrl.set(camBedroom.c540281);
+                    sNextUrl.set(aStills.Bedroom);
                     break;
                 default:
             }
@@ -571,10 +521,10 @@
      * Second 'ended' event draws poster to screen when 2nd clip has completed
      * @param {string} currentVidUrl
      *      Clip with the trap sequence.
-     * @param {string} [nextVid]
-     *      Trap clips are often have a clip that appears next.
+     * @param {string} [nextVidUrl]
+     *      Trap clips often have a clip that appears next.
      */
-    var createVideoSeries = function (currentVidUrl, nextVidUrl) { //TODO: Maybe I should have another clip for the trap?
+    var createVideoSeries = function (currentVidUrl, nextVidUrl) {
         var hasPlayed = false;
         video.poster(sCurStill.get());
         playVideo(currentVidUrl);
@@ -584,21 +534,16 @@
             toggleTrapListener(true);
         }
 
-        // Did not catch..... so play next video
+        // Did not catch -- play next video or show still
         video.on('ended', function() {
             if (hasPlayed === false) {
-
-                // TODO: May have to change this, b/c there will always be a URL video... I think.
                 if (nextVidUrl) {
-                    console.log('playing next vid');
                     playVideo(nextVidUrl);
-
-                // Use a still if nextVid does not exist
                 } else { 
                     hasPlayed = true;
                     displayStill();
                 }
-            };
+            }
 
             // Video has already played, so use a still
             hasPlayed = true;
@@ -611,11 +556,9 @@
 
     /**
      * Can we use a trap in this scene? If so, change clips when user hits 'Trap' button
-     * Make it unsable again right after you trigger the video
+     * Make it unusable again right after you trigger the video
      */
     var trap = function () {
-        console.log('trap btn hit');
-        //playVideo(sCurTrapUrl.get()); 
         createVideoSeries(sCurTrapUrl.get(), sNextUrl.get());
         toggleTrapListener(false);
     };
@@ -636,10 +579,10 @@
 
 
     /**
-     * Still to play when no action occurs. Sets video.src to src so that the still image can be dispayed as a poster
+     * Displays the room poster when no action occurs by clearing the video source.
      */
     var displayStill = function () { 
-        video.src(video.src);
+        video.src('');
         audioElem.src = aAudioClips.crickets;
         audioElem.play();
     };

@@ -1,4 +1,4 @@
-﻿(function (undefined) {
+(function (undefined) {
 
     /**
      * Countdown timer.
@@ -8,7 +8,7 @@
      * // returns  30 seconds countdown.
      * During the game, use with :
      * var countDownValue = currentCountDown(); 
-     * // rerturns  in ms.
+     * // returns in ms.
      */
     var createCountDown = function (timeRemaining) {
         var startTime = Date.now();
@@ -21,7 +21,7 @@
 
     /**
      * Self-adjusting timer
-     * EX: Anim an objet over 5 seconds at 20 frames/second
+     * Animates an object over 5 seconds at 20 frames/second
      * @usage: doTimer(5000, 20, function(steps) {
      *       opacity           = opacity - (1 / steps);
      *       img.style.opacity = opacity;
